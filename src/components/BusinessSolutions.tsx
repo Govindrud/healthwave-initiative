@@ -1,11 +1,7 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// Importing framer-motion for animations
-<lov-add-dependency>framer-motion@latest</lov-add-dependency>
 
 interface Solution {
   id: number;
@@ -48,7 +44,7 @@ const BusinessSolutions = () => {
     {
       id: 5,
       title: "PeerSupport",
-      description: "A moderated community platform where people can share experiences and provide mutual support for mental health issues.",
+      description: "A community platform where people can share experiences and provide mutual support for mental health issues.",
       icon: "👥",
       color: "bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200",
     },
