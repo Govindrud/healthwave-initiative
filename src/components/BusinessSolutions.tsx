@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Brain, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Solution {
@@ -9,6 +10,7 @@ interface Solution {
   description: string;
   icon: string;
   color: string;
+  aiFeature?: string;
 }
 
 const BusinessSolutions = () => {
@@ -19,6 +21,7 @@ const BusinessSolutions = () => {
       description: "A mobile application providing personalized meditation and mindfulness exercises to reduce anxiety and improve focus.",
       icon: "💆‍♂️",
       color: "bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200",
+      aiFeature: "AI-powered personalization that adapts exercises based on your emotional state, sleep patterns, and stress levels."
     },
     {
       id: 2,
@@ -26,6 +29,7 @@ const BusinessSolutions = () => {
       description: "A platform connecting users with affordable, qualified therapists for virtual consultations on-demand.",
       icon: "🤝",
       color: "bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200",
+      aiFeature: "Smart matching algorithm that pairs you with the most compatible therapist based on your needs, communication style, and treatment preferences."
     },
     {
       id: 3,
@@ -33,6 +37,7 @@ const BusinessSolutions = () => {
       description: "Tools and resources specifically designed to help students manage academic stress and maintain mental wellbeing.",
       icon: "📚",
       color: "bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200",
+      aiFeature: "AI study assistant that identifies optimal study times based on your cognitive rhythms and suggests personalized breaks to prevent burnout."
     },
     {
       id: 4,
@@ -40,6 +45,7 @@ const BusinessSolutions = () => {
       description: "Corporate wellness programs addressing burnout and promoting healthy work-life balance for employees.",
       icon: "⚖️",
       color: "bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200",
+      aiFeature: "Predictive analytics that identify burnout risks before they manifest and recommend preventative interventions tailored to your work habits."
     },
     {
       id: 5,
@@ -47,6 +53,7 @@ const BusinessSolutions = () => {
       description: "A community platform where people can share experiences and provide mutual support for mental health issues.",
       icon: "👥",
       color: "bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200",
+      aiFeature: "Smart content moderation and crisis detection algorithms that ensure a safe environment and provide immediate resources when concerning patterns are detected."
     },
     {
       id: 6,
@@ -54,6 +61,7 @@ const BusinessSolutions = () => {
       description: "Science-backed solutions to improve sleep quality, addressing a common factor in many mental health conditions.",
       icon: "😴",
       color: "bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200",
+      aiFeature: "Adaptive sound therapy that synchronizes with your sleep cycles and adjusts in real-time based on environmental inputs and biofeedback."
     }
   ];
 
@@ -67,14 +75,20 @@ const BusinessSolutions = () => {
         </span>
         <h2 className="font-bold mb-6 text-balance">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-600">
-            Innovative Mental Health Solutions
+            AI-Powered Mental Health Solutions
           </span>
         </h2>
         <p className="text-muted-foreground text-balance">
-          Discover our growing ecosystem of mental health services, each one designed 
-          to address specific challenges identified by our community and developed with 
-          the help of talented college students.
+          Discover our growing ecosystem of mental health services enhanced with artificial intelligence, 
+          each one designed to address specific challenges identified by our community and 
+          developed with the help of talented college students.
         </p>
+        <div className="flex items-center justify-center mt-4 bg-meant-50 rounded-lg p-3 border border-meant-100">
+          <Brain className="text-meant-600 mr-2" size={20} />
+          <p className="text-sm text-meant-700">
+            All our solutions use ethical AI designed with privacy and user wellbeing as top priorities
+          </p>
+        </div>
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
@@ -92,6 +106,16 @@ const BusinessSolutions = () => {
             <div className="text-4xl mb-4">{solution.icon}</div>
             <h3 className="text-xl font-medium mb-2">{solution.title}</h3>
             <p className="text-muted-foreground mb-4">{solution.description}</p>
+            
+            {solution.aiFeature && (
+              <div className="bg-white bg-opacity-60 rounded-lg p-3 mb-4 border border-meant-100">
+                <div className="flex items-start">
+                  <Sparkles className="text-meant-600 mr-2 mt-0.5 flex-shrink-0" size={16} />
+                  <p className="text-sm text-meant-700">{solution.aiFeature}</p>
+                </div>
+              </div>
+            )}
+            
             <Button 
               variant="ghost" 
               className="p-0 h-auto text-meant-700 hover:text-meant-800 hover:bg-transparent group"
