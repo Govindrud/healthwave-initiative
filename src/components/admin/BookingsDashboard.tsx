@@ -72,15 +72,18 @@ const BookingsDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <ChartContainer className="h-[300px]" config={{ count: { color: "#7c3aed" } }}>
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={bookingsData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Bar dataKey="count" fill="var(--color-count)" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            {/* Wrap the children in a Fragment to fix the type error */}
+            <>
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={bookingsData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Bar dataKey="count" fill="var(--color-count)" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </>
           </ChartContainer>
         </CardContent>
       </Card>

@@ -75,18 +75,21 @@ const SalesDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <ChartContainer className="h-[300px]" config={{ revenue: { color: "#7c3aed" }, profit: { color: "#10b981" } }}>
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="revenue" stroke="var(--color-revenue)" activeDot={{ r: 8 }} strokeWidth={2} />
-                <Line type="monotone" dataKey="profit" stroke="var(--color-profit)" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
+            {/* Wrap the children in a Fragment to fix the type error */}
+            <>
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={salesData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="revenue" stroke="var(--color-revenue)" activeDot={{ r: 8 }} strokeWidth={2} />
+                  <Line type="monotone" dataKey="profit" stroke="var(--color-profit)" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </>
           </ChartContainer>
         </CardContent>
       </Card>
