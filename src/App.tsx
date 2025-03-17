@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Index />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/admin" 
+          element={
+            <PageTransition>
+              <Admin />
             </PageTransition>
           } 
         />

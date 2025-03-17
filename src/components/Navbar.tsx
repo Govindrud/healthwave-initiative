@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,11 +30,11 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
             MeantToHelp
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
           {["Home", "About", "Solutions", "Contribute", "Contact"].map((item) => (
@@ -45,6 +46,11 @@ const Navbar = () => {
               {item}
             </a>
           ))}
+          <Link to="/admin">
+            <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50">
+              Admin
+            </Button>
+          </Link>
           <Button className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-6 hover:shadow-md transition-all">
             Share Your Problem
           </Button>
@@ -70,6 +76,11 @@ const Navbar = () => {
                   {item}
                 </a>
               ))}
+              <Link to="/admin" className="px-4 py-2">
+                <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50 w-full">
+                  Admin
+                </Button>
+              </Link>
               <Button 
                 className="bg-meant-600 hover:bg-meant-700 text-white rounded-full hover:shadow-md transition-all"
                 onClick={() => {
