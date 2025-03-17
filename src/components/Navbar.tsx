@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,6 +22,14 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -30,28 +39,33 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
-            MeantToHelp
-          </span>
-        </Link>
+        <Logo size="md" variant="full" />
 
         <nav className="hidden md:flex items-center space-x-8">
-          {["Home", "About", "Solutions", "Contribute", "Contact"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+          {[
+            { text: "Home", id: "hero" },
+            { text: "About", id: "about" },
+            { text: "Solutions", id: "solutions" },
+            { text: "Contribute", id: "problem" },
+            { text: "Contact", id: "contact" }
+          ].map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
               className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium"
             >
-              {item}
-            </a>
+              {item.text}
+            </button>
           ))}
           <Link to="/admin">
             <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50">
               Admin
             </Button>
           </Link>
-          <Button className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-6 hover:shadow-md transition-all">
+          <Button 
+            className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-6 hover:shadow-md transition-all"
+            onClick={() => scrollToSection("problem")}
+          >
             Share Your Problem
           </Button>
         </nav>
@@ -66,15 +80,20 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 glass md:hidden py-4 px-4 animate-fade-in">
             <nav className="flex flex-col space-y-4">
-              {["Home", "About", "Solutions", "Contribute", "Contact"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+              {[
+                { text: "Home", id: "hero" },
+                { text: "About", id: "about" },
+                { text: "Solutions", id: "solutions" },
+                { text: "Contribute", id: "problem" },
+                { text: "Contact", id: "contact" }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
                   className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item}
-                </a>
+                  {item.text}
+                </button>
               ))}
               <Link to="/admin" className="px-4 py-2">
                 <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50 w-full">
@@ -83,10 +102,7 @@ const Navbar = () => {
               </Link>
               <Button 
                 className="bg-meant-600 hover:bg-meant-700 text-white rounded-full hover:shadow-md transition-all"
-                onClick={() => {
-                  document.getElementById('problem')?.scrollIntoView();
-                  setIsMobileMenuOpen(false);
-                }}
+                onClick={() => scrollToSection("problem")}
               >
                 Share Your Problem
               </Button>

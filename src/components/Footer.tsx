@@ -1,55 +1,41 @@
 
-import { Heart, Mail, MapPin, Phone, Twitter, Linkedin, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Twitter, Facebook, Instagram, Linkedin, Youtube, Heart } from "lucide-react";
+import Logo from "./Logo";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  
   return (
-    <footer id="contact" className="bg-meant-950 text-white pt-16 pb-8">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          <div>
-            <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-meant-300 to-meant-500">
-              MeantToHelp
-            </h3>
-            <p className="text-meant-200 mb-4">
-              Connecting mental health challenges with innovative solutions through collaboration and community.
+    <footer className="bg-card border-t">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2 lg:col-span-1">
+            <Logo size="lg" variant="full" />
+            <p className="mt-4 text-muted-foreground">
+              Empowering individuals through innovative mental health solutions.
+              Our mission is to make mental wellness accessible to everyone.
             </p>
-            <div className="flex space-x-3">
-              <a 
-                href="#" 
-                className="w-9 h-9 rounded-full bg-meant-800 flex items-center justify-center hover:bg-meant-700 transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter size={18} />
-              </a>
-              <a 
-                href="#" 
-                className="w-9 h-9 rounded-full bg-meant-800 flex items-center justify-center hover:bg-meant-700 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a 
-                href="#" 
-                className="w-9 h-9 rounded-full bg-meant-800 flex items-center justify-center hover:bg-meant-700 transition-colors"
-                aria-label="Github"
-              >
-                <Github size={18} />
-              </a>
+            <div className="flex space-x-4 mt-6">
+              {[Twitter, Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-10 h-10 rounded-full bg-meant-50 flex items-center justify-center text-meant-600 hover:bg-meant-100 transition-colors"
+                >
+                  <Icon size={20} />
+                </a>
+              ))}
             </div>
           </div>
-          
+
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {["Home", "About", "Solutions", "Contribute", "Contact", "Privacy Policy", "Terms of Service"].map((item) => (
-                <li key={item}>
+              {["Home", "About Us", "Our Solutions", "Testimonials", "Contact"].map((item, i) => (
+                <li key={i}>
                   <a 
-                    href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} 
-                    className="text-meant-300 hover:text-white transition-colors"
+                    href={`#${item.toLowerCase().replace(/\s+/g, '')}`}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {item}
                   </a>
@@ -57,57 +43,72 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <MapPin size={18} className="text-meant-400 mr-2 mt-0.5 flex-shrink-0" />
-                <span className="text-meant-300">
-                  1234 Innovation Way<br />
-                  San Francisco, CA 94103
-                </span>
+            <h3 className="font-semibold text-lg mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Admin Dashboard
+                </Link>
               </li>
-              <li className="flex items-center">
-                <Phone size={18} className="text-meant-400 mr-2 flex-shrink-0" />
-                <a href="tel:+11234567890" className="text-meant-300 hover:text-white transition-colors">
-                  +1 (123) 456-7890
+              <li>
+                <Link to="/hosting" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Hosting Guide
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Mental Health Blog
                 </a>
               </li>
-              <li className="flex items-center">
-                <Mail size={18} className="text-meant-400 mr-2 flex-shrink-0" />
-                <a href="mailto:info@meanttohelp.com" className="text-meant-300 hover:text-white transition-colors">
-                  info@meanttohelp.com
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Help & Support
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Terms of Service
                 </a>
               </li>
             </ul>
           </div>
-          
+
           <div>
-            <h3 className="text-white font-semibold mb-4">Stay Updated</h3>
-            <p className="text-meant-300 mb-3">
-              Subscribe to our newsletter for the latest mental health resources and updates.
+            <h3 className="font-semibold text-lg mb-4">Newsletter</h3>
+            <p className="text-muted-foreground mb-4">
+              Subscribe to our newsletter for the latest updates on mental health resources.
             </p>
-            <div className="flex gap-2">
-              <Input 
-                placeholder="Your email" 
-                className="bg-meant-800 border-meant-700 text-white placeholder:text-meant-400"
+            <form className="flex gap-2">
+              <input
+                type="email"
+                placeholder="Your email"
+                className="flex-1 px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-meant-500"
               />
-              <Button className="bg-meant-600 hover:bg-meant-500 text-white">
+              <button
+                type="submit"
+                className="bg-meant-600 hover:bg-meant-700 text-white px-4 py-2 rounded-md"
+              >
                 Subscribe
-              </Button>
-            </div>
+              </button>
+            </form>
           </div>
         </div>
-        
-        <div className="border-t border-meant-800 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <p className="text-meant-400 text-sm mb-4 md:mb-0">
-              © {currentYear} MeantToHelp. All rights reserved.
-            </p>
-            <p className="text-meant-400 text-sm flex items-center">
-              Made with <Heart size={14} className="text-meant-500 mx-1" /> for mental wellness
-            </p>
+
+        <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-muted-foreground">
+            © {new Date().getFullYear()} MeantToHelp. All rights reserved.
+          </p>
+          <div className="flex items-center mt-4 md:mt-0 text-muted-foreground">
+            <span>Made with</span>
+            <Heart className="h-4 w-4 mx-1 text-red-500" />
+            <span>for mental wellness</span>
           </div>
         </div>
       </div>

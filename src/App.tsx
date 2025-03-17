@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
+import Hosting from "./pages/Hosting";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Admin />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/hosting" 
+          element={
+            <PageTransition>
+              <Hosting />
             </PageTransition>
           } 
         />

@@ -7,6 +7,7 @@ import BusinessSolutions from "@/components/BusinessSolutions";
 import AIMentalHealthAssistant from "@/components/AIMentalHealthAssistant";
 import ProblemForm from "@/components/ProblemForm";
 import SocialFeed from "@/components/SocialFeed";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -25,6 +26,7 @@ const Index = () => {
         <AIMentalHealthAssistant />
         <ProblemForm />
         <SocialFeed />
+        <Contact />
       </main>
       <Footer />
     </div>
