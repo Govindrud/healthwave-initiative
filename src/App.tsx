@@ -9,6 +9,8 @@ import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Hosting from "./pages/Hosting";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
@@ -39,6 +41,22 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <AdminLogin />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/forgot-password" 
+          element={
+            <PageTransition>
+              <ForgotPassword />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/reset-password/:token" 
+          element={
+            <PageTransition>
+              <ResetPassword />
             </PageTransition>
           } 
         />

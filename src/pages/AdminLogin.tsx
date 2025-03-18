@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,8 +47,16 @@ const AdminLogin = () => {
               </div>
             </div>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex flex-col space-y-2">
             <Button type="submit" className="w-full bg-meant-600 hover:bg-meant-700">Login to Dashboard</Button>
+            <div className="text-center w-full">
+              <Link 
+                to="/forgot-password" 
+                className="text-sm text-primary hover:underline"
+              >
+                Forgot your password?
+              </Link>
+            </div>
           </CardFooter>
         </form>
       </Card>
