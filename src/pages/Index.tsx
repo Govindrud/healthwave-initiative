@@ -9,6 +9,7 @@ import ProblemForm from "@/components/ProblemForm";
 import SocialFeed from "@/components/SocialFeed";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ProductsSection from "@/components/ProductsSection";
 
 const Index = () => {
   useEffect(() => {
@@ -23,6 +24,7 @@ const Index = () => {
         <Hero />
         <About />
         <BusinessSolutions />
+        <ProductsSection />
         <AIMentalHealthAssistant />
         <ProblemForm />
         <SocialFeed />

@@ -9,6 +9,10 @@ import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import Hosting from "./pages/Hosting";
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
+import Services from "./pages/Services";
+import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +44,38 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Hosting />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/products" 
+          element={
+            <PageTransition>
+              <Products />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/products/:productId" 
+          element={
+            <PageTransition>
+              <ProductDetail />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/services" 
+          element={
+            <PageTransition>
+              <Services />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/cart" 
+          element={
+            <PageTransition>
+              <Cart />
             </PageTransition>
           } 
         />
