@@ -88,7 +88,7 @@ const Navbar = () => {
             Contact
           </button>
 
-          <Link to="/admin">
+          <Link to="/admin-login">
             <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
               Admin
             </Button>
@@ -171,7 +171,7 @@ const Navbar = () => {
                 Contact
               </button>
               <div className="pt-2">
-                <Link to="/admin" className="block px-4 py-2" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to="/admin-login" className="block px-4 py-2" onClick={() => setIsMobileMenuOpen(false)}>
                   <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50 w-full">
                     Admin
                   </Button>

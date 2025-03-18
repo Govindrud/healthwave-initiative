@@ -8,12 +8,15 @@ import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
 import Hosting from "./pages/Hosting";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Services from "./pages/Services";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -32,10 +35,20 @@ const AnimatedRoutes = () => {
           } 
         />
         <Route 
+          path="/admin-login" 
+          element={
+            <PageTransition>
+              <AdminLogin />
+            </PageTransition>
+          } 
+        />
+        <Route 
           path="/admin" 
           element={
             <PageTransition>
-              <Admin />
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
             </PageTransition>
           } 
         />
@@ -94,13 +107,15 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AnimatedRoutes />
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

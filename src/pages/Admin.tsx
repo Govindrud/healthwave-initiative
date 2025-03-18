@@ -1,14 +1,22 @@
-
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronDown, Calendar, Users, DollarSign, TrendingUp, ArrowRight } from "lucide-react";
+import { ChevronDown, Calendar, Users, DollarSign, TrendingUp, ArrowRight, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BookingsDashboard from "@/components/admin/BookingsDashboard";
 import SalesDashboard from "@/components/admin/SalesDashboard";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState("bookings");
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -26,6 +34,10 @@ const Admin = () => {
             </a>
           </nav>
           <div className="ml-auto flex items-center space-x-4">
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
             <Button variant="ghost" size="sm">
               <span className="sr-only">User menu</span>
               <Users className="h-4 w-4" />
