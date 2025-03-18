@@ -12,14 +12,18 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const ADMIN_PASSWORD = "admin123"; // In a real app, this would be stored securely
-export const ADMIN_EMAIL = "admin@example.com"; // In a real app, this would be stored securely
+// Default values - in a real app, these would be stored securely
+const DEFAULT_ADMIN_PASSWORD = "admin123";
+export const ADMIN_EMAIL = "admin@example.com";
 
 // Mock storage for reset tokens - in a real app, this would be in a database
 const resetTokens: {[key: string]: {email: string, timestamp: number}} = {};
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [adminPassword, setAdminPassword] = useState<string>(
+    localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
+  );
 
   useEffect(() => {
     // Check if user was previously authenticated
@@ -30,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = (password: string): boolean => {
-    if (password === ADMIN_PASSWORD) {
+    if (password === adminPassword) {
       setIsAuthenticated(true);
       localStorage.setItem("admin_auth", "true");
       toast.success("Login successful");
@@ -78,10 +82,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return false;
     }
     
-    // In a real app, you would update the password in your database
-    // For this demo, we'll just update the ADMIN_PASSWORD (this is NOT how you'd do it in production)
-    // @ts-ignore - we're updating a const for demo purposes only
-    ADMIN_PASSWORD = newPassword;
+    // Update the password
+    setAdminPassword(newPassword);
+    // Persist the password in localStorage (for demo purposes only)
+    localStorage.setItem("admin_password", newPassword);
     
     // Clear the used token
     delete resetTokens[token];
