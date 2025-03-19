@@ -4,12 +4,14 @@ import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +25,11 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
@@ -39,8 +46,8 @@ const Navbar = () => {
     }
   };
 
-  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium";
-  const mobileNavLinkClass = "text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium";
+  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium text-center";
+  const mobileNavLinkClass = "text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium text-center";
 
   return (
     <header
@@ -66,30 +73,18 @@ const Navbar = () => {
           >
             About
           </button>
-          <button 
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              window.location.href = "/services";
-            }}
-            className={navLinkClass}
-          >
+          <Link to="/services" className={navLinkClass}>
             Services
-          </button>
+          </Link>
           <button
             onClick={() => scrollToSection("solutions")}
             className={navLinkClass}
           >
             Solutions
           </button>
-          <button 
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              window.location.href = "/products";
-            }}
-            className={navLinkClass}
-          >
+          <Link to="/products" className={navLinkClass}>
             Products
-          </button>
+          </Link>
           <button
             onClick={() => scrollToSection("problem")}
             className={navLinkClass}
@@ -153,30 +148,26 @@ const Navbar = () => {
               >
                 About
               </button>
-              <button 
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  window.location.href = "/services";
-                }}
+              <Link 
+                to="/services" 
                 className={mobileNavLinkClass}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Services
-              </button>
+              </Link>
               <button
                 onClick={() => scrollToSection("solutions")}
                 className={mobileNavLinkClass}
               >
                 Solutions
               </button>
-              <button 
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  window.location.href = "/products";
-                }}
+              <Link 
+                to="/products" 
                 className={mobileNavLinkClass}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Products
-              </button>
+              </Link>
               <button
                 onClick={() => scrollToSection("problem")}
                 className={mobileNavLinkClass}

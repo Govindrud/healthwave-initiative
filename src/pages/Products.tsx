@@ -7,11 +7,13 @@ import { products, productCategories } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { useIsPlatform } from "@/hooks/use-mobile";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [filteredProducts, setFilteredProducts] = useState(products);
+  const { isIOS } = useIsPlatform();
 
   useEffect(() => {
     document.title = "Products | MeantToHelp";
@@ -37,9 +39,9 @@ const Products = () => {
   }, [searchTerm, selectedCategory]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className={`min-h-screen flex flex-col ${isIOS ? 'ios-fix' : ''}`}>
       <Navbar />
-      <main className="flex-grow pt-24">
+      <main className="flex-grow pt-24 pb-safe">
         <div className="container px-4 mx-auto py-8">
           <div className="max-w-3xl mx-auto text-center mb-10">
             <h1 className="text-3xl font-bold mb-4 text-meant-800">Mental Wellness Products</h1>
