@@ -1,14 +1,31 @@
 
 import { CheckCircle, Users, Brain, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
 
-const AboutCard = ({ icon: Icon, title, description }: { icon: React.ElementType, title: string, description: string }) => (
-  <div className="glass rounded-2xl p-6 hover-effect">
-    <div className="w-12 h-12 rounded-full bg-meant-100 flex items-center justify-center mb-4">
-      <Icon className="text-meant-600" size={24} />
+const AboutCard = ({ 
+  icon: Icon, 
+  title, 
+  description, 
+  delay 
+}: { 
+  icon: React.ElementType, 
+  title: string, 
+  description: string,
+  delay: number
+}) => (
+  <motion.div 
+    className="glass rounded-2xl p-6 hover-effect card-hover"
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay }}
+  >
+    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-meant-50 to-meant-200 flex items-center justify-center mb-5 shadow-sm">
+      <Icon className="text-meant-600" size={26} />
     </div>
-    <h3 className="text-xl font-medium mb-2">{title}</h3>
+    <h3 className="text-xl font-semibold mb-3">{title}</h3>
     <p className="text-muted-foreground">{description}</p>
-  </div>
+  </motion.div>
 );
 
 const About = () => {
@@ -37,7 +54,13 @@ const About = () => {
 
   return (
     <section id="about" className="section-container">
-      <div className="max-w-3xl mx-auto text-center mb-16">
+      <motion.div 
+        className="max-w-3xl mx-auto text-center mb-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         <span className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-3">
           Our Approach
         </span>
@@ -51,7 +74,7 @@ const About = () => {
           understanding real challenges faced by real people. Our unique approach brings together 
           those experiencing mental health difficulties with passionate students ready to create change.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
         {features.map((feature, index) => (
@@ -59,7 +82,8 @@ const About = () => {
             key={index} 
             icon={feature.icon} 
             title={feature.title} 
-            description={feature.description} 
+            description={feature.description}
+            delay={index * 0.1}
           />
         ))}
       </div>

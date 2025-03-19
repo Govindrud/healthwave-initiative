@@ -1,10 +1,11 @@
 
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-accent to-background">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent to-background">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-meant-100 animate-float opacity-30"></div>
@@ -12,50 +13,83 @@ const Hero = () => {
         <div className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-meant-50 animate-float opacity-20" style={{ animationDelay: "2s" }}></div>
       </div>
 
-      <div className="container mx-auto px-4 z-10">
-        <div className="max-w-5xl mx-auto text-center">
-          <span className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-5 animate-fade-in">
+      <div className="container mx-auto px-4 z-10 pt-16">
+        <motion.div 
+          className="max-w-5xl mx-auto text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.span 
+            className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-5"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
+          >
             Transforming Mental Health Support
-          </span>
-          <h1 className="text-balance font-bold mb-6 text-gradient animate-fade-in delay-100">
+          </motion.span>
+          
+          <motion.h1 
+            className="text-balance font-bold mb-6 text-gradient"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-500">
               Meant to Help. Meant to Heal.
             </span>
-          </h1>
-          <p className="text-foreground/80 max-w-3xl mx-auto mb-10 text-balance animate-fade-in delay-200">
+          </motion.h1>
+          
+          <motion.p 
+            className="text-foreground/80 max-w-3xl mx-auto mb-10 text-balance"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
             We're building a community that connects real mental health challenges with innovative solutions. 
             By bringing together those in need and college students eager to make a difference, 
             we're creating powerful, accessible mental health resources for everyone.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in delay-300">
+          </motion.p>
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
             <Button 
               size="lg" 
-              className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-8 py-6 hover:shadow-md transition-all"
-              onClick={() => document.getElementById('problem')?.scrollIntoView()}
+              className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all"
+              onClick={() => document.getElementById('problem')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Share Your Challenge
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="rounded-full px-8 py-6 border-meant-200 hover:bg-meant-50 text-meant-800 hover:shadow-sm transition-all"
-              onClick={() => document.getElementById('solutions')?.scrollIntoView()}
+              className="rounded-full px-8 py-6 border-meant-200 hover:bg-meant-50 text-meant-800 hover:shadow-md transition-all"
+              onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Explore Solutions
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <motion.div 
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+      >
         <button 
-          onClick={() => document.getElementById('about')?.scrollIntoView()}
-          className="p-2 rounded-full bg-white/80 hover:bg-white shadow-md hover:shadow-lg transition-all"
+          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+          className="p-3 rounded-full bg-white/90 hover:bg-white shadow-md hover:shadow-lg transition-all group"
           aria-label="Scroll down"
         >
-          <ArrowDown className="text-meant-600" size={24} />
+          <ArrowDown className="text-meant-600 group-hover:text-meant-800 transition-colors" size={24} />
         </button>
-      </div>
+      </motion.div>
     </section>
   );
 };
