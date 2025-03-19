@@ -39,6 +39,9 @@ const Navbar = () => {
     }
   };
 
+  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium";
+  const mobileNavLinkClass = "text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium";
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -53,37 +56,49 @@ const Navbar = () => {
         <nav className="hidden md:flex items-center space-x-6">
           <button
             onClick={() => scrollToSection("hero")}
-            className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium"
+            className={navLinkClass}
           >
             Home
           </button>
           <button
             onClick={() => scrollToSection("about")}
-            className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium"
+            className={navLinkClass}
           >
             About
           </button>
-          <Link to="/services" className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium">
+          <button 
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              window.location.href = "/services";
+            }}
+            className={navLinkClass}
+          >
             Services
-          </Link>
+          </button>
           <button
             onClick={() => scrollToSection("solutions")}
-            className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium"
+            className={navLinkClass}
           >
             Solutions
           </button>
-          <Link to="/products" className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium">
+          <button 
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              window.location.href = "/products";
+            }}
+            className={navLinkClass}
+          >
             Products
-          </Link>
+          </button>
           <button
             onClick={() => scrollToSection("problem")}
-            className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium"
+            className={navLinkClass}
           >
             Contribute
           </button>
           <button
             onClick={() => scrollToSection("contact")}
-            className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium"
+            className={navLinkClass}
           >
             Contact
           </button>
@@ -128,50 +143,58 @@ const Navbar = () => {
             <nav className="flex flex-col space-y-2">
               <button
                 onClick={() => scrollToSection("hero")}
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
+                className={mobileNavLinkClass}
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection("about")}
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
+                className={mobileNavLinkClass}
               >
                 About
               </button>
-              <Link 
-                to="/services" 
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.location.href = "/services";
+                }}
+                className={mobileNavLinkClass}
               >
                 Services
-              </Link>
+              </button>
               <button
                 onClick={() => scrollToSection("solutions")}
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
+                className={mobileNavLinkClass}
               >
                 Solutions
               </button>
-              <Link 
-                to="/products" 
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  window.location.href = "/products";
+                }}
+                className={mobileNavLinkClass}
               >
                 Products
-              </Link>
+              </button>
               <button
                 onClick={() => scrollToSection("problem")}
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
+                className={mobileNavLinkClass}
               >
                 Contribute
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="text-foreground/80 hover:text-foreground transition-colors px-4 py-2 rounded-md text-sm font-medium"
+                className={mobileNavLinkClass}
               >
                 Contact
               </button>
               <div className="pt-2">
-                <Link to="/admin-login" className="block px-4 py-2" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link 
+                  to="/admin-login" 
+                  className="block px-4 py-2" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50 w-full">
                     Admin
                   </Button>
