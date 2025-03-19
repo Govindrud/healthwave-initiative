@@ -109,7 +109,7 @@
   }
 
   input, textarea, select, button {
-    @apply font-inherit;
+    @apply font-body;
     font-size: inherit;
   }
 
