@@ -87,7 +87,15 @@ You can access the admin area at `admin.php` with these credentials:
 
 ## Support
 
-If you encounter any issues during setup, please contact support@meanttohelp.com.
+If you encounter any issues during setup, please contact support@meanttohelp.com or call +918329116329.
+
+## Company Information
+
+TechD Headquarters
+TechD, Bhugaon
+Near Chandni Chowk
+Pune, Maharashtra
+India - 411042
 
 ## Security Recommendations
 

@@ -112,7 +112,7 @@ const Contact = () => {
             <h3 className="text-xl font-medium mb-6">Our Location</h3>
             <div className="aspect-video w-full rounded-lg mb-6 overflow-hidden bg-accent">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.3059353029!2d-74.25986548248684!3d40.69714941512199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1610642512123!5m2!1sen!2s"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.0926253167197!2d73.76252347498663!3d18.48428758274636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bfc85d0cd699%3A0x45d6f19dd7261bb9!2sBhugaon%2C%20Pune%2C%20Maharashtra%20411042!5e0!3m2!1sen!2sin!4v1698338226587!5m2!1sen!2sin"
                 className="w-full h-full"
                 style={{ border: 0 }}
                 allowFullScreen
@@ -124,11 +124,12 @@ const Contact = () => {
             <div className="flex items-start gap-4">
               <MapPin className="text-meant-600 mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-medium">MeantToHelp Headquarters</h4>
+                <h4 className="font-medium">TechD Headquarters</h4>
                 <p className="text-muted-foreground">
-                  350 Fifth Avenue<br />
-                  New York, NY 10118<br />
-                  United States
+                  TechD, Bhugaon<br />
+                  Near Chandni Chowk<br />
+                  Pune, Maharashtra<br />
+                  India - 411042
                 </p>
               </div>
             </div>

@@ -1,331 +1,225 @@
 
+// Contact Form JS
 document.addEventListener('DOMContentLoaded', function() {
-  // Copy to clipboard functionality
-  const copyButtons = document.querySelectorAll('.copy-btn');
-  
-  copyButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const textToCopy = this.getAttribute('data-copy');
-      
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        // Show success message
-        const originalText = this.textContent;
-        this.textContent = 'Copied!';
-        
-        // Reset button text after 2 seconds
-        setTimeout(() => {
-          this.textContent = originalText;
-        }, 2000);
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-      });
+    // Copy button functionality
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const textToCopy = this.getAttribute('data-copy');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast('Copied to clipboard!');
+                
+                // Add temporary visual feedback
+                this.classList.add('copied');
+                this.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.textContent = this.textContent.includes('Email') 
+                        ? 'Copy Email Address' 
+                        : 'Copy Phone Number';
+                }, 2000);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        });
     });
-  });
-  
-  // Live chat button functionality
-  const chatButton = document.querySelector('.chat-btn');
-  
-  if (chatButton) {
-    chatButton.addEventListener('click', function() {
-      // Show a toast notification
-      showToast('Chat Initiated', 'A support agent will connect with you shortly.');
-      
-      // In a real implementation, you would initialize a chat widget here
-      // For demonstration, we'll just show a notification
-      setTimeout(() => {
-        // Create a chat bubble
-        createChatBubble();
-      }, 2000);
-    });
-  }
-  
-  // Contact form submission
-  const contactForm = document.querySelector('.contact-form');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      // In a local demo without PHP, prevent the default form submission
-      if (!window.location.href.includes('serverbyt.in')) {
-        e.preventDefault();
-        
-        // Simulate form submission
-        const submitBtn = this.querySelector('.submit-btn');
-        const originalText = submitBtn.innerHTML;
-        
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-          submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Sent!';
-          
-          showToast('Message Sent!', 'We\'ll get back to you as soon as possible.');
-          
-          // Reset form
-          this.reset();
-          
-          // Reset button after 2 seconds
-          setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-          }, 2000);
-        }, 1500);
-      }
-    });
-  }
-  
-  // Toast notification system
-  function showToast(title, message) {
-    // Create toast container if it doesn't exist
-    let toastContainer = document.querySelector('.toast-container');
     
-    if (!toastContainer) {
-      toastContainer = document.createElement('div');
-      toastContainer.className = 'toast-container';
-      document.body.appendChild(toastContainer);
-      
-      // Add styles
-      const style = document.createElement('style');
-      style.textContent = `
-        .toast-container {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          z-index: 9999;
-        }
-        .toast {
-          background-color: white;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          padding: 16px;
-          margin-top: 8px;
-          min-width: 300px;
-          max-width: 400px;
-          animation: slideIn 0.3s ease forwards;
-          transform: translateX(100%);
-        }
-        .toast-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 8px;
-        }
-        .toast-title {
-          font-weight: 600;
-          font-size: 16px;
-        }
-        .toast-close {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-size: 16px;
-          color: #64748b;
-        }
-        .toast-body {
-          color: #64748b;
-          font-size: 14px;
-        }
-        @keyframes slideIn {
-          to {
-            transform: translateX(0);
-          }
-        }
-        @keyframes slideOut {
-          to {
-            transform: translateX(120%);
-            opacity: 0;
-          }
-        }
-      `;
-      document.head.appendChild(style);
+    // Live chat button
+    const chatButton = document.querySelector('.chat-btn');
+    if (chatButton) {
+        chatButton.addEventListener('click', function() {
+            showToast('Chat initiated! An agent will connect with you shortly.');
+            
+            // Simulate chat interface appearing
+            setTimeout(() => {
+                const chatInterface = document.createElement('div');
+                chatInterface.className = 'chat-interface';
+                chatInterface.innerHTML = `
+                    <div class="chat-header">
+                        <h4>Live Support</h4>
+                        <button class="close-chat"><i class="fa-solid fa-times"></i></button>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message agent">
+                            <div class="message-content">
+                                <p>Hello! Thanks for reaching out. How can I help you today?</p>
+                                <span class="message-time">${getCurrentTime()}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type your message..." />
+                        <button class="send-message"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                `;
+                
+                document.body.appendChild(chatInterface);
+                
+                // Add event listeners for chat interface
+                const closeChat = document.querySelector('.close-chat');
+                closeChat.addEventListener('click', function() {
+                    document.body.removeChild(chatInterface);
+                });
+                
+                const sendMessage = document.querySelector('.send-message');
+                const chatInput = document.querySelector('.chat-input input');
+                
+                sendMessage.addEventListener('click', function() {
+                    sendChatMessage(chatInput.value);
+                });
+                
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendChatMessage(chatInput.value);
+                    }
+                });
+                
+                function sendChatMessage(text) {
+                    if (!text.trim()) return;
+                    
+                    const chatMessages = document.querySelector('.chat-messages');
+                    const messageElement = document.createElement('div');
+                    messageElement.className = 'message user';
+                    messageElement.innerHTML = `
+                        <div class="message-content">
+                            <p>${text}</p>
+                            <span class="message-time">${getCurrentTime()}</span>
+                        </div>
+                    `;
+                    
+                    chatMessages.appendChild(messageElement);
+                    chatInput.value = '';
+                    
+                    // Auto response after a delay
+                    setTimeout(() => {
+                        const responseElement = document.createElement('div');
+                        responseElement.className = 'message agent';
+                        responseElement.innerHTML = `
+                            <div class="message-content">
+                                <p>Thank you for your message. Our team will assist you shortly.</p>
+                                <span class="message-time">${getCurrentTime()}</span>
+                            </div>
+                        `;
+                        
+                        chatMessages.appendChild(responseElement);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
+                    
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }, 500);
+        });
     }
     
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `
-      <div class="toast-header">
-        <div class="toast-title">${title}</div>
-        <button class="toast-close">&times;</button>
-      </div>
-      <div class="toast-body">${message}</div>
-    `;
-    
-    // Add to container
-    toastContainer.appendChild(toast);
-    
-    // Add close button functionality
-    const closeBtn = toast.querySelector('.toast-close');
-    closeBtn.addEventListener('click', () => {
-      toast.style.animation = 'slideOut 0.3s ease forwards';
-      setTimeout(() => {
-        toast.remove();
-      }, 300);
-    });
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-      if (toast.parentNode) {
-        toast.style.animation = 'slideOut 0.3s ease forwards';
-        setTimeout(() => {
-          toast.remove();
-        }, 300);
-      }
-    }, 5000);
-  }
-  
-  // Create a simple chat bubble
-  function createChatBubble() {
-    // Create chat bubble if it doesn't exist
-    let chatBubble = document.querySelector('.chat-bubble');
-    
-    if (!chatBubble) {
-      chatBubble = document.createElement('div');
-      chatBubble.className = 'chat-bubble';
-      document.body.appendChild(chatBubble);
-      
-      // Add styles
-      const style = document.createElement('style');
-      style.textContent = `
-        .chat-bubble {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          background-color: white;
-          border-radius: 16px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-          padding: 20px;
-          width: 300px;
-          z-index: 9998;
-          animation: fadeIn 0.3s ease forwards;
-        }
-        .chat-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
-          border-bottom: 1px solid #e2e8f0;
-          padding-bottom: 8px;
-        }
-        .chat-title {
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .chat-close {
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-size: 16px;
-          color: #64748b;
-        }
-        .chat-message {
-          background-color: #f1f5f9;
-          border-radius: 12px;
-          padding: 12px;
-          margin-bottom: 12px;
-        }
-        .chat-input {
-          display: flex;
-          gap: 8px;
-        }
-        .chat-input input {
-          flex: 1;
-          padding: 10px;
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-        }
-        .chat-input button {
-          background-color: var(--meant-600);
-          color: white;
-          border: none;
-          border-radius: 8px;
-          padding: 0 12px;
-          cursor: pointer;
-        }
-        .chat-input button:hover {
-          background-color: var(--meant-700);
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `;
-      document.head.appendChild(style);
-      
-      chatBubble.innerHTML = `
-        <div class="chat-header">
-          <div class="chat-title">
-            <i class="fa-solid fa-comment" style="color: var(--meant-600);"></i>
-            Chat Support
-          </div>
-          <button class="chat-close">&times;</button>
-        </div>
-        <div class="chat-message">
-          <strong>Support Agent:</strong> Hello! How can I help you today with your mental health journey?
-        </div>
-        <div class="chat-input">
-          <input type="text" placeholder="Type your message...">
-          <button><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
-      `;
-      
-      // Add close button functionality
-      const closeBtn = chatBubble.querySelector('.chat-close');
-      closeBtn.addEventListener('click', () => {
-        chatBubble.remove();
-      });
-      
-      // Add simple chat functionality
-      const chatInput = chatBubble.querySelector('input');
-      const sendBtn = chatBubble.querySelector('button');
-      
-      function sendMessage() {
-        if (chatInput.value.trim() === '') return;
-        
-        const messageContainer = document.createElement('div');
-        messageContainer.className = 'chat-message';
-        messageContainer.style.backgroundColor = '#e0f2fe';
-        messageContainer.style.marginLeft = 'auto';
-        messageContainer.style.maxWidth = '80%';
-        messageContainer.style.textAlign = 'right';
-        messageContainer.innerHTML = `
-          <strong>You:</strong> ${chatInput.value}
-        `;
-        
-        // Insert before the chat input
-        chatBubble.insertBefore(messageContainer, chatBubble.querySelector('.chat-input'));
-        
-        // Clear input
-        chatInput.value = '';
-        
-        // Simulate reply after 1 second
-        setTimeout(() => {
-          const replyContainer = document.createElement('div');
-          replyContainer.className = 'chat-message';
-          replyContainer.innerHTML = `
-            <strong>Support Agent:</strong> Thank you for reaching out. One of our specialists will continue this conversation shortly. Is there anything specific you'd like to discuss about mental health support?
-          `;
-          
-          chatBubble.insertBefore(replyContainer, chatBubble.querySelector('.chat-input'));
-          
-          // Scroll to bottom
-          chatBubble.scrollTop = chatBubble.scrollHeight;
-        }, 1000);
-      }
-      
-      sendBtn.addEventListener('click', sendMessage);
-      chatInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          sendMessage();
-        }
-      });
+    // Contact form submission
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+            // Form will be handled by the PHP script, but we can add client-side validation
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+            
+            let isValid = true;
+            
+            // Simple validation
+            if (!nameInput.value.trim()) {
+                highlightInvalidField(nameInput);
+                isValid = false;
+            }
+            
+            if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
+                highlightInvalidField(emailInput);
+                isValid = false;
+            }
+            
+            if (!subjectInput.value.trim()) {
+                highlightInvalidField(subjectInput);
+                isValid = false;
+            }
+            
+            if (!messageInput.value.trim()) {
+                highlightInvalidField(messageInput);
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                event.preventDefault();
+                showToast('Please fill in all required fields correctly.', 'error');
+            }
+        });
     }
-  }
+    
+    // Check URL parameters for form submission status
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const message = urlParams.get('message');
+    
+    if (status && message) {
+        showToast(message, status);
+        
+        // Remove parameters from URL
+        const url = new URL(window.location);
+        url.searchParams.delete('status');
+        url.searchParams.delete('message');
+        window.history.replaceState({}, '', url);
+    }
+    
+    // Helper functions
+    function highlightInvalidField(field) {
+        field.classList.add('invalid');
+        
+        field.addEventListener('input', function() {
+            field.classList.remove('invalid');
+        }, { once: true });
+    }
+    
+    function isValidEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+    
+    function getCurrentTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        return `${hours}:${minutes} ${ampm}`;
+    }
 });
+
+// Toast notification function
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.querySelector('.toast-message');
+    const toastIcon = document.querySelector('.toast-icon');
+    
+    // Set message
+    toastMessage.textContent = message;
+    
+    // Set appropriate icon based on type
+    if (type === 'error') {
+        toast.classList.add('error');
+        toastIcon.classList.remove('fa-check-circle');
+        toastIcon.classList.add('fa-exclamation-circle');
+    } else {
+        toast.classList.remove('error');
+        toastIcon.classList.remove('fa-exclamation-circle');
+        toastIcon.classList.add('fa-check-circle');
+    }
+    
+    // Show toast
+    toast.classList.add('show');
+    
+    // Hide toast after 5 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 5000);
+}

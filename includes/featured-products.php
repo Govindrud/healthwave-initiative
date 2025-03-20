@@ -11,24 +11,24 @@ $fallbackProducts = [
     [
         'id' => 1,
         'name' => 'Weighted Blanket',
-        'description' => 'Experience deep relaxation with our premium weighted blanket designed to reduce anxiety and improve sleep quality.',
+        'description' => 'Experience deep relaxation with our premium weighted blanket designed to reduce anxiety and improve sleep quality. Made with ultra-soft, breathable fabric and evenly distributed weight.',
         'price' => 89.99,
         'image' => 'images/products/weighted-blanket.jpg',
         'category' => 'sleep'
     ],
     [
         'id' => 2,
-        'name' => 'Meditation Cushion',
-        'description' => 'Enhance your meditation practice with our ergonomic cushion designed for comfort and proper posture.',
-        'price' => 49.99,
+        'name' => 'Meditation Cushion Set',
+        'description' => 'Enhance your meditation practice with our ergonomic cushion set designed for comfort and proper posture. Includes matching zabuton mat for complete comfort during longer sessions.',
+        'price' => 59.99,
         'image' => 'images/products/meditation-cushion.jpg',
         'category' => 'meditation'
     ],
     [
         'id' => 3,
-        'name' => 'Anxiety Relief Stones',
-        'description' => 'Smooth worry stones made from natural materials to help with grounding and anxiety relief during stressful moments.',
-        'price' => 24.99,
+        'name' => 'Anxiety Relief Stone Kit',
+        'description' => 'Our handcrafted worry stones are made from natural materials to help with grounding and anxiety relief. Set includes 5 different stones in a beautiful wooden box.',
+        'price' => 34.99,
         'image' => 'images/products/anxiety-stones.jpg',
         'category' => 'anxiety'
     ]
@@ -85,9 +85,9 @@ foreach ($products as $product) {
     }
     
     // Output the product card HTML
-    echo '<div class="product-card">';
+    echo '<div class="product-card" data-category="' . $category . '">';
     echo '  <div class="product-image">';
-    echo '    <img src="' . $image . '" alt="' . $name . '" />';
+    echo '    <img src="' . $image . '" alt="' . $name . '" loading="lazy" />';
     echo '    <div class="product-category">' . ucfirst($category) . '</div>';
     echo '  </div>';
     echo '  <h3>' . $name . '</h3>';

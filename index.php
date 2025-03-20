@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -170,22 +169,23 @@
               </div>
               <div class="map-container">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.3059353029!2d-74.25986548248684!3d40.69714941512199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1610642512123!5m2!1sen!2s"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.0926253167197!2d73.76252347498663!3d18.48428758274636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bfc85d0cd699%3A0x45d6f19dd7261bb9!2sBhugaon%2C%20Pune%2C%20Maharashtra%20411042!5e0!3m2!1sen!2sin!4v1698338226587!5m2!1sen!2sin"
                   style="border:0;" 
                   allowfullscreen="" 
                   loading="lazy" 
                   referrerpolicy="no-referrer-when-downgrade"
-                  title="MeantToHelp Office Location">
+                  title="TechD Office Location">
                 </iframe>
               </div>
               <div class="location-details">
                 <i class="fa-solid fa-location-dot"></i>
                 <div>
-                  <h4>MeantToHelp Headquarters</h4>
+                  <h4>TechD Headquarters</h4>
                   <p>
-                    350 Fifth Avenue<br />
-                    New York, NY 10118<br />
-                    United States
+                    TechD, Bhugaon<br />
+                    Near Chandni Chowk<br />
+                    Pune, Maharashtra<br />
+                    India - 411042
                   </p>
                 </div>
               </div>
@@ -212,7 +212,7 @@
                   <label for="message">Message</label>
                   <textarea id="message" name="message" placeholder="Please share your questions or feedback..." rows="5" required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">
+                <button type="submit" class="submit-btn pulse-animation">
                   <i class="fa-solid fa-paper-plane"></i>
                   Send Message
                 </button>
@@ -276,6 +276,15 @@
         </div>
       </div>
     </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification">
+      <div class="toast-content">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <div class="toast-message">Message sent successfully!</div>
+      </div>
+      <div class="toast-progress"></div>
+    </div>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
