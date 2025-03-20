@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Brain, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface Solution {
   id: number;
@@ -116,26 +117,32 @@ const BusinessSolutions = () => {
               </div>
             )}
             
-            <Button 
-              variant="ghost" 
-              className="p-0 h-auto text-meant-700 hover:text-meant-800 hover:bg-transparent group"
+            <Link 
+              to={`/services#${solution.title.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              Learn more
-              <ArrowRight 
-                size={16} 
-                className="ml-1 transition-transform group-hover:translate-x-1" 
-              />
-            </Button>
+              <Button 
+                variant="ghost" 
+                className="p-0 h-auto text-meant-700 hover:text-meant-800 hover:bg-transparent group"
+              >
+                Learn more
+                <ArrowRight 
+                  size={16} 
+                  className="ml-1 transition-transform group-hover:translate-x-1" 
+                />
+              </Button>
+            </Link>
           </motion.div>
         ))}
       </div>
 
       <div className="text-center mt-12">
-        <Button 
-          className="rounded-full bg-meant-600 hover:bg-meant-700 text-white px-8"
-        >
-          View All Solutions
-        </Button>
+        <Link to="/services">
+          <Button 
+            className="rounded-full bg-meant-600 hover:bg-meant-700 text-white px-8"
+          >
+            View All Solutions
+          </Button>
+        </Link>
       </div>
     </section>
   );

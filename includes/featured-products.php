@@ -93,7 +93,10 @@ foreach ($products as $product) {
     echo '  <h3>' . $name . '</h3>';
     echo '  <p>' . $description . '</p>';
     echo '  <div class="product-price">$' . number_format($price, 2) . '</div>';
-    echo '  <a href="product-detail.php?id=' . $id . '" class="view-product-btn">View Details</a>';
+    echo '  <div class="product-actions">';
+    echo '    <a href="product-detail.php?id=' . $id . '" class="view-product-btn">View Details</a>';
+    echo '    <a href="cart.php?action=add&id=' . $id . '" class="add-to-cart-btn">Add to Cart</a>';
+    echo '  </div>';
     echo '</div>';
 }
 ?>

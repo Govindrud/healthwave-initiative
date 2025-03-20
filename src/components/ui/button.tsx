@@ -20,6 +20,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         gradient: "relative overflow-hidden bg-meant-600 text-white before:absolute before:inset-0 before:-z-10 before:translate-y-full before:bg-gradient-to-r before:from-meant-800 before:to-meant-600 before:transition-transform hover:before:translate-y-0",
+        success: "bg-green-600 text-white hover:bg-green-700",
+        meant: "bg-meant-600 hover:bg-meant-700 text-white rounded-md hover:shadow-md transition-all",
       },
       size: {
         default: "h-10 px-4 py-2",

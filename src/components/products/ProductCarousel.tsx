@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Product } from "@/types/product";
 import ProductCard from "./ProductCard";
@@ -49,7 +49,24 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         <CarouselContent className="-ml-4">
           {products.map((product) => (
             <CarouselItem key={product.id} className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-              <ProductCard product={product} />
+              <div className="relative flex flex-col h-full">
+                <ProductCard product={product} />
+                <div className="mt-auto pt-3 flex justify-between items-center">
+                  <Link to={`/products/${product.id}`}>
+                    <Button variant="outline" size="sm">View Details</Button>
+                  </Link>
+                  <Link to="/cart">
+                    <Button 
+                      variant="meant" 
+                      size="sm"
+                      className="flex items-center gap-1"
+                    >
+                      <ShoppingCart size={16} />
+                      Add to Cart
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>
