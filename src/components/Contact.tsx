@@ -79,10 +79,10 @@ const Contact = () => {
         <ContactCard 
           icon={Phone} 
           title="Call Us" 
-          description="+1 (555) 123-4567"
+          description="+918329116329"
           action={{ 
             text: "Copy Phone Number", 
-            onClick: () => copyToClipboard("+1 (555) 123-4567", "Phone number copied to clipboard!") 
+            onClick: () => copyToClipboard("+918329116329", "Phone number copied to clipboard!") 
           }}
         />
         <ContactCard 
