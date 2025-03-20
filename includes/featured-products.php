@@ -84,11 +84,11 @@ foreach ($products as $product) {
         $description = substr($description, 0, 97) . '...';
     }
     
-    // Output the product card HTML
+    // Output the product card HTML with enhanced image display
     echo '<div class="product-card" data-category="' . $category . '">';
     echo '  <div class="product-image">';
-    echo '    <img src="' . $image . '" alt="' . $name . '" loading="lazy" />';
-    echo '    <div class="product-category">' . ucfirst($category) . '</div>';
+    echo '    <img src="' . $image . '" alt="' . $name . '" loading="lazy" onerror="this.src=\'images/placeholder.svg\';this.onerror=null;" />';
+    echo '    <div class="product-badge">' . ucfirst($category) . '</div>';
     echo '  </div>';
     echo '  <h3>' . $name . '</h3>';
     echo '  <p>' . $description . '</p>';
