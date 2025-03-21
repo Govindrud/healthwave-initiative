@@ -10,46 +10,20 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/doctors.css">
     
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
 
   <body>
-    <!-- Navigation Bar -->
-    <header class="nav-header">
-      <div class="container">
-        <nav class="navbar">
-          <div class="logo">
-            <a href="index.php">
-              <div class="logo-container">
-                <div class="logo-icon">
-                  <i class="fa-solid fa-brain"></i>
-                  <span class="logo-sparkle logo-sparkle-1"><i class="fa-solid fa-sparkle"></i></span>
-                  <span class="logo-sparkle logo-sparkle-2"><i class="fa-solid fa-sparkle"></i></span>
-                </div>
-                <span class="logo-text">MeantToHelp</span>
-              </div>
-            </a>
-          </div>
-          
-          <button class="mobile-menu-btn" aria-label="Toggle menu">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          
-          <div class="nav-links">
-            <a href="#about" class="nav-link">About</a>
-            <a href="services.php" class="nav-link">Services</a>
-            <a href="products.php" class="nav-link">Products</a>
-            <a href="#contact" class="nav-link">Contact</a>
-            <a href="login.php" class="login-btn">Login</a>
-          </div>
-        </nav>
-      </div>
-    </header>
+    <?php include 'includes/header.php'; ?>
 
     <main>
       <!-- Hero Section -->
@@ -120,6 +94,67 @@
           
           <div class="view-all-container">
             <a href="products.php" class="view-all-btn">View All Products</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Preview Section -->
+      <section class="services-preview-section">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge">Our Services</span>
+            <h2>Comprehensive <span class="gradient-text">Mental Health</span> Support</h2>
+            <p>Discover our range of services designed to support your mental wellness journey.</p>
+          </div>
+          
+          <div class="services-grid">
+            <a href="doctors.php" class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <h3>Consult with Doctors</h3>
+              <p>Connect with experienced psychiatrists and psychologists for professional care.</p>
+            </a>
+            
+            <a href="student-psychologists.php" class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <h3>Student Psychologists</h3>
+              <p>Affordable counseling with supervised psychology students and interns.</p>
+            </a>
+            
+            <a href="webinars.php" class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-laptop"></i>
+              </div>
+              <h3>Mental Health Webinars</h3>
+              <p>Attend live and recorded sessions on various mental health topics.</p>
+            </a>
+            
+            <a href="adventures.php" class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-mountain"></i>
+              </div>
+              <h3>Stress-Free Adventures</h3>
+              <p>Join guided tours and activities designed to reduce stress and anxiety.</p>
+            </a>
+            
+            <a href="games.php" class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-gamepad"></i>
+              </div>
+              <h3>Mental Health Games</h3>
+              <p>Engage with fun activities and games that support mental wellness.</p>
+            </a>
+            
+            <a href="corporate-plans.php" class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-building"></i>
+              </div>
+              <h3>Corporate Plans</h3>
+              <p>Wellness programs and mental health support for organizations.</p>
+            </a>
           </div>
         </div>
       </section>
@@ -223,72 +258,12 @@
       </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-logo">
-            <div class="logo-container">
-              <div class="logo-icon">
-                <i class="fa-solid fa-brain"></i>
-              </div>
-              <span class="logo-text">MeantToHelp</span>
-            </div>
-            <p>Supporting your mental health journey with compassion and care.</p>
-          </div>
-          
-          <div class="footer-links">
-            <div class="footer-column">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="services.php">Services</a></li>
-                <li><a href="products.php">Products</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
-            </div>
-            <div class="footer-column">
-              <h4>Support</h4>
-              <ul>
-                <li><a href="faq.php">FAQ</a></li>
-                <li><a href="privacy.php">Privacy Policy</a></li>
-                <li><a href="terms.php">Terms of Service</a></li>
-                <li><a href="careers.php">Careers</a></li>
-              </ul>
-            </div>
-            <div class="footer-column">
-              <h4>Connect</h4>
-              <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-              </div>
-              <p>Email: support@meanttohelp.com</p>
-              <p>Phone: +918329116329</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>&copy; <?php echo date("Y"); ?> MeantToHelp. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast-notification">
-      <div class="toast-content">
-        <i class="fas fa-check-circle toast-icon"></i>
-        <div class="toast-message">Message sent successfully!</div>
-      </div>
-      <div class="toast-progress"></div>
-    </div>
+    <?php include 'includes/footer.php'; ?>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/contact.js"></script>
+    <script src="js/razorpay.js"></script>
     
     <!-- IMPORTANT: This script tag is required for GPT Engineer functionality. Do not remove. -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
