@@ -19,6 +19,12 @@ import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import Doctors from "./pages/Doctors";
+import StudentPsychologists from "./pages/StudentPsychologists";
+import Webinars from "./pages/Webinars";
+import Adventures from "./pages/Adventures";
+import Games from "./pages/Games";
+import CorporatePlans from "./pages/CorporatePlans";
 
 const queryClient = new QueryClient();
 
@@ -107,6 +113,54 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Cart />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/doctors" 
+          element={
+            <PageTransition>
+              <Doctors />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/student-psychologists" 
+          element={
+            <PageTransition>
+              <StudentPsychologists />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/webinars" 
+          element={
+            <PageTransition>
+              <Webinars />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/adventures" 
+          element={
+            <PageTransition>
+              <Adventures />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/games" 
+          element={
+            <PageTransition>
+              <Games />
+            </PageTransition>
+          } 
+        />
+        <Route 
+          path="/corporate-plans" 
+          element={
+            <PageTransition>
+              <CorporatePlans />
             </PageTransition>
           } 
         />
