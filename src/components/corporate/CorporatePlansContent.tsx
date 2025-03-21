@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { 
@@ -210,7 +209,7 @@ const CorporatePlansContent = () => {
             <CardHeader className="pt-10">
               <CardTitle className="flex justify-between items-center">
                 <span>Growth Plan</span>
-                <Badge variant="meant" className="">
+                <Badge variant="default" className="bg-meant-600 text-white">
                   Mid-sized
                 </Badge>
               </CardTitle>
