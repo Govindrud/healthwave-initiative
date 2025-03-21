@@ -88,6 +88,22 @@
                   </div>
                 </div>
                 
+                <!-- Customer Info Form -->
+                <div class="customer-info-toggle mt-2 mb-2">
+                  <a href="#" class="show-customer-form">+ Add your contact information</a>
+                  <div class="customer-info-form" style="display: none;">
+                    <div class="form-group mt-2 mb-1">
+                      <input type="text" name="customer_name" placeholder="Your Name" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="email" name="customer_email" placeholder="Your Email" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="tel" name="customer_phone" placeholder="Your Phone" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
@@ -124,6 +140,22 @@
                     <button class="time-slot-btn" data-time="09:15 AM">09:15 AM</button>
                     <button class="time-slot-btn" data-time="12:45 PM">12:45 PM</button>
                     <button class="time-slot-btn" data-time="06:30 PM">06:30 PM</button>
+                  </div>
+                </div>
+                
+                <!-- Customer Info Form -->
+                <div class="customer-info-toggle mt-2 mb-2">
+                  <a href="#" class="show-customer-form">+ Add your contact information</a>
+                  <div class="customer-info-form" style="display: none;">
+                    <div class="form-group mt-2 mb-1">
+                      <input type="text" name="customer_name" placeholder="Your Name" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="email" name="customer_email" placeholder="Your Email" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="tel" name="customer_phone" placeholder="Your Phone" class="form-control">
+                    </div>
                   </div>
                 </div>
                 
@@ -166,6 +198,22 @@
                   </div>
                 </div>
                 
+                <!-- Customer Info Form -->
+                <div class="customer-info-toggle mt-2 mb-2">
+                  <a href="#" class="show-customer-form">+ Add your contact information</a>
+                  <div class="customer-info-form" style="display: none;">
+                    <div class="form-group mt-2 mb-1">
+                      <input type="text" name="customer_name" placeholder="Your Name" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="email" name="customer_email" placeholder="Your Email" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="tel" name="customer_phone" placeholder="Your Phone" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
@@ -205,6 +253,22 @@
                   </div>
                 </div>
                 
+                <!-- Customer Info Form -->
+                <div class="customer-info-toggle mt-2 mb-2">
+                  <a href="#" class="show-customer-form">+ Add your contact information</a>
+                  <div class="customer-info-form" style="display: none;">
+                    <div class="form-group mt-2 mb-1">
+                      <input type="text" name="customer_name" placeholder="Your Name" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="email" name="customer_email" placeholder="Your Email" class="form-control">
+                    </div>
+                    <div class="form-group mb-1">
+                      <input type="tel" name="customer_phone" placeholder="Your Phone" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
@@ -230,6 +294,15 @@
     </main>
 
     <?php include 'includes/footer.php'; ?>
+
+    <!-- Toast notification for messages -->
+    <div id="toast" class="toast-notification">
+      <div class="toast-content">
+        <i class="fas fa-info-circle toast-icon"></i>
+        <div class="toast-message">This is a notification message</div>
+        <button class="toast-close">&times;</button>
+      </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
@@ -316,6 +389,25 @@
           });
         });
         
+        // Customer info form toggling
+        const showFormLinks = document.querySelectorAll('.show-customer-form');
+        
+        showFormLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Toggle customer info form
+            const form = this.nextElementSibling;
+            if (form.style.display === 'none' || !form.style.display) {
+              form.style.display = 'block';
+              this.textContent = '- Hide contact information';
+            } else {
+              form.style.display = 'none';
+              this.textContent = '+ Add your contact information';
+            }
+          });
+        });
+        
         // Pagination functionality
         const paginationNumbers = document.querySelectorAll('.pagination-number');
         
@@ -337,6 +429,14 @@
             });
           });
         });
+        
+        // Toast close button
+        const toastCloseBtn = document.querySelector('.toast-close');
+        if (toastCloseBtn) {
+          toastCloseBtn.addEventListener('click', function() {
+            document.getElementById('toast').classList.remove('show');
+          });
+        }
       });
     </script>
   </body>

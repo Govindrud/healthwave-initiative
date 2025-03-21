@@ -10,13 +10,45 @@ document.addEventListener('DOMContentLoaded', function() {
             const amount = this.getAttribute('data-amount');
             const productName = this.getAttribute('data-product');
             const orderId = 'ORD_' + Math.random().toString(36).substring(2, 15);
+            const isConsultation = this.classList.contains('book-btn');
+            const datetime = this.getAttribute('data-datetime') || '';
+            
+            // Collect customer info if this is in a form
+            let customerName = '';
+            let customerEmail = '';
+            let customerPhone = '';
+            
+            // Try to get customer details from the closest form
+            const parentForm = this.closest('form');
+            if (parentForm) {
+                const nameInput = parentForm.querySelector('input[name="name"]');
+                const emailInput = parentForm.querySelector('input[name="email"]');
+                const phoneInput = parentForm.querySelector('input[name="phone"]');
+                
+                customerName = nameInput ? nameInput.value : '';
+                customerEmail = emailInput ? emailInput.value : '';
+                customerPhone = phoneInput ? phoneInput.value : '';
+            }
+            
+            // If it's a consultation without a form, try to get a customer name from the closest input
+            if (isConsultation && !customerName) {
+                // Look for name input in any nearby container
+                const container = this.closest('.doctor-card') || this.closest('.doctors-grid') || document;
+                const nameInput = container.querySelector('input[name="customer_name"]');
+                const emailInput = container.querySelector('input[name="customer_email"]');
+                const phoneInput = container.querySelector('input[name="customer_phone"]');
+                
+                customerName = nameInput ? nameInput.value : '';
+                customerEmail = emailInput ? emailInput.value : '';
+                customerPhone = phoneInput ? phoneInput.value : '';
+            }
             
             // Show payment options modal
-            showPaymentOptions(amount, productName, orderId);
+            showPaymentOptions(amount, productName, orderId, isConsultation ? 'consultation' : 'product', customerName, customerEmail, customerPhone, datetime);
         });
     });
 
-    function showPaymentOptions(amount, productName, orderId) {
+    function showPaymentOptions(amount, productName, orderId, transactionType, customerName, customerEmail, customerPhone, datetime) {
         // Create modal for payment options
         const modal = document.createElement('div');
         modal.className = 'payment-modal';
@@ -24,15 +56,39 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalContent = document.createElement('div');
         modalContent.className = 'payment-modal-content';
         
+        // Add customer info collection if not provided
+        let customerInfoHTML = '';
+        if (!customerName || !customerEmail || !customerPhone) {
+            customerInfoHTML = `
+                <div class="customer-info-section mb-4">
+                    <h4 class="mb-2">Your Information</h4>
+                    <div class="form-group mb-2">
+                        <label for="customer_name">Name</label>
+                        <input type="text" id="customer_name" class="form-control" value="${customerName}" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="customer_email">Email</label>
+                        <input type="email" id="customer_email" class="form-control" value="${customerEmail}" placeholder="Your email" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="customer_phone">Phone</label>
+                        <input type="tel" id="customer_phone" class="form-control" value="${customerPhone}" placeholder="Your phone number" required>
+                    </div>
+                </div>
+            `;
+        }
+        
         modalContent.innerHTML = `
             <div class="payment-modal-header">
                 <h3>Choose Payment Method</h3>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="payment-modal-body">
+                ${customerInfoHTML}
                 <div class="payment-summary">
                     <p>${productName}</p>
                     <p class="payment-amount">Amount: ₹${amount}</p>
+                    ${datetime ? `<p class="appointment-time">Scheduled for: ${datetime}</p>` : ''}
                 </div>
                 <div class="payment-options">
                     <button class="payment-option-btn razorpay-option">
@@ -55,20 +111,53 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(modal);
         });
         
+        // Function to collect customer info from modal
+        function getCustomerInfoFromModal() {
+            if (customerInfoHTML) {
+                const nameInput = modal.querySelector('#customer_name');
+                const emailInput = modal.querySelector('#customer_email');
+                const phoneInput = modal.querySelector('#customer_phone');
+                
+                // Validate required fields
+                if (!nameInput.value || !emailInput.value || !phoneInput.value) {
+                    showToast('Please fill in all required fields', 'error');
+                    return null;
+                }
+                
+                return {
+                    name: nameInput.value,
+                    email: emailInput.value,
+                    phone: phoneInput.value
+                };
+            }
+            
+            return {
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone
+            };
+        }
+        
         // Razorpay option event
         modal.querySelector('.razorpay-option').addEventListener('click', function() {
+            const customerInfo = getCustomerInfoFromModal();
+            if (!customerInfo) return;
+            
             document.body.removeChild(modal);
-            initiateRazorpayPayment(amount, productName, orderId);
+            initiateRazorpayPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
         });
         
         // UPI option event
         modal.querySelector('.upi-option').addEventListener('click', function() {
+            const customerInfo = getCustomerInfoFromModal();
+            if (!customerInfo) return;
+            
             document.body.removeChild(modal);
-            showUPIPayment(amount, productName, orderId);
+            showUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
         });
     }
 
-    function initiateRazorpayPayment(amount, productName, orderId) {
+    function initiateRazorpayPayment(amount, productName, orderId, transactionType, customerInfo, datetime) {
         // Razorpay options
         const options = {
             key: 'rzp_test_YOUR_KEY_HERE', // Replace with your Razorpay Key ID
@@ -80,15 +169,16 @@ document.addEventListener('DOMContentLoaded', function() {
             image: '/images/logo.png',
             handler: function(response) {
                 // Handle successful payment
-                verifyPayment(response, amount, productName, orderId, 'Razorpay');
+                verifyPayment(response, amount, productName, orderId, 'Razorpay', transactionType, customerInfo, datetime);
             },
             prefill: {
-                name: '',
-                email: '',
-                contact: ''
+                name: customerInfo.name,
+                email: customerInfo.email,
+                contact: customerInfo.phone
             },
             notes: {
-                product_name: productName
+                product_name: productName,
+                transaction_type: transactionType
             },
             theme: {
                 color: '#0284c7'
@@ -99,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rzp.open();
     }
     
-    function showUPIPayment(amount, productName, orderId) {
+    function showUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime) {
         // Create UPI QR code modal
         const modal = document.createElement('div');
         modal.className = 'payment-modal';
@@ -118,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="payment-summary mb-4">
                     <p>${productName}</p>
                     <p class="payment-amount">Amount: ₹${amount}</p>
+                    ${datetime ? `<p class="appointment-time">Scheduled for: ${datetime}</p>` : ''}
                 </div>
                 <div class="upi-qr-container">
                     <img src="images/upi-qr.png" alt="UPI QR Code" class="upi-qr-image"
@@ -146,11 +237,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(modal);
             // In a real app, you would verify the UPI payment on the server
             // For this demo, we'll simulate a successful payment
-            simulateUPIPayment(amount, productName, orderId);
+            simulateUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
         });
     }
     
-    function simulateUPIPayment(amount, productName, orderId) {
+    function simulateUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime) {
         // Show a loading toast
         showToast('Verifying your payment...', 'info');
         
@@ -163,11 +254,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 razorpay_signature: 'upi_verified'
             };
             
-            verifyPayment(response, amount, productName, orderId, 'UPI');
+            verifyPayment(response, amount, productName, orderId, 'UPI', transactionType, customerInfo, datetime);
         }, 2000);
     }
     
-    function verifyPayment(response, amount, productName, orderId, paymentMethod) {
+    function verifyPayment(response, amount, productName, orderId, paymentMethod, transactionType, customerInfo, datetime) {
         // Send payment verification request to the backend
         fetch('includes/verify-payment.php', {
             method: 'POST',
@@ -181,7 +272,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 amount: amount,
                 product_name: productName,
                 order_id: orderId,
-                payment_method: paymentMethod
+                payment_method: paymentMethod,
+                transaction_type: transactionType,
+                customer_name: customerInfo.name,
+                customer_email: customerInfo.email,
+                customer_phone: customerInfo.phone,
+                datetime: datetime
             })
         })
         .then(response => response.json())
@@ -189,17 +285,19 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 showToast('Payment successful! Thank you for your purchase.', 'success');
                 
-                // Get date and time if available
-                const dateTimeElement = document.querySelector('.doctor-date-time') || 
-                                       document.querySelector('.selected-date-time');
-                let dateTime = 'To be confirmed';
-                if (dateTimeElement) {
-                    dateTime = dateTimeElement.textContent || dateTimeElement.value || 'To be confirmed';
-                }
+                // Prepare URL parameters for redirect
+                const params = new URLSearchParams({
+                    order_id: orderId,
+                    payment_method: paymentMethod,
+                    service: productName,
+                    amount: amount,
+                    datetime: datetime || 'To be confirmed',
+                    transaction_type: transactionType
+                });
                 
                 // Redirect to success page with additional details
                 setTimeout(() => {
-                    window.location.href = `payment-success.php?order_id=${orderId}&payment_method=${paymentMethod}&service=${encodeURIComponent(productName)}&amount=${amount}&datetime=${encodeURIComponent(dateTime)}`;
+                    window.location.href = `payment-success.php?${params.toString()}`;
                 }, 2000);
             } else {
                 showToast('Payment verification failed. Please contact support.', 'error');
