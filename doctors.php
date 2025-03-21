@@ -77,12 +77,23 @@
                 </div>
                 <p class="doctor-experience"><i class="fas fa-briefcase"></i> 15 years experience</p>
                 <p class="doctor-bio">Specializes in anxiety disorders, depression, and ADHD treatment with a compassionate, patient-centered approach.</p>
+                
+                <!-- Available time slots -->
+                <div class="time-slots mt-3 mb-2">
+                  <p class="time-slots-title mb-1"><i class="fas fa-calendar-alt"></i> Available Today:</p>
+                  <div class="time-slots-container">
+                    <button class="time-slot-btn" data-time="10:00 AM">10:00 AM</button>
+                    <button class="time-slot-btn" data-time="02:30 PM">02:30 PM</button>
+                    <button class="time-slot-btn" data-time="05:15 PM">05:15 PM</button>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
                     <span class="fee-amount">₹1,500</span>
                   </div>
-                  <button class="book-btn razorpay-payment-btn" data-amount="1500" data-product="Consultation with Dr. Sarah Johnson">Book Appointment</button>
+                  <button class="book-btn payment-btn" data-amount="1500" data-product="Consultation with Dr. Sarah Johnson">Book Appointment</button>
                 </div>
               </div>
             </div>
@@ -105,12 +116,23 @@
                 </div>
                 <p class="doctor-experience"><i class="fas fa-briefcase"></i> 8 years experience</p>
                 <p class="doctor-bio">Expert in cognitive behavioral therapy for stress, anxiety management, and trauma recovery.</p>
+                
+                <!-- Available time slots -->
+                <div class="time-slots mt-3 mb-2">
+                  <p class="time-slots-title mb-1"><i class="fas fa-calendar-alt"></i> Available Today:</p>
+                  <div class="time-slots-container">
+                    <button class="time-slot-btn" data-time="09:15 AM">09:15 AM</button>
+                    <button class="time-slot-btn" data-time="12:45 PM">12:45 PM</button>
+                    <button class="time-slot-btn" data-time="06:30 PM">06:30 PM</button>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
                     <span class="fee-amount">₹1,300</span>
                   </div>
-                  <button class="book-btn razorpay-payment-btn" data-amount="1300" data-product="Consultation with Dr. Michael Chen">Book Appointment</button>
+                  <button class="book-btn payment-btn" data-amount="1300" data-product="Consultation with Dr. Michael Chen">Book Appointment</button>
                 </div>
               </div>
             </div>
@@ -133,12 +155,23 @@
                 </div>
                 <p class="doctor-experience"><i class="fas fa-briefcase"></i> 12 years experience</p>
                 <p class="doctor-bio">Specializes in family dynamics, relationship counseling, and conflict resolution with a holistic approach.</p>
+                
+                <!-- Available time slots -->
+                <div class="time-slots mt-3 mb-2">
+                  <p class="time-slots-title mb-1"><i class="fas fa-calendar-alt"></i> Available Today:</p>
+                  <div class="time-slots-container">
+                    <button class="time-slot-btn" data-time="11:30 AM">11:30 AM</button>
+                    <button class="time-slot-btn" data-time="03:45 PM">03:45 PM</button>
+                    <button class="time-slot-btn" data-time="07:00 PM">07:00 PM</button>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
                     <span class="fee-amount">₹1,400</span>
                   </div>
-                  <button class="book-btn razorpay-payment-btn" data-amount="1400" data-product="Consultation with Dr. Amelia Rodriguez">Book Appointment</button>
+                  <button class="book-btn payment-btn" data-amount="1400" data-product="Consultation with Dr. Amelia Rodriguez">Book Appointment</button>
                 </div>
               </div>
             </div>
@@ -161,12 +194,23 @@
                 </div>
                 <p class="doctor-experience"><i class="fas fa-briefcase"></i> 5 years experience</p>
                 <p class="doctor-bio">Focused on youth mental health, self-esteem issues, and academic stress management.</p>
+                
+                <!-- Available time slots -->
+                <div class="time-slots mt-3 mb-2">
+                  <p class="time-slots-title mb-1"><i class="fas fa-calendar-alt"></i> Available Today:</p>
+                  <div class="time-slots-container">
+                    <button class="time-slot-btn" data-time="08:30 AM">08:30 AM</button>
+                    <button class="time-slot-btn" data-time="01:00 PM">01:00 PM</button>
+                    <button class="time-slot-btn" data-time="04:30 PM">04:30 PM</button>
+                  </div>
+                </div>
+                
                 <div class="doctor-consultation">
                   <div class="consultation-fee">
                     <span class="fee-label">Consultation Fee:</span>
                     <span class="fee-amount">₹1,000</span>
                   </div>
-                  <button class="book-btn razorpay-payment-btn" data-amount="1000" data-product="Consultation with Dr. James Wilson">Book Appointment</button>
+                  <button class="book-btn payment-btn" data-amount="1000" data-product="Consultation with Dr. James Wilson">Book Appointment</button>
                 </div>
               </div>
             </div>
@@ -238,6 +282,40 @@
         experienceFilter.addEventListener('change', filterDoctors);
         searchInput.addEventListener('input', filterDoctors);
         
+        // Time slot selection
+        const timeSlotButtons = document.querySelectorAll('.time-slot-btn');
+        
+        timeSlotButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Remove active class from all buttons in this doctor card
+            const parentCard = this.closest('.doctor-card');
+            parentCard.querySelectorAll('.time-slot-btn').forEach(btn => {
+              btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Store selected time in data attribute for payment processing
+            const bookButton = parentCard.querySelector('.book-btn');
+            const doctorName = parentCard.querySelector('h3').textContent;
+            const selectedTime = this.getAttribute('data-time');
+            const today = new Date().toLocaleDateString();
+            
+            bookButton.setAttribute('data-datetime', `${today} at ${selectedTime}`);
+            
+            // Create or update hidden span for selected date/time
+            let dateTimeElement = parentCard.querySelector('.selected-date-time');
+            if (!dateTimeElement) {
+              dateTimeElement = document.createElement('span');
+              dateTimeElement.className = 'selected-date-time';
+              dateTimeElement.style.display = 'none';
+              parentCard.appendChild(dateTimeElement);
+            }
+            dateTimeElement.textContent = `${today} at ${selectedTime}`;
+          });
+        });
+        
         // Pagination functionality
         const paginationNumbers = document.querySelectorAll('.pagination-number');
         
@@ -261,8 +339,5 @@
         });
       });
     </script>
-    
-    <!-- IMPORTANT: This script tag is required for GPT Engineer functionality. Do not remove. -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </body>
 </html>

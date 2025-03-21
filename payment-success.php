@@ -29,15 +29,40 @@
               <i class="fa-solid fa-circle-check text-green-500 text-7xl"></i>
             </div>
             <h1 class="my-6 text-3xl font-bold">Payment Successful!</h1>
-            <p class="text-lg mb-8">
+            <p class="text-lg mb-4">
               Thank you for your purchase. Your order has been confirmed and your receipt has been sent to your email.
             </p>
             
             <?php
-              // Get order ID from URL parameter
+              // Get order ID and payment method from URL parameters
               $order_id = isset($_GET['order_id']) ? htmlspecialchars($_GET['order_id']) : 'Unknown';
-              echo '<p class="text-md mb-8">Order Reference: <span class="font-semibold">' . $order_id . '</span></p>';
+              $payment_method = isset($_GET['payment_method']) ? htmlspecialchars($_GET['payment_method']) : 'Online';
+              
+              echo '<p class="text-md mb-2">Order Reference: <span class="font-semibold">' . $order_id . '</span></p>';
+              echo '<p class="text-md mb-8">Payment Method: <span class="font-semibold">' . $payment_method . '</span></p>';
             ?>
+            
+            <div class="appointment-details mb-8 p-4 bg-gray-50 rounded-lg mx-auto max-w-md">
+              <h3 class="text-xl font-semibold mb-3">Appointment Details</h3>
+              <div class="flex justify-between mb-2">
+                <span>Service:</span>
+                <span class="font-medium">
+                  <?php echo isset($_GET['service']) ? htmlspecialchars($_GET['service']) : 'Consultation'; ?>
+                </span>
+              </div>
+              <div class="flex justify-between mb-2">
+                <span>Date & Time:</span>
+                <span class="font-medium">
+                  <?php echo isset($_GET['datetime']) ? htmlspecialchars($_GET['datetime']) : 'To be confirmed'; ?>
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <span>Amount Paid:</span>
+                <span class="font-medium">
+                  ₹<?php echo isset($_GET['amount']) ? htmlspecialchars($_GET['amount']) : '0'; ?>
+                </span>
+              </div>
+            </div>
             
             <div class="success-actions mt-8">
               <a href="index.php" class="primary-btn">Return to Home</a>
@@ -52,8 +77,5 @@
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
-    
-    <!-- IMPORTANT: This script tag is required for GPT Engineer functionality. Do not remove. -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </body>
 </html>
