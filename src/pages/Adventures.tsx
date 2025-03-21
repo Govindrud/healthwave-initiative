@@ -1,9 +1,7 @@
 
 import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import AdventureListing from "@/components/adventures/AdventureListing";
-import PageTransition from "@/components/PageTransition";
+import MainLayout from "@/components/layouts/MainLayout";
 
 const Adventures = () => {
   useEffect(() => {
@@ -11,15 +9,9 @@ const Adventures = () => {
   }, []);
 
   return (
-    <PageTransition>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow pt-24">
-          <AdventureListing />
-        </main>
-        <Footer />
-      </div>
-    </PageTransition>
+    <MainLayout title="Stress-Free Adventures">
+      <AdventureListing />
+    </MainLayout>
   );
 };
 

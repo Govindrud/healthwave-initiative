@@ -1,9 +1,7 @@
 
 import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import WebinarListing from "@/components/webinars/WebinarListing";
-import PageTransition from "@/components/PageTransition";
+import MainLayout from "@/components/layouts/MainLayout";
 
 const Webinars = () => {
   useEffect(() => {
@@ -11,15 +9,9 @@ const Webinars = () => {
   }, []);
 
   return (
-    <PageTransition>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow pt-24">
-          <WebinarListing />
-        </main>
-        <Footer />
-      </div>
-    </PageTransition>
+    <MainLayout title="Mental Health Webinars">
+      <WebinarListing />
+    </MainLayout>
   );
 };
 

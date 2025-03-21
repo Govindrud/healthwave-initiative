@@ -1,9 +1,7 @@
 
 import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import DoctorListing from "@/components/doctors/DoctorListing";
-import PageTransition from "@/components/PageTransition";
+import MainLayout from "@/components/layouts/MainLayout";
 
 const Doctors = () => {
   useEffect(() => {
@@ -11,15 +9,9 @@ const Doctors = () => {
   }, []);
 
   return (
-    <PageTransition>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow pt-24">
-          <DoctorListing />
-        </main>
-        <Footer />
-      </div>
-    </PageTransition>
+    <MainLayout title="Consult with Doctors">
+      <DoctorListing />
+    </MainLayout>
   );
 };
 
