@@ -61,8 +61,8 @@ const CorporatePlansContent = () => {
         <div className="flex flex-wrap justify-center gap-4">
           <Button 
             size="lg" 
-            variant="meant"
-            className="rounded-full px-8"
+            variant="default"
+            className="rounded-full px-8 bg-meant-600 hover:bg-meant-700 text-white"
             onClick={() => openContactDialog()}
           >
             Request a Consultation
