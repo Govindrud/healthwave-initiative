@@ -16,17 +16,10 @@ class HomeController extends Controller {
     }
     
     private function getFeaturedProducts() {
-        $products = [];
-        $sql = "SELECT * FROM products WHERE featured = 1 LIMIT 4";
-        $result = $this->conn->query($sql);
-        
-        if ($result && $result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $products[] = $row;
-            }
-        }
-        
-        return $products;
+        // Use the ProductModel to get the featured products
+        require_once 'models/ProductModel.php';
+        $productModel = new ProductModel($this->conn);
+        return $productModel->getFeaturedProducts(4);
     }
 }
 ?>
