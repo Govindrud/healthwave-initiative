@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Book Priest Buttons
   const bookPriestButtons = document.querySelectorAll('.book-priest-btn');
   const priestBookingModal = document.getElementById('priest-booking-modal');
-  const priestBookingForm = document.getElementById('priest-booking-form');
   
   bookPriestButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Book Tour Buttons
   const bookTourButtons = document.querySelectorAll('.book-tour-btn');
   const tourBookingModal = document.getElementById('tour-booking-modal');
-  const tourBookingForm = document.getElementById('tour-booking-form');
   
   bookTourButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -186,120 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('tour-participants').addEventListener('change', updateTourBookingSummary);
   document.getElementById('tour-date').addEventListener('change', updateTourBookingSummary);
   
-  // Handle booking form submissions
-  priestBookingForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const priestId = document.getElementById('priest-id').value;
-    const priestName = document.getElementById('priest-name').value;
-    const priestRate = document.getElementById('priest-rate').value;
-    const customerName = document.getElementById('priest-customer-name').value;
-    const customerEmail = document.getElementById('priest-customer-email').value;
-    const customerPhone = document.getElementById('priest-customer-phone').value;
-    const bookingDate = document.getElementById('priest-booking-date').value;
-    const bookingTime = document.getElementById('priest-booking-time').value;
-    const duration = document.getElementById('priest-consultation-duration').value;
-    const consultationMode = document.querySelector('input[name="consultation_mode"]:checked').value;
-    const notes = document.getElementById('priest-booking-notes').value;
-    
-    // Calculate total amount
-    const totalAmount = (parseFloat(priestRate) * parseInt(duration)) / 60;
-    
-    // Format booking datetime
-    const formattedDate = new Date(bookingDate).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    const bookingDatetime = `${formattedDate}, ${bookingTime}`;
-    
-    // Generate order ID
-    const orderId = 'PRIEST_' + Math.random().toString(36).substring(2, 12).toUpperCase();
-    
-    // Create payment data
-    const paymentData = {
-      amount: totalAmount,
-      productName: `Consultation with ${priestName}`,
-      orderId: orderId,
-      customerName: customerName,
-      customerEmail: customerEmail,
-      customerPhone: customerPhone,
-      datetime: bookingDatetime,
-      duration: duration,
-      consultationMode: consultationMode,
-      notes: notes,
-      priestId: priestId
-    };
-    
-    // Close the modal
-    priestBookingModal.style.display = 'none';
-    
-    // Initiate payment using Razorpay
-    initiatePayment(paymentData, 'consultation');
-  });
-  
-  tourBookingForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const tourId = document.getElementById('tour-id').value;
-    const tourName = document.getElementById('tour-name').value;
-    const tourPrice = document.getElementById('tour-price').value;
-    const customerName = document.getElementById('tour-customer-name').value;
-    const customerEmail = document.getElementById('tour-customer-email').value;
-    const customerPhone = document.getElementById('tour-customer-phone').value;
-    const tourDate = document.getElementById('tour-date').value;
-    const participants = document.getElementById('tour-participants').value;
-    const notes = document.getElementById('tour-booking-notes').value;
-    
-    // Calculate total amount
-    const totalAmount = parseFloat(tourPrice) * parseInt(participants);
-    
-    // Format booking date
-    const formattedDate = new Date(tourDate).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    
-    // Generate order ID
-    const orderId = 'TOUR_' + Math.random().toString(36).substring(2, 12).toUpperCase();
-    
-    // Create payment data
-    const paymentData = {
-      amount: totalAmount,
-      productName: tourName,
-      orderId: orderId,
-      customerName: customerName,
-      customerEmail: customerEmail,
-      customerPhone: customerPhone,
-      datetime: formattedDate,
-      participants: participants,
-      notes: notes,
-      tourId: tourId
-    };
-    
-    // Close the modal
-    tourBookingModal.style.display = 'none';
-    
-    // Initiate payment using Razorpay
-    initiatePayment(paymentData, 'tour');
-  });
-  
-  // Function to initiate payment
-  function initiatePayment(paymentData, serviceType) {
-    // Show payment options modal from razorpay.js
-    showPaymentOptions(
-      paymentData.amount, 
-      paymentData.productName, 
-      paymentData.orderId, 
-      'consultation', 
-      paymentData.customerName, 
-      paymentData.customerEmail, 
-      paymentData.customerPhone, 
-      paymentData.datetime,
-      paymentData);
-  }
-  
   // Testimonials Slider
   let currentSlide = 0;
   const slides = document.querySelectorAll('.testimonial-slide');
@@ -320,57 +204,4 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Auto-advance slides every 5 seconds
   setInterval(nextSlide, 5000);
-  
-  // Helper function to show toast messages (Using existing toast from Razorpay JS)
-  window.showToast = function(message, type = 'info') {
-    const toast = document.getElementById('toast');
-    const toastMessage = document.querySelector('.toast-message');
-    const toastIcon = document.querySelector('.toast-icon');
-    
-    if (toast && toastMessage) {
-      // Set message
-      toastMessage.textContent = message;
-      
-      // Set icon based on type
-      if (toastIcon) {
-        toastIcon.className = 'fas toast-icon';
-        switch(type) {
-          case 'success':
-            toastIcon.classList.add('fa-check-circle');
-            toast.className = 'toast-notification toast-success';
-            break;
-          case 'error':
-            toastIcon.classList.add('fa-exclamation-circle');
-            toast.className = 'toast-notification toast-error';
-            break;
-          case 'warning':
-            toastIcon.classList.add('fa-exclamation-triangle');
-            toast.className = 'toast-notification toast-warning';
-            break;
-          default:
-            toastIcon.classList.add('fa-info-circle');
-            toast.className = 'toast-notification toast-info';
-        }
-      }
-      
-      // Show toast
-      toast.classList.add('show');
-      
-      // Auto hide after 5 seconds
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 5000);
-    }
-  };
 });
-
-// Function to handle payment options (extending the functionality in razorpay.js)
-function showPaymentOptions(amount, productName, orderId, transactionType, customerName, customerEmail, customerPhone, datetime, additionalData) {
-  // Check if the function exists in razorpay.js
-  if (typeof window.showPaymentOptions === 'function') {
-    // Call the function from razorpay.js
-    window.showPaymentOptions(amount, productName, orderId, transactionType, customerName, customerEmail, customerPhone, datetime);
-  } else {
-    console.error('showPaymentOptions function not found. Make sure razorpay.js is loaded correctly.');
-  }
-}

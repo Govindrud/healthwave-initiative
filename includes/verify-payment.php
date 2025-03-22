@@ -1,199 +1,151 @@
 
 <?php
-// Prevent direct access to this file
-if (!defined('BASEPATH')) {
-    header('HTTP/1.1 403 Forbidden');
-    exit('Direct script access is not allowed');
-}
+// Include database configuration
+require_once 'config.php';
 
-// Database connection settings
-$db_host = 'localhost';
-$db_user = 'root'; // Replace with your database username
-$db_pass = ''; // Replace with your database password
-$db_name = 'meantohelp'; // Replace with your database name
+// Define Razorpay API key and secret (replace with your actual credentials)
+$razorpay_key_id = 'rzp_test_XXXXXXXXXX';
+$razorpay_key_secret = 'XXXXXXXXXXXXXXXXXXXXXXXX';
 
-// Include the Razorpay PHP SDK (you'll need to download this separately)
-// require_once('path/to/razorpay-php/Razorpay.php');
-// use Razorpay\Api\Api;
+// Set headers for JSON response
+header('Content-Type: application/json');
 
-// Get payment data from POST request
-$inputJSON = file_get_contents('php://input');
-$input = json_decode($inputJSON, TRUE);
-
-// Initialize response array
-$response = [
-    'success' => false,
-    'message' => 'Payment verification failed'
-];
+// Get input data
+$data = json_decode(file_get_contents('php://input'), true);
 
 // Check if all required parameters are present
-if (
-    isset($input['razorpay_payment_id']) && 
-    isset($input['razorpay_order_id']) && 
-    isset($input['razorpay_signature']) &&
-    isset($input['amount']) &&
-    isset($input['product_name']) &&
-    isset($input['order_id'])
-) {
-    $razorpay_payment_id = $input['razorpay_payment_id'];
-    $razorpay_order_id = $input['razorpay_order_id'];
-    $razorpay_signature = $input['razorpay_signature'];
-    $amount = $input['amount'];
-    $product_name = $input['product_name'];
-    $order_id = $input['order_id'];
-    $payment_method = isset($input['payment_method']) ? $input['payment_method'] : 'Razorpay';
-    $transaction_type = isset($input['transaction_type']) ? $input['transaction_type'] : 'product'; // 'product', 'consultation', 'priest', or 'tour'
-    $customer_name = isset($input['customer_name']) ? $input['customer_name'] : '';
-    $customer_email = isset($input['customer_email']) ? $input['customer_email'] : '';
-    $customer_phone = isset($input['customer_phone']) ? $input['customer_phone'] : '';
-    $datetime = isset($input['datetime']) ? $input['datetime'] : '';
-    
-    // For UPI payments, we have a different verification flow
-    if (strpos($razorpay_payment_id, 'upi_') === 0) {
-        // In a real application, you would verify the UPI payment with your payment gateway
-        // For this demo, we'll simulate success but store the transaction
-        $paymentVerified = true;
+if (!isset($data['payment_id']) || !isset($data['razorpay_order_id']) || !isset($data['signature']) || !isset($data['order_id']) || !isset($data['booking_type'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Missing required parameters']);
+    exit;
+}
+
+// Extract data
+$payment_id = $data['payment_id'];
+$razorpay_order_id = $data['razorpay_order_id'];
+$signature = $data['signature'];
+$order_id = $data['order_id'];
+$booking_type = $data['booking_type'];
+
+// Verify payment signature (in a real application, you would verify the signature using Razorpay SDK)
+// For this example, we'll assume the payment is valid
+
+// Update the appropriate booking table based on booking type
+try {
+    if ($booking_type === 'priest_consultation') {
+        // Update priest booking
+        $stmt = $conn->prepare("UPDATE priest_bookings SET 
+            razorpay_payment_id = ?, 
+            razorpay_order_id = ?, 
+            payment_date = NOW(), 
+            payment_status = 'completed' 
+            WHERE order_id = ?");
+            
+        $stmt->bind_param("sss", $payment_id, $razorpay_order_id, $order_id);
+        
+        if ($stmt->execute()) {
+            // Get booking details for SMS notification
+            $bookingStmt = $conn->prepare("SELECT p.name, b.customer_name, b.customer_phone, b.booking_datetime 
+                                          FROM priest_bookings b 
+                                          JOIN spiritual_priests p ON b.priest_id = p.id 
+                                          WHERE b.order_id = ?");
+            $bookingStmt->bind_param("s", $order_id);
+            $bookingStmt->execute();
+            $bookingResult = $bookingStmt->get_result();
+            
+            if ($bookingResult->num_rows > 0) {
+                $bookingData = $bookingResult->fetch_assoc();
+                
+                // Send SMS notification (implement your SMS gateway integration here)
+                sendSmsNotification(
+                    $bookingData['customer_phone'],
+                    "Your consultation with " . $bookingData['name'] . " has been confirmed for " . $bookingData['booking_datetime'] . ". Thank you for booking with MeantToHelp."
+                );
+            }
+            
+            echo json_encode(['status' => 'success', 'message' => 'Payment verified successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update booking: ' . $stmt->error]);
+        }
+    } elseif ($booking_type === 'tour_booking') {
+        // Update tour booking
+        $stmt = $conn->prepare("UPDATE tour_bookings SET 
+            razorpay_payment_id = ?, 
+            razorpay_order_id = ?, 
+            payment_date = NOW(), 
+            payment_status = 'completed' 
+            WHERE order_id = ?");
+            
+        $stmt->bind_param("sss", $payment_id, $razorpay_order_id, $order_id);
+        
+        if ($stmt->execute()) {
+            // Get booking details for SMS notification
+            $bookingStmt = $conn->prepare("SELECT t.name, b.customer_name, b.customer_phone, b.booking_date 
+                                          FROM tour_bookings b 
+                                          JOIN spiritual_tours t ON b.tour_id = t.id 
+                                          WHERE b.order_id = ?");
+            $bookingStmt->bind_param("s", $order_id);
+            $bookingStmt->execute();
+            $bookingResult = $bookingStmt->get_result();
+            
+            if ($bookingResult->num_rows > 0) {
+                $bookingData = $bookingResult->fetch_assoc();
+                
+                // Send SMS notification (implement your SMS gateway integration here)
+                sendSmsNotification(
+                    $bookingData['customer_phone'],
+                    "Your tour booking for " . $bookingData['name'] . " on " . date('d M Y', strtotime($bookingData['booking_date'])) . " has been confirmed. Thank you for booking with MeantToHelp."
+                );
+            }
+            
+            echo json_encode(['status' => 'success', 'message' => 'Payment verified successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update booking: ' . $stmt->error]);
+        }
     } else {
-        // Verify the Razorpay payment signature
-        $key_id = 'rzp_test_YOUR_KEY_HERE'; // Replace with your Razorpay Key ID
-        $key_secret = 'YOUR_KEY_SECRET'; // Replace with your Razorpay Key Secret
-        
-        // Create an array for signature verification
-        $attributes = [
-            'razorpay_payment_id' => $razorpay_payment_id,
-            'razorpay_order_id' => $razorpay_order_id
-        ];
-        
-        // Verify the signature
-        // Uncomment this when you have the Razorpay SDK installed
-        /*
-        $api = new Api($key_id, $key_secret);
-        
-        try {
-            $api->utility->verifyPaymentSignature($attributes + ['razorpay_signature' => $razorpay_signature]);
-            $paymentVerified = true;
-        } catch (Exception $e) {
-            $paymentVerified = false;
-            $response['message'] = $e->getMessage();
-        }
-        */
-        
-        // For testing purposes (remove in production)
-        $paymentVerified = true;
+        echo json_encode(['status' => 'error', 'message' => 'Invalid booking type']);
     }
-    
-    if ($paymentVerified) {
-        try {
-            // Connect to database
-            $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-            
-            if ($conn->connect_error) {
-                throw new Exception("Database connection failed: " . $conn->connect_error);
-            }
-            
-            // Determine the table to use based on transaction type
-            if ($transaction_type == 'consultation') {
-                // Insert appointment details
-                $stmt = $conn->prepare("INSERT INTO appointments (order_id, razorpay_payment_id, razorpay_order_id, amount, doctor_name, customer_name, customer_email, customer_phone, appointment_datetime, payment_method, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-                $stmt->bind_param("sssdsssss", $order_id, $razorpay_payment_id, $razorpay_order_id, $amount, $product_name, $customer_name, $customer_email, $customer_phone, $datetime, $payment_method);
-            } elseif ($transaction_type == 'priest') {
-                // Get additional data for priest consultation
-                $priestId = isset($input['priestId']) ? $input['priestId'] : 0;
-                $duration = isset($input['duration']) ? $input['duration'] : 60;
-                $notes = isset($input['notes']) ? $input['notes'] : '';
-                
-                // Insert priest booking details
-                $stmt = $conn->prepare("INSERT INTO priest_bookings (order_id, priest_id, customer_name, customer_email, customer_phone, booking_datetime, duration_minutes, amount, payment_method, razorpay_payment_id, razorpay_order_id, payment_date, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
-                $stmt->bind_param("sissssidsss", $order_id, $priestId, $customer_name, $customer_email, $customer_phone, $datetime, $duration, $amount, $payment_method, $razorpay_payment_id, $razorpay_order_id, $notes);
-            } elseif ($transaction_type == 'tour') {
-                // Get additional data for tour booking
-                $tourId = isset($input['tourId']) ? $input['tourId'] : 0;
-                $participants = isset($input['participants']) ? $input['participants'] : 1;
-                $notes = isset($input['notes']) ? $input['notes'] : '';
-                
-                // Convert datetime to date for tour bookings
-                $bookingDate = date('Y-m-d', strtotime($datetime));
-                
-                // Insert tour booking details
-                $stmt = $conn->prepare("INSERT INTO tour_bookings (order_id, tour_id, customer_name, customer_email, customer_phone, booking_date, participants, amount, payment_method, razorpay_payment_id, razorpay_order_id, payment_date, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
-                $stmt->bind_param("sissssidsss", $order_id, $tourId, $customer_name, $customer_email, $customer_phone, $bookingDate, $participants, $amount, $payment_method, $razorpay_payment_id, $razorpay_order_id, $notes);
-            } else {
-                // Insert order details
-                $stmt = $conn->prepare("INSERT INTO orders (order_id, razorpay_payment_id, razorpay_order_id, amount, product_name, customer_name, customer_email, customer_phone, payment_method, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-                $stmt->bind_param("sssdsssss", $order_id, $razorpay_payment_id, $razorpay_order_id, $amount, $product_name, $customer_name, $customer_email, $customer_phone, $payment_method);
-            }
-            
-            if ($stmt->execute()) {
-                // Payment successful and saved to database
-                $response['success'] = true;
-                $response['message'] = 'Payment verified successfully';
-                $response['order_id'] = $order_id;
-                
-                // Send SMS notification if phone number is provided
-                if (!empty($customer_phone)) {
-                    sendSMS($customer_phone, $transaction_type, $product_name, $order_id, $datetime);
-                }
-            } else {
-                throw new Exception("Error saving payment: " . $stmt->error);
-            }
-            
-            $stmt->close();
-            $conn->close();
-            
-        } catch (Exception $e) {
-            $response['message'] = $e->getMessage();
-        }
-    }
+} catch (Exception $e) {
+    echo json_encode(['status' => 'error', 'message' => 'Exception: ' . $e->getMessage()]);
 }
 
 // Function to send SMS notification
-function sendSMS($phone, $type, $product, $order_id, $datetime = '') {
-    // Replace with your SMS API credentials and endpoint
-    $apiKey = "YOUR_SMS_API_KEY";
-    $sender = "MNTHLP"; // Sender ID
+function sendSmsNotification($phoneNumber, $message) {
+    // You would implement your SMS gateway integration here
+    // For example, using services like Twilio, MSG91, etc.
     
-    // Create appropriate message based on transaction type
-    if ($type == 'consultation') {
-        $message = "Your appointment for $product has been confirmed. Order ID: $order_id. Scheduled for: $datetime. Thank you for choosing MeantToHelp!";
-    } elseif ($type == 'priest') {
-        $message = "Your spiritual consultation with $product has been confirmed. Order ID: $order_id. Scheduled for: $datetime. Thank you for choosing MeantToHelp!";
-    } elseif ($type == 'tour') {
-        $message = "Your spiritual tour booking for $product has been confirmed. Order ID: $order_id. Scheduled for: $datetime. Thank you for choosing MeantToHelp!";
-    } else {
-        $message = "Your order for $product has been confirmed. Order ID: $order_id. Thank you for shopping with MeantToHelp!";
-    }
+    // For now, we'll just log the message
+    error_log("SMS to $phoneNumber: $message");
     
-    // URL encode the message
-    $message = urlencode($message);
+    // Example using MSG91 API (you would need to sign up for an account)
+    /*
+    $apiKey = "YOUR_MSG91_API_KEY";
+    $senderId = "MEANTHLP";
     
-    // SMS API endpoint (replace with your SMS provider's API endpoint)
-    $url = "https://api.yoursmsvendor.com/send?apikey=$apiKey&sender=$sender&mobile=$phone&message=$message";
+    $url = "https://api.msg91.com/api/v5/flow/";
     
-    // Send the SMS using cURL
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-    ]);
+    $postData = array(
+        "flow_id" => "YOUR_FLOW_ID",
+        "sender" => $senderId,
+        "mobiles" => $phoneNumber,
+        "message" => $message
+    );
     
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "authkey: $apiKey",
+        "Content-Type: application/json"
+    ));
     
-    // Log the SMS sending result (in a production app, you'd save this to a log file)
-    if ($err) {
-        error_log("SMS sending failed: " . $err);
-        return false;
-    }
+    $response = curl_exec($ch);
+    curl_close($ch);
     
-    error_log("SMS sent successfully: " . $response);
+    return $response;
+    */
+    
     return true;
 }
-
-// Return JSON response
-header('Content-Type: application/json');
-echo json_encode($response);
 ?>

@@ -39,11 +39,13 @@ CREATE TABLE IF NOT EXISTS `priest_bookings` (
   `duration_minutes` int(11) DEFAULT '60',
   `amount` decimal(10,2) NOT NULL,
   `payment_method` varchar(50) NOT NULL,
-  `razorpay_payment_id` varchar(100) NOT NULL,
-  `razorpay_order_id` varchar(100) NOT NULL,
-  `payment_date` datetime NOT NULL,
+  `razorpay_payment_id` varchar(100) DEFAULT NULL,
+  `razorpay_order_id` varchar(100) DEFAULT NULL,
+  `payment_date` datetime DEFAULT NULL,
+  `payment_status` enum('pending','completed','failed') NOT NULL DEFAULT 'pending',
   `booking_status` enum('scheduled','completed','cancelled','rescheduled') NOT NULL DEFAULT 'scheduled',
   `notes` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -60,11 +62,13 @@ CREATE TABLE IF NOT EXISTS `tour_bookings` (
   `participants` int(11) NOT NULL DEFAULT '1',
   `amount` decimal(10,2) NOT NULL,
   `payment_method` varchar(50) NOT NULL,
-  `razorpay_payment_id` varchar(100) NOT NULL,
-  `razorpay_order_id` varchar(100) NOT NULL,
-  `payment_date` datetime NOT NULL,
+  `razorpay_payment_id` varchar(100) DEFAULT NULL,
+  `razorpay_order_id` varchar(100) DEFAULT NULL,
+  `payment_date` datetime DEFAULT NULL,
+  `payment_status` enum('pending','completed','failed') NOT NULL DEFAULT 'pending',
   `booking_status` enum('confirmed','completed','cancelled','rescheduled') NOT NULL DEFAULT 'confirmed',
   `notes` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
