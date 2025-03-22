@@ -1,10 +1,10 @@
 
 <?php
-class HomeController {
-    private $conn;
-    
+require_once 'includes/Controller.php';
+
+class HomeController extends Controller {
     public function __construct($conn) {
-        $this->conn = $conn;
+        parent::__construct($conn);
     }
     
     public function index() {
@@ -12,7 +12,7 @@ class HomeController {
         $featured_products = $this->getFeaturedProducts();
         
         // Include the view
-        include_once(VIEWS_PATH . 'home/index.php');
+        $this->render('home/index', ['featured_products' => $featured_products]);
     }
     
     private function getFeaturedProducts() {
