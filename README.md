@@ -1,69 +1,115 @@
-# Welcome to your Lovable project
 
-## Project info
+# MeantToHelp Website
 
-**URL**: https://lovable.dev/projects/dfd2c528-31e1-482d-9b8c-07f4b9e7e91d
+This is a PHP-based website for MeantToHelp, supporting mental well-being through products and services including therapy, spiritual guidance, and community support.
 
-## How can I edit this code?
+## Setup Instructions
 
-There are several ways of editing your application.
+### Prerequisites
 
-**Use Lovable**
+- PHP 7.2 or higher
+- MySQL 5.7 or higher
+- Apache or Nginx web server
+- Your server should support .htaccess files (for Apache)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/dfd2c528-31e1-482d-9b8c-07f4b9e7e91d) and start prompting.
+### Installation Steps
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Database Setup**
+   - Create a database on your MySQL server
+   - Import the SQL file from `setup/database.sql` to create all necessary tables and sample data
+   - The database already includes sample data for products, spiritual services, and an admin user
 
-**Use your preferred IDE**
+2. **File Upload**
+   - Upload all files to your web server
+   - Ensure the following directories are writable by the web server:
+     - `/uploads`
+     - `/images`
+     - `/logs` (if present)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Configuration**
+   - The database connection is already configured in `includes/config.php` with your provided credentials:
+     - Username: Admin-ef1e
+     - Password: 1=XBb=hME^e8
+     - Database: meanttohelp_db-353038359294
+   - If you need to change these details, edit the `includes/config.php` file
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. **Payment Gateway Setup**
+   - Update your Razorpay API keys in the `js/razorpay-config.js` file:
+     ```javascript
+     const RAZORPAY_KEY_ID = 'rzp_test_XXXXXXXXXX'; // Replace with your Razorpay Key ID
+     ```
+   - Also update the server-side keys in `includes/verify-payment.php` if necessary
 
-Follow these steps:
+5. **SMS Notifications**
+   - The site is configured to send SMS notifications for bookings
+   - To enable this feature, update the `sendSmsNotification` function in `models/SpiritualityModel.php` with your SMS gateway API details
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Admin Access
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Admin panel URL: `/admin.php`
+- Default admin credentials:
+  - Username: admin
+  - Password: admin123
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Directory Structure
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+The website follows the MVC (Model-View-Controller) architecture:
 
-**Edit a file directly in GitHub**
+- `/models` - Contains database models
+- `/views` - Contains template files
+- `/controllers` - Contains controller logic
+- `/includes` - Contains configuration and shared files
+- `/js` - Contains JavaScript files
+- `/css` - Contains CSS stylesheets
+- `/images` - Contains images
+- `/uploads` - Directory for user uploaded files
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Pages
 
-**Use GitHub Codespaces**
+- Home: `/` or `/index.php`
+- Spirituality: `/spirituality.php`
+- Doctors: `/doctors.php` 
+- Products: `/products.php`
+- Admin Panel: `/admin.php`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Customization
 
-## What technologies are used for this project?
+### Adding New Products
 
-This project is built with .
+1. Add product details to the `products` table in the database
+2. Upload product images to the `/images/products` directory
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Adding New Spiritual Guides
 
-## How can I deploy this project?
+1. Add guide details to the `spiritual_priests` table in the database
+2. Upload guide images to the `/images/priests` directory
 
-Simply open [Lovable](https://lovable.dev/projects/dfd2c528-31e1-482d-9b8c-07f4b9e7e91d) and click on Share -> Publish.
+### Adding New Spiritual Tours
 
-## I want to use a custom domain - is that possible?
+1. Add tour details to the `spiritual_tours` table in the database
+2. Upload tour images to the `/images/tours` directory
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## Troubleshooting
+
+### Page Not Found Errors
+
+- Ensure your server is configured to handle PHP files
+- Check if mod_rewrite is enabled for Apache
+- Verify .htaccess settings if using URL rewriting
+
+### Database Connection Issues
+
+- Verify database credentials in `includes/config.php`
+- Ensure your database server is running
+- Check if your database user has proper permissions
+
+### Payment Integration Issues
+
+- Verify Razorpay API keys
+- Check browser console for JavaScript errors
+- Review payment logs in Razorpay dashboard
+
+## Support
+
+For support or questions, please contact:
+- Email: support@meanttohelp.com

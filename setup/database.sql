@@ -1,102 +1,94 @@
 
--- Database creation (Run this only if you need to create the database)
--- CREATE DATABASE IF NOT EXISTS meanttohelp_db-353038359294;
--- USE meanttohelp_db-353038359294;
+-- Main Database Structure for MeantToHelp
 
--- Users table (for authentication)
-CREATE TABLE IF NOT EXISTS `users` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `username` VARCHAR(50) NOT NULL UNIQUE,
-    `password` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(100) NOT NULL UNIQUE,
-    `first_name` VARCHAR(50),
-    `last_name` VARCHAR(50),
-    `role` ENUM('admin', 'user') DEFAULT 'user',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Contact messages table
-CREATE TABLE IF NOT EXISTS `contact_messages` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL,
-    `email` VARCHAR(100) NOT NULL,
-    `subject` VARCHAR(200) NOT NULL,
-    `message` TEXT NOT NULL,
-    `status` ENUM('new', 'read', 'replied') DEFAULT 'new',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Products table
+-- Products Table
 CREATE TABLE IF NOT EXISTS `products` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(200) NOT NULL,
-    `slug` VARCHAR(200) NOT NULL UNIQUE,
-    `short_description` VARCHAR(255),
-    `description` TEXT,
-    `price` DECIMAL(10, 2) NOT NULL,
-    `discount_price` DECIMAL(10, 2),
-    `category` VARCHAR(50) NOT NULL,
-    `image` VARCHAR(255) NOT NULL,
-    `featured` BOOLEAN DEFAULT 0,
-    `badge` ENUM('new', 'sale', 'popular'),
-    `stock` INT DEFAULT 0,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `slug` varchar(100) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `discount_price` decimal(10,2) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `category` varchar(50) NOT NULL,
+  `badge` varchar(20) DEFAULT NULL,
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `stock` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Product features table
-CREATE TABLE IF NOT EXISTS `product_features` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `product_id` INT NOT NULL,
-    `feature` TEXT NOT NULL,
-    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Categories table
-CREATE TABLE IF NOT EXISTS `categories` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(100) NOT NULL,
-    `slug` VARCHAR(100) NOT NULL UNIQUE,
-    `description` TEXT,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Orders table
+-- Orders Table
 CREATE TABLE IF NOT EXISTS `orders` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `order_id` VARCHAR(50) NOT NULL UNIQUE,
-    `user_id` INT,
-    `customer_name` VARCHAR(100) NOT NULL,
-    `customer_email` VARCHAR(100) NOT NULL,
-    `customer_phone` VARCHAR(20) NOT NULL,
-    `total_amount` DECIMAL(10, 2) NOT NULL,
-    `status` ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
-    `shipping_address` TEXT,
-    `billing_address` TEXT,
-    `payment_method` VARCHAR(50),
-    `payment_status` ENUM('pending', 'paid', 'failed', 'refunded') DEFAULT 'pending',
-    `razorpay_payment_id` VARCHAR(100),
-    `razorpay_order_id` VARCHAR(100),
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_number` varchar(50) NOT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `customer_email` varchar(100) NOT NULL,
+  `customer_phone` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `postal_code` varchar(20) NOT NULL,
+  `country` varchar(50) NOT NULL DEFAULT 'India',
+  `total_amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) NOT NULL,
+  `payment_id` varchar(100) DEFAULT NULL,
+  `payment_status` enum('pending','completed','failed') NOT NULL DEFAULT 'pending',
+  `order_status` enum('processing','shipped','delivered','cancelled') NOT NULL DEFAULT 'processing',
+  `notes` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_number` (`order_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Order items table
+-- Order Items Table
 CREATE TABLE IF NOT EXISTS `order_items` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `order_id` VARCHAR(50) NOT NULL,
-    `product_id` INT NOT NULL,
-    `quantity` INT NOT NULL,
-    `price` DECIMAL(10, 2) NOT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`) ON DELETE CASCADE,
-    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Users Table
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `role` enum('admin','editor','customer') NOT NULL DEFAULT 'customer',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Contact Messages Table
+CREATE TABLE IF NOT EXISTS `contact_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `subject` varchar(200) NOT NULL,
+  `message` text NOT NULL,
+  `status` enum('new','read','replied') NOT NULL DEFAULT 'new',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Spiritual Services Tables
 -- Create the spiritual_priests table for priest consultations
 CREATE TABLE IF NOT EXISTS `spiritual_priests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -171,24 +163,9 @@ CREATE TABLE IF NOT EXISTS `tour_bookings` (
   UNIQUE KEY `order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert sample admin user (password: Admin@123)
-INSERT INTO `users` (`username`, `password`, `email`, `first_name`, `last_name`, `role`) 
-VALUES ('admin', '$2y$10$XQ.LioBTpth9IHsZC6/c3eJa5xGDLWvOZ7vEIFiukjvsQH33gYSxK', 'admin@meanttohelp.com', 'Admin', 'User', 'admin');
-
--- Insert sample product categories
-INSERT INTO `categories` (`name`, `slug`, `description`) VALUES
-('Meditation', 'meditation', 'Products to enhance your meditation practice'),
-('Sleep', 'sleep', 'Solutions for better sleep quality'),
-('Anxiety', 'anxiety', 'Tools to help manage anxiety'),
-('Stress', 'stress', 'Products designed to reduce stress'),
-('Focus', 'focus', 'Items to improve concentration and focus'),
-('Self-care', 'self-care', 'Self-care products for mental wellbeing');
-
--- Insert sample products
-INSERT INTO `products` (`name`, `slug`, `short_description`, `description`, `price`, `category`, `image`, `featured`, `badge`, `stock`) VALUES
-('Weighted Blanket', 'weighted-blanket', 'Experience deep relaxation with our premium weighted blanket.', 'Our premium weighted blanket applies gentle pressure across your body to reduce anxiety and improve sleep quality. Made with high-quality, breathable materials for comfort in all seasons.', 89.99, 'sleep', 'images/products/weighted-blanket.jpg', 1, 'popular', 25),
-('Meditation Cushion', 'meditation-cushion', 'Enhance your meditation practice with our ergonomic cushion.', 'This ergonomically designed meditation cushion helps maintain proper posture during extended meditation sessions. The buckwheat fill molds to your body while providing essential support.', 49.99, 'meditation', 'images/products/meditation-cushion.jpg', 1, NULL, 40),
-('Anxiety Relief Stones', 'anxiety-stones', 'Smooth worry stones made from natural materials.', 'These polished natural stones fit perfectly in your palm, providing a tactile grounding technique during moments of anxiety. Carry them in your pocket for on-the-go anxiety relief.', 24.99, 'anxiety', 'images/products/anxiety-stones.jpg', 1, 'new', 100);
+-- Insert sample admin user (username: admin, password: admin123)
+INSERT INTO `users` (`username`, `password`, `email`, `name`, `role`) VALUES
+('admin', '$2y$10$LMoOiWmtw.0dt22zPhgZyOzQejp4M8gHITaKXKVYuLa8pEZCBU5AO', 'admin@meanttohelp.com', 'Administrator', 'admin');
 
 -- Insert sample spiritual priests data
 INSERT INTO `spiritual_priests` (`name`, `expertise`, `description`, `image`, `hourly_rate`, `availability`, `rating`, `experience_years`) VALUES
@@ -201,3 +178,10 @@ INSERT INTO `spiritual_tours` (`name`, `location`, `description`, `image`, `pric
 ('Varanasi Sacred Journey', 'Varanasi, Uttar Pradesh', 'Experience the spiritual energy of one of the world\'s oldest living cities. Visit sacred ghats, witness the Ganga Aarti, and explore ancient temples.', 'varanasi-tour.jpg', 15000.00, '3 Days', '2023-10-15,2023-11-05,2023-12-10', 15),
 ('Rishikesh Meditation Retreat', 'Rishikesh, Uttarakhand', 'Join a guided meditation retreat in the yoga capital of the world. Learn meditation techniques and experience the serene Ganges riverside.', 'rishikesh-retreat.jpg', 12000.00, '5 Days', '2023-10-20,2023-11-10,2023-11-25', 12),
 ('Tirupati Balaji Darshan', 'Tirupati, Andhra Pradesh', 'A guided tour to one of India\'s most visited temples. Skip the queue and experience a peaceful darshan with detailed explanations of the temple\'s significance.', 'tirupati-tour.jpg', 8000.00, '2 Days', '2023-10-01,2023-10-15,2023-11-01,2023-11-15', 20);
+
+-- Insert sample products
+INSERT INTO `products` (`name`, `slug`, `short_description`, `description`, `price`, `discount_price`, `image`, `category`, `badge`, `featured`, `stock`) VALUES
+('Weighted Blanket', 'weighted-blanket', 'Reduce anxiety and improve sleep with our premium weighted blanket', 'Experience deep relaxation with our premium weighted blanket designed to reduce anxiety and improve sleep quality. Made with ultra-soft, breathable fabric and evenly distributed weight for maximum comfort.', 2999.00, 3499.00, 'images/products/weighted-blanket.jpg', 'sleep', 'bestseller', 1, 25),
+('Meditation Cushion Set', 'meditation-cushion-set', 'Enhance your meditation practice with our ergonomic cushion set', 'Enhance your meditation practice with our ergonomic cushion set designed for comfort and proper posture. Includes matching zabuton mat for complete comfort during longer sessions.', 1499.00, NULL, 'images/products/meditation-cushion.jpg', 'meditation', 'new', 1, 40),
+('Anxiety Relief Stone Kit', 'anxiety-relief-stone-kit', 'Natural worry stones for grounding and anxiety relief', 'Our handcrafted worry stones are made from natural materials to help with grounding and anxiety relief. Set includes 5 different stones in a beautiful wooden box.', 899.00, 1199.00, 'images/products/anxiety-stones.jpg', 'anxiety', 'sale', 1, 30),
+('Sleep Sound Machine', 'sleep-sound-machine', 'Create the perfect sleep environment with calming sounds', 'This sound machine offers 10 soothing sounds to mask disruptive noises and create a peaceful environment for better sleep. Features timer options and adjustable volume.', 1799.00, NULL, 'images/products/sound-machine.jpg', 'sleep', NULL, 1, 15);
