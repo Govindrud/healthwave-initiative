@@ -42,7 +42,7 @@ if (
     $product_name = $input['product_name'];
     $order_id = $input['order_id'];
     $payment_method = isset($input['payment_method']) ? $input['payment_method'] : 'Razorpay';
-    $transaction_type = isset($input['transaction_type']) ? $input['transaction_type'] : 'product'; // 'product' or 'consultation'
+    $transaction_type = isset($input['transaction_type']) ? $input['transaction_type'] : 'product'; // 'product', 'consultation', 'priest', or 'tour'
     $customer_name = isset($input['customer_name']) ? $input['customer_name'] : '';
     $customer_email = isset($input['customer_email']) ? $input['customer_email'] : '';
     $customer_phone = isset($input['customer_phone']) ? $input['customer_phone'] : '';
@@ -92,12 +92,31 @@ if (
             }
             
             // Determine the table to use based on transaction type
-            $table = ($transaction_type == 'consultation') ? 'appointments' : 'orders';
-            
             if ($transaction_type == 'consultation') {
                 // Insert appointment details
                 $stmt = $conn->prepare("INSERT INTO appointments (order_id, razorpay_payment_id, razorpay_order_id, amount, doctor_name, customer_name, customer_email, customer_phone, appointment_datetime, payment_method, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
                 $stmt->bind_param("sssdsssss", $order_id, $razorpay_payment_id, $razorpay_order_id, $amount, $product_name, $customer_name, $customer_email, $customer_phone, $datetime, $payment_method);
+            } elseif ($transaction_type == 'priest') {
+                // Get additional data for priest consultation
+                $priestId = isset($input['priestId']) ? $input['priestId'] : 0;
+                $duration = isset($input['duration']) ? $input['duration'] : 60;
+                $notes = isset($input['notes']) ? $input['notes'] : '';
+                
+                // Insert priest booking details
+                $stmt = $conn->prepare("INSERT INTO priest_bookings (order_id, priest_id, customer_name, customer_email, customer_phone, booking_datetime, duration_minutes, amount, payment_method, razorpay_payment_id, razorpay_order_id, payment_date, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+                $stmt->bind_param("sissssidsss", $order_id, $priestId, $customer_name, $customer_email, $customer_phone, $datetime, $duration, $amount, $payment_method, $razorpay_payment_id, $razorpay_order_id, $notes);
+            } elseif ($transaction_type == 'tour') {
+                // Get additional data for tour booking
+                $tourId = isset($input['tourId']) ? $input['tourId'] : 0;
+                $participants = isset($input['participants']) ? $input['participants'] : 1;
+                $notes = isset($input['notes']) ? $input['notes'] : '';
+                
+                // Convert datetime to date for tour bookings
+                $bookingDate = date('Y-m-d', strtotime($datetime));
+                
+                // Insert tour booking details
+                $stmt = $conn->prepare("INSERT INTO tour_bookings (order_id, tour_id, customer_name, customer_email, customer_phone, booking_date, participants, amount, payment_method, razorpay_payment_id, razorpay_order_id, payment_date, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+                $stmt->bind_param("sissssidsss", $order_id, $tourId, $customer_name, $customer_email, $customer_phone, $bookingDate, $participants, $amount, $payment_method, $razorpay_payment_id, $razorpay_order_id, $notes);
             } else {
                 // Insert order details
                 $stmt = $conn->prepare("INSERT INTO orders (order_id, razorpay_payment_id, razorpay_order_id, amount, product_name, customer_name, customer_email, customer_phone, payment_method, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
@@ -136,6 +155,10 @@ function sendSMS($phone, $type, $product, $order_id, $datetime = '') {
     // Create appropriate message based on transaction type
     if ($type == 'consultation') {
         $message = "Your appointment for $product has been confirmed. Order ID: $order_id. Scheduled for: $datetime. Thank you for choosing MeantToHelp!";
+    } elseif ($type == 'priest') {
+        $message = "Your spiritual consultation with $product has been confirmed. Order ID: $order_id. Scheduled for: $datetime. Thank you for choosing MeantToHelp!";
+    } elseif ($type == 'tour') {
+        $message = "Your spiritual tour booking for $product has been confirmed. Order ID: $order_id. Scheduled for: $datetime. Thank you for choosing MeantToHelp!";
     } else {
         $message = "Your order for $product has been confirmed. Order ID: $order_id. Thank you for shopping with MeantToHelp!";
     }
