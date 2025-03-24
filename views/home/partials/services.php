@@ -18,13 +18,13 @@
                 <a href="doctors.php" class="btn btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
             
-            <div class="service-card">
+            <div class="service-card highlight">
                 <div class="service-icon">
                     <i class="fas fa-pray"></i>
                 </div>
                 <h3>Spiritual Guidance</h3>
                 <p>Explore spiritual practices and connect with guides to nurture your spiritual wellbeing.</p>
-                <a href="spirituality.php" class="btn btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                <a href="spirituality.php" class="btn btn-primary btn-sm">Explore Now <i class="fas fa-arrow-right"></i></a>
             </div>
             
             <div class="service-card">

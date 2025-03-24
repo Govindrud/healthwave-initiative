@@ -6,6 +6,18 @@ class Router {
     
     public function __construct($conn) {
         $this->conn = $conn;
+        
+        // Register default routes
+        $this->registerDefaultRoutes();
+    }
+    
+    private function registerDefaultRoutes() {
+        // Home route
+        $this->addRoute('/', 'Home', 'index');
+        
+        // Spirituality route
+        $this->addRoute('/spirituality', 'Spirituality', 'index');
+        $this->addRoute('/spirituality.php', 'Spirituality', 'index');
     }
     
     public function addRoute($path, $controller, $action = 'index') {
@@ -20,30 +32,26 @@ class Router {
         $controller = 'Home';
         $action = 'index';
         
-        // Parse the path to extract controller and action
-        if (!empty($path) && $path !== '/') {
-            $path_parts = explode('/', trim($path, '/'));
-            
-            if (!empty($path_parts[0])) {
-                $controller = ucfirst($path_parts[0]);
-            }
-            
-            if (!empty($path_parts[1])) {
-                $action = $path_parts[1];
-            }
-        }
+        // Clean the path
+        $path = strtok($path, '?');
         
-        // Special case for the root URL
-        if ($path === '/' || $path === '') {
-            // Display the home page
-            $controller = 'Home';
-            $action = 'index';
-        }
-        
-        // Legacy support for direct file access
-        if ($path === '/spirituality.php') {
-            $controller = 'Spirituality';
-            $action = 'index';
+        // Check if we have a direct match in routes
+        if (isset($this->routes[$path])) {
+            $controller = $this->routes[$path]['controller'];
+            $action = $this->routes[$path]['action'];
+        } else {
+            // Parse the path to extract controller and action
+            if (!empty($path) && $path !== '/') {
+                $path_parts = explode('/', trim($path, '/'));
+                
+                if (!empty($path_parts[0])) {
+                    $controller = ucfirst($path_parts[0]);
+                }
+                
+                if (!empty($path_parts[1])) {
+                    $action = $path_parts[1];
+                }
+            }
         }
         
         $this->loadController($controller, $action);

@@ -1,9 +1,13 @@
 
 <?php
-class SpiritualityController {
+require_once 'includes/Controller.php';
+require_once 'models/SpiritualityModel.php';
+
+class SpiritualityController extends Controller {
     private $model;
     
     public function __construct($conn) {
+        parent::__construct($conn);
         $this->model = new SpiritualityModel($conn);
     }
     
@@ -12,8 +16,12 @@ class SpiritualityController {
         $priests = $this->model->getPriests();
         $tours = $this->model->getTours();
         
-        // Include the view
-        include_once(VIEWS_PATH . 'spirituality/index.php');
+        // Include the view with data
+        $this->render('spirituality/index', [
+            'priests' => $priests,
+            'tours' => $tours,
+            'controller' => $this
+        ]);
     }
     
     public function processPriestBooking() {
@@ -60,7 +68,7 @@ class SpiritualityController {
     }
     
     public function formatDate($date) {
-        return $this->model->formatDate($date);
+        return date('F j, Y', strtotime($date));
     }
 }
 ?>

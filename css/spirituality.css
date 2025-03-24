@@ -1,4 +1,3 @@
-
 /* Spirituality Page Styles */
 :root {
   --spiritual-light: #fdf8ef;
@@ -9,21 +8,43 @@
 
 /* Hero Section */
 .spirituality-hero-section {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)), 
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6)), 
               url('../images/spirituality-hero.jpg');
   background-size: cover;
   background-position: center;
-  padding: 6rem 0 4rem;
+  padding: 8rem 0 6rem;
   text-align: center;
+  position: relative;
+}
+
+.spirituality-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .spirituality-hero-section h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin-bottom: 1.5rem;
+  color: var(--spiritual-dark);
+}
+
+.spirituality-hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: var(--spiritual-deep);
 }
 
 .font-playfair {
   font-family: 'Playfair Display', serif;
+}
+
+/* Highlight card for spirituality */
+.service-card.highlight {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--spiritual-accent);
 }
 
 /* Tab System */
@@ -90,7 +111,7 @@
 /* Priest Cards */
 .priests-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
 }
@@ -547,7 +568,7 @@
   }
   
   .spirituality-hero-section h1 {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
   
   .priest-booking, .tour-booking {
@@ -566,3 +587,4 @@
     grid-template-columns: 1fr;
   }
 }
+

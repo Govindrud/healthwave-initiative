@@ -266,7 +266,79 @@ require_once 'includes/config.php';
 
     <!-- Booking Modal - Tours -->
     <div class="booking-modal" id="tour-booking-modal">
-      <!-- Similar to priest booking modal -->
+      <div class="booking-modal-content">
+        <div class="booking-modal-header">
+          <h3>Book a Sacred Tour</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="booking-modal-body">
+          <form id="tour-booking-form">
+            <input type="hidden" id="tour-id" name="tour_id">
+            <input type="hidden" id="tour-name" name="tour_name">
+            <input type="hidden" id="tour-price" name="tour_price">
+            <input type="hidden" name="action" value="create_tour_order">
+            
+            <div class="form-group">
+              <label for="tour-customer-name">Your Name</label>
+              <input type="text" id="tour-customer-name" name="customer_name" required>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tour-customer-email">Email</label>
+                <input type="email" id="tour-customer-email" name="customer_email" required>
+              </div>
+              <div class="form-group">
+                <label for="tour-customer-phone">Phone</label>
+                <input type="tel" id="tour-customer-phone" name="customer_phone" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tour-date">Tour Date</label>
+                <select id="tour-date" name="tour_date" required>
+                  <option value="">Select Date</option>
+                  <!-- Tour dates will be populated via JavaScript -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="tour-participants">Number of Participants</label>
+                <select id="tour-participants" name="participants" required>
+                  <!-- Participant options will be populated via JavaScript -->
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="tour-special-requests">Special Requests (Optional)</label>
+              <textarea id="tour-special-requests" name="special_requests" rows="3"></textarea>
+            </div>
+            
+            <div class="booking-summary">
+              <h4>Booking Summary</h4>
+              <div class="summary-item">
+                <span>Sacred Tour:</span>
+                <span id="summary-tour-name">-</span>
+              </div>
+              <div class="summary-item">
+                <span>Date:</span>
+                <span id="summary-tour-date">-</span>
+              </div>
+              <div class="summary-item">
+                <span>Participants:</span>
+                <span id="summary-participants">-</span>
+              </div>
+              <div class="summary-item total">
+                <span>Total Amount:</span>
+                <span id="summary-tour-amount">₹0</span>
+              </div>
+            </div>
+            
+            <button type="submit" class="proceed-payment-btn">Proceed to Payment</button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <?php include 'includes/footer.php'; ?>
