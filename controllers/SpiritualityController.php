@@ -20,7 +20,9 @@ class SpiritualityController extends Controller {
         $this->render('spirituality/index', [
             'priests' => $priests,
             'tours' => $tours,
-            'controller' => $this
+            'controller' => $this,
+            'pageTitle' => 'Spiritual Services | ' . SITE_NAME,
+            'metaDescription' => 'Connect with spiritual guides and explore sacred tours for your mental wellbeing journey.'
         ]);
     }
     
@@ -32,6 +34,16 @@ class SpiritualityController extends Controller {
             exit;
         }
         
+        // Validate required fields
+        $requiredFields = ['priest_id', 'customer_name', 'customer_email', 'customer_phone', 'booking_datetime', 'duration'];
+        foreach ($requiredFields as $field) {
+            if (!isset($_POST[$field]) || empty($_POST[$field])) {
+                echo json_encode(['status' => 'error', 'message' => 'Missing required field: ' . $field]);
+                exit;
+            }
+        }
+        
+        // Process the booking
         $response = $this->model->createPriestBooking($_POST);
         echo json_encode($response);
         exit;
@@ -45,6 +57,16 @@ class SpiritualityController extends Controller {
             exit;
         }
         
+        // Validate required fields
+        $requiredFields = ['tour_id', 'customer_name', 'customer_email', 'customer_phone', 'booking_date', 'participants'];
+        foreach ($requiredFields as $field) {
+            if (!isset($_POST[$field]) || empty($_POST[$field])) {
+                echo json_encode(['status' => 'error', 'message' => 'Missing required field: ' . $field]);
+                exit;
+            }
+        }
+        
+        // Process the booking
         $response = $this->model->createTourBooking($_POST);
         echo json_encode($response);
         exit;

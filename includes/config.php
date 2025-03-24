@@ -1,21 +1,11 @@
 
 <?php
-// Database configuration
-$db_host = 'localhost';
-$db_user = 'Admin-ef1e';
-$db_pass = '1=XBb=hME^e8';
-$db_name = 'meanttohelp_db-353038359294';
+// Include Database class
+require_once 'Database.php';
 
-// Create connection
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Set character set
-$conn->set_charset("utf8mb4");
+// Get database connection
+$db = Database::getInstance();
+$conn = $db->getConnection();
 
 // Define site constants
 define('SITE_NAME', 'MeantToHelp');

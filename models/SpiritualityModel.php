@@ -1,10 +1,11 @@
 
 <?php
-class SpiritualityModel {
-    private $conn;
+require_once 'includes/Model.php';
+
+class SpiritualityModel extends Model {
     
     public function __construct($conn) {
-        $this->conn = $conn;
+        parent::__construct($conn);
     }
     
     public function getPriests() {
@@ -213,41 +214,8 @@ class SpiritualityModel {
     
     private function sendSmsNotification($phoneNumber, $message) {
         // You would implement your SMS gateway integration here
-        // For example, using services like Twilio, MSG91, etc.
-        
         // For now, we'll just log the message
         error_log("SMS to $phoneNumber: $message");
-        
-        // Example using MSG91 API (you would need to sign up for an account)
-        /*
-        $apiKey = "YOUR_MSG91_API_KEY";
-        $senderId = "MEANTHLP";
-        
-        $url = "https://api.msg91.com/api/v5/flow/";
-        
-        $postData = array(
-            "flow_id" => "YOUR_FLOW_ID",
-            "sender" => $senderId,
-            "mobiles" => $phoneNumber,
-            "message" => $message
-        );
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "authkey: $apiKey",
-            "Content-Type: application/json"
-        ));
-        
-        $response = curl_exec($ch);
-        curl_close($ch);
-        
-        return $response;
-        */
-        
         return true;
     }
     
