@@ -1,71 +1,58 @@
 
-# Mental Wellbeing Website
+# MeantToHelp Website
 
-A PHP-based website using MVC (Model-View-Controller) architecture for mental wellbeing services, products, and spiritual guidance.
+A complete website solution for mental wellbeing services including doctor consultations, spiritual guidance, and wellness products.
 
-## Project Structure
+## Features
 
-The website follows the MVC architecture pattern:
+- Doctor consultations booking
+- Spiritual guides and tours booking
+- Wellness product shopping
+- Responsive design for all devices
+- Integrated payment processing
 
-- **Models** (`models/`): Contains database interaction logic
-- **Views** (`views/`): Contains the presentation layer
-- **Controllers** (`controllers/`): Contains business logic
+## Quick Setup Guide
 
-### Key Files and Directories
+### 1. Database Setup
 
-- `index.php`: Main entry point for the application
-- `includes/config.php`: Configuration settings
-- `includes/Router.php`: URL routing system
-- `includes/Controller.php`: Base controller class
-- `includes/Model.php`: Base model class
-- `controllers/`: All controller classes
-- `models/`: All model classes
-- `views/`: All view files, organized by feature
-- `css/`: Stylesheets
-- `js/`: JavaScript files
-- `images/`: Image assets
+1. Create a new MySQL database for the project
+2. Import the SQL file from `setup/simple_setup.sql` to create all required tables
+3. Update database credentials in `includes/Database.php`:
 
-## Main Features
+```php
+private $db_host = 'localhost';     // Your database host
+private $db_user = 'your_username'; // Your database username
+private $db_pass = 'your_password'; // Your database password
+private $db_name = 'your_database'; // Your database name
+```
 
-1. **Home Page**: Overview of services and products
-2. **Products**: Mental wellbeing products
-3. **Professional Services**: Doctor consultations
-4. **Spiritual Services**: Spiritual guides and sacred tours
-5. **Payment Integration**: Secure payment processing with Razorpay
+### 2. Server Requirements
 
-## Navigation
+- PHP 7.4 or higher
+- MySQL 5.7 or higher
+- Apache/Nginx web server
+- mod_rewrite enabled (for clean URLs)
 
-- Home: `/` or `/index.php`
-- Doctors: `/doctors.php`
-- Spirituality: `/spirituality.php`
-- Products: `/products.php`
+### 3. File Structure
 
-## Setup Instructions
+The project follows MVC (Model-View-Controller) architecture:
 
-1. Upload all files to your web server
-2. Import the database tables using the SQL files in the `setup/` directory
-3. Configure your database connection in `includes/config.php`
-4. Ensure your web server has PHP 7.4+ installed
-5. Make sure the `images/` directory is writable by the web server
+- `models/` - Contains database models
+- `views/` - Contains HTML templates
+- `controllers/` - Contains business logic
+- `includes/` - Contains utility files
+- `css/` - Contains stylesheets
+- `js/` - Contains JavaScript files
+- `images/` - Contains image assets
+- `uploads/` - For user-uploaded content
 
-## MVC Explanation
+### 4. Common Issues
 
-- **Models**: Handle data operations (retrieving, storing, updating)
-- **Views**: Display the UI to users
-- **Controllers**: Process user inputs, interact with models, and render views
+If you encounter a database connection error:
+1. Verify database credentials in `includes/Database.php`
+2. Ensure your database server is running
+3. Check if the database and tables exist
 
-## Adding New Features
+## Contact
 
-To add a new feature (e.g., a Blog section):
-
-1. Create a new model in `models/BlogModel.php`
-2. Create a new controller in `controllers/BlogController.php`
-3. Create view files in `views/blog/`
-4. Add routes in `includes/Router.php`
-
-## Customization
-
-- Design: Edit CSS files in the `css/` directory
-- Business Logic: Edit controller files in the `controllers/` directory
-- Database Interactions: Edit model files in the `models/` directory
-- UI: Edit view files in the `views/` directory
+For support or questions, contact us at support@meanttohelp.com

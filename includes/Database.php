@@ -8,11 +8,11 @@ class Database {
     private static $instance = null;
     private $conn;
     
-    // Database configuration
+    // Database configuration - CHANGE THESE TO MATCH YOUR SERVER
     private $db_host = 'localhost';
-    private $db_user = 'Admin-ef1e';
-    private $db_pass = '1=XBb=hME^e8';
-    private $db_name = 'meanttohelp_db-353038359294';
+    private $db_user = 'your_username';  // Replace with your actual username
+    private $db_pass = 'your_password';  // Replace with your actual password
+    private $db_name = 'your_database';  // Replace with your actual database name
     
     // Private constructor - singleton pattern
     private function __construct() {
