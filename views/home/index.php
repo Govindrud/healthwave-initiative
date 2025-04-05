@@ -1,14 +1,23 @@
 
-<?php require_once 'includes/config.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php
+// This file serves as the main content for the home page
+// All components are included from partials
+?>
 
-<main>
-    <?php include 'views/home/partials/hero.php'; ?>
-    <?php include 'views/home/partials/image_slider.php'; ?>
-    <?php include 'views/home/partials/featured_products.php'; ?>
-    <?php include 'views/home/partials/services.php'; ?>
-    <?php include 'views/home/partials/testimonials.php'; ?>
-    <?php include 'views/home/partials/cta.php'; ?>
-</main>
+<!-- Hero Section -->
+<?php include_once 'partials/hero.php'; ?>
 
-<?php include 'includes/footer.php'; ?>
+<!-- Featured Products Section -->
+<?php include_once 'partials/featured_products.php'; ?>
+
+<!-- Services Section -->
+<?php include_once 'partials/services.php'; ?>
+
+<!-- Testimonials Section -->
+<?php include_once 'partials/testimonials.php'; ?>
+
+<!-- Image Slider Section -->
+<?php include_once 'partials/image_slider.php'; ?>
+
+<!-- CTA Section -->
+<?php include_once 'partials/cta.php'; ?>

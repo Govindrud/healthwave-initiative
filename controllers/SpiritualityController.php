@@ -1,30 +1,27 @@
 
 <?php
 require_once 'includes/Controller.php';
-require_once 'models/SpiritualityModel.php';
-require_once 'models/OrderModel.php';
 
 class SpiritualityController extends Controller {
     private $spiritualityModel;
-    private $orderModel;
     
     public function __construct($conn) {
         parent::__construct($conn);
+        require_once 'models/SpiritualityModel.php';
         $this->spiritualityModel = new SpiritualityModel($conn);
-        $this->orderModel = new OrderModel($conn);
     }
     
     public function index() {
-        // Get data for the spirituality page
+        // Get spirituality data
         $priests = $this->spiritualityModel->getPriests();
         $tours = $this->spiritualityModel->getTours();
-        $testimonials = $this->spiritualityModel->getTestimonials();
+        $testimonials = $this->spiritualityModel->getTestimonials(3);
         
         // Set page specific variables
-        $pageTitle = SITE_NAME . ' - Spiritual Guidance & Sacred Tours';
-        $metaDescription = 'Explore spiritual guidance services and sacred tours to enhance your mental well-being.';
+        $pageTitle = 'Spiritual Services | ' . SITE_NAME;
+        $metaDescription = 'Explore spiritual guidance and services to support your mental well-being journey.';
         $pageSpecificCSS = 'spirituality.css';
-        $pageSpecificJS = 'spirituality.js';
+        $pageSpecificJS = 'razorpay.js';
         
         // Include the view with data
         $this->render('spirituality/index', [
@@ -39,306 +36,232 @@ class SpiritualityController extends Controller {
     }
     
     public function processPriestBooking() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Validate input
-            $priest_id = isset($_POST['priest_id']) ? intval($_POST['priest_id']) : 0;
-            $customer_name = isset($_POST['customer_name']) ? sanitize_input($_POST['customer_name']) : '';
-            $customer_email = isset($_POST['customer_email']) ? sanitize_input($_POST['customer_email']) : '';
-            $customer_phone = isset($_POST['customer_phone']) ? sanitize_input($_POST['customer_phone']) : '';
-            $duration = isset($_POST['duration']) ? intval($_POST['duration']) : 60;
-            $booking_date = isset($_POST['booking_date']) ? sanitize_input($_POST['booking_date']) : '';
-            $booking_time = isset($_POST['booking_time']) ? sanitize_input($_POST['booking_time']) : '';
-            $special_requests = isset($_POST['special_requests']) ? sanitize_input($_POST['special_requests']) : '';
-            $priest_rate = isset($_POST['priest_rate']) ? floatval($_POST['priest_rate']) : 0;
+        // Validate and sanitize input
+        $priest_id = isset($_POST['priest_id']) ? (int)$_POST['priest_id'] : 0;
+        $customer_name = isset($_POST['customer_name']) ? sanitize_input($_POST['customer_name']) : '';
+        $customer_email = isset($_POST['customer_email']) ? sanitize_input($_POST['customer_email']) : '';
+        $customer_phone = isset($_POST['customer_phone']) ? sanitize_input($_POST['customer_phone']) : '';
+        $booking_date = isset($_POST['booking_date']) ? sanitize_input($_POST['booking_date']) : '';
+        $booking_time = isset($_POST['booking_time']) ? sanitize_input($_POST['booking_time']) : '';
+        $consultation_type = isset($_POST['consultation_type']) ? sanitize_input($_POST['consultation_type']) : '';
+        $duration_minutes = isset($_POST['duration_minutes']) ? (int)$_POST['duration_minutes'] : 60;
+        $amount = isset($_POST['amount']) ? (float)$_POST['amount'] : 0;
+        
+        // Validation
+        $errors = [];
+        
+        if ($priest_id <= 0) {
+            $errors[] = 'Invalid priest selection';
+        }
+        
+        if (empty($customer_name)) {
+            $errors[] = 'Name is required';
+        }
+        
+        if (empty($customer_email) || !filter_var($customer_email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Valid email is required';
+        }
+        
+        if (empty($customer_phone)) {
+            $errors[] = 'Phone number is required';
+        }
+        
+        if (empty($booking_date) || empty($booking_time)) {
+            $errors[] = 'Booking date and time are required';
+        }
+        
+        // If there are validation errors
+        if (!empty($errors)) {
+            // Set error message and redirect back
+            $error_message = implode(', ', $errors);
+            display_message($error_message, 'error');
+            redirect('spirituality.php');
+            return;
+        }
+        
+        // Create order ID
+        $order_id = 'PST' . time() . rand(100, 999);
+        
+        // Combine date and time
+        $booking_datetime = $booking_date . ' ' . $booking_time . ':00';
+        
+        try {
+            // Insert booking into database
+            $stmt = $this->conn->prepare("
+                INSERT INTO priest_bookings 
+                (order_id, priest_id, customer_name, customer_email, customer_phone, 
+                 booking_datetime, consultation_type, duration_minutes, amount, payment_status, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())
+            ");
             
-            // Calculate amount
-            $amount = ($priest_rate * $duration) / 60;
+            $stmt->bind_param(
+                "sisssssid",
+                $order_id,
+                $priest_id,
+                $customer_name,
+                $customer_email,
+                $customer_phone,
+                $booking_datetime,
+                $consultation_type,
+                $duration_minutes,
+                $amount
+            );
             
-            // Format booking datetime
-            $booking_datetime = $booking_date . ' ' . $booking_time . ':00';
-            
-            // Create order
-            $order_data = [
-                'order_type' => 'priest_consultation',
-                'customer_name' => $customer_name,
-                'customer_email' => $customer_email,
-                'customer_phone' => $customer_phone,
-                'amount' => $amount,
-                'item_id' => $priest_id,
-                'booking_datetime' => $booking_datetime,
-                'duration' => $duration,
-                'notes' => $special_requests,
-                'status' => 'pending'
-            ];
-            
-            // Create order and get order_id
-            $order_id = $this->orderModel->createOrder($order_data);
-            
-            if ($order_id) {
-                // Generate Razorpay order
-                require_once 'includes/RazorpayApi.php';
-                $razorpay = new RazorpayApi();
-                $razorpay_order = $razorpay->createOrder($amount * 100, $order_id); // Amount in paise
-                
-                if ($razorpay_order) {
-                    // Update order with razorpay_order_id
-                    $this->orderModel->updateOrder($order_id, [
-                        'razorpay_order_id' => $razorpay_order['id']
-                    ]);
-                    
-                    // Return success response
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'Order created successfully',
-                        'order_id' => $razorpay_order['id'],
-                        'amount' => $amount * 100, // Amount in paise
-                        'customer_name' => $customer_name,
-                        'customer_email' => $customer_email,
-                        'customer_phone' => $customer_phone
-                    ];
-                    
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    exit;
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Failed to create payment order'
-                    ];
-                    
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    exit;
-                }
-            } else {
-                $response = [
-                    'status' => 'error',
-                    'message' => 'Failed to create order'
+            if ($stmt->execute()) {
+                // Redirect to payment page
+                $_SESSION['order_data'] = [
+                    'order_id' => $order_id,
+                    'amount' => $amount,
+                    'booking_type' => 'priest_consultation',
+                    'priest_id' => $priest_id,
+                    'customer_name' => $customer_name,
+                    'customer_email' => $customer_email,
+                    'customer_phone' => $customer_phone,
+                    'booking_datetime' => $booking_datetime,
+                    'duration_minutes' => $duration_minutes
                 ];
                 
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit;
+                redirect('payment.php?order=' . $order_id);
+            } else {
+                display_message('Failed to create booking. Please try again.', 'error');
+                redirect('spirituality.php');
             }
+        } catch (Exception $e) {
+            display_message('Error: ' . $e->getMessage(), 'error');
+            redirect('spirituality.php');
         }
     }
     
     public function processTourBooking() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Validate input
-            $tour_id = isset($_POST['tour_id']) ? intval($_POST['tour_id']) : 0;
-            $customer_name = isset($_POST['customer_name']) ? sanitize_input($_POST['customer_name']) : '';
-            $customer_email = isset($_POST['customer_email']) ? sanitize_input($_POST['customer_email']) : '';
-            $customer_phone = isset($_POST['customer_phone']) ? sanitize_input($_POST['customer_phone']) : '';
-            $booking_date = isset($_POST['booking_date']) ? sanitize_input($_POST['booking_date']) : '';
-            $participants = isset($_POST['participants']) ? intval($_POST['participants']) : 1;
-            $special_requests = isset($_POST['special_requests']) ? sanitize_input($_POST['special_requests']) : '';
-            $tour_price = isset($_POST['tour_price']) ? floatval($_POST['tour_price']) : 0;
+        // Validate and sanitize input
+        $tour_id = isset($_POST['tour_id']) ? (int)$_POST['tour_id'] : 0;
+        $customer_name = isset($_POST['customer_name']) ? sanitize_input($_POST['customer_name']) : '';
+        $customer_email = isset($_POST['customer_email']) ? sanitize_input($_POST['customer_email']) : '';
+        $customer_phone = isset($_POST['customer_phone']) ? sanitize_input($_POST['customer_phone']) : '';
+        $booking_date = isset($_POST['booking_date']) ? sanitize_input($_POST['booking_date']) : '';
+        $participants = isset($_POST['participants']) ? (int)$_POST['participants'] : 1;
+        $amount = isset($_POST['amount']) ? (float)$_POST['amount'] : 0;
+        
+        // Validation
+        $errors = [];
+        
+        if ($tour_id <= 0) {
+            $errors[] = 'Invalid tour selection';
+        }
+        
+        if (empty($customer_name)) {
+            $errors[] = 'Name is required';
+        }
+        
+        if (empty($customer_email) || !filter_var($customer_email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Valid email is required';
+        }
+        
+        if (empty($customer_phone)) {
+            $errors[] = 'Phone number is required';
+        }
+        
+        if (empty($booking_date)) {
+            $errors[] = 'Booking date is required';
+        }
+        
+        if ($participants < 1) {
+            $errors[] = 'At least one participant is required';
+        }
+        
+        // If there are validation errors
+        if (!empty($errors)) {
+            // Set error message and redirect back
+            $error_message = implode(', ', $errors);
+            display_message($error_message, 'error');
+            redirect('spirituality.php');
+            return;
+        }
+        
+        // Create order ID
+        $order_id = 'TUR' . time() . rand(100, 999);
+        
+        try {
+            // Insert booking into database
+            $stmt = $this->conn->prepare("
+                INSERT INTO tour_bookings 
+                (order_id, tour_id, customer_name, customer_email, customer_phone, 
+                 booking_date, participants, amount, payment_status, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())
+            ");
             
-            // Calculate amount
-            $amount = $tour_price * $participants;
+            $stmt->bind_param(
+                "sissssis",
+                $order_id,
+                $tour_id,
+                $customer_name,
+                $customer_email,
+                $customer_phone,
+                $booking_date,
+                $participants,
+                $amount
+            );
             
-            // Create order
-            $order_data = [
-                'order_type' => 'tour_booking',
-                'customer_name' => $customer_name,
-                'customer_email' => $customer_email,
-                'customer_phone' => $customer_phone,
-                'amount' => $amount,
-                'item_id' => $tour_id,
-                'booking_datetime' => $booking_date,
-                'participants' => $participants,
-                'notes' => $special_requests,
-                'status' => 'pending'
-            ];
-            
-            // Create order and get order_id
-            $order_id = $this->orderModel->createOrder($order_data);
-            
-            if ($order_id) {
-                // Generate Razorpay order
-                require_once 'includes/RazorpayApi.php';
-                $razorpay = new RazorpayApi();
-                $razorpay_order = $razorpay->createOrder($amount * 100, $order_id); // Amount in paise
-                
-                if ($razorpay_order) {
-                    // Update order with razorpay_order_id
-                    $this->orderModel->updateOrder($order_id, [
-                        'razorpay_order_id' => $razorpay_order['id']
-                    ]);
-                    
-                    // Return success response
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'Order created successfully',
-                        'order_id' => $razorpay_order['id'],
-                        'amount' => $amount * 100, // Amount in paise
-                        'customer_name' => $customer_name,
-                        'customer_email' => $customer_email,
-                        'customer_phone' => $customer_phone
-                    ];
-                    
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    exit;
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Failed to create payment order'
-                    ];
-                    
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    exit;
-                }
-            } else {
-                $response = [
-                    'status' => 'error',
-                    'message' => 'Failed to create order'
+            if ($stmt->execute()) {
+                // Redirect to payment page
+                $_SESSION['order_data'] = [
+                    'order_id' => $order_id,
+                    'amount' => $amount,
+                    'booking_type' => 'tour_booking',
+                    'tour_id' => $tour_id,
+                    'customer_name' => $customer_name,
+                    'customer_email' => $customer_email,
+                    'customer_phone' => $customer_phone,
+                    'booking_date' => $booking_date,
+                    'participants' => $participants
                 ];
                 
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit;
+                redirect('payment.php?order=' . $order_id);
+            } else {
+                display_message('Failed to create booking. Please try again.', 'error');
+                redirect('spirituality.php');
             }
+        } catch (Exception $e) {
+            display_message('Error: ' . $e->getMessage(), 'error');
+            redirect('spirituality.php');
         }
     }
     
     public function verifyPayment($data) {
-        if ($data && isset($data['payment_id']) && isset($data['razorpay_order_id']) && isset($data['signature'])) {
-            require_once 'includes/RazorpayApi.php';
-            $razorpay = new RazorpayApi();
-            
-            $isValid = $razorpay->verifyPaymentSignature($data);
-            
-            if ($isValid) {
-                // Update order status
-                $order = $this->orderModel->getOrderByRazorpayId($data['razorpay_order_id']);
-                
-                if ($order) {
-                    $update_data = [
-                        'payment_id' => $data['payment_id'],
-                        'status' => 'confirmed',
-                        'payment_date' => date('Y-m-d H:i:s')
-                    ];
-                    
-                    $this->orderModel->updateOrder($order['id'], $update_data);
-                    
-                    // Send confirmation email
-                    $this->sendConfirmationEmail($order['id']);
-                    
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'Payment verified successfully',
-                        'order_id' => $order['id']
-                    ];
-                    
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    exit;
-                } else {
-                    $response = [
-                        'status' => 'error',
-                        'message' => 'Order not found'
-                    ];
-                    
-                    header('Content-Type: application/json');
-                    echo json_encode($response);
-                    exit;
-                }
-            } else {
-                $response = [
-                    'status' => 'error',
-                    'message' => 'Payment verification failed'
-                ];
-                
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit;
-            }
-        } else {
-            $response = [
-                'status' => 'error',
-                'message' => 'Invalid payment data'
-            ];
-            
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            exit;
+        if (!isset($data['payment_id']) || !isset($data['order_id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing payment details']);
+            return;
         }
-    }
-    
-    private function sendConfirmationEmail($order_id) {
-        // Get order details
-        $order = $this->orderModel->getOrder($order_id);
         
-        if ($order) {
-            $to = $order['customer_email'];
-            $subject = 'Booking Confirmation - ' . SITE_NAME;
-            
-            // Build email content based on order type
-            if ($order['order_type'] === 'priest_consultation') {
-                $priest = $this->spiritualityModel->getPriest($order['item_id']);
-                $product_name = 'Consultation with ' . $priest['name'];
-                $details = 'Date & Time: ' . date('F j, Y \a\t g:i A', strtotime($order['booking_datetime'])) . '<br>'
-                         . 'Duration: ' . $order['duration'] . ' minutes';
-            } else {
-                $tour = $this->spiritualityModel->getTour($order['item_id']);
-                $product_name = $tour['name'] . ' Tour';
-                $details = 'Date: ' . date('F j, Y', strtotime($order['booking_datetime'])) . '<br>'
-                         . 'Participants: ' . $order['participants'];
-            }
-            
-            $message = '
-                <html>
-                <head>
-                    <title>Booking Confirmation</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; line-height: 1.6; }
-                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                        .header { background-color: #6D4C41; padding: 20px; color: white; text-align: center; }
-                        .content { padding: 20px; background-color: #f9f9f9; }
-                        .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
-                        .details { margin: 20px 0; padding: 15px; border: 1px solid #ddd; background-color: white; }
-                        .amount { font-size: 20px; font-weight: bold; color: #6D4C41; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="header">
-                            <h1>Booking Confirmation</h1>
-                        </div>
-                        <div class="content">
-                            <p>Dear ' . $order['customer_name'] . ',</p>
-                            <p>Thank you for your booking with ' . SITE_NAME . '. Your payment has been successfully processed.</p>
-                            
-                            <div class="details">
-                                <h2>Booking Details</h2>
-                                <p><strong>Order ID:</strong> ' . $order['id'] . '</p>
-                                <p><strong>Service:</strong> ' . $product_name . '</p>
-                                <p><strong>Details:</strong><br> ' . $details . '</p>
-                                <p><strong>Amount Paid:</strong> <span class="amount">₹' . number_format($order['amount'], 2) . '</span></p>
-                            </div>
-                            
-                            <p>If you have any questions regarding your booking, please contact us at support@' . $_SERVER['HTTP_HOST'] . '.</p>
-                            
-                            <p>We look forward to serving you!</p>
-                        </div>
-                        <div class="footer">
-                            <p>&copy; ' . date('Y') . ' ' . SITE_NAME . '. All rights reserved.</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            ';
-            
-            // Headers for HTML email
-            $headers = "MIME-Version: 1.0\r\n";
-            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-            $headers .= "From: " . SITE_NAME . " <noreply@" . $_SERVER['HTTP_HOST'] . ">\r\n";
-            
-            // Send email
-            mail($to, $subject, $message, $headers);
+        $payment_id = sanitize_input($data['payment_id']);
+        $order_id = sanitize_input($data['order_id']);
+        
+        // In a production environment, you would verify the payment with Razorpay
+        // For this demo, we'll simulate successful verification
+        
+        // Update the appropriate booking record
+        if (substr($order_id, 0, 3) === 'PST') {
+            // Priest consultation booking
+            $stmt = $this->conn->prepare("
+                UPDATE priest_bookings SET payment_status = 'completed', razorpay_payment_id = ? WHERE order_id = ?
+            ");
+        } else if (substr($order_id, 0, 3) === 'TUR') {
+            // Tour booking
+            $stmt = $this->conn->prepare("
+                UPDATE tour_bookings SET payment_status = 'completed', razorpay_payment_id = ? WHERE order_id = ?
+            ");
+        } else {
+            // Unknown order type
+            echo json_encode(['status' => 'error', 'message' => 'Invalid order ID format']);
+            return;
+        }
+        
+        $stmt->bind_param("ss", $payment_id, $order_id);
+        
+        if ($stmt->execute()) {
+            echo json_encode(['status' => 'success', 'message' => 'Payment verified successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update payment status']);
         }
     }
 }

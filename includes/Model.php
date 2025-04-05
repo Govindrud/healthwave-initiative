@@ -9,11 +9,26 @@ class Model {
         $this->table = $table;
     }
     
-    public function getAll($limit = 100, $offset = 0) {
-        $sql = "SELECT * FROM {$this->table} LIMIT ? OFFSET ?";
+    public function getAll($limit = 0, $offset = 0) {
+        $sql = "SELECT * FROM {$this->table}";
+        
+        if ($limit > 0) {
+            $sql .= " LIMIT ?";
+            if ($offset > 0) {
+                $sql .= " OFFSET ?";
+            }
+        }
         
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $limit, $offset);
+        
+        if ($limit > 0) {
+            if ($offset > 0) {
+                $stmt->bind_param("ii", $limit, $offset);
+            } else {
+                $stmt->bind_param("i", $limit);
+            }
+        }
+        
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -29,7 +44,6 @@ class Model {
     
     public function getById($id) {
         $sql = "SELECT * FROM {$this->table} WHERE id = ?";
-        
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -42,38 +56,39 @@ class Model {
         return null;
     }
     
-    public function getWhere($conditions, $limit = 100, $offset = 0) {
-        $whereClause = [];
-        $params = [];
-        $types = '';
+    public function getWhere(array $conditions, $limit = 0, $offset = 0) {
+        $sql = "SELECT * FROM {$this->table} WHERE ";
         
-        foreach ($conditions as $key => $value) {
-            $whereClause[] = "{$key} = ?";
-            $params[] = $value;
+        $whereConditions = [];
+        $types = '';
+        $values = [];
+        
+        foreach ($conditions as $field => $value) {
+            $whereConditions[] = "{$field} = ?";
+            $types .= $this->getParamType($value);
+            $values[] = $value;
+        }
+        
+        $sql .= implode(" AND ", $whereConditions);
+        
+        if ($limit > 0) {
+            $sql .= " LIMIT ?";
+            $types .= "i";
+            $values[] = $limit;
             
-            // Determine the data type for binding
-            if (is_int($value)) {
-                $types .= 'i';
-            } elseif (is_float($value)) {
-                $types .= 'd';
-            } else {
-                $types .= 's';
+            if ($offset > 0) {
+                $sql .= " OFFSET ?";
+                $types .= "i";
+                $values[] = $offset;
             }
         }
         
-        $whereStr = implode(' AND ', $whereClause);
-        
-        $sql = "SELECT * FROM {$this->table} WHERE {$whereStr} LIMIT ? OFFSET ?";
-        
-        // Add limit and offset parameters
-        $types .= 'ii';
-        $params[] = $limit;
-        $params[] = $offset;
-        
         $stmt = $this->conn->prepare($sql);
         
-        // Dynamically bind parameters
-        $stmt->bind_param($types, ...$params);
+        if (!empty($values)) {
+            $stmt->bind_param($types, ...$values);
+        }
+        
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -87,24 +102,19 @@ class Model {
         return $items;
     }
     
-    public function create($data) {
-        $columns = implode(', ', array_keys($data));
-        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+    public function create(array $data) {
+        $fields = array_keys($data);
+        $placeholders = array_fill(0, count($fields), '?');
         
-        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+        $sql = "INSERT INTO {$this->table} (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")";
         
         $stmt = $this->conn->prepare($sql);
         
         $types = '';
         $values = [];
+        
         foreach ($data as $value) {
-            if (is_int($value)) {
-                $types .= 'i';
-            } elseif (is_float($value)) {
-                $types .= 'd';
-            } else {
-                $types .= 's';
-            }
+            $types .= $this->getParamType($value);
             $values[] = $value;
         }
         
@@ -117,44 +127,51 @@ class Model {
         return false;
     }
     
-    public function update($id, $data) {
-        $setClause = [];
-        $params = [];
-        $types = '';
+    public function update($id, array $data) {
+        $fields = array_keys($data);
+        $updateFields = [];
         
-        foreach ($data as $key => $value) {
-            $setClause[] = "{$key} = ?";
-            $params[] = $value;
-            
-            if (is_int($value)) {
-                $types .= 'i';
-            } elseif (is_float($value)) {
-                $types .= 'd';
-            } else {
-                $types .= 's';
-            }
+        foreach ($fields as $field) {
+            $updateFields[] = "{$field} = ?";
         }
         
-        $setStr = implode(', ', $setClause);
-        
-        $sql = "UPDATE {$this->table} SET {$setStr} WHERE id = ?";
-        
-        // Add id parameter
-        $types .= 'i';
-        $params[] = $id;
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $updateFields) . " WHERE id = ?";
         
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param($types, ...$params);
+        
+        $types = '';
+        $values = [];
+        
+        foreach ($data as $value) {
+            $types .= $this->getParamType($value);
+            $values[] = $value;
+        }
+        
+        $types .= 'i';  // For the ID in WHERE clause
+        $values[] = $id;
+        
+        $stmt->bind_param($types, ...$values);
         
         return $stmt->execute();
     }
     
     public function delete($id) {
         $sql = "DELETE FROM {$this->table} WHERE id = ?";
-        
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id);
-        
         return $stmt->execute();
     }
+    
+    private function getParamType($value) {
+        if (is_int($value)) {
+            return 'i';
+        } else if (is_float($value)) {
+            return 'd';
+        } else if (is_string($value)) {
+            return 's';
+        } else {
+            return 'b';  // BLOB
+        }
+    }
 }
+?>

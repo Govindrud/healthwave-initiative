@@ -6,140 +6,147 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
             menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
         });
     }
     
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (navLinks && navLinks.classList.contains('active') && 
-            !event.target.closest('.nav-links') && 
-            !event.target.closest('.menu-toggle')) {
-            navLinks.classList.remove('active');
-            menuToggle.classList.remove('active');
-        }
-    });
+    // Image slider functionality
+    initImageSlider();
     
-    // Initialize scrolling animations
-    initScrollAnimations();
-    
-    // Initialize accordion functionality if exists
-    initAccordions();
-    
-    // Handle session messages
-    showSessionMessages();
+    // Initialize any tooltips
+    initTooltips();
 });
 
-function initScrollAnimations() {
-    const fadeElements = document.querySelectorAll('.fade-in-up');
+// Function to initialize image sliders
+function initImageSlider() {
+    const sliders = document.querySelectorAll('.slider-container');
     
-    if (fadeElements.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
+    sliders.forEach(slider => {
+        const track = slider.querySelector('.slider-track');
+        const slides = slider.querySelectorAll('.slider-item');
+        const dots = slider.querySelectorAll('.dot');
+        const prevBtn = slider.querySelector('.prev-btn');
+        const nextBtn = slider.querySelector('.next-btn');
+        
+        if (!track || slides.length === 0) return;
+        
+        let currentSlide = 0;
+        
+        // Set up the slider
+        slides.forEach((slide, index) => {
+            slide.style.display = index === 0 ? 'block' : 'none';
         });
         
-        fadeElements.forEach(element => {
-            observer.observe(element);
-        });
-    }
-}
-
-function initAccordions() {
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-    
-    if (accordionHeaders.length > 0) {
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', function() {
-                const accordionItem = this.parentElement;
-                const accordionContent = this.nextElementSibling;
-                
-                // Toggle current item
-                accordionItem.classList.toggle('active');
-                
-                // Adjust content height
-                if (accordionItem.classList.contains('active')) {
-                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
-                } else {
-                    accordionContent.style.maxHeight = 0;
-                }
-                
-                // Close other items if this is a single-open accordion
-                const isSingleOpen = accordionItem.parentElement.classList.contains('single-open');
-                if (isSingleOpen) {
-                    const siblingItems = accordionItem.parentElement.children;
-                    for (let i = 0; i < siblingItems.length; i++) {
-                        const sibling = siblingItems[i];
-                        if (sibling !== accordionItem && sibling.classList.contains('active')) {
-                            sibling.classList.remove('active');
-                            sibling.querySelector('.accordion-content').style.maxHeight = 0;
-                        }
-                    }
-                }
-            });
-        });
-    }
-}
-
-function showSessionMessages() {
-    const message = document.getElementById('session-message');
-    
-    if (message) {
-        // Show the message
-        message.classList.add('show');
-        
-        // Auto hide after 5 seconds
-        setTimeout(() => {
-            message.classList.remove('show');
-        }, 5000);
-        
-        // Close button functionality
-        const closeBtn = message.querySelector('.close-message');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                message.classList.remove('show');
+        // Next button functionality
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                goToSlide((currentSlide + 1) % slides.length);
             });
         }
-    }
+        
+        // Previous button functionality
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
+            });
+        }
+        
+        // Dots functionality
+        if (dots) {
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+            });
+        }
+        
+        // Function to change slide
+        function goToSlide(index) {
+            slides[currentSlide].style.display = 'none';
+            dots && dots[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            slides[currentSlide].style.display = 'block';
+            dots && dots[currentSlide].classList.add('active');
+        }
+        
+        // Auto slide (optional)
+        let slideInterval = setInterval(() => {
+            goToSlide((currentSlide + 1) % slides.length);
+        }, 5000);
+        
+        // Pause auto slide on hover
+        slider.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        slider.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                goToSlide((currentSlide + 1) % slides.length);
+            }, 5000);
+        });
+    });
 }
 
-// Generic toast notification function
+// Function to initialize tooltips
+function initTooltips() {
+    const tooltips = document.querySelectorAll('[data-tooltip]');
+    
+    tooltips.forEach(tooltip => {
+        tooltip.addEventListener('mouseenter', function() {
+            const tooltipText = this.getAttribute('data-tooltip');
+            
+            if (!tooltipText) return;
+            
+            const tooltipElement = document.createElement('div');
+            tooltipElement.className = 'tooltip';
+            tooltipElement.textContent = tooltipText;
+            
+            document.body.appendChild(tooltipElement);
+            
+            const rect = this.getBoundingClientRect();
+            const tooltipRect = tooltipElement.getBoundingClientRect();
+            
+            tooltipElement.style.top = `${rect.top - tooltipRect.height - 10}px`;
+            tooltipElement.style.left = `${rect.left + (rect.width/2) - (tooltipRect.width/2)}px`;
+            tooltipElement.style.opacity = '1';
+        });
+        
+        tooltip.addEventListener('mouseleave', function() {
+            const tooltipElement = document.querySelector('.tooltip');
+            if (tooltipElement) {
+                tooltipElement.remove();
+            }
+        });
+    });
+}
+
+// Global toast notification function
 window.showToast = function(message, type = 'info') {
-    // Check if toast container exists
-    let toastContainer = document.getElementById('toast-container');
+    const toastContainer = document.getElementById('toast-container') || createToastContainer();
     
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.id = 'toast-container';
-        document.body.appendChild(toastContainer);
-    }
-    
-    // Create toast element
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     
-    let iconClass = 'fa-info-circle';
+    // Set icon based on type
+    let icon = 'info-circle';
     switch(type) {
         case 'success':
-            iconClass = 'fa-check-circle';
+            icon = 'check-circle';
             break;
         case 'error':
-            iconClass = 'fa-exclamation-circle';
+            icon = 'exclamation-circle';
             break;
         case 'warning':
-            iconClass = 'fa-exclamation-triangle';
+            icon = 'exclamation-triangle';
             break;
     }
     
     toast.innerHTML = `
         <div class="toast-content">
-            <i class="fas ${iconClass} toast-icon"></i>
+            <i class="fas fa-${icon} toast-icon"></i>
             <div class="toast-message">${message}</div>
         </div>
         <button class="toast-close">&times;</button>
@@ -147,33 +154,35 @@ window.showToast = function(message, type = 'info') {
     
     toastContainer.appendChild(toast);
     
-    // Show toast after a small delay for animation
+    // Add the show class to trigger animation
     setTimeout(() => {
         toast.classList.add('show');
     }, 10);
     
-    // Auto-hide toast after 5 seconds
-    const hideTimeout = setTimeout(() => {
-        hideToast(toast);
+    // Auto remove after 5 seconds
+    const timeout = setTimeout(() => {
+        removeToast(toast);
     }, 5000);
     
-    // Add close button event listener
-    const closeBtn = toast.querySelector('.toast-close');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            clearTimeout(hideTimeout);
-            hideToast(toast);
-        });
+    // Close button event
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+        clearTimeout(timeout);
+        removeToast(toast);
+    });
+    
+    function removeToast(toast) {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }
+    
+    function createToastContainer() {
+        const container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+        return container;
     }
 };
-
-function hideToast(toast) {
-    toast.classList.remove('show');
-    
-    // Remove from DOM after animation completes
-    setTimeout(() => {
-        if (toast.parentNode) {
-            toast.parentNode.removeChild(toast);
-        }
-    }, 300);
-}
