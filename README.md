@@ -1,69 +1,112 @@
 
-# MeantToHelp Website
+# MeantToHelp - Mental Health Support Project
 
-A complete website solution for mental wellbeing services including doctor consultations, spiritual guidance, and wellness products.
+A comprehensive mental health support platform built with HTML, CSS, JavaScript, and PHP.
 
-## Features
+## Project Overview
 
-- Doctor consultations booking
-- Spiritual guides and tours booking
-- Wellness product shopping
-- Responsive design for all devices
-- Image sliders and interactive UI elements
+MeantToHelp is designed to provide resources, services, and products for mental well-being. The platform offers:
 
-## Quick Setup Guide
+- Mental health products
+- Professional doctor consultations
+- Spiritual guidance services
+- Sacred tours for mental rejuvenation
 
-### 1. Database Setup
+## Technical Stack
 
-1. Create a new MySQL database for the project
-2. Import the SQL file from `setup/simple_setup.sql` to create all required tables
-3. Update database credentials in `includes/Database.php`:
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Backend**: PHP 7.4+
+- **Database**: MySQL
+- **Payment Gateway**: Razorpay
+- **Other Libraries**: Font Awesome, Google Fonts
 
-```php
-private $db_host = 'localhost';     // Your database host
-private $db_user = 'your_username'; // Your database username
-private $db_pass = 'your_password'; // Your database password
-private $db_name = 'your_database'; // Your database name
-```
+## Setup Instructions
 
-### 2. Server Requirements
+### Requirements
 
 - PHP 7.4 or higher
 - MySQL 5.7 or higher
-- Apache/Nginx web server
-- mod_rewrite enabled (for clean URLs)
+- Web server (Apache/Nginx)
 
-### 3. File Structure
+### Installation Steps
 
-The project follows MVC (Model-View-Controller) architecture:
+1. **Clone the repository**
 
-- `models/` - Contains database models
-- `views/` - Contains HTML templates
-- `controllers/` - Contains business logic
-- `includes/` - Contains utility files
-- `css/` - Contains stylesheets
-- `js/` - Contains JavaScript files
-- `images/` - Contains image assets
-- `setup/` - Contains database setup files
+```bash
+git clone https://github.com/yourusername/meanttohelp.git
+cd meanttohelp
+```
 
-### 4. Available Pages
+2. **Set up the database**
 
-- Home (`/` or `/index.php`)
-- Products (`/products.php`)
-- Product Detail (`/products.php?id=X`)
-- Spirituality (`/spirituality.php`)
-- Doctors (`/doctors.php`)
-- Contact (`/contact.php`)
-- Cart (`/cart.php`)
+- Create a new MySQL database
+- Import the database schema from `database.sql`
 
-### 5. Common Issues
+```bash
+mysql -u username -p database_name < database.sql
+```
 
-If you encounter a database connection error:
-1. Verify database credentials in `includes/Database.php`
-2. Ensure your database server is running
-3. Check if the database and tables exist
+3. **Configure the application**
 
-## Contact
+- Update database connection details in `includes/Database.php`
+- Set Razorpay API keys in `includes/constants.php`
 
-For support or questions, contact us at support@meanttohelp.com
+4. **Set up the web server**
 
+- Point your web server document root to the project root directory
+- Ensure `mod_rewrite` is enabled if using Apache
+
+5. **Set folder permissions**
+
+```bash
+chmod -R 755 .
+chmod -R 777 uploads/
+```
+
+## Project Structure
+
+```
+├── controllers/     # PHP controller files
+├── css/            # CSS stylesheets
+├── images/         # Image assets
+├── includes/       # Core PHP includes
+├── js/            # JavaScript files
+├── models/         # PHP model files
+├── uploads/        # Uploaded files
+└── views/          # PHP view templates
+```
+
+## Features
+
+- User authentication
+- Product browsing and purchasing
+- Doctor/Priest consultation booking
+- Spiritual tour booking
+- Razorpay and UPI payment integration
+- Responsive design
+
+## Development
+
+### Adding New Pages
+
+1. Create a new controller in the `controllers/` directory
+2. Create corresponding views in the `views/` directory
+3. Add a new route in the `includes/Router.php` file
+
+### Adding New Features
+
+1. Implement the database changes if necessary
+2. Create or update relevant models in `models/`
+3. Implement controller logic in `controllers/`
+4. Create view templates in `views/`
+
+## Deployment
+
+1. Upload all files to your production server
+2. Import the database schema
+3. Update configuration files with production settings
+4. Set up cron jobs if necessary
+
+## License
+
+[MIT License](LICENSE)

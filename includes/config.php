@@ -1,20 +1,14 @@
 
 <?php
+// Include constants
+require_once 'constants.php';
+
 // Include Database class
 require_once 'Database.php';
 
 // Get database connection
 $db = Database::getInstance();
 $conn = $db->getConnection();
-
-// Define site constants
-define('SITE_NAME', 'MeantToHelp');
-define('SITE_URL', 'https://' . $_SERVER['HTTP_HOST']);
-define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'] . '/uploads/');
-define('IMAGES_URL', SITE_URL . '/images/');
-define('MODELS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/models/');
-define('CONTROLLERS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/controllers/');
-define('VIEWS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/views/');
 
 // Initialize session if not already started
 if (session_status() === PHP_SESSION_NONE) {

@@ -1,5 +1,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Image slider initialization
+    initImageSlider();
+});
+
+function initImageSlider() {
     // Image slider for happy people section
     const sliderTrack = document.querySelector('.slider-track');
     const sliderItems = document.querySelectorAll('.slider-item');
@@ -99,34 +104,4 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-    
-    // Additional functionality for testimonial sliders if needed
-    const testimonialSlides = document.querySelectorAll('.testimonial-card');
-    
-    if (testimonialSlides.length > 1) {
-        let currentTestimonial = 0;
-        
-        function showTestimonial(index) {
-            testimonialSlides.forEach((slide, i) => {
-                slide.style.display = i === index ? 'block' : 'none';
-                if (i === index) {
-                    slide.style.opacity = 0;
-                    setTimeout(() => {
-                        slide.style.opacity = 1;
-                    }, 10);
-                }
-            });
-        }
-        
-        function nextTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonialSlides.length;
-            showTestimonial(currentTestimonial);
-        }
-        
-        // Initialize testimonial slider
-        showTestimonial(currentTestimonial);
-        
-        // Auto-advance testimonials
-        setInterval(nextTestimonial, 7000);
-    }
-});
+}

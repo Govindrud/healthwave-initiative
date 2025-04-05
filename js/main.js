@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
@@ -20,254 +21,159 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Handle slider initialization if it exists on the page
-    initSliders();
+    // Initialize scrolling animations
+    initScrollAnimations();
     
-    // Initialize tabs if they exist on the page
-    initTabs();
+    // Initialize accordion functionality if exists
+    initAccordions();
     
-    // Initialize modal functionality
-    initModals();
+    // Handle session messages
+    showSessionMessages();
 });
 
-// Function to initialize all sliders on the page
-function initSliders() {
-    // This is handled by the specific slider.js file
-    // Only keeping this here for potential future expansion
-}
-
-// Function to initialize tabs
-function initTabs() {
-    const tabButtons = document.querySelectorAll('.tab-button');
+function initScrollAnimations() {
+    const fadeElements = document.querySelectorAll('.fade-in-up');
     
-    if (tabButtons.length > 0) {
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.getAttribute('data-tab');
-                
-                // Deactivate all tabs and buttons
-                document.querySelectorAll('.tab-button').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                document.querySelectorAll('.tab-pane').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                
-                // Activate the selected tab and button
-                button.classList.add('active');
-                document.getElementById(`${tabId}-tab`).classList.add('active');
+    if (fadeElements.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
+        }, {
+            threshold: 0.1
+        });
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
         });
     }
 }
 
-// Function to initialize modals
-function initModals() {
-    // Priest booking modal
-    const priestBookingTriggers = document.querySelectorAll('.book-priest-btn');
-    const priestBookingModal = document.getElementById('priest-booking-modal');
+function initAccordions() {
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
     
-    if (priestBookingTriggers.length > 0 && priestBookingModal) {
-        // Initialize modal events
-        priestBookingTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault();
+    if (accordionHeaders.length > 0) {
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const accordionItem = this.parentElement;
+                const accordionContent = this.nextElementSibling;
                 
-                // Get priest details
-                const priestId = this.getAttribute('data-id');
-                const priestName = this.getAttribute('data-name');
-                const priestRate = this.getAttribute('data-rate');
+                // Toggle current item
+                accordionItem.classList.toggle('active');
                 
-                // Set values in modal
-                document.getElementById('priest-id').value = priestId;
-                document.getElementById('priest-name').value = priestName;
-                document.getElementById('priest-rate').value = priestRate;
-                document.getElementById('summary-priest-name').textContent = priestName;
-                document.getElementById('summary-amount').textContent = `₹${priestRate}`;
+                // Adjust content height
+                if (accordionItem.classList.contains('active')) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                } else {
+                    accordionContent.style.maxHeight = 0;
+                }
                 
-                // Show modal
-                priestBookingModal.style.display = 'flex';
-            });
-        });
-        
-        // Close modal when clicking the close button
-        const closeBtn = priestBookingModal.querySelector('.close-modal');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function() {
-                priestBookingModal.style.display = 'none';
-            });
-        }
-        
-        // Close modal when clicking outside
-        priestBookingModal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.style.display = 'none';
-            }
-        });
-        
-        // Update summary when duration changes
-        const durationSelect = document.getElementById('priest-consultation-duration');
-        if (durationSelect) {
-            durationSelect.addEventListener('change', function() {
-                const duration = parseInt(this.value);
-                const rate = parseInt(document.getElementById('priest-rate').value);
-                const totalAmount = (duration / 60) * rate;
-                
-                document.getElementById('summary-duration').textContent = `${duration} minutes`;
-                document.getElementById('summary-amount').textContent = `₹${totalAmount}`;
-            });
-        }
-        
-        // Update booking datetime summary
-        const bookingDate = document.getElementById('priest-booking-date');
-        const bookingTime = document.getElementById('priest-booking-time');
-        
-        if (bookingDate && bookingTime) {
-            const updateDateTime = function() {
-                const date = bookingDate.value;
-                const time = bookingTime.value;
-                
-                if (date && time) {
-                    const formattedDate = new Date(date + 'T' + time).toLocaleString('en-IN', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    document.getElementById('summary-datetime').textContent = formattedDate;
-                    
-                    // Combine date and time for form submission
-                    const combinedDateTime = date + ' ' + time;
-                    const hiddenDateTimeField = document.querySelector('input[name="booking_datetime"]');
-                    if (!hiddenDateTimeField) {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'booking_datetime';
-                        input.value = combinedDateTime;
-                        document.getElementById('priest-booking-form').appendChild(input);
-                    } else {
-                        hiddenDateTimeField.value = combinedDateTime;
+                // Close other items if this is a single-open accordion
+                const isSingleOpen = accordionItem.parentElement.classList.contains('single-open');
+                if (isSingleOpen) {
+                    const siblingItems = accordionItem.parentElement.children;
+                    for (let i = 0; i < siblingItems.length; i++) {
+                        const sibling = siblingItems[i];
+                        if (sibling !== accordionItem && sibling.classList.contains('active')) {
+                            sibling.classList.remove('active');
+                            sibling.querySelector('.accordion-content').style.maxHeight = 0;
+                        }
                     }
                 }
-            };
-            
-            bookingDate.addEventListener('change', updateDateTime);
-            bookingTime.addEventListener('change', updateDateTime);
-        }
-    }
-    
-    // Tour booking modal
-    const tourBookingTriggers = document.querySelectorAll('.book-tour-btn');
-    const tourBookingModal = document.getElementById('tour-booking-modal');
-    
-    if (tourBookingTriggers.length > 0 && tourBookingModal) {
-        // Initialize modal events
-        tourBookingTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Get tour details
-                const tourId = this.getAttribute('data-id');
-                const tourName = this.getAttribute('data-name');
-                const tourPrice = this.getAttribute('data-price');
-                const tourDates = this.getAttribute('data-dates').split(',');
-                const maxParticipants = parseInt(this.getAttribute('data-max'));
-                
-                // Set values in modal
-                document.getElementById('tour-id').value = tourId;
-                document.getElementById('tour-name').value = tourName;
-                document.getElementById('tour-price').value = tourPrice;
-                document.getElementById('summary-tour-name').textContent = tourName;
-                document.getElementById('summary-tour-amount').textContent = `₹${tourPrice}`;
-                
-                // Populate participants dropdown
-                const participantsSelect = document.getElementById('tour-participants');
-                participantsSelect.innerHTML = '';
-                for (let i = 1; i <= maxParticipants; i++) {
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = i === 1 ? '1 Person' : `${i} People`;
-                    participantsSelect.appendChild(option);
-                }
-                
-                // Populate dates dropdown
-                const dateSelect = document.getElementById('tour-date');
-                dateSelect.innerHTML = '<option value="">Select Date</option>';
-                
-                tourDates.forEach(date => {
-                    const formattedDate = new Date(date.trim()).toLocaleDateString('en-IN', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
-                    
-                    const option = document.createElement('option');
-                    option.value = date.trim();
-                    option.textContent = formattedDate;
-                    dateSelect.appendChild(option);
-                });
-                
-                // Show modal
-                tourBookingModal.style.display = 'flex';
             });
         });
+    }
+}
+
+function showSessionMessages() {
+    const message = document.getElementById('session-message');
+    
+    if (message) {
+        // Show the message
+        message.classList.add('show');
         
-        // Close modal when clicking the close button
-        const closeBtn = tourBookingModal.querySelector('.close-modal');
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            message.classList.remove('show');
+        }, 5000);
+        
+        // Close button functionality
+        const closeBtn = message.querySelector('.close-message');
         if (closeBtn) {
-            closeBtn.addEventListener('click', function() {
-                tourBookingModal.style.display = 'none';
-            });
-        }
-        
-        // Close modal when clicking outside
-        tourBookingModal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.style.display = 'none';
-            }
-        });
-        
-        // Update summary when participants changes
-        const participantsSelect = document.getElementById('tour-participants');
-        if (participantsSelect) {
-            participantsSelect.addEventListener('change', function() {
-                const participants = parseInt(this.value);
-                const price = parseInt(document.getElementById('tour-price').value);
-                const totalAmount = participants * price;
-                
-                document.getElementById('summary-participants').textContent = participants === 1 ? '1 person' : `${participants} people`;
-                document.getElementById('summary-tour-amount').textContent = `₹${totalAmount}`;
-                
-                // Update amount in hidden field
-                const amountField = document.querySelector('input[name="amount"]');
-                if (!amountField) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'amount';
-                    input.value = totalAmount;
-                    document.getElementById('tour-booking-form').appendChild(input);
-                } else {
-                    amountField.value = totalAmount;
-                }
-            });
-        }
-        
-        // Update booking date summary
-        const tourDate = document.getElementById('tour-date');
-        if (tourDate) {
-            tourDate.addEventListener('change', function() {
-                const date = this.value;
-                
-                if (date) {
-                    const formattedDate = new Date(date).toLocaleDateString('en-IN', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric'
-                    });
-                    document.getElementById('summary-tour-date').textContent = formattedDate;
-                }
+            closeBtn.addEventListener('click', () => {
+                message.classList.remove('show');
             });
         }
     }
+}
+
+// Generic toast notification function
+window.showToast = function(message, type = 'info') {
+    // Check if toast container exists
+    let toastContainer = document.getElementById('toast-container');
+    
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        document.body.appendChild(toastContainer);
+    }
+    
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    
+    let iconClass = 'fa-info-circle';
+    switch(type) {
+        case 'success':
+            iconClass = 'fa-check-circle';
+            break;
+        case 'error':
+            iconClass = 'fa-exclamation-circle';
+            break;
+        case 'warning':
+            iconClass = 'fa-exclamation-triangle';
+            break;
+    }
+    
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas ${iconClass} toast-icon"></i>
+            <div class="toast-message">${message}</div>
+        </div>
+        <button class="toast-close">&times;</button>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    // Show toast after a small delay for animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    // Auto-hide toast after 5 seconds
+    const hideTimeout = setTimeout(() => {
+        hideToast(toast);
+    }, 5000);
+    
+    // Add close button event listener
+    const closeBtn = toast.querySelector('.toast-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            clearTimeout(hideTimeout);
+            hideToast(toast);
+        });
+    }
+};
+
+function hideToast(toast) {
+    toast.classList.remove('show');
+    
+    // Remove from DOM after animation completes
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+    }, 300);
 }

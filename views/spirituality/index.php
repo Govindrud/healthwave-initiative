@@ -1,357 +1,262 @@
 
-<?php
-$pageSpecificCSS = 'spirituality.css';
-$pageSpecificJS = 'spirituality.js';
-?>
-
+<?php require_once 'includes/config.php'; ?>
 <?php include 'includes/header.php'; ?>
 
-<div class="spirituality-hero-section">
-    <div class="container">
-        <div class="spirituality-hero-content">
-            <h1 class="font-playfair">Spiritual Well-being</h1>
-            <p>Connect with spiritual guides and explore sacred journeys to enhance your mental well-being</p>
-            <div class="hero-buttons">
-                <a href="#priests-section" class="btn btn-primary">Consult with Priests</a>
-                <a href="#tours-section" class="btn btn-outline">Explore Sacred Tours</a>
-            </div>
+<main>
+    <section class="spirituality-header">
+        <div class="container">
+            <h1>Spiritual Journey</h1>
+            <p>Explore our spiritual services and embark on a journey to inner peace and mental well-being through ancient wisdom and practices.</p>
         </div>
-    </div>
-</div>
-
-<div class="container section-padding">
-    <div class="spirituality-tabs">
-        <div class="tab-buttons">
-            <button class="tab-button active" data-tab="priests">Spiritual Guides</button>
+    </section>
+    
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="priests">Spiritual Guidance</button>
             <button class="tab-button" data-tab="tours">Sacred Tours</button>
         </div>
         
-        <div class="tab-content">
-            <div id="priests-tab" class="tab-pane active">
-                <div class="section-header text-center mb-5">
-                    <h2 class="font-playfair">Connect with Spiritual Guides</h2>
-                    <p>Our network of experienced priests and spiritual guides can provide guidance and perform rituals</p>
-                </div>
-                
-                <div class="priests-grid">
-                    <?php if(empty($priests)): ?>
-                        <div class="empty-state">
-                            <i class="fas fa-user-tie fa-4x mb-3"></i>
-                            <h3>No spiritual guides available</h3>
-                            <p>Please check back soon as we expand our network of spiritual guides.</p>
-                        </div>
-                    <?php else: ?>
-                        <?php foreach($priests as $priest): ?>
-                            <div class="priest-card">
-                                <div class="priest-image">
-                                    <img src="<?php echo !empty($priest['image']) ? $priest['image'] : '/images/priest-placeholder.jpg'; ?>" alt="<?php echo $priest['name']; ?>">
-                                    <div class="priest-rating">
-                                        <i class="fas fa-star"></i> <?php echo number_format($priest['rating'], 1); ?>
-                                    </div>
-                                </div>
-                                <div class="priest-info">
-                                    <h3><?php echo $priest['name']; ?></h3>
-                                    <div class="priest-expertise"><?php echo $priest['expertise']; ?></div>
-                                    <div class="priest-description"><?php echo $priest['description']; ?></div>
-                                    <div class="priest-details">
-                                        <p><i class="fas fa-user-clock"></i> <?php echo $priest['experience']; ?> years experience</p>
-                                        <p><i class="fas fa-map-marker-alt"></i> <?php echo $priest['location']; ?></p>
-                                        <p><i class="fas fa-language"></i> <?php echo $priest['languages']; ?></p>
-                                    </div>
-                                    <div class="priest-booking">
-                                        <p class="priest-rate">₹<?php echo $priest['hourly_rate']; ?>/hour</p>
-                                        <button class="book-priest-btn" 
-                                            data-id="<?php echo $priest['id']; ?>" 
-                                            data-name="<?php echo $priest['name']; ?>" 
-                                            data-rate="<?php echo $priest['hourly_rate']; ?>">
-                                            Book Consultation
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
+        <div class="tab-pane active" id="priests-tab">
+            <div class="section-header">
+                <h2>Spiritual Consultations</h2>
+                <p>Connect with our experienced spiritual guides for personal guidance</p>
             </div>
             
-            <div id="tours-tab" class="tab-pane">
-                <div class="section-header text-center mb-5">
-                    <h2 class="font-playfair">Sacred Tours and Pilgrimages</h2>
-                    <p>Explore spiritual destinations with our guided tours designed to promote mental well-being</p>
+            <div class="priests-grid">
+                <?php foreach($priests as $priest): ?>
+                <div class="priest-card">
+                    <img src="<?php echo $priest['image']; ?>" alt="<?php echo $priest['name']; ?>" class="priest-image">
+                    <div class="priest-details">
+                        <h3 class="priest-name"><?php echo $priest['name']; ?></h3>
+                        <p class="priest-specialty"><?php echo $priest['specialty']; ?></p>
+                        <p class="priest-description"><?php echo $priest['description']; ?></p>
+                        <p class="priest-rate">₹<?php echo $priest['rate']; ?>/hr</p>
+                        <button class="btn btn-primary book-priest-btn" 
+                                data-id="<?php echo $priest['id']; ?>"
+                                data-name="<?php echo $priest['name']; ?>"
+                                data-rate="<?php echo $priest['rate']; ?>">
+                            Book Consultation
+                        </button>
+                    </div>
                 </div>
-                
-                <div class="tours-grid">
-                    <?php if(empty($tours)): ?>
-                        <div class="empty-state">
-                            <i class="fas fa-mountain fa-4x mb-3"></i>
-                            <h3>No tours available</h3>
-                            <p>Please check back soon as we add spiritual journeys to our offerings.</p>
-                        </div>
-                    <?php else: ?>
-                        <?php foreach($tours as $tour): ?>
-                            <div class="tour-card">
-                                <div class="tour-image">
-                                    <img src="<?php echo !empty($tour['image']) ? $tour['image'] : '/images/tour-placeholder.jpg'; ?>" alt="<?php echo $tour['name']; ?>">
-                                    <div class="tour-duration">
-                                        <i class="fas fa-clock"></i> <?php echo $tour['duration']; ?>
-                                    </div>
-                                </div>
-                                <div class="tour-info">
-                                    <h3><?php echo $tour['name']; ?></h3>
-                                    <div class="tour-location">
-                                        <i class="fas fa-map-marker-alt"></i> <?php echo $tour['location']; ?>
-                                    </div>
-                                    <div class="tour-description"><?php echo $tour['description']; ?></div>
-                                    <div class="tour-details">
-                                        <p><i class="fas fa-calendar-alt"></i> Available dates: <?php echo implode(', ', array_map(function($date) use ($controller) { 
-                                            return $controller->formatDate($date); 
-                                        }, explode(',', $tour['available_dates']))); ?></p>
-                                        <p><i class="fas fa-users"></i> Max <?php echo $tour['max_participants']; ?> participants</p>
-                                    </div>
-                                    <div class="tour-booking">
-                                        <p class="tour-price">₹<?php echo $tour['price']; ?> per person</p>
-                                        <button class="book-tour-btn" 
-                                            data-id="<?php echo $tour['id']; ?>" 
-                                            data-name="<?php echo $tour['name']; ?>" 
-                                            data-price="<?php echo $tour['price']; ?>"
-                                            data-dates="<?php echo $tour['available_dates']; ?>"
-                                            data-max="<?php echo $tour['max_participants']; ?>">
-                                            Book Tour
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
+                <?php endforeach; ?>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Testimonials Section -->
-<section class="testimonials-section">
-    <div class="container">
-        <div class="section-title">
-            <h2>What Our Clients Say</h2>
-            <p>Hear from people who have experienced spiritual transformation with us</p>
         </div>
         
-        <div class="testimonials-slider">
-            <div class="testimonial-slide">
-                <div class="testimonial-content">
-                    <span class="testimonial-quote">"</span>
-                    <p>The spiritual guidance I received completely changed my perspective on life. I found inner peace that I had been searching for.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <img src="/images/user-placeholder.jpg" alt="User">
-                        </div>
-                        <div class="author-info">
-                            <h4>Priya Sharma</h4>
-                            <p>Delhi</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="tab-pane" id="tours-tab">
+            <div class="section-header">
+                <h2>Sacred Tours</h2>
+                <p>Experience the spiritual energy of sacred sites with our guided tours</p>
             </div>
             
-            <div class="testimonial-slide">
-                <div class="testimonial-content">
-                    <span class="testimonial-quote">"</span>
-                    <p>The Varanasi spiritual tour was life-changing. The rituals and meditations helped me overcome my anxiety that medications couldn't fix.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <img src="/images/user-placeholder.jpg" alt="User">
-                        </div>
-                        <div class="author-info">
-                            <h4>Rajesh Kumar</h4>
-                            <p>Mumbai</p>
-                        </div>
+            <div class="tours-grid">
+                <?php foreach($tours as $tour): ?>
+                <div class="tour-card">
+                    <img src="<?php echo $tour['image']; ?>" alt="<?php echo $tour['name']; ?>" class="tour-image">
+                    <div class="tour-details">
+                        <h3 class="tour-name"><?php echo $tour['name']; ?></h3>
+                        <p class="tour-location">
+                            <i class="fas fa-map-marker-alt"></i> <?php echo $tour['location']; ?>
+                        </p>
+                        <p class="tour-dates">
+                            <strong>Available Dates:</strong> <?php echo implode(', ', explode(',', $tour['dates'])); ?>
+                        </p>
+                        <p class="tour-description"><?php echo $tour['description']; ?></p>
+                        <p class="tour-price">₹<?php echo $tour['price']; ?> per person</p>
+                        <button class="btn btn-primary book-tour-btn"
+                                data-id="<?php echo $tour['id']; ?>"
+                                data-name="<?php echo $tour['name']; ?>"
+                                data-price="<?php echo $tour['price']; ?>"
+                                data-dates="<?php echo $tour['dates']; ?>"
+                                data-max="<?php echo $tour['max_participants']; ?>">
+                            Book Tour
+                        </button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="testimonial-slide">
-                <div class="testimonial-content">
-                    <span class="testimonial-quote">"</span>
-                    <p>I was going through a difficult time in my life, and the guidance from Pandit Sharma gave me clarity and strength to move forward.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <img src="/images/user-placeholder.jpg" alt="User">
-                        </div>
-                        <div class="author-info">
-                            <h4>Anita Desai</h4>
-                            <p>Bangalore</p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Booking Modal for Priests -->
-<div id="priest-booking-modal" class="booking-modal">
-    <div class="booking-modal-content">
-        <div class="booking-modal-header">
-            <h3>Book Spiritual Consultation</h3>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="booking-modal-body">
-            <form action="/spirituality.php" method="POST" id="priest-booking-form">
-                <input type="hidden" name="action" value="create_priest_order">
-                <input type="hidden" name="priest_id" id="priest-id">
-                <input type="hidden" name="priest_name" id="priest-name">
-                <input type="hidden" name="priest_rate" id="priest-rate">
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="customer_name">Your Name</label>
-                        <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+    
+    <section class="spirituality-testimonial">
+        <div class="container">
+            <div class="section-header">
+                <h2>Spiritual Experiences</h2>
+                <p>Hear from people who found peace through our spiritual services</p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <?php foreach($testimonials as $index => $testimonial): ?>
+                <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>">
+                    <div class="testimonial-quote">
+                        <?php echo $testimonial['message']; ?>
                     </div>
-                    <div class="form-group">
-                        <label for="customer_email">Email</label>
-                        <input type="email" class="form-control" id="customer_email" name="customer_email" required>
+                    <div class="testimonial-author">
+                        <img src="<?php echo $testimonial['avatar']; ?>" alt="<?php echo $testimonial['name']; ?>" class="testimonial-avatar">
+                        <div class="author-details">
+                            <h4><?php echo $testimonial['name']; ?></h4>
+                            <p><?php echo $testimonial['location']; ?></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="customer_phone">Phone Number</label>
-                        <input type="tel" class="form-control" id="customer_phone" name="customer_phone" required>
-                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Priest booking modal -->
+    <div class="modal" id="priest-booking-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book Spiritual Consultation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="priest-booking-form" method="post">
+                    <input type="hidden" name="action" value="create_priest_order">
+                    <input type="hidden" name="priest_id" id="priest-id">
+                    <input type="hidden" name="priest_name" id="priest-name">
+                    <input type="hidden" name="priest_rate" id="priest-rate">
+                    
                     <div class="form-group">
                         <label for="priest-consultation-duration">Consultation Duration</label>
                         <select class="form-control" id="priest-consultation-duration" name="duration" required>
-                            <option value="30">30 Minutes</option>
-                            <option value="60" selected>1 Hour</option>
-                            <option value="90">1.5 Hours</option>
-                            <option value="120">2 Hours</option>
+                            <option value="30">30 minutes</option>
+                            <option value="60" selected>60 minutes</option>
+                            <option value="90">90 minutes</option>
+                            <option value="120">120 minutes</option>
                         </select>
                     </div>
-                </div>
-                
-                <div class="form-row">
+                    
                     <div class="form-group">
-                        <label for="priest-booking-date">Preferred Date</label>
+                        <label for="priest-booking-date">Select Date</label>
                         <input type="date" class="form-control" id="priest-booking-date" name="booking_date" required min="<?php echo date('Y-m-d'); ?>">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="priest-booking-time">Preferred Time</label>
+                        <label for="priest-booking-time">Select Time</label>
                         <input type="time" class="form-control" id="priest-booking-time" name="booking_time" required>
                     </div>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label for="special_requests">Special Requests or Questions</label>
-                    <textarea class="form-control" id="special_requests" name="special_requests" rows="3"></textarea>
-                </div>
-                
-                <div class="booking-summary">
-                    <h4>Booking Summary</h4>
-                    <div class="summary-item">
-                        <span class="summary-label">Spiritual Guide:</span>
-                        <span class="summary-value" id="summary-priest-name"></span>
+                    
+                    <div class="form-group">
+                        <label for="customer_name">Your Name</label>
+                        <input type="text" class="form-control" name="customer_name" id="customer_name" required>
                     </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Duration:</span>
-                        <span class="summary-value" id="summary-duration">1 hour</span>
+                    
+                    <div class="form-group">
+                        <label for="customer_email">Email Address</label>
+                        <input type="email" class="form-control" name="customer_email" id="customer_email" required>
                     </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Date & Time:</span>
-                        <span class="summary-value" id="summary-datetime">-</span>
+                    
+                    <div class="form-group">
+                        <label for="customer_phone">Phone Number</label>
+                        <input type="tel" class="form-control" name="customer_phone" id="customer_phone" required>
                     </div>
-                    <div class="summary-item total">
-                        <span class="summary-label">Total Amount:</span>
-                        <span class="summary-value" id="summary-amount"></span>
+                    
+                    <div class="form-group">
+                        <label for="special_requests">Special Requests (Optional)</label>
+                        <textarea class="form-control" name="special_requests" id="special_requests" rows="3"></textarea>
                     </div>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="submit" class="book-btn">Proceed to Payment</button>
-                </div>
-            </form>
+                    
+                    <div class="booking-summary">
+                        <h4>Booking Summary</h4>
+                        <div class="summary-row">
+                            <span>Priest:</span>
+                            <span id="summary-priest-name"></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Duration:</span>
+                            <span id="summary-duration">60 minutes</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Date & Time:</span>
+                            <span id="summary-datetime">Please select a date and time</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Amount:</span>
+                            <span id="summary-amount"></span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- Booking Modal for Tours -->
-<div id="tour-booking-modal" class="booking-modal">
-    <div class="booking-modal-content">
-        <div class="booking-modal-header">
-            <h3>Book Sacred Tour</h3>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="booking-modal-body">
-            <form action="/spirituality.php" method="POST" id="tour-booking-form">
-                <input type="hidden" name="action" value="create_tour_order">
-                <input type="hidden" name="tour_id" id="tour-id">
-                <input type="hidden" name="tour_name" id="tour-name">
-                <input type="hidden" name="tour_price" id="tour-price">
-                
-                <div class="form-row">
+    
+    <!-- Tour booking modal -->
+    <div class="modal" id="tour-booking-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book Sacred Tour</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="tour-booking-form" method="post">
+                    <input type="hidden" name="action" value="create_tour_order">
+                    <input type="hidden" name="tour_id" id="tour-id">
+                    <input type="hidden" name="tour_name" id="tour-name">
+                    <input type="hidden" name="tour_price" id="tour-price">
+                    
                     <div class="form-group">
-                        <label for="tour_customer_name">Your Name</label>
-                        <input type="text" class="form-control" id="tour_customer_name" name="customer_name" required>
+                        <label for="tour-date">Select Tour Date</label>
+                        <select class="form-control" id="tour-date" name="booking_date" required>
+                            <!-- Options will be populated dynamically -->
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="tour_customer_email">Email</label>
-                        <input type="email" class="form-control" id="tour_customer_email" name="customer_email" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tour_customer_phone">Phone Number</label>
-                        <input type="tel" class="form-control" id="tour_customer_phone" name="customer_phone" required>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="tour-participants">Number of Participants</label>
                         <select class="form-control" id="tour-participants" name="participants" required>
-                            <option value="1">1 Person</option>
+                            <!-- Options will be populated dynamically -->
                         </select>
                     </div>
-                </div>
-                
-                <div class="form-row">
+                    
                     <div class="form-group">
-                        <label for="tour-date">Tour Date</label>
-                        <select class="form-control" id="tour-date" name="booking_date" required>
-                            <option value="">Select Date</option>
-                        </select>
+                        <label for="customer_name">Your Name</label>
+                        <input type="text" class="form-control" name="customer_name" required>
                     </div>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label for="tour_special_requests">Special Requests or Questions</label>
-                    <textarea class="form-control" id="tour_special_requests" name="special_requests" rows="3"></textarea>
-                </div>
-                
-                <div class="booking-summary">
-                    <h4>Booking Summary</h4>
-                    <div class="summary-item">
-                        <span class="summary-label">Tour:</span>
-                        <span class="summary-value" id="summary-tour-name"></span>
+                    
+                    <div class="form-group">
+                        <label for="customer_email">Email Address</label>
+                        <input type="email" class="form-control" name="customer_email" required>
                     </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Participants:</span>
-                        <span class="summary-value" id="summary-participants">1 person</span>
+                    
+                    <div class="form-group">
+                        <label for="customer_phone">Phone Number</label>
+                        <input type="tel" class="form-control" name="customer_phone" required>
                     </div>
-                    <div class="summary-item">
-                        <span class="summary-label">Date:</span>
-                        <span class="summary-value" id="summary-tour-date">-</span>
+                    
+                    <div class="form-group">
+                        <label for="special_requests">Special Requests (Optional)</label>
+                        <textarea class="form-control" name="special_requests" rows="3"></textarea>
                     </div>
-                    <div class="summary-item total">
-                        <span class="summary-label">Total Amount:</span>
-                        <span class="summary-value" id="summary-tour-amount"></span>
+                    
+                    <div class="booking-summary">
+                        <h4>Booking Summary</h4>
+                        <div class="summary-row">
+                            <span>Tour:</span>
+                            <span id="summary-tour-name"></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Date:</span>
+                            <span id="summary-tour-date">Please select a date</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Participants:</span>
+                            <span id="summary-participants">1 person</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Total Amount:</span>
+                            <span id="summary-tour-amount"></span>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="submit" class="book-btn">Proceed to Payment</button>
-                </div>
-            </form>
+                    
+                    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 <?php include 'includes/footer.php'; ?>
