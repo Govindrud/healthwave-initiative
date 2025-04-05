@@ -1,4 +1,3 @@
-
 <?php
 class Router {
     private $routes = [];
@@ -14,10 +13,24 @@ class Router {
     private function registerDefaultRoutes() {
         // Home route
         $this->addRoute('/', 'Home', 'index');
+        $this->addRoute('/index.php', 'Home', 'index');
         
         // Spirituality route
         $this->addRoute('/spirituality', 'Spirituality', 'index');
         $this->addRoute('/spirituality.php', 'Spirituality', 'index');
+        
+        // Products route
+        $this->addRoute('/products', 'Product', 'index');
+        $this->addRoute('/products.php', 'Product', 'index');
+        $this->addRoute('/products/detail', 'Product', 'detail');
+        
+        // Contact route
+        $this->addRoute('/contact', 'Contact', 'index');
+        $this->addRoute('/contact.php', 'Contact', 'index');
+        
+        // Cart route
+        $this->addRoute('/cart', 'Cart', 'index');
+        $this->addRoute('/cart.php', 'Cart', 'index');
     }
     
     public function addRoute($path, $controller, $action = 'index') {

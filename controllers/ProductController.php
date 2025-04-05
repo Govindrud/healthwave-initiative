@@ -33,7 +33,12 @@ class ProductController extends Controller {
         ]);
     }
     
-    public function detail($id) {
+    public function detail($id = null) {
+        // Get product ID from request if not provided as parameter
+        if ($id === null) {
+            $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        }
+        
         // Get product details
         $product = $this->model->getById($id);
         
@@ -64,15 +69,26 @@ class ProductController extends Controller {
         ]);
     }
     
-    public function addToCart($productId, $quantity = 1) {
+    public function addToCart() {
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+            exit;
+        }
+        
+        $productId = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+        $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
+        
         // Add product to cart (in a real implementation, would handle cart logic)
         $success = $this->model->addToCart($productId, $quantity);
         
         if ($success) {
-            return ['status' => 'success', 'message' => 'Product added to cart successfully.'];
+            echo json_encode(['status' => 'success', 'message' => 'Product added to cart successfully.']);
         } else {
-            return ['status' => 'error', 'message' => 'Failed to add product to cart.'];
+            echo json_encode(['status' => 'error', 'message' => 'Failed to add product to cart.']);
         }
+        exit;
     }
     
     public function getAllProducts() {

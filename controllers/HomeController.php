@@ -11,8 +11,20 @@ class HomeController extends Controller {
         // Get featured products
         $featured_products = $this->getFeaturedProducts();
         
-        // Include the view
-        $this->render('home/index', ['featured_products' => $featured_products]);
+        // Set page specific variables
+        $pageTitle = SITE_NAME . ' - Support for Mental Well-being';
+        $metaDescription = SITE_NAME . ' provides tools, resources and services to support your mental well-being journey.';
+        $pageSpecificCSS = 'home.css';
+        $pageSpecificJS = 'slider.js';
+        
+        // Include the view with data
+        $this->render('home/index', [
+            'featured_products' => $featured_products,
+            'pageTitle' => $pageTitle,
+            'metaDescription' => $metaDescription,
+            'pageSpecificCSS' => $pageSpecificCSS,
+            'pageSpecificJS' => $pageSpecificJS
+        ]);
     }
     
     private function getFeaturedProducts() {

@@ -9,7 +9,7 @@ A complete website solution for mental wellbeing services including doctor consu
 - Spiritual guides and tours booking
 - Wellness product shopping
 - Responsive design for all devices
-- Integrated payment processing
+- Image sliders and interactive UI elements
 
 ## Quick Setup Guide
 
@@ -44,9 +44,19 @@ The project follows MVC (Model-View-Controller) architecture:
 - `css/` - Contains stylesheets
 - `js/` - Contains JavaScript files
 - `images/` - Contains image assets
-- `uploads/` - For user-uploaded content
+- `setup/` - Contains database setup files
 
-### 4. Common Issues
+### 4. Available Pages
+
+- Home (`/` or `/index.php`)
+- Products (`/products.php`)
+- Product Detail (`/products.php?id=X`)
+- Spirituality (`/spirituality.php`)
+- Doctors (`/doctors.php`)
+- Contact (`/contact.php`)
+- Cart (`/cart.php`)
+
+### 5. Common Issues
 
 If you encounter a database connection error:
 1. Verify database credentials in `includes/Database.php`
@@ -56,3 +66,4 @@ If you encounter a database connection error:
 ## Contact
 
 For support or questions, contact us at support@meanttohelp.com
+
