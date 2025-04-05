@@ -23,6 +23,9 @@
     <?php if(isset($pageSpecificCSS)): ?>
         <link rel="stylesheet" href="/css/<?php echo $pageSpecificCSS; ?>">
     <?php endif; ?>
+
+    <!-- Razorpay Script for Payment -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <header>

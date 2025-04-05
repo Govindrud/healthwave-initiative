@@ -7,8 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             
-            const amount = this.getAttribute('data-amount');
-            const productName = this.getAttribute('data-product');
+            const amount = this.getAttribute('data-amount') || this.closest('form')?.querySelector('input[name="amount"]')?.value;
+            const productName = this.getAttribute('data-product') || this.closest('form')?.querySelector('input[name="product_name"]')?.value;
+            
+            if (!amount) {
+                showToast('Error: Amount not specified', 'error');
+                return;
+            }
+            
             const orderId = 'ORD_' + Math.random().toString(36).substring(2, 15);
             const isConsultation = this.classList.contains('book-btn');
             const datetime = this.getAttribute('data-datetime') || '';
@@ -21,30 +27,26 @@ document.addEventListener('DOMContentLoaded', function() {
             // Try to get customer details from the closest form
             const parentForm = this.closest('form');
             if (parentForm) {
-                const nameInput = parentForm.querySelector('input[name="name"]');
-                const emailInput = parentForm.querySelector('input[name="email"]');
-                const phoneInput = parentForm.querySelector('input[name="phone"]');
+                const nameInput = parentForm.querySelector('input[name="customer_name"]') || 
+                                  parentForm.querySelector('input[name="name"]');
+                const emailInput = parentForm.querySelector('input[name="customer_email"]') || 
+                                   parentForm.querySelector('input[name="email"]');
+                const phoneInput = parentForm.querySelector('input[name="customer_phone"]') || 
+                                   parentForm.querySelector('input[name="phone"]');
                 
                 customerName = nameInput ? nameInput.value : '';
                 customerEmail = emailInput ? emailInput.value : '';
                 customerPhone = phoneInput ? phoneInput.value : '';
-            }
-            
-            // If it's a consultation without a form, try to get a customer name from the closest input
-            if (isConsultation && !customerName) {
-                // Look for name input in any nearby container
-                const container = this.closest('.doctor-card') || this.closest('.doctors-grid') || document;
-                const nameInput = container.querySelector('input[name="customer_name"]');
-                const emailInput = container.querySelector('input[name="customer_email"]');
-                const phoneInput = container.querySelector('input[name="customer_phone"]');
                 
-                customerName = nameInput ? nameInput.value : '';
-                customerEmail = emailInput ? emailInput.value : '';
-                customerPhone = phoneInput ? phoneInput.value : '';
+                // Validate required fields
+                if (isConsultation && (!customerName || !customerEmail || !customerPhone)) {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
             }
             
             // Show payment options modal
-            showPaymentOptions(amount, productName, orderId, isConsultation ? 'consultation' : 'product', customerName, customerEmail, customerPhone, datetime);
+            showPaymentOptions(amount, productName || 'Services', orderId, isConsultation ? 'consultation' : 'product', customerName, customerEmail, customerPhone, datetime);
         });
     });
 
@@ -106,9 +108,17 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
         
+        // Add transition effect
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+        
         // Close modal event
         modal.querySelector('.close-modal').addEventListener('click', function() {
-            document.body.removeChild(modal);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
         });
         
         // Function to collect customer info from modal
@@ -143,8 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const customerInfo = getCustomerInfoFromModal();
             if (!customerInfo) return;
             
-            document.body.removeChild(modal);
-            initiateRazorpayPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(modal);
+                initiateRazorpayPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
+            }, 300);
         });
         
         // UPI option event
@@ -152,12 +165,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const customerInfo = getCustomerInfoFromModal();
             if (!customerInfo) return;
             
-            document.body.removeChild(modal);
-            showUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(modal);
+                showUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
+            }, 300);
         });
     }
 
     function initiateRazorpayPayment(amount, productName, orderId, transactionType, customerInfo, datetime) {
+        // Show loading toast
+        showToast('Setting up payment...', 'info');
+        
         // Razorpay options
         const options = {
             key: 'rzp_test_YOUR_KEY_HERE', // Replace with your Razorpay Key ID
@@ -166,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
             name: 'MeantToHelp',
             description: productName,
             order_id: orderId,
-            image: '/images/logo.png',
+            image: '/images/logo-placeholder.png',
             handler: function(response) {
                 // Handle successful payment
                 verifyPayment(response, amount, productName, orderId, 'Razorpay', transactionType, customerInfo, datetime);
@@ -182,11 +201,24 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             theme: {
                 color: '#0284c7'
+            },
+            modal: {
+                ondismiss: function() {
+                    showToast('Payment cancelled', 'warning');
+                }
             }
         };
         
-        const rzp = new Razorpay(options);
-        rzp.open();
+        try {
+            const rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response){
+                showToast(`Payment failed: ${response.error.description}`, 'error');
+            });
+            rzp.open();
+        } catch (err) {
+            showToast('Failed to initialize payment gateway. Please try again.', 'error');
+            console.error('Razorpay initialization error:', err);
+        }
     }
     
     function showUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime) {
@@ -227,17 +259,28 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
         
+        // Add transition effect
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+        
         // Close modal event
         modal.querySelector('.close-modal').addEventListener('click', function() {
-            document.body.removeChild(modal);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
         });
         
         // Confirm UPI payment
         modal.querySelector('#confirm-upi-payment').addEventListener('click', function() {
-            document.body.removeChild(modal);
-            // In a real app, you would verify the UPI payment on the server
-            // For this demo, we'll simulate a successful payment
-            simulateUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
+            modal.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(modal);
+                // In a real app, you would verify the UPI payment on the server
+                // For this demo, we'll simulate a successful payment
+                simulateUPIPayment(amount, productName, orderId, transactionType, customerInfo, datetime);
+            }, 300);
         });
     }
     
@@ -277,12 +320,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 customer_name: customerInfo.name,
                 customer_email: customerInfo.email,
                 customer_phone: customerInfo.phone,
-                datetime: datetime
+                datetime: datetime,
+                booking_type: transactionType === 'consultation' ? 'priest_consultation' : 'tour_booking'
             })
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.status === 'success') {
                 showToast('Payment successful! Thank you for your purchase.', 'success');
                 
                 // Prepare URL parameters for redirect
@@ -300,54 +344,86 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = `payment-success.php?${params.toString()}`;
                 }, 2000);
             } else {
-                showToast('Payment verification failed. Please contact support.', 'error');
+                showToast(data.message || 'Payment verification failed. Please contact support.', 'error');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            showToast('An error occurred. Please try again.', 'error');
+            showToast('An error occurred during payment verification. Please try again.', 'error');
         });
     }
     
     // Helper function to show toast messages
     function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        const toastMessage = document.querySelector('.toast-message');
-        const toastIcon = document.querySelector('.toast-icon');
+        // Check if toast container exists, if not create it
+        let toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'toast-container';
+            document.body.appendChild(toastContainer);
+        }
         
-        if (toast && toastMessage) {
-            // Set message
-            toastMessage.textContent = message;
-            
-            // Set icon based on type
-            if (toastIcon) {
-                toastIcon.className = 'fas toast-icon';
-                switch(type) {
-                    case 'success':
-                        toastIcon.classList.add('fa-check-circle');
-                        toast.className = 'toast-notification toast-success';
-                        break;
-                    case 'error':
-                        toastIcon.classList.add('fa-exclamation-circle');
-                        toast.className = 'toast-notification toast-error';
-                        break;
-                    case 'warning':
-                        toastIcon.classList.add('fa-exclamation-triangle');
-                        toast.className = 'toast-notification toast-warning';
-                        break;
-                    default:
-                        toastIcon.classList.add('fa-info-circle');
-                        toast.className = 'toast-notification toast-info';
-                }
-            }
-            
-            // Show toast
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        
+        // Set icon based on type
+        let icon = 'info-circle';
+        switch(type) {
+            case 'success':
+                icon = 'check-circle';
+                break;
+            case 'error':
+                icon = 'exclamation-circle';
+                break;
+            case 'warning':
+                icon = 'exclamation-triangle';
+                break;
+        }
+        
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="fas fa-${icon} toast-icon"></i>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close">&times;</button>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Add the show class to trigger animation
+        setTimeout(() => {
             toast.classList.add('show');
-            
-            // Auto hide after 5 seconds
+        }, 10);
+        
+        // Auto remove after 5 seconds
+        const timeout = setTimeout(() => {
+            removeToast(toast);
+        }, 5000);
+        
+        // Close button event
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            clearTimeout(timeout);
+            removeToast(toast);
+        });
+        
+        function removeToast(toast) {
+            toast.classList.remove('show');
             setTimeout(() => {
-                toast.classList.remove('show');
-            }, 5000);
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
         }
     }
+    
+    // Add event listeners to close modals when clicking outside
+    document.addEventListener('click', function(e) {
+        const modals = document.querySelectorAll('.payment-modal, .booking-modal');
+        modals.forEach(modal => {
+            if (e.target === modal) {
+                const closeBtn = modal.querySelector('.close-modal');
+                if (closeBtn) closeBtn.click();
+            }
+        });
+    });
 });

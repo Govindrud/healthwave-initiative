@@ -32,6 +32,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="slider-item">
+                    <div class="slider-image">
+                        <img src="public/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png" alt="Mental wellness journey">
+                        <div class="slider-caption">
+                            <p>"Taking steps toward mental health"</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="slider-nav">
@@ -40,6 +48,7 @@
                     <span class="dot active" data-slide="0"></span>
                     <span class="dot" data-slide="1"></span>
                     <span class="dot" data-slide="2"></span>
+                    <span class="dot" data-slide="3"></span>
                 </div>
                 <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
             </div>
