@@ -1,3 +1,4 @@
+
 /* Spirituality Page Styles */
 :root {
   --spiritual-light: #fdf8ef;
@@ -34,10 +35,55 @@
   font-size: 1.2rem;
   margin-bottom: 2rem;
   color: var(--spiritual-deep);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .font-playfair {
   font-family: 'Playfair Display', serif;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.hero-buttons .btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.hero-buttons .btn-primary {
+  background-color: var(--spiritual-dark);
+  color: white;
+  border: 2px solid var(--spiritual-dark);
+}
+
+.hero-buttons .btn-primary:hover {
+  background-color: var(--spiritual-deep);
+  border-color: var(--spiritual-deep);
+}
+
+.hero-buttons .btn-outline {
+  background-color: transparent;
+  color: var(--spiritual-dark);
+  border: 2px solid var(--spiritual-dark);
+}
+
+.hero-buttons .btn-outline:hover {
+  background-color: var(--spiritual-light);
+}
+
+/* Section Padding */
+.section-padding {
+  padding: 5rem 0;
 }
 
 /* Highlight card for spirituality */
@@ -50,22 +96,25 @@
 /* Tab System */
 .spirituality-tabs {
   margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 .tab-buttons {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
 }
 
 .tab-button {
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   border: none;
   background: none;
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--muted-foreground);
+  color: #666;
   cursor: pointer;
   position: relative;
   transition: all 0.3s ease;
@@ -78,20 +127,24 @@
   left: 0;
   width: 0;
   height: 3px;
-  background-color: var(--meant-600);
+  background-color: var(--spiritual-dark);
   transition: width 0.3s ease;
 }
 
 .tab-button:hover {
-  color: var(--foreground);
+  color: #333;
 }
 
 .tab-button.active {
-  color: var(--meant-600);
+  color: var(--spiritual-dark);
 }
 
 .tab-button.active::after {
   width: 100%;
+}
+
+.tab-content {
+  padding: 2.5rem;
 }
 
 .tab-pane {
@@ -108,7 +161,43 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Priest Cards */
+/* Section Header */
+.section-header {
+  margin-bottom: 2.5rem;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  color: var(--spiritual-dark);
+  margin-bottom: 0.75rem;
+}
+
+.section-header p {
+  color: #666;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  color: #666;
+}
+
+.empty-state i {
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* Priests Grid */
 .priests-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -117,21 +206,24 @@
 }
 
 .priest-card {
-  background-color: var(--card);
-  border-radius: var(--radius);
+  background-color: #fff;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .priest-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .priest-image {
   position: relative;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
 }
 
@@ -165,24 +257,30 @@
 
 .priest-info {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .priest-info h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--spiritual-dark);
 }
 
 .priest-expertise {
-  color: var(--meant-600);
+  color: var(--spiritual-deep);
   font-weight: 500;
   margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
 .priest-description {
-  color: var(--muted-foreground);
+  color: #666;
   margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
@@ -193,11 +291,13 @@
 
 .priest-details p {
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .priest-details i {
   width: 20px;
-  color: var(--meant-600);
+  color: var(--spiritual-deep);
   margin-right: 8px;
 }
 
@@ -205,32 +305,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
 }
 
 .priest-rate {
   font-weight: 600;
   font-size: 1.25rem;
-  color: var(--meant-800);
+  color: var(--spiritual-dark);
   margin: 0;
 }
 
 .book-priest-btn {
-  background-color: var(--meant-600);
+  background-color: var(--spiritual-dark);
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
-  border-radius: var(--radius);
+  border-radius: 30px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .book-priest-btn:hover {
-  background-color: var(--meant-700);
+  background-color: var(--spiritual-deep);
 }
 
-/* Tour Cards */
+/* Tours Grid */
 .tours-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -239,21 +341,24 @@
 }
 
 .tour-card {
-  background-color: var(--card);
-  border-radius: var(--radius);
+  background-color: #fff;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .tour-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .tour-image {
   position: relative;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
 }
 
@@ -286,18 +391,25 @@
 
 .tour-info {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .tour-info h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--spiritual-dark);
 }
 
 .tour-location {
-  color: var(--meant-600);
+  color: var(--spiritual-deep);
   font-weight: 500;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .tour-location i {
@@ -305,9 +417,9 @@
 }
 
 .tour-description {
-  color: var(--muted-foreground);
+  color: #666;
   margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
@@ -318,62 +430,100 @@
 
 .tour-details p {
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
 }
 
 .tour-details i {
   width: 20px;
-  color: var(--meant-600);
+  color: var(--spiritual-deep);
   margin-right: 8px;
+  margin-top: 0.2rem;
 }
 
 .tour-booking {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
 }
 
 .tour-price {
   font-weight: 600;
   font-size: 1.25rem;
-  color: var(--meant-800);
+  color: var(--spiritual-dark);
   margin: 0;
 }
 
 .book-tour-btn {
-  background-color: var(--meant-600);
+  background-color: var(--spiritual-dark);
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
-  border-radius: var(--radius);
+  border-radius: 30px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .book-tour-btn:hover {
-  background-color: var(--meant-700);
+  background-color: var(--spiritual-deep);
 }
 
-/* Testimonials */
+/* Testimonials Section */
 .testimonials-section {
   background-color: var(--spiritual-light);
   padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-section:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/testimonial-pattern.png');
+  opacity: 0.05;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.section-title h2 {
+  font-size: 2.5rem;
+  color: var(--spiritual-dark);
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.section-title p {
+  color: #666;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .testimonials-slider {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem 0;
 }
 
 .testimonial-slide {
-  margin: 0 1rem;
+  padding: 0 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .testimonial-content {
   background-color: white;
-  border-radius: var(--radius);
+  border-radius: 10px;
   padding: 2rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   position: relative;
@@ -383,16 +533,19 @@
   position: absolute;
   top: -15px;
   left: 20px;
-  font-size: 2rem;
+  font-size: 3rem;
   color: var(--spiritual-accent);
   opacity: 0.5;
+  font-family: 'Playfair Display', serif;
 }
 
 .testimonial-content p {
   font-style: italic;
   margin-bottom: 1.5rem;
-  color: var(--muted-foreground);
+  color: #555;
   line-height: 1.8;
+  position: relative;
+  z-index: 1;
 }
 
 .testimonial-author {
@@ -406,6 +559,7 @@
   border-radius: 50%;
   overflow: hidden;
   margin-right: 1rem;
+  border: 2px solid var(--spiritual-accent);
 }
 
 .author-avatar img {
@@ -417,12 +571,13 @@
 .author-info h4 {
   margin: 0;
   font-size: 1rem;
+  color: var(--spiritual-dark);
 }
 
 .author-info p {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--muted-foreground);
+  color: #666;
   font-style: normal;
 }
 
@@ -433,7 +588,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: none;
   align-items: center;
   justify-content: center;
@@ -443,12 +598,18 @@
 
 .booking-modal-content {
   background-color: white;
-  border-radius: var(--radius);
+  border-radius: 10px;
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: modalSlideUp 0.4s ease;
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .booking-modal-header {
@@ -456,25 +617,30 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid var(--border);
+  background-color: var(--spiritual-dark);
+  color: white;
+  border-radius: 10px 10px 0 0;
 }
 
 .booking-modal-header h3 {
   margin: 0;
   font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
 }
 
 .close-modal {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
-  color: var(--muted-foreground);
-  transition: color 0.3s ease;
+  color: white;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  line-height: 1;
 }
 
 .close-modal:hover {
-  color: var(--foreground);
+  opacity: 1;
 }
 
 .booking-modal-body {
@@ -494,97 +660,203 @@
   gap: 1rem;
 }
 
-.radio-group {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
+.form-group {
+  margin-bottom: 0.5rem;
 }
 
-.radio-label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
 }
 
-.radio-label input {
-  margin-right: 0.5rem;
+.form-control {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--spiritual-accent);
+  box-shadow: 0 0 0 3px rgba(233, 216, 180, 0.3);
+  outline: none;
+}
+
+.full-width {
+  grid-column: 1 / -1;
 }
 
 .booking-summary {
-  background-color: var(--secondary);
+  background-color: #f8f8f8;
   padding: 1.5rem;
-  border-radius: var(--radius);
-  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
 }
 
 .booking-summary h4 {
   margin-top: 0;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
   padding-bottom: 0.5rem;
+  color: var(--spiritual-dark);
 }
 
 .summary-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.summary-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: #333;
 }
 
 .summary-item.total {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--border);
-  font-weight: 600;
+  border-top: 1px solid #eee;
   font-size: 1.1rem;
 }
 
-.proceed-payment-btn {
-  background-color: var(--meant-600);
+.modal-footer {
+  padding-top: 1.5rem;
+  text-align: right;
+}
+
+.book-btn {
+  background-color: var(--spiritual-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
+  border-radius: 30px;
   font-weight: 500;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  width: 100%;
-  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.proceed-payment-btn:hover {
-  background-color: var(--meant-700);
-  transform: translateY(-2px);
+.book-btn:hover {
+  background-color: var(--spiritual-deep);
 }
 
 /* Responsive styles */
+@media (max-width: 992px) {
+  .spirituality-hero-section h1 {
+    font-size: 2.8rem;
+  }
+  
+  .tours-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  .tab-content {
+    padding: 2rem 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .spirituality-hero-section {
+    padding: 6rem 0 4rem;
+  }
+  
+  .spirituality-hero-section h1 {
+    font-size: 2.2rem;
+  }
+  
+  .spirituality-hero-section p {
+    font-size: 1rem;
+  }
+  
+  .section-padding {
+    padding: 3rem 0;
+  }
+  
+  .section-title h2,
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+  
   .form-row {
     grid-template-columns: 1fr;
   }
   
-  .tab-button {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-  }
-  
-  .spirituality-hero-section h1 {
-    font-size: 2.5rem;
-  }
-  
   .priest-booking, .tour-booking {
     flex-direction: column;
-    gap: 1rem;
     align-items: flex-start;
+    gap: 1rem;
   }
   
-  .priests-grid, .tours-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  .book-priest-btn, .book-tour-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .tab-buttons {
+    flex-direction: column;
+  }
+  
+  .tab-button {
+    border-bottom: 1px solid #eee;
+    padding: 1rem;
+  }
+  
+  .tab-button::after {
+    display: none;
+  }
+  
+  .tab-button.active {
+    background-color: var(--spiritual-light);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .priests-grid, .tours-grid {
     grid-template-columns: 1fr;
   }
+  
+  .hero-buttons {
+    flex-direction: column;
+  }
+  
+  .hero-buttons .btn {
+    width: 100%;
+  }
+  
+  .booking-modal-content {
+    width: 95%;
+  }
+  
+  .booking-modal-header h3 {
+    font-size: 1.3rem;
+  }
 }
 
+/* Fix for cards with different heights */
+.priests-grid, .tours-grid {
+  align-items: stretch;
+}
+
+.priest-card, .tour-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.priest-info, .tour-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.priest-booking, .tour-booking {
+  margin-top: auto;
+}

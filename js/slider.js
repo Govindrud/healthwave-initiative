@@ -1,115 +1,132 @@
 
-/**
- * Hero Image Slider JavaScript
- */
 document.addEventListener('DOMContentLoaded', function() {
-    const sliderWrapper = document.querySelector('.slider-wrapper');
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.slider-dot');
-    const prevButton = document.querySelector('.slider-prev');
-    const nextButton = document.querySelector('.slider-next');
+    // Image slider for happy people section
+    const sliderTrack = document.querySelector('.slider-track');
+    const sliderItems = document.querySelectorAll('.slider-item');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
     
-    if (!sliderWrapper || slides.length === 0) return;
-    
-    let currentSlide = 0;
-    const slideCount = slides.length;
-    
-    // Initialize the slider
-    function initSlider() {
-        // Show first slide
+    if (sliderTrack && sliderItems.length > 0) {
+        let currentIndex = 0;
+        const itemCount = sliderItems.length;
+        
+        // Set initial position
         updateSlider();
         
-        // Set up auto slide
-        startAutoSlide();
-    }
-    
-    // Update slider to show the current slide
-    function updateSlider() {
-        // Hide all slides
-        slides.forEach(slide => {
-            slide.classList.remove('active');
+        // Event listeners for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+            });
         });
         
-        // Show current slide
-        slides[currentSlide].classList.add('active');
-        
-        // Update dots
-        dots.forEach(dot => {
-            dot.classList.remove('active');
-        });
-        
-        dots[currentSlide].classList.add('active');
-    }
-    
-    // Go to previous slide
-    function prevSlide() {
-        currentSlide--;
-        if (currentSlide < 0) {
-            currentSlide = slideCount - 1;
+        // Event listeners for prev/next buttons
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateSlider();
+            });
         }
-        updateSlider();
-    }
-    
-    // Go to next slide
-    function nextSlide() {
-        currentSlide++;
-        if (currentSlide >= slideCount) {
-            currentSlide = 0;
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateSlider();
+            });
         }
-        updateSlider();
-    }
-    
-    // Go to a specific slide
-    function goToSlide(index) {
-        currentSlide = index;
-        updateSlider();
-        resetAutoSlide();
-    }
-    
-    // Auto slide functionality
-    let autoSlideInterval;
-    
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            nextSlide();
-        }, 5000); // Change slide every 5 seconds
-    }
-    
-    function resetAutoSlide() {
-        clearInterval(autoSlideInterval);
-        startAutoSlide();
-    }
-    
-    // Add event listeners
-    if (prevButton) {
-        prevButton.addEventListener('click', () => {
-            prevSlide();
-            resetAutoSlide();
+        
+        // Auto advance slide
+        let slideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % itemCount;
+            updateSlider();
+        }, 5000);
+        
+        // Pause slider on hover
+        sliderTrack.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
         });
+        
+        sliderTrack.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateSlider();
+            }, 5000);
+        });
+        
+        // Touch events for mobile swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        sliderTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        sliderTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50; // Minimum distance required for a swipe
+            
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe left - next slide
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateSlider();
+            }
+            
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe right - previous slide
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateSlider();
+            }
+        }
+        
+        // Update slider position and active dot
+        function updateSlider() {
+            // Update slider track position
+            sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update active dot
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
     }
     
-    if (nextButton) {
-        nextButton.addEventListener('click', () => {
-            nextSlide();
-            resetAutoSlide();
-        });
+    // Additional functionality for testimonial sliders if needed
+    const testimonialSlides = document.querySelectorAll('.testimonial-card');
+    
+    if (testimonialSlides.length > 1) {
+        let currentTestimonial = 0;
+        
+        function showTestimonial(index) {
+            testimonialSlides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+                if (i === index) {
+                    slide.style.opacity = 0;
+                    setTimeout(() => {
+                        slide.style.opacity = 1;
+                    }, 10);
+                }
+            });
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonialSlides.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        // Initialize testimonial slider
+        showTestimonial(currentTestimonial);
+        
+        // Auto-advance testimonials
+        setInterval(nextTestimonial, 7000);
     }
-    
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            goToSlide(index);
-        });
-    });
-    
-    // Initialize slider
-    initSlider();
-    
-    // Add pause on hover functionality
-    sliderWrapper.addEventListener('mouseenter', () => {
-        clearInterval(autoSlideInterval);
-    });
-    
-    sliderWrapper.addEventListener('mouseleave', () => {
-        startAutoSlide();
-    });
 });

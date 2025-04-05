@@ -4,6 +4,7 @@
 
 <main>
     <?php include 'views/home/partials/hero.php'; ?>
+    <?php include 'views/home/partials/image_slider.php'; ?>
     <?php include 'views/home/partials/featured_products.php'; ?>
     <?php include 'views/home/partials/services.php'; ?>
     <?php include 'views/home/partials/testimonials.php'; ?>
