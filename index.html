@@ -24,35 +24,7 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 </head>
 <body>
-    <div class="content-wrapper">
-        <!-- Header/Navigation will be included via PHP -->
-        <?php include 'includes/header.php'; ?>
-        
-        <main>
-            <!-- Hero Section -->
-            <?php include 'views/home/partials/hero.php'; ?>
-            
-            <!-- Featured Products Section -->
-            <?php include 'views/home/partials/featured_products.php'; ?>
-            
-            <!-- Services Section -->
-            <?php include 'views/home/partials/services.php'; ?>
-            
-            <!-- Testimonials Section -->
-            <?php include 'views/home/partials/testimonials.php'; ?>
-            
-            <!-- Image Slider Section -->
-            <?php include 'views/home/partials/image_slider.php'; ?>
-            
-            <!-- CTA Section -->
-            <?php include 'views/home/partials/cta.php'; ?>
-        </main>
-        
-        <!-- Footer will be included via PHP -->
-        <?php include 'includes/footer.php'; ?>
-    </div>
-    
-    <!-- JavaScript -->
-    <script src="js/main.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
