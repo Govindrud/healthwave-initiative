@@ -31,7 +31,7 @@ function App() {
       <Router>
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<MainLayout />}>
+          <Route element={<MainLayout />}>
             <Route index element={<IndexPage />} />
             <Route path="products" element={<ProductsPage />} />
             <Route path="products/:id" element={<ProductDetailPage />} />

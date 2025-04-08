@@ -5,7 +5,7 @@ import PageTransition from "@/components/PageTransition";
 
 interface MainLayoutProps {
   children: React.ReactNode;
-  title: string;
+  title?: string; // Make title optional
 }
 
 const MainLayout = ({ children, title }: MainLayoutProps) => {

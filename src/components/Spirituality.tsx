@@ -3,9 +3,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { MeditationIcon, Sparkles, Heart, Lotus } from "lucide-react";
+import { Sparkles, Heart } from "lucide-react";
 
-// Custom Lotus icon since it's not available in Lucide
+// Custom Meditation icon since it's not available in Lucide
 const MeditationIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
