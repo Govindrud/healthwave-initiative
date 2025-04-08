@@ -30,26 +30,30 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public Routes */}
-          <Route element={<MainLayout />}>
-            <Route index element={<IndexPage />} />
-            <Route path="products" element={<ProductsPage />} />
-            <Route path="products/:id" element={<ProductDetailPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="doctors" element={<DoctorsPage />} />
-            <Route path="spirituality" element={<SpiritualityPage />} />
-            <Route path="hosting" element={<HostingPage />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="webinars" element={<WebinarsPage />} />
-            <Route path="adventures" element={<AdventuresPage />} />
-            <Route path="games" element={<GamesPage />} />
-            <Route path="student-psychologists" element={<StudentPsychologistsPage />} />
-            <Route path="corporate-plans" element={<CorporatePlansPage />} />
-            <Route path="admin-login" element={<AdminLoginPage />} />
-            <Route path="forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="reset-password" element={<ResetPasswordPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
+          {/* Public Routes with MainLayout */}
+          <Route path="/" element={
+            <MainLayout>
+              <Routes>
+                <Route index element={<IndexPage />} />
+                <Route path="products" element={<ProductsPage />} />
+                <Route path="products/:id" element={<ProductDetailPage />} />
+                <Route path="services" element={<ServicesPage />} />
+                <Route path="doctors" element={<DoctorsPage />} />
+                <Route path="spirituality" element={<SpiritualityPage />} />
+                <Route path="hosting" element={<HostingPage />} />
+                <Route path="cart" element={<CartPage />} />
+                <Route path="webinars" element={<WebinarsPage />} />
+                <Route path="adventures" element={<AdventuresPage />} />
+                <Route path="games" element={<GamesPage />} />
+                <Route path="student-psychologists" element={<StudentPsychologistsPage />} />
+                <Route path="corporate-plans" element={<CorporatePlansPage />} />
+                <Route path="admin-login" element={<AdminLoginPage />} />
+                <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="reset-password" element={<ResetPasswordPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </MainLayout>
+          } />
           
           {/* Protected Routes */}
           <Route
