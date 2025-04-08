@@ -192,6 +192,9 @@ const Navbar = () => {
           <Link to="/products" className={navLinkClass}>
             Products
           </Link>
+          <Link to="/spirituality" className={navLinkClass}>
+            Spirituality
+          </Link>
           <button
             onClick={() => scrollToSection("problem")}
             className={navLinkClass}
@@ -297,6 +300,13 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Products
+              </Link>
+              <Link 
+                to="/spirituality" 
+                className={mobileNavLinkClass}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Spirituality
               </Link>
               <button
                 onClick={() => scrollToSection("problem")}
