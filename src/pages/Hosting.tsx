@@ -1,10 +1,11 @@
+
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ExternalLink, Github, Code, Terminal, Globe, Server, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 
 const CodeBlock = ({ code }: { code: string }) => {

@@ -1,7 +1,7 @@
 
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { getFeaturedProducts } from "@/data/products";
