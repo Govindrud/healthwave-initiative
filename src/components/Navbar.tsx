@@ -192,9 +192,54 @@ const Navbar = () => {
           <Link to="/products" className={navLinkClass}>
             Products
           </Link>
-          <Link to="/spirituality" className={navLinkClass}>
-            Spirituality
-          </Link>
+          
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={`${navLinkClass} bg-transparent p-0`}>Spirituality</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
+                    <ListItem
+                      href="/spirituality"
+                      title="Spiritual Wellness" 
+                      className="hover:bg-meant-50"
+                    >
+                      Explore spiritual practices to enhance your well-being
+                    </ListItem>
+                    <ListItem
+                      href="/spirituality-new"
+                      title="Spiritual Services" 
+                      className="hover:bg-meant-50"
+                    >
+                      Comprehensive spiritual guidance and practices
+                    </ListItem>
+                    <ListItem
+                      href="/spirituality-new?tab=gurus"
+                      title="Guru Consultations"
+                      className="hover:bg-meant-50"
+                    >
+                      Connect with experienced spiritual teachers and guides
+                    </ListItem>
+                    <ListItem
+                      href="/spirituality-new?tab=travel"
+                      title="Spiritual Travel"
+                      className="hover:bg-meant-50"
+                    >
+                      Transformative journeys to sacred destinations worldwide
+                    </ListItem>
+                    <ListItem
+                      href="/spirituality-new?tab=yoga"
+                      title="Bhakti Yoga"
+                      className="hover:bg-meant-50"
+                    >
+                      The devotional path to spiritual growth and well-being
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+          
           <button
             onClick={() => scrollToSection("problem")}
             className={navLinkClass}
@@ -301,13 +346,22 @@ const Navbar = () => {
               >
                 Products
               </Link>
-              <Link 
-                to="/spirituality" 
-                className={mobileNavLinkClass}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Spirituality
-              </Link>
+              
+              {/* Spirituality dropdown */}
+              <div className="relative">
+                <div className={`${mobileNavLinkClass} flex justify-between items-center`}>
+                  <span>Spirituality</span>
+                  <ChevronDown size={16} />
+                </div>
+                <div className="ml-4 mt-1 space-y-1">
+                  <Link to="/spirituality" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Spiritual Wellness</Link>
+                  <Link to="/spirituality-new" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Spiritual Services</Link>
+                  <Link to="/spirituality-new?tab=gurus" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Guru Consultations</Link>
+                  <Link to="/spirituality-new?tab=travel" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Spiritual Travel</Link>
+                  <Link to="/spirituality-new?tab=yoga" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Bhakti Yoga</Link>
+                </div>
+              </div>
+              
               <button
                 onClick={() => scrollToSection("problem")}
                 className={mobileNavLinkClass}

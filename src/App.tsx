@@ -24,6 +24,7 @@ import CorporatePlansPage from "@/pages/CorporatePlans";
 import ForgotPasswordPage from "@/pages/ForgotPassword";
 import ResetPasswordPage from "@/pages/ResetPassword";
 import SpiritualityPage from "@/pages/Spirituality";
+import SpiritualityPageNew from "@/pages/SpiritualityPage";
 
 function App() {
   return (
@@ -31,29 +32,24 @@ function App() {
       <Router>
         <Routes>
           {/* Public Routes with MainLayout */}
-          <Route path="/" element={
-            <MainLayout>
-              <Routes>
-                <Route index element={<IndexPage />} />
-                <Route path="products" element={<ProductsPage />} />
-                <Route path="products/:id" element={<ProductDetailPage />} />
-                <Route path="services" element={<ServicesPage />} />
-                <Route path="doctors" element={<DoctorsPage />} />
-                <Route path="spirituality" element={<SpiritualityPage />} />
-                <Route path="hosting" element={<HostingPage />} />
-                <Route path="cart" element={<CartPage />} />
-                <Route path="webinars" element={<WebinarsPage />} />
-                <Route path="adventures" element={<AdventuresPage />} />
-                <Route path="games" element={<GamesPage />} />
-                <Route path="student-psychologists" element={<StudentPsychologistsPage />} />
-                <Route path="corporate-plans" element={<CorporatePlansPage />} />
-                <Route path="admin-login" element={<AdminLoginPage />} />
-                <Route path="forgot-password" element={<ForgotPasswordPage />} />
-                <Route path="reset-password" element={<ResetPasswordPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </MainLayout>
-          } />
+          <Route path="/" element={<MainLayout>{<IndexPage />}</MainLayout>} />
+          <Route path="products" element={<MainLayout>{<ProductsPage />}</MainLayout>} />
+          <Route path="products/:id" element={<MainLayout>{<ProductDetailPage />}</MainLayout>} />
+          <Route path="services" element={<MainLayout>{<ServicesPage />}</MainLayout>} />
+          <Route path="doctors" element={<MainLayout>{<DoctorsPage />}</MainLayout>} />
+          <Route path="spirituality" element={<MainLayout>{<SpiritualityPage />}</MainLayout>} />
+          <Route path="spirituality-new" element={<MainLayout>{<SpiritualityPageNew />}</MainLayout>} />
+          <Route path="hosting" element={<MainLayout>{<HostingPage />}</MainLayout>} />
+          <Route path="cart" element={<MainLayout>{<CartPage />}</MainLayout>} />
+          <Route path="webinars" element={<MainLayout>{<WebinarsPage />}</MainLayout>} />
+          <Route path="adventures" element={<MainLayout>{<AdventuresPage />}</MainLayout>} />
+          <Route path="games" element={<MainLayout>{<GamesPage />}</MainLayout>} />
+          <Route path="student-psychologists" element={<MainLayout>{<StudentPsychologistsPage />}</MainLayout>} />
+          <Route path="corporate-plans" element={<MainLayout>{<CorporatePlansPage />}</MainLayout>} />
+          <Route path="admin-login" element={<MainLayout>{<AdminLoginPage />}</MainLayout>} />
+          <Route path="forgot-password" element={<MainLayout>{<ForgotPasswordPage />}</MainLayout>} />
+          <Route path="reset-password" element={<MainLayout>{<ResetPasswordPage />}</MainLayout>} />
+          <Route path="*" element={<MainLayout>{<NotFoundPage />}</MainLayout>} />
           
           {/* Protected Routes */}
           <Route
