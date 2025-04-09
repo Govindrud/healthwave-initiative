@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,9 +6,26 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { User, Video, MapPin, Calendar, BookOpen, Heart, BookUser } from "lucide-react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import MainLayout from "@/components/layouts/MainLayout";
 
 const SpiritualityPage: React.FC = () => {
-  // Animation variants
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<string>("gurus");
+  
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && ["gurus", "travel", "video", "planning", "health", "yoga"].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
+  
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    navigate(`/spirituality-new?tab=${value}`);
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -27,8 +43,7 @@ const SpiritualityPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      {/* Hero Section */}
+    <MainLayout>
       <section className="mb-12">
         <div className="relative rounded-lg overflow-hidden h-80 md:h-96">
           <div className="absolute inset-0 bg-gradient-to-r from-meant-900/80 to-meant-700/40 z-10"></div>
@@ -58,8 +73,7 @@ const SpiritualityPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Main Sections Tabs */}
-      <Tabs defaultValue="gurus" className="mb-12">
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="mb-12">
         <TabsList className="grid grid-cols-3 md:grid-cols-6 w-full mb-8">
           <TabsTrigger value="gurus">Guru Help</TabsTrigger>
           <TabsTrigger value="travel">Spiritual Travel</TabsTrigger>
@@ -69,7 +83,6 @@ const SpiritualityPage: React.FC = () => {
           <TabsTrigger value="yoga">Bhakti Yoga</TabsTrigger>
         </TabsList>
 
-        {/* Gurus Section */}
         <TabsContent value="gurus">
           <motion.div
             variants={containerVariants}
@@ -122,7 +135,6 @@ const SpiritualityPage: React.FC = () => {
           </motion.div>
         </TabsContent>
 
-        {/* Spiritual Travel Section */}
         <TabsContent value="travel">
           <motion.div
             variants={containerVariants}
@@ -200,7 +212,6 @@ const SpiritualityPage: React.FC = () => {
           </motion.div>
         </TabsContent>
 
-        {/* Video Consultation */}
         <TabsContent value="video">
           <div className="flex flex-col lg:flex-row gap-8">
             <motion.div 
@@ -293,7 +304,6 @@ const SpiritualityPage: React.FC = () => {
           </div>
         </TabsContent>
 
-        {/* Planning */}
         <TabsContent value="planning">
           <div className="mb-6">
             <h2 className="text-2xl font-bold mb-2">Spiritual Journey Planning</h2>
@@ -394,7 +404,6 @@ const SpiritualityPage: React.FC = () => {
           </motion.div>
         </TabsContent>
 
-        {/* Health Guidance */}
         <TabsContent value="health">
           <motion.div 
             variants={containerVariants}
@@ -496,7 +505,6 @@ const SpiritualityPage: React.FC = () => {
           </motion.div>
         </TabsContent>
 
-        {/* Bhakti Yoga */}
         <TabsContent value="yoga">
           <div className="mb-8">
             <motion.div
@@ -623,8 +631,7 @@ const SpiritualityPage: React.FC = () => {
         </TabsContent>
       </Tabs>
       
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-meant-600 to-meant-800 rounded-lg text-white p-8 md:p-12">
+      <section className="bg-gradient-to-r from-meant-600 to-meant-800 rounded-lg text-white p-8 md:p-12 mb-12">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Begin Your Spiritual Journey Today</h2>
           <p className="mb-8">
@@ -636,7 +643,7 @@ const SpiritualityPage: React.FC = () => {
           </div>
         </div>
       </section>
-    </div>
+    </MainLayout>
   );
 };
 

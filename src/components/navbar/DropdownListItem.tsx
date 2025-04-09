@@ -1,38 +1,36 @@
 
 import React from "react";
-import {
-  NavigationMenuLink
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
-interface ListItemProps extends React.ComponentPropsWithoutRef<"a"> {
+interface DropdownListItemProps {
+  href: string;
   title: string;
   children: React.ReactNode;
+  className?: string;
+  icon?: React.ReactNode;
 }
 
-export const DropdownListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  ListItemProps
->(({ className, title, children, ...props }, ref) => {
+export const DropdownListItem: React.FC<DropdownListItemProps> = ({
+  href,
+  title,
+  children,
+  className = "",
+  icon
+}) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
+      <Link
+        to={href}
+        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${className}`}
+      >
+        <div className="flex items-center gap-2">
+          {icon && <span className="flex-shrink-0">{icon}</span>}
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
+        </div>
+        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          {children}
+        </p>
+      </Link>
     </li>
   );
-});
-
-DropdownListItem.displayName = "DropdownListItem";
+};
