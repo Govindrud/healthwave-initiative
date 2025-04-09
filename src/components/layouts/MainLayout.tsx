@@ -1,5 +1,5 @@
 
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 
