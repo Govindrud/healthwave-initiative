@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
@@ -6,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Cigarette, Wine, CigaretteOff, MonitorSmartphone, Pills, LucideCoffee, Brain } from "lucide-react";
+import { Cigarette, Wine, CigaretteOff, MonitorSmartphone, Pill, LucideCoffee, Brain } from "lucide-react";
 
 const addictionTypes = [
   {
@@ -27,7 +26,7 @@ const addictionTypes = [
       {
         title: "Drug Addiction",
         description: "Support for recovery from prescription or illicit drug dependency",
-        icon: <Pills className="h-10 w-10 text-meant-600" />,
+        icon: <Pill className="h-10 w-10 text-meant-600" />,
       },
     ]
   },
