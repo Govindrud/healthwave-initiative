@@ -31,16 +31,36 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {["Home", "About Us", "Our Solutions", "Testimonials", "Contact"].map((item, i) => (
-                <li key={i}>
-                  <a 
-                    href={`#${item.toLowerCase().replace(/\s+/g, '')}`}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/#about" className="text-muted-foreground hover:text-foreground transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/#solutions" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Our Solutions
+                </Link>
+              </li>
+              <li>
+                <Link to="/#contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/surender" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Surender
+                </Link>
+              </li>
+              <li>
+                <Link to="/de-addiction" className="text-muted-foreground hover:text-foreground transition-colors">
+                  De-addiction
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -48,7 +68,7 @@ const Footer = () => {
             <h3 className="font-semibold text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/admin-login" className="text-muted-foreground hover:text-foreground transition-colors">
                   Admin Dashboard
                 </Link>
               </li>
@@ -58,24 +78,24 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Mental Health Blog
-                </a>
+                <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Mental Health Products
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">
                   Help & Support
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy Policy
-                </a>
+                <Link to="/spirituality" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Spiritual Resources
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Terms of Service
-                </a>
+                <Link to="/corporate-certification" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Corporate Certification
+                </Link>
               </li>
             </ul>
           </div>

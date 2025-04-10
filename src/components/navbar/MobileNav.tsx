@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link, Location } from "react-router-dom";
+import { Link, Location, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MobileDropdown } from "./MobileDropdown";
@@ -12,6 +12,7 @@ interface MobileNavProps {
 export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const isHomePage = location.pathname === "/";
+  const navigate = useNavigate();
   
   // Close mobile menu when route changes
   React.useEffect(() => {
@@ -29,7 +30,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       }
     } else {
       // If we're on another page, navigate to home page with hash
-      window.location.href = `/#${id}`;
+      navigate(`/#${id}`);
     }
   };
 

@@ -12,6 +12,7 @@ import Spirituality from "./pages/Spirituality";
 import CorporateCertification from "./pages/CorporateCertification";
 import Surender from "./pages/Surender";
 import DeAddiction from "./pages/DeAddiction";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/corporate-certification" element={<CorporateCertification />} />
         <Route path="/surender" element={<Surender />} />
         <Route path="/de-addiction" element={<DeAddiction />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

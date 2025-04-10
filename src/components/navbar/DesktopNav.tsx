@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link, Location } from "react-router-dom";
+import { Link, Location, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "./NavLink";
@@ -14,6 +14,7 @@ interface DesktopNavProps {
 
 export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const isHomePage = location.pathname === "/";
+  const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
     if (isHomePage) {
@@ -24,7 +25,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
       }
     } else {
       // If we're on another page, navigate to home page with hash
-      window.location.href = `/#${id}`;
+      navigate(`/#${id}`);
     }
   };
 
