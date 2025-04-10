@@ -74,6 +74,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
               <Link to="/student-psychologists" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Student Psychologists</Link>
               <Link to="/webinars" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Mental Health Webinars</Link>
               <Link to="/corporate-plans" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Corporate Plans</Link>
+              <Link to="/corporate-certification" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Stress-Free Certification</Link>
             </MobileDropdown>
             
             <button

@@ -9,6 +9,7 @@ import Hosting from "./pages/Hosting";
 import NotFound from "./pages/NotFound";
 import SpiritualityPage from "./pages/SpiritualityPage";
 import Spirituality from "./pages/Spirituality";
+import CorporateCertification from "./pages/CorporateCertification";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/hosting" element={<Hosting />} />
         <Route path="/spirituality" element={<Spirituality />} />
         <Route path="/spirituality-new" element={<SpiritualityPage />} />
+        <Route path="/corporate-certification" element={<CorporateCertification />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
