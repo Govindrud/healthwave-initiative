@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
@@ -15,7 +14,8 @@ import {
   Phone,
   Mail,
   ChevronRight,
-  BarChart
+  BarChart,
+  Brain
 } from "lucide-react";
 import { 
   Card, 
