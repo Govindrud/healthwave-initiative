@@ -105,6 +105,22 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
               <Link to="/spirituality-new?tab=yoga" className={`block pl-4 py-2 ${mobileNavLinkClass}`}>Bhakti Yoga</Link>
             </MobileDropdown>
             
+            <Link 
+              to="/surender"
+              className={mobileNavLinkClass}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Surender
+            </Link>
+
+            <Link 
+              to="/de-addiction"
+              className={mobileNavLinkClass}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              De-addiction
+            </Link>
+            
             <button
               onClick={() => scrollToSection("problem")}
               className={mobileNavLinkClass}

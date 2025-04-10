@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound";
 import SpiritualityPage from "./pages/SpiritualityPage";
 import Spirituality from "./pages/Spirituality";
 import CorporateCertification from "./pages/CorporateCertification";
+import Surender from "./pages/Surender";
+import DeAddiction from "./pages/DeAddiction";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/spirituality" element={<Spirituality />} />
         <Route path="/spirituality-new" element={<SpiritualityPage />} />
         <Route path="/corporate-certification" element={<CorporateCertification />} />
+        <Route path="/surender" element={<Surender />} />
+        <Route path="/de-addiction" element={<DeAddiction />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
