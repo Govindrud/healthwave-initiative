@@ -1,6 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Award, Shield, Check } from "lucide-react";
 
 interface CertificationLogoProps {
   size?: "sm" | "md" | "lg";
@@ -17,12 +18,13 @@ export const CertificationLogo = ({ size = "md", animated = false, className = "
   
   const Logo = animated ? motion.div : "div";
   const animationProps = animated ? {
-    initial: { rotate: -5 },
-    animate: { rotate: 5 },
+    initial: { rotate: -5, scale: 0.95 },
+    animate: { rotate: 5, scale: 1 },
     transition: { 
       repeat: Infinity, 
       repeatType: "reverse" as const,
-      duration: 2
+      duration: 2,
+      ease: "easeInOut"
     }
   } : {};
 
@@ -31,35 +33,38 @@ export const CertificationLogo = ({ size = "md", animated = false, className = "
       {...animationProps}
       className={`relative ${sizeClasses[size]} ${className}`}
     >
-      <div className="absolute inset-0 rounded-full border-8 border-meant-600 flex items-center justify-center">
-        <div className="rounded-full h-3/4 w-3/4 border-4 border-meant-500 flex items-center justify-center bg-white">
-          <div className="text-meant-700 font-bold text-center">
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-meant-500 to-meant-700 flex items-center justify-center shadow-lg">
+        <div className="rounded-full h-[85%] w-[85%] bg-white flex items-center justify-center border-4 border-meant-200">
+          <div className="text-meant-700 font-bold text-center flex flex-col items-center justify-center">
             {size === "lg" ? (
               <>
-                <div className="text-2xl">STRESS-FREE</div>
-                <div className="text-xl">CERTIFIED</div>
+                <Shield className="h-12 w-12 mb-1 text-meant-600" strokeWidth={1.5} />
+                <div className="text-2xl leading-tight">STRESS-FREE</div>
+                <div className="text-xl leading-tight">CERTIFIED</div>
               </>
             ) : size === "md" ? (
-              <div className="text-lg">CERTIFIED</div>
+              <>
+                <Shield className="h-6 w-6 mb-1 text-meant-600" strokeWidth={1.5} />
+                <div className="text-lg">CERTIFIED</div>
+              </>
             ) : (
-              <div className="text-xs">SF</div>
+              <>
+                <Shield className="h-4 w-4 text-meant-600" strokeWidth={1.5} />
+                <div className="text-[8px]">SF</div>
+              </>
             )}
           </div>
         </div>
       </div>
       
-      {/* Stars around the logo */}
+      {/* Stars and checkmarks around the logo */}
       {size === "lg" && (
         <>
-          <div className="absolute -top-3 -right-3 bg-meant-500 text-white p-1 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"></path>
-            </svg>
+          <div className="absolute -top-3 -right-3 bg-gradient-to-r from-meant-500 to-meant-600 text-white p-1 rounded-full shadow-md">
+            <Award className="h-5 w-5" />
           </div>
-          <div className="absolute -bottom-2 -left-2 bg-meant-500 text-white p-1 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"></path>
-            </svg>
+          <div className="absolute -bottom-2 -left-2 bg-gradient-to-r from-meant-500 to-meant-600 text-white p-1 rounded-full shadow-md">
+            <Check className="h-4 w-4" />
           </div>
         </>
       )}
