@@ -1,10 +1,25 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Twitter, Facebook, Instagram, Linkedin, Youtube, Heart } from "lucide-react";
 import Logo from "./Logo";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  
+  const scrollToSection = (id: string) => {
+    if (window.location.pathname === '/') {
+      // If on home page, scroll to section
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If not on home page, navigate to home page with hash
+      navigate(`/#${id}`);
+    }
+  };
+
   return (
     <footer className="bg-card border-t">
       <div className="container mx-auto px-4 py-12">
@@ -21,6 +36,7 @@ const Footer = () => {
                   key={i}
                   href="#"
                   className="w-10 h-10 rounded-full bg-meant-50 flex items-center justify-center text-meant-600 hover:bg-meant-100 transition-colors"
+                  aria-label={`Social media link ${i+1}`}
                 >
                   <Icon size={20} />
                 </a>
@@ -37,19 +53,28 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/#about" className="text-muted-foreground hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => scrollToSection("about")}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left"
+                >
                   About Us
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/#solutions" className="text-muted-foreground hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => scrollToSection("solutions")}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left"
+                >
                   Our Solutions
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/#contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                <button 
+                  onClick={() => scrollToSection("contact")}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left"
+                >
                   Contact
-                </Link>
+                </button>
               </li>
               <li>
                 <Link to="/surender" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -105,11 +130,12 @@ const Footer = () => {
             <p className="text-muted-foreground mb-4">
               Subscribe to our newsletter for the latest updates on mental health resources.
             </p>
-            <form className="flex gap-2">
+            <form className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Your email"
                 className="flex-1 px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-meant-500"
+                aria-label="Email address"
               />
               <button
                 type="submit"

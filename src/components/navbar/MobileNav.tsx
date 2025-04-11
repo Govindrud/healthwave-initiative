@@ -48,12 +48,13 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       <button
         className="text-foreground"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        aria-label="Toggle mobile menu"
       >
         {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 glass md:hidden py-4 px-4 animate-fade-in">
+        <div className="absolute top-full left-0 right-0 glass md:hidden py-4 px-4 animate-fade-in z-50 max-h-[80vh] overflow-y-auto">
           <nav className="flex flex-col space-y-2">
             <button
               onClick={() => scrollToSection("hero")}

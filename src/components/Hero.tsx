@@ -5,12 +5,47 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent to-background">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent to-background">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-meant-100 animate-float opacity-30"></div>
-        <div className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-meant-200 animate-float opacity-20" style={{ animationDelay: "1s" }}></div>
-        <div className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-meant-50 animate-float opacity-20" style={{ animationDelay: "2s" }}></div>
+        <motion.div 
+          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-meant-100 opacity-30"
+          animate={{ 
+            y: [0, 15, 0],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-meant-200 opacity-20"
+          animate={{ 
+            y: [0, -20, 0],
+            scale: [1, 1.03, 1]
+          }}
+          transition={{ 
+            duration: 8,
+            delay: 1,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-meant-50 opacity-20"
+          animate={{ 
+            y: [0, 25, 0],
+            scale: [1, 1.04, 1]
+          }}
+          transition={{ 
+            duration: 7,
+            delay: 2,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 z-10 pt-16">
@@ -30,7 +65,7 @@ const Hero = () => {
           </motion.span>
           
           <motion.h1 
-            className="text-balance font-bold mb-6 text-gradient"
+            className="text-4xl md:text-6xl lg:text-7xl text-balance font-bold mb-6 text-gradient"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -41,7 +76,7 @@ const Hero = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-foreground/80 max-w-3xl mx-auto mb-10 text-balance"
+            className="text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto mb-10 text-balance"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}

@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
@@ -13,6 +13,13 @@ import CorporateCertification from "./pages/CorporateCertification";
 import Surender from "./pages/Surender";
 import DeAddiction from "./pages/DeAddiction";
 import AdminLogin from "./pages/AdminLogin";
+import CorporatePlans from "./pages/CorporatePlans";
+import Doctors from "./pages/Doctors";
+import Adventures from "./pages/Adventures";
+import Games from "./pages/Games";
+import StudentPsychologists from "./pages/StudentPsychologists";
+import Webinars from "./pages/Webinars";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -27,9 +34,22 @@ function App() {
         <Route path="/spirituality" element={<Spirituality />} />
         <Route path="/spirituality-new" element={<SpiritualityPage />} />
         <Route path="/corporate-certification" element={<CorporateCertification />} />
+        <Route path="/corporate-plans" element={<CorporatePlans />} />
         <Route path="/surender" element={<Surender />} />
         <Route path="/de-addiction" element={<DeAddiction />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/doctors" element={<Doctors />} />
+        <Route path="/adventures" element={<Adventures />} />
+        <Route path="/games" element={<Games />} />
+        <Route path="/student-psychologists" element={<StudentPsychologists />} />
+        <Route path="/webinars" element={<Webinars />} />
+        
+        {/* Redirect for common misspellings */}
+        <Route path="/surrender" element={<Navigate to="/surender" replace />} />
+        <Route path="/deaddiction" element={<Navigate to="/de-addiction" replace />} />
+        <Route path="/de-addiction" element={<DeAddiction />} />
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
