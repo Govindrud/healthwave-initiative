@@ -1,7 +1,7 @@
 
 @layer components {
   .glass {
-    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-lg;
+    @apply bg-white/90 backdrop-blur-lg border border-white/20 shadow-lg;
   }
   
   .hover-effect {
@@ -14,5 +14,35 @@
 
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24;
+  }
+
+  /* Improved dropdown styling */
+  .dropdown-menu {
+    @apply bg-background border border-border shadow-lg rounded-md py-2 px-1;
+  }
+
+  .dropdown-item {
+    @apply flex items-center px-4 py-2 text-sm text-foreground hover:bg-accent rounded-md transition-colors;
+  }
+
+  /* Navigation improvements */
+  .navigation-bg {
+    @apply bg-background/95 backdrop-blur-md shadow-sm border-b border-border/40;
+  }
+
+  /* Button improvements */
+  .btn-primary {
+    @apply bg-meant-600 hover:bg-meant-700 text-white rounded-md px-4 py-2 
+           transition-all shadow-sm hover:shadow-md active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border border-meant-600 text-meant-700 hover:bg-meant-50 
+           rounded-md px-4 py-2 transition-all;
+  }
+
+  /* Card improvements */
+  .card-fancy {
+    @apply bg-background border border-border rounded-lg shadow-sm hover:shadow-md transition-all;
   }
 }

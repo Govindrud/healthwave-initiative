@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -40,13 +41,19 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex flex-col">
+      <motion.div 
+        className="min-h-screen flex flex-col"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         <Navbar />
-        <main className="flex-grow pt-24">
+        <main className="flex-grow pt-24 md:pt-28 w-full overflow-x-hidden">
           {children}
         </main>
         <Footer />
-      </div>
+      </motion.div>
     </PageTransition>
   );
 };
