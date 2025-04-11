@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface MobileDropdownProps {
   title: string;
@@ -17,15 +18,32 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
       <button 
         className={`${mobileNavLinkClass} justify-between w-full`}
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
       >
         <span>{title}</span>
-        {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <ChevronDown size={16} />
+        </motion.div>
       </button>
-      {isOpen && (
-        <div className="ml-4 mt-1 space-y-1 border-l-2 border-meant-100 pl-2">
-          {children}
-        </div>
-      )}
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            id={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
+            className="ml-4 mt-1 space-y-1 border-l-2 border-meant-100 pl-2 bg-white/95 backdrop-blur-sm rounded-md shadow-sm overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

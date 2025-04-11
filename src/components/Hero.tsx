@@ -2,6 +2,7 @@
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
 
 const Hero = () => {
   return (
@@ -49,66 +50,77 @@ const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 z-10 pt-16">
-        <motion.div 
-          className="max-w-5xl mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.span 
-            className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-5"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
-          >
-            Transforming Mental Health Support
-          </motion.span>
-          
-          <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl text-balance font-bold mb-6 text-gradient"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-500">
-              Meant to Help. Meant to Heal.
-            </span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto mb-10 text-balance"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            We're building a community that connects real mental health challenges with innovative solutions. 
-            By bringing together those in need and college students eager to make a difference, 
-            we're creating powerful, accessible mental health resources for everyone.
-          </motion.p>
-          
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            initial={{ opacity: 0, y: 10 }}
+            className="max-w-3xl"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            transition={{ duration: 0.6 }}
           >
-            <Button 
-              size="lg" 
-              className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all"
-              onClick={() => document.getElementById('problem')?.scrollIntoView({ behavior: 'smooth' })}
+            <motion.span 
+              className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-5"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
             >
-              Share Your Challenge
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="rounded-full px-8 py-6 border-meant-200 hover:bg-meant-50 text-meant-800 hover:shadow-md transition-all"
-              onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
+              Transforming Mental Health Support
+            </motion.span>
+            
+            <motion.h1 
+              className="text-4xl md:text-6xl lg:text-7xl text-balance font-bold mb-6 text-gradient"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
             >
-              Explore Solutions
-            </Button>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-500">
+                Meant to Help. Meant to Heal.
+              </span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-lg md:text-xl text-foreground/80 max-w-3xl mb-10 text-balance"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
+              We're building a community that connects real mental health challenges with innovative solutions. 
+              By bringing together those in need and college students eager to make a difference, 
+              we're creating powerful, accessible mental health resources for everyone.
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              <Button 
+                size="lg" 
+                className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
+                onClick={() => document.getElementById('problem')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Share Your Challenge
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full px-8 py-6 border-meant-200 hover:bg-meant-50 text-meant-800 hover:shadow-md transition-all w-full sm:w-auto"
+                onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Explore Solutions
+              </Button>
+            </motion.div>
           </motion.div>
-        </motion.div>
+          
+          <motion.div
+            className="hidden md:flex justify-center items-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            <BrainThoughtsAnimation />
+          </motion.div>
+        </div>
       </div>
 
       <motion.div 

@@ -18,16 +18,42 @@
 
   /* Improved dropdown styling */
   .dropdown-menu {
-    @apply bg-background border border-border shadow-lg rounded-md py-2 px-1;
+    @apply bg-white border border-border shadow-lg rounded-md py-2 px-1 z-50;
   }
 
   .dropdown-item {
     @apply flex items-center px-4 py-2 text-sm text-foreground hover:bg-accent rounded-md transition-colors;
   }
 
+  /* Hamburger menu styling */
+  .hamburger-button {
+    @apply relative w-6 h-6 flex flex-col justify-center items-center;
+  }
+
+  .hamburger-line {
+    @apply w-full h-0.5 bg-foreground rounded-full transition-all duration-300;
+  }
+
+  .hamburger-active .hamburger-line:first-child {
+    @apply rotate-45 translate-y-1;
+  }
+
+  .hamburger-active .hamburger-line:nth-child(2) {
+    @apply opacity-0;
+  }
+
+  .hamburger-active .hamburger-line:last-child {
+    @apply -rotate-45 -translate-y-1;
+  }
+
   /* Navigation improvements */
   .navigation-bg {
     @apply bg-background/95 backdrop-blur-md shadow-sm border-b border-border/40;
+  }
+
+  /* Mobile dropdown menu */
+  .mobile-dropdown {
+    @apply bg-white/95 backdrop-blur-sm border border-border/20 rounded-md shadow-md overflow-hidden z-50;
   }
 
   /* Button improvements */
@@ -44,5 +70,22 @@
   /* Card improvements */
   .card-fancy {
     @apply bg-background border border-border rounded-lg shadow-sm hover:shadow-md transition-all;
+  }
+
+  /* Thought bubble animation */
+  .thought-bubble {
+    @apply bg-white/80 backdrop-blur-sm border border-gray-100 shadow-md rounded-full 
+           px-3 py-1.5 text-xs font-medium text-gray-700;
+  }
+
+  /* Brain animation container */
+  .brain-container {
+    @apply relative w-full h-full flex items-center justify-center;
+  }
+
+  /* Mobile menu container */
+  .mobile-menu-container {
+    @apply fixed top-[4.5rem] left-0 right-0 bg-white border-t border-b border-border 
+           py-4 shadow-lg z-50 max-h-[80vh] overflow-y-auto;
   }
 }

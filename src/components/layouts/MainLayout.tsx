@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -49,9 +49,18 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
         transition={{ duration: 0.3 }}
       >
         <Navbar />
-        <main className="flex-grow pt-24 md:pt-28 w-full overflow-x-hidden">
-          {children}
-        </main>
+        <AnimatePresence mode="wait">
+          <motion.main 
+            key={location.pathname}
+            className="flex-grow pt-24 md:pt-28 w-full overflow-x-hidden"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
         <Footer />
       </motion.div>
     </PageTransition>
