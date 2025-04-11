@@ -73,7 +73,7 @@ const Hero = () => {
               transition={{ delay: 0.4, duration: 0.8 }}
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-500">
-                Meant to Help. Meant to Heal.
+                Break Free From Mental Loops
               </span>
             </motion.h1>
             
@@ -113,7 +113,7 @@ const Hero = () => {
           </motion.div>
           
           <motion.div
-            className="hidden md:flex justify-center items-center"
+            className="flex justify-center items-center"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1, duration: 0.8 }}

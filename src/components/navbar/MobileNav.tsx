@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MobileDropdown } from "./MobileDropdown";
 import { motion, AnimatePresence } from "framer-motion";
@@ -65,44 +65,32 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       </Link>
       
       <button
-        className="text-foreground p-2 rounded-md hover:bg-accent flex items-center justify-center"
+        className="hamburger-button text-foreground p-2 rounded-md hover:bg-accent flex items-center justify-center"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label="Toggle mobile menu"
         aria-expanded={isMobileMenuOpen}
       >
-        <div className="relative w-6 h-6">
-          <AnimatePresence initial={false} mode="wait">
-            {isMobileMenuOpen ? (
-              <motion.div
-                key="close"
-                initial={{ opacity: 0, rotate: -90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 90 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <X size={24} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="menu"
-                initial={{ opacity: 0, rotate: 90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: -90 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <Menu size={24} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <motion.div 
+          className={`hamburger-line mb-1 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+          animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+          transition={{ duration: 0.2 }}
+        />
+        <motion.div 
+          className={`hamburger-line ${isMobileMenuOpen ? 'opacity-0' : ''}`}
+          animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        />
+        <motion.div 
+          className={`hamburger-line mt-1 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+          animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+          transition={{ duration: 0.2 }}
+        />
       </button>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
-            className="absolute top-full left-0 right-0 bg-white border-t border-b border-border md:hidden py-4 px-4 shadow-md z-50 max-h-[80vh] overflow-y-auto"
+            className="mobile-menu-container absolute top-full left-0 right-0 bg-white border-t border-b border-border md:hidden py-4 px-4 shadow-md z-50 max-h-[80vh] overflow-y-auto"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

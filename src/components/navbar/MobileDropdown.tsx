@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MobileDropdownProps {
@@ -34,7 +34,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
         {isOpen && (
           <motion.div 
             id={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
-            className="ml-4 mt-1 space-y-1 border-l-2 border-meant-100 pl-2 bg-white/95 backdrop-blur-sm rounded-md shadow-sm overflow-hidden"
+            className="ml-4 mt-1 space-y-1 border-l-2 border-meant-100 pl-2 bg-white shadow-sm rounded-md overflow-hidden z-10"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
