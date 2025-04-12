@@ -65,23 +65,24 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       </Link>
       
       <button
-        className="hamburger-button text-foreground p-2 rounded-md hover:bg-accent flex items-center justify-center"
+        className="hamburger-button text-foreground p-2 rounded-md hover:bg-accent flex flex-col items-center justify-center"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label="Toggle mobile menu"
         aria-expanded={isMobileMenuOpen}
+        style={{ width: '40px', height: '40px', background: isMobileMenuOpen ? 'rgba(0,0,0,0.1)' : 'transparent' }}
       >
         <motion.div 
-          className="hamburger-line mb-1"
+          className="hamburger-line mb-1 bg-foreground h-0.5 w-6"
           animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className="hamburger-line"
+          className="hamburger-line bg-foreground h-0.5 w-6"
           animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className="hamburger-line mt-1"
+          className="hamburger-line mt-1 bg-foreground h-0.5 w-6"
           animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
@@ -90,7 +91,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
-            className="mobile-menu-container"
+            className="mobile-menu-container absolute top-full right-0 mt-2 w-64 bg-white shadow-lg rounded-lg overflow-hidden z-50 border border-gray-200"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

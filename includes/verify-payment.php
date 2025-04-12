@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customer_name = isset($data['customer_name']) ? sanitize_input($data['customer_name']) : '';
     $customer_email = isset($data['customer_email']) ? sanitize_input($data['customer_email']) : '';
     $customer_phone = isset($data['customer_phone']) ? sanitize_input($data['customer_phone']) : '';
+    $booking_datetime = isset($data['datetime']) ? sanitize_input($data['datetime']) : '';
     
     // Validate required fields
     if (empty($order_id) || empty($payment_method) || $amount <= 0) {
@@ -51,10 +52,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If payment is verified, record it in the database
     if ($verified) {
         try {
-            // First, check if this is a spiritual service booking
-            if ($transaction_type === 'consultation' && isset($data['booking_type']) && $data['booking_type'] === 'priest_consultation') {
+            // First, check if this is a doctor consultation booking
+            if ($transaction_type === 'consultation' && isset($data['booking_type']) && $data['booking_type'] === 'doctor_consultation') {
+                $doctor_id = isset($data['doctor_id']) ? (int)$data['doctor_id'] : 1; // Default to doctor ID 1 if not specified
+                $duration_minutes = isset($data['duration_minutes']) ? (int)$data['duration_minutes'] : 30;
+                
+                // Insert booking into doctor_bookings table
+                $stmt = $conn->prepare("
+                    INSERT INTO doctor_bookings 
+                    (order_id, doctor_id, customer_name, customer_email, customer_phone, booking_datetime, duration_minutes, amount, payment_method, payment_status, payment_id, created_at) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'completed', ?, NOW())
+                ");
+                
+                $stmt->bind_param(
+                    "sissssidss",
+                    $order_id,
+                    $doctor_id,
+                    $customer_name,
+                    $customer_email,
+                    $customer_phone,
+                    $booking_datetime,
+                    $duration_minutes,
+                    $amount,
+                    $payment_method,
+                    $payment_id
+                );
+                
+                $success = $stmt->execute();
+            } 
+            // Check if this is a priest consultation
+            elseif ($transaction_type === 'consultation' && isset($data['booking_type']) && $data['booking_type'] === 'priest_consultation') {
                 $priest_id = isset($data['priest_id']) ? (int)$data['priest_id'] : 0;
-                $booking_datetime = isset($data['datetime']) ? $data['datetime'] : date('Y-m-d H:i:s');
                 $duration = isset($data['duration_minutes']) ? (int)$data['duration_minutes'] : 60;
                 
                 // Insert booking into priest_bookings table
@@ -153,5 +181,13 @@ function sendResponse($data) {
     header('Content-Type: application/json');
     echo json_encode($data);
     exit;
+}
+
+// Function to sanitize input
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 ?>

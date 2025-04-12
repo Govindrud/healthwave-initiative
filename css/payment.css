@@ -1,0 +1,361 @@
+
+/**
+ * Payment styles for MeantToHelp
+ */
+
+/* Payment modal overlay */
+.payment-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.payment-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.payment-modal-content {
+    width: 100%;
+    max-width: 500px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.payment-modal.show .payment-modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.payment-modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.payment-modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.payment-modal-body {
+    padding: 1.5rem;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+/* Payment summary */
+.payment-summary {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-amount {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 0.5rem;
+}
+
+.appointment-time {
+    margin-top: 0.5rem;
+    color: #6D4C41;
+    font-weight: 500;
+}
+
+/* Payment options */
+.payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.payment-option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.payment-option-btn:hover {
+    border-color: #6D4C41;
+    background-color: #f9f4f2;
+    transform: translateY(-2px);
+}
+
+.payment-option-btn img {
+    height: 40px;
+    width: auto;
+    margin-bottom: 0.75rem;
+}
+
+.payment-option-btn span {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Customer info section */
+.customer-info-section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    color: #555;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #6D4C41;
+    box-shadow: 0 0 0 2px rgba(109, 76, 65, 0.1);
+}
+
+/* UPI specific styles */
+.upi-qr-container {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.upi-qr-container img {
+    max-width: 200px;
+    margin: 0 auto;
+    border: 1px solid #eee;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.upi-id-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.upi-id-container p {
+    font-size: 0.95rem;
+}
+
+.upi-id-container strong {
+    color: #333;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.upi-apps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.upi-apps img {
+    height: 32px;
+    width: auto;
+    margin: 0 0.5rem;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #6D4C41;
+    color: white;
+    box-shadow: 0 2px 4px rgba(109, 76, 65, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #5D4037;
+    box-shadow: 0 3px 6px rgba(109, 76, 65, 0.3);
+}
+
+/* Toast notifications */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+}
+
+.toast {
+    min-width: 250px;
+    max-width: 350px;
+    background-color: white;
+    border-left: 4px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+}
+
+.toast-icon {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.toast-message {
+    font-size: 0.95rem;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.toast-success {
+    border-left-color: #4CAF50;
+}
+
+.toast-success .toast-icon {
+    color: #4CAF50;
+}
+
+.toast-error {
+    border-left-color: #F44336;
+}
+
+.toast-error .toast-icon {
+    color: #F44336;
+}
+
+.toast-warning {
+    border-left-color: #FF9800;
+}
+
+.toast-warning .toast-icon {
+    color: #FF9800;
+}
+
+.toast-info {
+    border-left-color: #2196F3;
+}
+
+.toast-info .toast-icon {
+    color: #2196F3;
+}
+
+/* Time slots styling */
+.time-slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.time-slot-btn {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.time-slot-btn:hover {
+    border-color: #6D4C41;
+    background-color: #f9f4f2;
+}
+
+.time-slot-btn.active {
+    background-color: #6D4C41;
+    color: white;
+    border-color: #6D4C41;
+}
+
+/* Responsive fixes */
+@media (max-width: 576px) {
+    .payment-modal-content {
+        max-width: 95%;
+        margin: 0 10px;
+    }
+    
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+}
