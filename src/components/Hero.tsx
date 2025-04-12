@@ -6,11 +6,11 @@ import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent to-background">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent/50 to-background">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
-          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-meant-100 opacity-30"
+          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-meant-200 opacity-30"
           animate={{ 
             y: [0, 15, 0],
             scale: [1, 1.05, 1]
@@ -22,7 +22,7 @@ const Hero = () => {
           }}
         />
         <motion.div 
-          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-meant-200 opacity-20"
+          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-meant-300 opacity-30"
           animate={{ 
             y: [0, -20, 0],
             scale: [1, 1.03, 1]
@@ -35,7 +35,7 @@ const Hero = () => {
           }}
         />
         <motion.div 
-          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-meant-50 opacity-20"
+          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-meant-100 opacity-30"
           animate={{ 
             y: [0, 25, 0],
             scale: [1, 1.04, 1]
@@ -49,7 +49,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="container mx-auto px-4 z-10 pt-16">
+      <div className="container mx-auto px-4 z-10 pt-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div 
             className="max-w-3xl"
@@ -58,7 +58,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
           >
             <motion.span 
-              className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-5"
+              className="inline-block py-1 px-3 rounded-full bg-meant-200 text-meant-800 text-sm font-medium mb-5"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.4 }}
@@ -67,18 +67,18 @@ const Hero = () => {
             </motion.span>
             
             <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl text-balance font-bold mb-6 text-gradient"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-500">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-800 to-meant-600">
                 Break Free From Mental Loops
               </span>
             </motion.h1>
             
             <motion.p 
-              className="text-lg md:text-xl text-foreground/80 max-w-3xl mb-10 text-balance"
+              className="text-lg md:text-xl text-foreground/80 max-w-3xl mb-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -89,14 +89,14 @@ const Hero = () => {
             </motion.p>
             
             <motion.div 
-              className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4"
+              className="flex flex-col sm:flex-row items-center sm:justify-start gap-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
               <Button 
                 size="lg" 
-                className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
+                className="bg-meant-700 hover:bg-meant-800 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
                 onClick={() => document.getElementById('problem')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Share Your Challenge
@@ -104,7 +104,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-full px-8 py-6 border-meant-200 hover:bg-meant-50 text-meant-800 hover:shadow-md transition-all w-full sm:w-auto"
+                className="rounded-full px-8 py-6 border-meant-300 hover:bg-meant-50 text-meant-800 hover:shadow-md transition-all w-full sm:w-auto"
                 onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Explore Solutions
@@ -113,7 +113,7 @@ const Hero = () => {
           </motion.div>
           
           <motion.div
-            className="flex justify-center items-center"
+            className="flex justify-center items-center mt-8 md:mt-0"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
@@ -131,10 +131,10 @@ const Hero = () => {
       >
         <button 
           onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          className="p-3 rounded-full bg-white/90 hover:bg-white shadow-md hover:shadow-lg transition-all group"
+          className="p-3 rounded-full bg-white shadow-md hover:shadow-lg transition-all group"
           aria-label="Scroll down"
         >
-          <ArrowDown className="text-meant-600 group-hover:text-meant-800 transition-colors" size={24} />
+          <ArrowDown className="text-meant-700 group-hover:text-meant-800 transition-colors" size={24} />
         </button>
       </motion.div>
     </section>

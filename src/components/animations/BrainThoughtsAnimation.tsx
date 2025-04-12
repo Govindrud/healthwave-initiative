@@ -37,13 +37,13 @@ export const BrainThoughtsAnimation: React.FC = () => {
     ];
     
     const colors = [
-      "bg-red-100 border-red-200 text-red-800",
-      "bg-orange-100 border-orange-200 text-orange-800",
-      "bg-amber-100 border-amber-200 text-amber-800",
-      "bg-yellow-100 border-yellow-200 text-yellow-800",
-      "bg-blue-100 border-blue-200 text-blue-800",
-      "bg-indigo-100 border-indigo-200 text-indigo-800",
-      "bg-purple-100 border-purple-200 text-purple-800",
+      "bg-red-200 border-red-300 text-red-800",
+      "bg-orange-200 border-orange-300 text-orange-800",
+      "bg-amber-200 border-amber-300 text-amber-800",
+      "bg-yellow-200 border-yellow-300 text-yellow-800",
+      "bg-blue-200 border-blue-300 text-blue-800",
+      "bg-indigo-200 border-indigo-300 text-indigo-800",
+      "bg-purple-200 border-purple-300 text-purple-800",
     ];
     
     const newThoughts = Array.from({ length: 15 }, (_, i) => ({
@@ -63,9 +63,9 @@ export const BrainThoughtsAnimation: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full max-w-[500px] max-h-[500px]">
+    <div className="relative w-full h-full max-w-[500px] max-h-[500px] mx-auto">
       {/* Circular path for thoughts */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border-2 border-dashed border-meant-100 opacity-30" />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border-2 border-dashed border-meant-200 opacity-40" />
       
       {/* Central brain */}
       <motion.div 
@@ -79,7 +79,7 @@ export const BrainThoughtsAnimation: React.FC = () => {
           repeatType: "reverse" 
         }}
       >
-        <Brain className="w-32 h-32 md:w-40 md:h-40 text-meant-600" strokeWidth={1.5} />
+        <Brain className="w-32 h-32 md:w-40 md:h-40 text-meant-700" strokeWidth={1.5} />
       </motion.div>
       
       {/* Circling thoughts */}
@@ -107,7 +107,7 @@ export const BrainThoughtsAnimation: React.FC = () => {
           }}
         >
           <div 
-            className={`flex items-center justify-center ${thought.color} backdrop-blur-sm border shadow-md rounded-full px-3 py-1.5 text-xs font-medium`}
+            className={`flex items-center justify-center ${thought.color} border shadow-md rounded-full px-3 py-1.5 text-xs font-medium`}
             style={{ width: `${thought.size}px`, height: `${thought.size * 0.6}px` }}
           >
             {thought.text}
@@ -117,8 +117,8 @@ export const BrainThoughtsAnimation: React.FC = () => {
       
       {/* Break free message */}
       <motion.div
-        className="absolute left-1/2 -translate-x-1/2 bottom-5 bg-meant-600 text-white px-6 py-2 rounded-full text-base font-medium shadow-lg"
-        initial={{ y: 10, opacity: 0 }}
+        className="absolute left-1/2 -translate-x-1/2 bottom-0 bg-meant-700 text-white px-6 py-2 rounded-full text-base font-medium shadow-lg"
+        initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
       >

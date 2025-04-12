@@ -27,7 +27,7 @@
 
   /* Hamburger menu styling */
   .hamburger-button {
-    @apply relative w-8 h-6 flex flex-col justify-around;
+    @apply relative w-8 h-6 flex flex-col justify-around cursor-pointer;
   }
 
   .hamburger-line {
@@ -39,25 +39,25 @@
     @apply bg-background/95 backdrop-blur-md shadow-sm border-b border-border/40;
   }
 
-  /* Mobile dropdown menu */
+  /* Mobile dropdown menu - ensuring it's not transparent */
   .mobile-dropdown {
     @apply bg-white border border-border/20 rounded-md shadow-md overflow-hidden z-50;
   }
 
-  /* Mobile menu container */
+  /* Mobile menu container - ensuring it's not transparent */
   .mobile-menu-container {
     @apply fixed top-[4.5rem] left-0 right-0 bg-white border-t border-b border-border 
-           py-4 shadow-lg z-50 max-h-[80vh] overflow-y-auto;
+           py-4 px-4 shadow-lg z-50 max-h-[80vh] overflow-y-auto;
   }
   
   /* Button improvements */
   .btn-primary {
-    @apply bg-meant-600 hover:bg-meant-700 text-white rounded-md px-4 py-2 
+    @apply bg-meant-700 hover:bg-meant-800 text-white rounded-md px-4 py-2 
            transition-all shadow-sm hover:shadow-md active:scale-[0.98];
   }
 
   .btn-outline {
-    @apply border border-meant-600 text-meant-700 hover:bg-meant-50 
+    @apply border border-meant-700 text-meant-700 hover:bg-meant-50 
            rounded-md px-4 py-2 transition-all;
   }
 
@@ -68,8 +68,8 @@
 
   /* Thought bubble animation */
   .thought-bubble {
-    @apply bg-white/80 backdrop-blur-sm border border-gray-100 shadow-md rounded-full 
-           px-3 py-1.5 text-xs font-medium text-gray-700;
+    @apply bg-white/95 backdrop-blur-sm border border-gray-200 shadow-md rounded-full 
+           px-3 py-1.5 text-xs font-medium text-gray-800;
   }
 
   /* Brain animation container */

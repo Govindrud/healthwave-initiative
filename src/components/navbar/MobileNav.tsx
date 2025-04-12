@@ -71,17 +71,17 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
         aria-expanded={isMobileMenuOpen}
       >
         <motion.div 
-          className={`hamburger-line mb-1 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+          className="hamburger-line mb-1"
           animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className={`hamburger-line ${isMobileMenuOpen ? 'opacity-0' : ''}`}
+          className="hamburger-line"
           animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className={`hamburger-line mt-1 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+          className="hamburger-line mt-1"
           animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
@@ -90,7 +90,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
-            className="mobile-menu-container absolute top-full left-0 right-0 bg-white border-t border-b border-border md:hidden py-4 px-4 shadow-md z-50 max-h-[80vh] overflow-y-auto"
+            className="mobile-menu-container"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -112,12 +112,12 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
               </button>
               
               <MobileDropdown title="Services">
-                <Link to="/services" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>All Services</Link>
-                <Link to="/doctors" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Doctor Consultations</Link>
-                <Link to="/student-psychologists" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Student Psychologists</Link>
-                <Link to="/webinars" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Mental Health Webinars</Link>
-                <Link to="/corporate-plans" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Corporate Plans</Link>
-                <Link to="/corporate-certification" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Stress-Free Certification</Link>
+                <Link to="/services" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>All Services</Link>
+                <Link to="/doctors" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Doctor Consultations</Link>
+                <Link to="/student-psychologists" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Student Psychologists</Link>
+                <Link to="/webinars" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Mental Health Webinars</Link>
+                <Link to="/corporate-plans" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Corporate Plans</Link>
+                <Link to="/corporate-certification" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Stress-Free Certification</Link>
               </MobileDropdown>
               
               <button
@@ -128,8 +128,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
               </button>
               
               <MobileDropdown title="Activities">
-                <Link to="/adventures" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Stress-Free Adventures</Link>
-                <Link to="/games" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Mental Health Games</Link>
+                <Link to="/adventures" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Stress-Free Adventures</Link>
+                <Link to="/games" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Mental Health Games</Link>
               </MobileDropdown>
               
               <Link 
@@ -141,11 +141,11 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
               </Link>
               
               <MobileDropdown title="Spirituality">
-                <Link to="/spirituality" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Spiritual Wellness</Link>
-                <Link to="/spirituality-new" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Spiritual Services</Link>
-                <Link to="/spirituality-new?tab=gurus" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Guru Consultations</Link>
-                <Link to="/spirituality-new?tab=travel" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Spiritual Travel</Link>
-                <Link to="/spirituality-new?tab=yoga" className={`block pl-4 py-3 ${mobileNavLinkClass}`} onClick={() => setIsMobileMenuOpen(false)}>Bhakti Yoga</Link>
+                <Link to="/spirituality" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Spiritual Wellness</Link>
+                <Link to="/spirituality-new" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Spiritual Services</Link>
+                <Link to="/spirituality-new?tab=gurus" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Guru Consultations</Link>
+                <Link to="/spirituality-new?tab=travel" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Spiritual Travel</Link>
+                <Link to="/spirituality-new?tab=yoga" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Bhakti Yoga</Link>
               </MobileDropdown>
               
               <Link 
