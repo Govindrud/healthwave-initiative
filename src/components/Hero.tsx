@@ -6,7 +6,7 @@ import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent/50 to-background">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent/50 to-background pt-16">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
@@ -49,7 +49,7 @@ const Hero = () => {
         />
       </div>
 
-      <div className="container mx-auto px-4 z-10 pt-24">
+      <div className="container mx-auto px-4 z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div 
             className="max-w-3xl"

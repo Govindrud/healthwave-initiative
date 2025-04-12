@@ -36,14 +36,15 @@ export const BrainThoughtsAnimation: React.FC = () => {
       "Insomnia"
     ];
     
+    // Updated color palette to match project UI colors
     const colors = [
-      "bg-purple-300 border-purple-400 text-purple-900",
-      "bg-rose-300 border-rose-400 text-rose-900",
-      "bg-amber-300 border-amber-400 text-amber-900",
-      "bg-cyan-300 border-cyan-400 text-cyan-900",
-      "bg-blue-300 border-blue-400 text-blue-900",
-      "bg-indigo-300 border-indigo-400 text-indigo-900",
-      "bg-violet-300 border-violet-400 text-violet-900",
+      "bg-purple-300/90 border-purple-500 text-purple-900",
+      "bg-rose-300/90 border-rose-500 text-rose-900",
+      "bg-amber-300/90 border-amber-500 text-amber-900",
+      "bg-cyan-300/90 border-cyan-500 text-cyan-900",
+      "bg-indigo-300/90 border-indigo-500 text-indigo-900",
+      "bg-violet-300/90 border-violet-500 text-violet-900",
+      "bg-meant-200/90 border-meant-500 text-meant-900",
     ];
     
     const newThoughts = Array.from({ length: 15 }, (_, i) => ({
@@ -64,12 +65,12 @@ export const BrainThoughtsAnimation: React.FC = () => {
 
   return (
     <div className="relative w-full h-full max-w-[500px] max-h-[500px] mx-auto flex items-center justify-center">
-      {/* Circular path for thoughts */}
-      <div className="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-purple-300 opacity-70" />
+      {/* Circular path for thoughts - more visible */}
+      <div className="absolute w-[300px] h-[300px] rounded-full border-2 border-dashed border-purple-400 opacity-80" />
       
-      {/* Central brain */}
+      {/* Central brain - enhanced glow effect */}
       <motion.div 
-        className="z-10"
+        className="z-10 relative"
         animate={{ 
           scale: [1, 1.05, 1],
         }}
@@ -79,10 +80,11 @@ export const BrainThoughtsAnimation: React.FC = () => {
           repeatType: "reverse" 
         }}
       >
-        <Brain className="w-36 h-36 md:w-44 md:h-44 text-purple-700" strokeWidth={1.5} />
+        <div className="absolute inset-0 rounded-full bg-purple-300 blur-lg opacity-30 scale-125"></div>
+        <Brain className="w-36 h-36 md:w-44 md:h-44 text-purple-700 drop-shadow-lg" strokeWidth={1.8} />
       </motion.div>
       
-      {/* Circling thoughts */}
+      {/* Circling thoughts - enhanced with shadow and better opacity */}
       {thoughts.map((thought) => (
         <motion.div
           key={thought.id}
@@ -93,7 +95,7 @@ export const BrainThoughtsAnimation: React.FC = () => {
             opacity: 0 
           }}
           animate={{ 
-            opacity: [0, 0.9, 0.9, 0],
+            opacity: [0, 0.95, 0.95, 0],
             rotate: [0, 360],
             x: [0, thought.position.x, 0],
             y: [0, thought.position.y, 0]
@@ -107,7 +109,7 @@ export const BrainThoughtsAnimation: React.FC = () => {
           }}
         >
           <div 
-            className={`flex items-center justify-center ${thought.color} border-2 shadow-lg rounded-full px-3 py-1.5 text-sm font-medium`}
+            className={`flex items-center justify-center ${thought.color} border-2 shadow-md rounded-full px-3 py-1.5 text-sm font-medium`}
             style={{ width: `${thought.size}px`, height: `${thought.size * 0.6}px` }}
           >
             {thought.text}
@@ -115,9 +117,9 @@ export const BrainThoughtsAnimation: React.FC = () => {
         </motion.div>
       ))}
       
-      {/* Break free message */}
+      {/* Break free message - improved contrast and visibility */}
       <motion.div
-        className="absolute bottom-0 bg-gradient-to-r from-purple-700 to-indigo-700 text-white px-6 py-3 rounded-full text-base font-medium shadow-lg"
+        className="absolute -bottom-12 bg-gradient-to-r from-purple-700 to-indigo-700 text-white px-6 py-3 rounded-full text-base font-medium shadow-lg border border-purple-300"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}

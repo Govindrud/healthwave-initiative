@@ -14,7 +14,7 @@
 /* Enhanced visibility for animations */
 @keyframes pulse-glow {
     0% {
-        box-shadow: 0 0 0 0 rgba(156, 132, 250, 0.4);
+        box-shadow: 0 0 0 0 rgba(156, 132, 250, 0.5);
     }
     70% {
         box-shadow: 0 0 0 15px rgba(156, 132, 250, 0);
@@ -45,45 +45,76 @@
     animation: float 6s ease-in-out infinite;
 }
 
-/* Hamburger menu styling */
+/* Hamburger menu styling - Enhanced for better visibility */
 .hamburger-line {
     display: block;
     height: 2px;
     width: 24px;
-    background-color: #333;
+    background-color: #333; /* Darker default color for better visibility */
+    margin: 3px 0; /* Add margin between lines */
+    transition: all 0.3s ease; /* Smooth transition for animations */
+}
+
+/* Added hover state for hamburger menu to increase visibility */
+.hamburger-button:hover .hamburger-line {
+    background-color: #000; /* Even darker on hover */
 }
 
 .mobile-menu-container {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
 }
 
-/* Doctor status indicators */
+/* Doctor status indicators - Enhanced styles */
 .status-indicator {
     display: inline-block;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     margin-right: 6px;
+    transition: all 0.3s ease; /* Smooth transition */
 }
 
 .status-online {
     background-color: #4CAF50;
-    box-shadow: 0 0 5px #4CAF50;
+    box-shadow: 0 0 8px #4CAF50; /* Enhanced glow effect */
+    animation: pulse-status 2s infinite; /* Add pulsing effect */
+}
+
+@keyframes pulse-status {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
 }
 
 .status-offline {
     background-color: #F44336;
+    box-shadow: 0 0 3px rgba(244, 67, 54, 0.5); /* Subtle glow */
 }
 
-/* Appointment type indicators */
+/* Appointment type indicators - Enhanced styling */
 .appointment-type {
     display: inline-flex;
     align-items: center;
     font-size: 0.85rem;
-    padding: 2px 8px;
+    padding: 3px 10px; /* Slightly larger padding */
     border-radius: 12px;
     margin-right: 5px;
     background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08); /* Subtle border */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.appointment-type:hover {
+    transform: translateY(-2px); /* Subtle lift on hover */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1); /* Shadow on hover */
 }
 
 .appointment-type-video {
@@ -96,4 +127,48 @@
 
 .appointment-type-clinic {
     color: #4CAF50;
+}
+
+/* Enhanced thought bubble animation */
+@keyframes bubble-float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+    66% {
+        transform: translateY(-5px) rotate(-1deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.thought-bubble {
+    animation: bubble-float 4s ease-in-out infinite;
+}
+
+/* Enhanced button hover effects */
+.button-hover-effect {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.button-hover-effect:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    transition: all 0.3s ease;
+}
+
+.button-hover-effect:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }

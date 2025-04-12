@@ -64,25 +64,26 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
         </span>
       </Link>
       
+      {/* Enhanced hamburger button with better visibility */}
       <button
-        className="hamburger-button text-foreground p-2 rounded-md hover:bg-accent flex flex-col items-center justify-center"
+        className="hamburger-button text-foreground p-2 rounded-md hover:bg-accent flex flex-col items-center justify-center shadow-sm border border-gray-200"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label="Toggle mobile menu"
         aria-expanded={isMobileMenuOpen}
-        style={{ width: '40px', height: '40px', background: isMobileMenuOpen ? 'rgba(0,0,0,0.1)' : 'transparent' }}
+        style={{ width: '40px', height: '40px', background: isMobileMenuOpen ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.03)' }}
       >
         <motion.div 
-          className="hamburger-line mb-1 bg-foreground h-0.5 w-6"
+          className="hamburger-line mb-1 bg-foreground"
           animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className="hamburger-line bg-foreground h-0.5 w-6"
+          className="hamburger-line bg-foreground"
           animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className="hamburger-line mt-1 bg-foreground h-0.5 w-6"
+          className="hamburger-line mt-1 bg-foreground"
           animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
