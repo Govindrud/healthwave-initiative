@@ -1,0 +1,19 @@
+
+/* Image slider with enhanced effects */
+.happy-people-slider {
+    background-color: var(--light-bg);
+    padding: 5rem 0;
+}
+
+.slider-item {
+    padding: 0 1rem;
+}
+
+.slider-image img {
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.slider-caption {
+    border-radius: 0 0 8px 8px;
+}

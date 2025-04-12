@@ -1,0 +1,22 @@
+
+/* Counter section */
+.counters {
+    padding: 5rem 0;
+    background-color: white;
+}
+
+.counter-item {
+    text-align: center;
+}
+
+.counter-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.counter-title {
+    color: #666;
+    font-size: 1.1rem;
+}

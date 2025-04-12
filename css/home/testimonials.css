@@ -1,0 +1,21 @@
+
+/* Testimonials with better styling */
+.testimonials {
+    background-color: var(--light-bg);
+}
+
+.testimonial-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonial-card:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--light-bg);
+    transform: rotate(45deg);
+}

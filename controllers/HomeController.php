@@ -14,7 +14,7 @@ class HomeController extends Controller {
         // Set page specific variables
         $pageTitle = SITE_NAME . ' - Support for Mental Well-being';
         $metaDescription = SITE_NAME . ' provides tools, resources and services to support your mental well-being journey.';
-        $pageSpecificCSS = 'home.css';
+        $pageSpecificCSS = 'home.css'; // This remains the same since we're using imports in home.css
         $pageSpecificJS = 'slider.js';
         
         // Include the view with data

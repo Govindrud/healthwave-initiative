@@ -1,0 +1,9 @@
+
+/* Featured products section */
+.featured-products {
+    padding: 5rem 0;
+}
+
+.product-card {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
