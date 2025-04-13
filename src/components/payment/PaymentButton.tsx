@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { initiatePayment, verifyPayment } from "@/utils/payments";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 interface PaymentButtonProps {
   amount: number;
@@ -25,7 +25,6 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({
   onPaymentError
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
   
   const handlePayment = async () => {
     setIsLoading(true);
@@ -77,7 +76,7 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({
               toast({
                 title: "Payment Successful",
                 description: `Your payment for ${productName} has been completed successfully!`,
-                variant: "default"
+                variant: "success"
               });
               
               if (onPaymentSuccess) onPaymentSuccess(result);
