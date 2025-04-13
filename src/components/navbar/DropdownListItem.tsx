@@ -20,7 +20,7 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
   onClick
 }) => {
   const baseClassName = `block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors 
-    bg-sky-50 hover:bg-sky-100 text-foreground 
+    bg-blue-50 hover:bg-blue-100 text-foreground 
     ${className}`;
 
   if (onClick) {
