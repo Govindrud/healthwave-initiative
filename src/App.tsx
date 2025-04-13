@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { Toaster } from "@/components/ui/toaster";
 
 import Index from "@/pages/Index";
-import Layout from "@/components/Layout";
+import Layout from "./components/Layout"; // Changed from @/components/Layout to relative path
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
