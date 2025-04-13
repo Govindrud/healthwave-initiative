@@ -1,7 +1,7 @@
 
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Toaster } from "sonner";
+import { Toaster } from "./components/ui/toaster";
 
 import Index from "@/pages/Index";
 import MainLayout from "@/components/layouts/MainLayout";
@@ -39,7 +39,7 @@ function App() {
   
   return (
     <>
-      <Toaster position="bottom-right" richColors />
+      <Toaster />
       <Router>
         <Routes>
           <Route path="/" element={<MainLayout title="Home"><Index /></MainLayout>} />

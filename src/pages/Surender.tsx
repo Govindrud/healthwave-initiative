@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { StressLevelSelector } from "@/components/surender/StressLevelSelector";
 import { HelpInfo } from "@/components/surender/HelpInfo";
 import { ContactForm } from "@/components/surender/ContactForm";
@@ -17,6 +17,7 @@ const Surender = () => {
   });
   const [isFormOpen, setIsFormOpen] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleStressLevelSelect = (level: string) => {
     setSelectedLevel(level);

@@ -6,7 +6,6 @@ import { MobileNav } from "./MobileNav";
 import { DesktopNav } from "./DesktopNav";
 import Logo from "../Logo";
 import { motion } from "framer-motion";
-import ThemeToggle from "../ThemeToggle";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -26,8 +25,8 @@ const Navbar: React.FC = () => {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "py-3 bg-white shadow-md border-b border-border/40 dark:bg-gray-900 dark:border-gray-800"
-          : "py-4 bg-background shadow-sm border-b border-border/10 dark:bg-gray-900/90 dark:border-gray-800/50"
+          ? "py-3 bg-white shadow-md border-b border-border/40"
+          : "py-4 bg-background shadow-sm border-b border-border/10"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
