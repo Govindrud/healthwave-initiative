@@ -29,7 +29,7 @@ export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSect
                 href="/surender"
                 title="Surender"
                 icon={<Heart className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Explore surrender services and assistance
               </DropdownListItem>
@@ -37,7 +37,7 @@ export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSect
                 href="/de-addiction"
                 title="De-addiction"
                 icon={<Shield className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Support for overcoming addiction
               </DropdownListItem>
@@ -45,14 +45,14 @@ export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSect
                 onClick={() => scrollToSection("solutions")}
                 title="Solutions"
                 icon={<Lightbulb className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Explore our mental health solutions
               </DropdownListItem>
-              <li className="lg:col-span-2">
+              <li className="lg:col-span-2 bg-white">
                 <button
                   onClick={() => scrollToSection("problem")}
-                  className="block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground hover:bg-meant-50"
+                  className="block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-meant-50 bg-white"
                 >
                   <div className="flex items-center gap-2">
                     <HelpCircle className="h-4 w-4 text-meant-600" />

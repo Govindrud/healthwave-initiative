@@ -14,7 +14,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
   const mobileNavLinkClass = "text-foreground hover:text-meant-600 transition-colors px-4 py-3 rounded-md text-sm font-medium flex items-center";
 
   return (
-    <div className="relative">
+    <div className="relative bg-white">
       <button 
         className={`${mobileNavLinkClass} justify-between w-full`}
         onClick={() => setIsOpen(!isOpen)}

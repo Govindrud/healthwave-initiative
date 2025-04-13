@@ -23,18 +23,18 @@ export const ActivitiesDropdown: React.FC = () => {
               <DropdownListItem
                 href="/adventures"
                 title="Stress-Free Adventures"
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Enjoy therapeutic outdoor activities and retreats
               </DropdownListItem>
               <DropdownListItem
                 href="/games"
                 title="Mental Health Games"
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Fun activities designed to boost mood and reduce stress
               </DropdownListItem>
-              <li className="col-span-2 mt-2">
+              <li className="col-span-2 mt-2 bg-white">
                 <Link to="/activities" className="text-sm text-primary hover:underline flex justify-center">
                   View All Activities
                 </Link>
