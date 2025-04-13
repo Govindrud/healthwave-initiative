@@ -7,6 +7,7 @@ import { NavLink } from "./NavLink";
 import { ServicesDropdown } from "./ServicesDropdown";
 import { ActivitiesDropdown } from "./ActivitiesDropdown";
 import { SpiritualityDropdown } from "./SpiritualityDropdown";
+import ThemeToggle from "../ThemeToggle";
 
 interface DesktopNavProps {
   location: Location;
@@ -68,6 +69,8 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
       <NavLink onClick={() => scrollToSection("contact")}>
         Contact
       </NavLink>
+
+      <ThemeToggle />
 
       <Link to="/admin-login">
         <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">

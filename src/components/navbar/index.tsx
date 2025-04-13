@@ -6,6 +6,7 @@ import { MobileNav } from "./MobileNav";
 import { DesktopNav } from "./DesktopNav";
 import Logo from "../Logo";
 import { motion } from "framer-motion";
+import ThemeToggle from "../ThemeToggle";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
