@@ -8,11 +8,11 @@ const CTASection = () => {
   return (
     <section className="py-16 bg-white dark:bg-background">
       <div className="container mx-auto px-4">
-        <div className="bg-gradient-to-r from-love-600 to-love-700 text-white rounded-2xl p-8 md:p-12 max-w-5xl mx-auto shadow-lg">
+        <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-2xl p-8 md:p-12 max-w-5xl mx-auto shadow-lg">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h2 className="text-3xl font-bold mb-4 flex items-center gap-2">
-                <HeartHandshake className="h-7 w-7 text-love-200" />
+                <HeartHandshake className="h-7 w-7 text-purple-200" />
                 Ready to Break Free?
               </h2>
               <p className="mb-6">
@@ -20,11 +20,11 @@ const CTASection = () => {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/surender">
-                  <Button size="lg" variant="default" className="bg-white text-love-600 hover:bg-gray-100">
+                  <Button size="lg" variant="default" className="bg-white text-purple-600 hover:bg-gray-100">
                     Get Started
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-love-700">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-purple-700">
                   Contact Us
                 </Button>
               </div>

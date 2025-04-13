@@ -36,14 +36,14 @@ export const BrainThoughtsAnimation: React.FC = () => {
       "Insomnia"
     ];
     
-    // Restored previous color palette with soft purples and blues
+    // Purple color palette
     const colors = [
       "bg-purple-200/90 border-purple-400 text-purple-800",
       "bg-purple-300/90 border-purple-500 text-purple-900",
       "bg-purple-100/90 border-purple-300 text-purple-700",
-      "bg-blue-200/80 border-blue-400 text-blue-800",
-      "bg-blue-300/80 border-blue-500 text-blue-900",
-      "bg-blue-100/80 border-blue-300 text-blue-700",
+      "bg-indigo-200/80 border-indigo-400 text-indigo-800",
+      "bg-indigo-300/80 border-indigo-500 text-indigo-900",
+      "bg-indigo-100/80 border-indigo-300 text-indigo-700",
     ];
     
     const newThoughts = Array.from({ length: 15 }, (_, i) => ({
@@ -128,4 +128,3 @@ export const BrainThoughtsAnimation: React.FC = () => {
     </div>
   );
 };
-
