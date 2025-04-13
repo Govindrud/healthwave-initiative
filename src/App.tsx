@@ -1,9 +1,10 @@
+
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastProvider } from "./hooks/use-toast";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "./components/ui/toaster";
 
 import Index from "@/pages/Index";
-import Layout from "@/components/Layout";
+import MainLayout from "@/components/layouts/MainLayout";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
@@ -37,10 +38,11 @@ function App() {
   }, []);
   
   return (
-    <ToastProvider>
+    <>
+      <Toaster />
       <Router>
         <Routes>
-          <Route path="/" element={<Layout><Index /></Layout>} />
+          <Route path="/" element={<MainLayout title="Home"><Index /></MainLayout>} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
@@ -62,12 +64,11 @@ function App() {
           
           <Route path="/surrender" element={<Navigate to="/surender" replace />} />
           <Route path="/deaddiction" element={<Navigate to="/de-addiction" replace />} />
-          <Route path="/de-addiction" element={<DeAddiction />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </ToastProvider>
+    </>
   );
 }
 
