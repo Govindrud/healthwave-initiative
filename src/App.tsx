@@ -21,6 +21,8 @@ import Webinars from "@/pages/Webinars";
 import Games from "@/pages/Games";
 import Adventures from "@/pages/Adventures";
 import DeAddiction from "@/pages/DeAddiction";
+import RehabilitationConfirmation from "@/pages/RehabilitationConfirmation";
+import HelpResources from "@/pages/HelpResources";
 import MainLayout from "@/components/layouts/MainLayout";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "@/components/ui/toaster";
@@ -41,6 +43,8 @@ function App() {
             <Route path="/spirituality" element={<MainLayout><Spirituality /></MainLayout>} />
             <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
             <Route path="/surender" element={<MainLayout><Surender /></MainLayout>} />
+            <Route path="/rehabilitation-confirmation" element={<MainLayout><RehabilitationConfirmation /></MainLayout>} />
+            <Route path="/help-resources" element={<MainLayout><HelpResources /></MainLayout>} />
             <Route path="/corporate-plans" element={<MainLayout><CorporatePlans /></MainLayout>} />
             <Route path="/corporate-certification" element={<MainLayout><CorporateCertification /></MainLayout>} />
             <Route path="/student-psychologists" element={<MainLayout><StudentPsychologists /></MainLayout>} />

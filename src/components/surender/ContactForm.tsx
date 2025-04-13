@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -41,7 +40,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       <DialogTrigger asChild>
         <span className="hidden">Trigger</span>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white border-meant-300 shadow-xl">
+      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-background border-meant-300 dark:border-meant-800 shadow-xl">
         <form onSubmit={onSubmit}>
           <DialogHeader>
             <DialogTitle>Request Professional Help</DialogTitle>
@@ -58,7 +57,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.name}
                 onChange={onChange}
                 required
-                className="bg-white border-meant-300"
+                className="bg-white dark:bg-meant-900/30 border-meant-300 dark:border-meant-800"
               />
             </div>
             <div className="grid gap-2">
@@ -70,7 +69,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.phone}
                 onChange={onChange}
                 required
-                className="bg-white border-meant-300"
+                className="bg-white dark:bg-meant-900/30 border-meant-300 dark:border-meant-800"
               />
             </div>
             <div className="grid gap-2">
@@ -82,7 +81,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.email}
                 onChange={onChange}
                 required
-                className="bg-white border-meant-300"
+                className="bg-white dark:bg-meant-900/30 border-meant-300 dark:border-meant-800"
               />
             </div>
             <div className="grid gap-2">
@@ -93,19 +92,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.concerns}
                 onChange={onChange}
                 placeholder="Tell us briefly about your situation"
-                className="bg-white border-meant-300"
+                className="bg-white dark:bg-meant-900/30 border-meant-300 dark:border-meant-800"
               />
             </div>
           </div>
           
           {/* Emergency helpline section */}
-          <div className="bg-red-50 p-3 rounded-md mb-4 border border-red-200">
+          <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-md mb-4 border border-red-200 dark:border-red-800">
             <div className="flex items-start space-x-2">
-              <AlertCircle className="h-5 w-5 text-red-600 mt-0.5" />
+              <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5" />
               <div>
-                <h4 className="font-medium text-red-800">Emergency Helpline</h4>
-                <p className="text-sm text-red-700">If you're in immediate distress, please call our 24/7 crisis line:</p>
-                <a href="tel:1800-273-8255" className="flex items-center mt-2 text-red-700 font-medium">
+                <h4 className="font-medium text-red-800 dark:text-red-300">Emergency Helpline</h4>
+                <p className="text-sm text-red-700 dark:text-red-400">If you're in immediate distress, please call our 24/7 crisis line:</p>
+                <a href="tel:1800-273-8255" className="flex items-center mt-2 text-red-700 dark:text-red-400 font-medium">
                   <Phone className="h-4 w-4 mr-2" />
                   1800-273-8255
                 </a>
