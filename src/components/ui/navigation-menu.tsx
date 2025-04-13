@@ -71,6 +71,8 @@ const NavigationMenuContent = React.forwardRef<
     ref={ref}
     className={cn(
       "left-0 top-0 w-full bg-white border border-border/20 shadow-lg data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out md:absolute md:w-auto z-50",
+      // Updated with a light sky blue background
+      "bg-sky-50 border-sky-100 shadow-sky-100/50",
       className
     )}
     {...props}

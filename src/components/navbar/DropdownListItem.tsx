@@ -19,12 +19,16 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
   icon,
   onClick
 }) => {
+  const baseClassName = `block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors 
+    bg-sky-50 hover:bg-sky-100 text-foreground 
+    ${className}`;
+
   if (onClick) {
     return (
       <li>
         <button
           onClick={onClick}
-          className={`block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${className}`}
+          className={baseClassName}
         >
           <div className="flex items-center gap-2">
             {icon && <span className="flex-shrink-0">{icon}</span>}
@@ -42,7 +46,7 @@ export const DropdownListItem: React.FC<DropdownListItemProps> = ({
     <li>
       <Link
         to={href || "#"}
-        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${className}`}
+        className={baseClassName}
       >
         <div className="flex items-center gap-2">
           {icon && <span className="flex-shrink-0">{icon}</span>}
