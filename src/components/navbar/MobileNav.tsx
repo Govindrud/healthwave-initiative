@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
 import { MobileMenuContent } from "./mobile/MobileMenuContent";
+import ThemeToggle from "../ThemeToggle";
 
 interface MobileNavProps {
   location: Location;
@@ -55,6 +56,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
 
   return (
     <div className="flex items-center space-x-2 md:hidden" ref={menuRef}>
+      <ThemeToggle />
       <CartIcon itemCount={2} />
       
       <HamburgerButton 
