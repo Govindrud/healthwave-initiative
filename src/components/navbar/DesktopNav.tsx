@@ -1,10 +1,10 @@
 
 import React from "react";
-import NavLink from "./NavLink";
+import { NavLink } from "./NavLink";
 import { CartIcon } from "./CartIcon";
-import ServicesDropdown from "./ServicesDropdown";
-import SpiritualityDropdown from "./SpiritualityDropdown";
-import ActivitiesDropdown from "./ActivitiesDropdown";
+import { ServicesDropdown } from "./ServicesDropdown";
+import { SpiritualityDropdown } from "./SpiritualityDropdown";
+import { ActivitiesDropdown } from "./ActivitiesDropdown";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface DesktopNavProps {
