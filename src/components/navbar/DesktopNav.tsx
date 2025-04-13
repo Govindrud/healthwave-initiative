@@ -40,37 +40,37 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center space-x-2">
-        <Logo size="md" variant="full" className="mr-2 lg:mr-4" />
+      <div className="flex items-center">
+        <Logo size="md" variant="full" className="mr-4" />
         
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+        <nav className="hidden md:flex items-center space-x-1">
           {/* Primary navigation links (always visible on desktop) */}
           {primaryMenuItems.map((item, index) => (
             <NavLink 
               key={index}
               to={item.to} 
               onClick={item.action}
-              className="text-xs lg:text-sm whitespace-nowrap py-2"
+              className="text-xs lg:text-sm whitespace-nowrap px-2 py-2"
             >
               {item.label}
             </NavLink>
           ))}
 
-          {/* Dropdown menus */}
-          <ServicesDropdown />
-          <ActivitiesDropdown />
-          <SpiritualityDropdown />
-          
-          {/* More menu for additional items */}
-          <MainMenuDropdown scrollToSection={scrollToSection} />
+          {/* Dropdown menus with appropriate spacing */}
+          <div className="flex items-center space-x-1">
+            <ServicesDropdown />
+            <ActivitiesDropdown />
+            <SpiritualityDropdown />
+            <MainMenuDropdown scrollToSection={scrollToSection} />
+          </div>
         </nav>
       </div>
 
-      <div className="flex items-center space-x-2 md:space-x-2 lg:space-x-3">
+      <div className="flex items-center space-x-2 md:space-x-2">
         <ThemeToggle />
 
-        <Link to="/admin-login">
-          <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50 hidden sm:inline-flex">
+        <Link to="/admin-login" className="hidden sm:block">
+          <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50">
             Admin
           </Button>
         </Link>

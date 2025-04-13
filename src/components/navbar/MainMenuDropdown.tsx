@@ -22,7 +22,7 @@ export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSect
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={`${navLinkClass} bg-transparent p-1 text-xs lg:text-sm`}>More</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={`${navLinkClass} bg-transparent px-2 py-2 text-xs lg:text-sm`}>More</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-background border border-border/20 rounded-md shadow-md">
               <DropdownListItem
