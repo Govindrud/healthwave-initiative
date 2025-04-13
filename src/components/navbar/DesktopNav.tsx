@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
@@ -29,46 +30,49 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   };
 
   return (
-    <nav className="hidden md:flex items-center space-x-6 w-full justify-between">
-      <div className="flex items-center space-x-6">
-        <Logo size="md" variant="full" />
-        <NavLink onClick={() => scrollToSection("hero")}>
-          Home
-        </NavLink>
+    <div className="flex items-center justify-between w-full">
+      <div className="flex items-center">
+        <Logo size="md" variant="full" className="mr-6" />
         
-        <NavLink onClick={() => scrollToSection("about")}>
-          About
-        </NavLink>
-        
-        <ServicesDropdown />
-        
-        <NavLink onClick={() => scrollToSection("solutions")}>
-          Solutions
-        </NavLink>
-        
-        <ActivitiesDropdown />
-        
-        <NavLink to="/products">
-          Products
-        </NavLink>
-        
-        <SpiritualityDropdown />
+        <nav className="flex items-center space-x-4">
+          <NavLink onClick={() => scrollToSection("hero")}>
+            Home
+          </NavLink>
+          
+          <NavLink onClick={() => scrollToSection("about")}>
+            About
+          </NavLink>
+          
+          <ServicesDropdown />
+          
+          <NavLink onClick={() => scrollToSection("solutions")}>
+            Solutions
+          </NavLink>
+          
+          <ActivitiesDropdown />
+          
+          <NavLink to="/products">
+            Products
+          </NavLink>
+          
+          <SpiritualityDropdown />
 
-        <NavLink to="/surender">
-          Surender
-        </NavLink>
+          <NavLink to="/surender">
+            Surender
+          </NavLink>
 
-        <NavLink to="/de-addiction">
-          De-addiction
-        </NavLink>
-        
-        <NavLink onClick={() => scrollToSection("problem")}>
-          Contribute
-        </NavLink>
-        
-        <NavLink onClick={() => scrollToSection("contact")}>
-          Contact
-        </NavLink>
+          <NavLink to="/de-addiction">
+            De-addiction
+          </NavLink>
+          
+          <NavLink onClick={() => scrollToSection("problem")}>
+            Contribute
+          </NavLink>
+          
+          <NavLink onClick={() => scrollToSection("contact")}>
+            Contact
+          </NavLink>
+        </nav>
       </div>
 
       <div className="flex items-center space-x-4">
@@ -96,6 +100,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
           </span>
         </Link>
       </div>
-    </nav>
+    </div>
   );
 };
