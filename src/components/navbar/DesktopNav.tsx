@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
@@ -8,6 +7,7 @@ import { ServicesDropdown } from "./ServicesDropdown";
 import { ActivitiesDropdown } from "./ActivitiesDropdown";
 import { SpiritualityDropdown } from "./SpiritualityDropdown";
 import ThemeToggle from "../ThemeToggle";
+import Logo from "@/components/Logo";
 
 interface DesktopNavProps {
   location: Location;
