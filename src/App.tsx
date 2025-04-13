@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -33,7 +34,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 // Utils and Context
 import { queryClient } from "@/lib/query-client";
-import { AuthProvider } from "@/context/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 function App() {
   return (
@@ -61,7 +62,7 @@ function App() {
             <Route path="/corporate-plans" element={<CorporatePlans />} />
             <Route path="/corporate-certification" element={<CorporateCertification />} />
             <Route path="/admin-login" element={<AdminLogin />} />
-            <Route path="/admin/*" element={<Admin />} />
+            <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
             <Route path="/hosting" element={<Hosting />} />
             <Route path="/setup-database" element={<DatabaseSetup />} />
             <Route path="*" element={<NotFound />} />
