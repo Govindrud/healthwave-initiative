@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -33,6 +34,11 @@ export const ActivitiesDropdown: React.FC = () => {
               >
                 Fun activities designed to boost mood and reduce stress
               </DropdownListItem>
+              <li className="col-span-2 mt-2">
+                <Link to="/activities" className="text-sm text-primary hover:underline flex justify-center">
+                  View All Activities
+                </Link>
+              </li>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -40,4 +46,3 @@ export const ActivitiesDropdown: React.FC = () => {
     </NavigationMenu>
   );
 };
-

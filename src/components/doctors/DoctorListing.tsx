@@ -27,7 +27,8 @@ import {
   Search, 
   Star, 
   Filter, 
-  Clock 
+  Clock,
+  CheckCircle
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -138,6 +139,8 @@ const DoctorListing: React.FC = () => {
     email: "",
     phone: ""
   });
+  const [showCustomerForm, setShowCustomerForm] = useState<Record<number, boolean>>({});
+  const [isProcessing, setIsProcessing] = useState<Record<number, boolean>>({});
 
   // Apply filters
   const filteredDoctors = doctors.filter(doctor => {
@@ -169,6 +172,22 @@ const DoctorListing: React.FC = () => {
     });
   };
 
+  const toggleCustomerForm = (doctorId: number) => {
+    setShowCustomerForm(prev => ({
+      ...prev,
+      [doctorId]: !prev[doctorId]
+    }));
+  };
+
+  const validateEmail = (email: string) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    return phone.length >= 10;
+  };
+
   const handleBookAppointment = (doctor: Doctor) => {
     if (!selectedSlots[doctor.id]) {
       toast.error("Please select a time slot first");
@@ -177,8 +196,25 @@ const DoctorListing: React.FC = () => {
     
     if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
       toast.error("Please fill in your contact information");
+      toggleCustomerForm(doctor.id);
       return;
     }
+
+    if (!validateEmail(customerInfo.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    if (!validatePhone(customerInfo.phone)) {
+      toast.error("Please enter a valid phone number");
+      return;
+    }
+    
+    // Start processing
+    setIsProcessing({
+      ...isProcessing,
+      [doctor.id]: true
+    });
     
     // Show payment options
     showPaymentOptions({
@@ -191,17 +227,36 @@ const DoctorListing: React.FC = () => {
   };
   
   const showPaymentOptions = (data: any) => {
-    toast.success("Redirecting to payment options...", {
-      duration: 2000,
-      onDismiss: () => {
-        // In a real app, this would open the payment modal
-        setTimeout(() => {
-          toast.message("Payment successful!", {
-            description: `Your appointment with has been booked for ${data.dateTime}`,
-          });
-        }, 1000);
-      }
-    });
+    // Simulate API call delay
+    setTimeout(() => {
+      setIsProcessing({
+        ...isProcessing,
+        [data.doctorId]: false
+      });
+      
+      toast.success("Payment successful!", {
+        description: `Your appointment has been booked for ${data.dateTime}`,
+        duration: 5000,
+        action: {
+          label: "View Details",
+          onClick: () => console.log("View appointment details")
+        }
+      });
+      
+      // Reset form after successful booking
+      setSelectedSlots(prev => {
+        const newState = {...prev};
+        delete newState[data.doctorId];
+        return newState;
+      });
+      
+      setShowCustomerForm(prev => {
+        const newState = {...prev};
+        delete newState[data.doctorId];
+        return newState;
+      });
+      
+    }, 2000);
   };
 
   const formatRating = (rating: number) => {
@@ -304,6 +359,15 @@ const DoctorListing: React.FC = () => {
                 />
               </div>
             </div>
+            
+            <Button 
+              onClick={() => setFilters({specialization: "", experience: "", search: "", onlineOnly: false})}
+              variant="outline"
+              size="sm"
+              className="w-full mt-2"
+            >
+              Clear Filters
+            </Button>
           </div>
         </div>
         
@@ -321,7 +385,7 @@ const DoctorListing: React.FC = () => {
                     />
                     <div className="absolute top-4 right-4">
                       <Badge variant={doctor.isOnline ? "default" : "secondary"} className={doctor.isOnline ? "bg-green-500 hover:bg-green-600" : ""}>
-                        <span className={`status-indicator ${doctor.isOnline ? 'status-online' : 'status-offline'} mr-1.5`}></span>
+                        <span className={`inline-block w-2 h-2 rounded-full mr-1.5 ${doctor.isOnline ? 'bg-white' : 'bg-gray-400'}`}></span>
                         {doctor.isOnline ? "Online" : "Offline"}
                       </Badge>
                     </div>
@@ -338,7 +402,7 @@ const DoctorListing: React.FC = () => {
                     
                     <div className="flex flex-wrap gap-2 mt-2">
                       {doctor.appointmentTypes.map(type => (
-                        <span key={type} className={`appointment-type appointment-type-${type}`}>
+                        <span key={type} className="inline-flex items-center text-xs bg-gray-100 px-2 py-1 rounded-full">
                           {type === 'video' && <Video className="h-3.5 w-3.5 mr-1" />}
                           {type === 'call' && <Phone className="h-3.5 w-3.5 mr-1" />}
                           {type === 'clinic' && <MapPin className="h-3.5 w-3.5 mr-1" />}
@@ -374,30 +438,45 @@ const DoctorListing: React.FC = () => {
                     </div>
                     
                     <div className="mt-4">
-                      <details>
-                        <summary className="cursor-pointer text-sm text-primary font-medium">
-                          {customerInfo.name ? 'Edit contact information' : 'Add contact information'}
-                        </summary>
+                      <Button 
+                        variant="ghost"
+                        size="sm"
+                        className="p-0 h-auto text-primary font-medium text-sm flex items-center"
+                        onClick={() => toggleCustomerForm(doctor.id)}
+                      >
+                        {customerInfo.name && !showCustomerForm[doctor.id] ? 'Edit contact information' : 'Add contact information'}
+                      </Button>
+                      
+                      {(showCustomerForm[doctor.id] || (!customerInfo.name && selectedSlots[doctor.id])) && (
                         <div className="mt-3 space-y-2 bg-muted/50 p-3 rounded-md">
                           <Input 
-                            placeholder="Your Name" 
+                            placeholder="Your Name *" 
                             value={customerInfo.name}
                             onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
+                            className="border-gray-300"
                           />
                           <Input 
-                            placeholder="Your Email" 
+                            placeholder="Your Email *" 
                             type="email"
                             value={customerInfo.email}
                             onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                            className="border-gray-300"
                           />
                           <Input 
-                            placeholder="Your Phone" 
+                            placeholder="Your Phone *" 
                             type="tel"
                             value={customerInfo.phone}
                             onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
+                            className="border-gray-300"
                           />
+                          {customerInfo.name && customerInfo.email && customerInfo.phone && (
+                            <div className="flex items-center text-green-600 text-xs">
+                              <CheckCircle className="h-3 w-3 mr-1" />
+                              Contact information saved
+                            </div>
+                          )}
                         </div>
-                      </details>
+                      )}
                     </div>
                   </CardContent>
                   
@@ -409,8 +488,19 @@ const DoctorListing: React.FC = () => {
                     <Button 
                       onClick={() => handleBookAppointment(doctor)}
                       className="bg-meant-700 hover:bg-meant-800"
+                      disabled={isProcessing[doctor.id]}
                     >
-                      Book Appointment
+                      {isProcessing[doctor.id] ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : (
+                        'Book Appointment'
+                      )}
                     </Button>
                   </CardFooter>
                 </Card>
@@ -435,4 +525,3 @@ const DoctorListing: React.FC = () => {
 };
 
 export default DoctorListing;
-
