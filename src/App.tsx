@@ -1,76 +1,75 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import { QueryClientProvider } from "@tanstack/react-query";
 
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
-
-import Index from "@/pages/Index";
-import Layout from "./components/Layout"; 
+// Pages
+import Index from "./pages/Index";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
+import Doctors from "./pages/Doctors";
+import Games from "./pages/Games";
+import Adventures from "./pages/Adventures";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Services from "./pages/Services";
-import Hosting from "./pages/Hosting";
-import NotFound from "./pages/NotFound";
-import SpiritualityPage from "./pages/SpiritualityPage";
 import Spirituality from "./pages/Spirituality";
-import CorporateCertification from "./pages/CorporateCertification";
-import Surender from "./pages/Surender";
-import DeAddiction from "./pages/DeAddiction";
-import AdminLogin from "./pages/AdminLogin";
-import CorporatePlans from "./pages/CorporatePlans";
-import Doctors from "./pages/Doctors";
-import Adventures from "./pages/Adventures";
-import Games from "./pages/Games";
+import SpiritualityPage from "./pages/SpiritualityPage";
+import Services from "./pages/Services";
 import StudentPsychologists from "./pages/StudentPsychologists";
+import Surender from "./pages/Surender";
 import Webinars from "./pages/Webinars";
+import Cart from "./pages/Cart";
+import DeAddiction from "./pages/DeAddiction";
+import CorporatePlans from "./pages/CorporatePlans";
+import CorporateCertification from "./pages/CorporateCertification";
+import AdminLogin from "./pages/AdminLogin";
 import Admin from "./pages/Admin";
-import Login from "./pages/Login";
+import Hosting from "./pages/Hosting";
+import DatabaseSetup from "./pages/DatabaseSetup";
+
+// Components
+import { Toaster } from "@/components/ui/toaster";
+
+// Utils and Context
+import { queryClient } from "@/lib/query-client";
+import { AuthProvider } from "@/context/AuthContext";
 
 function App() {
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || 
-                      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    
-    if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-  
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout><Index /></Layout>} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/hosting" element={<Hosting />} />
-          <Route path="/spirituality" element={<Spirituality />} />
-          <Route path="/spirituality-new" element={<SpiritualityPage />} />
-          <Route path="/corporate-certification" element={<CorporateCertification />} />
-          <Route path="/corporate-plans" element={<CorporatePlans />} />
-          <Route path="/surender" element={<Surender />} />
-          <Route path="/de-addiction" element={<DeAddiction />} />
-          <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/doctors" element={<Doctors />} />
-          <Route path="/adventures" element={<Adventures />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/student-psychologists" element={<StudentPsychologists />} />
-          <Route path="/webinars" element={<Webinars />} />
-          <Route path="/login" element={<Login />} />
-          
-          <Route path="/surrender" element={<Navigate to="/surender" replace />} />
-          <Route path="/deaddiction" element={<Navigate to="/de-addiction" replace />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-      <Toaster />
-    </>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider defaultTheme="light" storageKey="ui-theme">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/doctors" element={<Doctors />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/adventures" element={<Adventures />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/spirituality" element={<Spirituality />} />
+            <Route path="/spirituality/:id" element={<SpiritualityPage />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/student-psychologists" element={<StudentPsychologists />} />
+            <Route path="/surender" element={<Surender />} />
+            <Route path="/webinars" element={<Webinars />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/de-addiction" element={<DeAddiction />} />
+            <Route path="/corporate-plans" element={<CorporatePlans />} />
+            <Route path="/corporate-certification" element={<CorporateCertification />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/admin/*" element={<Admin />} />
+            <Route path="/hosting" element={<Hosting />} />
+            <Route path="/setup-database" element={<DatabaseSetup />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Toaster />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   );
 }
 
