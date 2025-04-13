@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -534,8 +535,8 @@ const SpiritualityPage: React.FC = () => {
                 <iframe 
                   width="100%" 
                   height="100%" 
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                  title="Introduction to Bhakti Yoga" 
+                  src="https://www.youtube.com/embed/RgHw9H50sPs" 
+                  title="Swami Premananda - Bhakti Yoga Discourse" 
                   frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                   allowFullScreen
@@ -576,6 +577,29 @@ const SpiritualityPage: React.FC = () => {
                   ))}
                 </div>
               </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="grid grid-cols-2 gap-4 mb-6"
+              >
+                <div className="rounded-lg overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1508672019048-805c876b67e2" 
+                    alt="Devotees at a temple ceremony" 
+                    className="w-full h-48 object-cover"
+                  />
+                </div>
+                <div className="rounded-lg overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1600510068651-5fe4a2570a8c" 
+                    alt="Traditional puja ceremony" 
+                    className="w-full h-48 object-cover"
+                  />
+                </div>
+              </motion.div>
             </div>
 
             <motion.div
@@ -583,6 +607,7 @@ const SpiritualityPage: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.3 }}
+              className="flex flex-col gap-6"
             >
               <Card>
                 <CardHeader>
@@ -626,8 +651,70 @@ const SpiritualityPage: React.FC = () => {
                   <Button className="w-full">View All Bhakti Events</Button>
                 </CardFooter>
               </Card>
+              
+              <div className="rounded-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1564391744677-0e146f4a5e68" 
+                  alt="Meditation practice" 
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg">Meet Swami Premanand</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-4 mb-4">
+                    <Avatar className="h-16 w-16">
+                      <AvatarImage src="https://images.unsplash.com/photo-1580756321097-07d2a106079a" alt="Swami Premanand" />
+                      <AvatarFallback>SP</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium">Swami Premanand</p>
+                      <Badge className="mt-1">Bhakti Yoga Master</Badge>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Join Swami Premanand's weekly Bhakti sessions where he shares ancient wisdom and guides devotional practices.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" className="w-full">Learn More</Button>
+                </CardFooter>
+              </Card>
             </motion.div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+          >
+            <div className="rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1604881991720-f91add269bed" 
+                alt="Offering flowers at temple" 
+                className="w-full h-64 object-cover"
+              />
+            </div>
+            <div className="rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be" 
+                alt="Sacred ritual" 
+                className="w-full h-64 object-cover"
+              />
+            </div>
+            <div className="rounded-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1609153315898-e1e5a0061f92" 
+                alt="Devotional singing" 
+                className="w-full h-64 object-cover"
+              />
+            </div>
+          </motion.div>
         </TabsContent>
       </Tabs>
       
