@@ -47,19 +47,19 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
       
       <ActivitiesDropdown />
       
-      <Link to="/products" className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium text-center">
+      <NavLink to="/products">
         Products
-      </Link>
+      </NavLink>
       
       <SpiritualityDropdown />
 
-      <Link to="/surender" className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium text-center">
+      <NavLink to="/surender">
         Surender
-      </Link>
+      </NavLink>
 
-      <Link to="/de-addiction" className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium text-center">
+      <NavLink to="/de-addiction">
         De-addiction
-      </Link>
+      </NavLink>
       
       <NavLink onClick={() => scrollToSection("problem")}>
         Contribute

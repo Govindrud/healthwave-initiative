@@ -40,15 +40,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       <DialogTrigger asChild>
         <span className="hidden">Trigger</span>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-white shadow-lg border border-gray-200">
         <form onSubmit={onSubmit}>
-          <DialogHeader>
+          <DialogHeader className="bg-background">
             <DialogTitle>Request Professional Help</DialogTitle>
             <DialogDescription>
               Fill in your details and we'll reach out to you within 24 hours.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-4 py-4 bg-white">
             <div className="grid gap-2">
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -57,6 +57,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.name}
                 onChange={onChange}
                 required
+                className="bg-white border-gray-300"
               />
             </div>
             <div className="grid gap-2">
@@ -68,6 +69,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.phone}
                 onChange={onChange}
                 required
+                className="bg-white border-gray-300"
               />
             </div>
             <div className="grid gap-2">
@@ -79,6 +81,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.email}
                 onChange={onChange}
                 required
+                className="bg-white border-gray-300"
               />
             </div>
             <div className="grid gap-2">
@@ -89,10 +92,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.concerns}
                 onChange={onChange}
                 placeholder="Tell us briefly about your situation"
+                className="bg-white border-gray-300"
               />
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="bg-background">
             <Button type="submit" variant="meant">Submit</Button>
           </DialogFooter>
         </form>

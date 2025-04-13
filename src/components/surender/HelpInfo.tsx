@@ -26,7 +26,7 @@ export const HelpInfo: React.FC<HelpInfoProps> = ({ onOpenForm }) => {
 
   return (
     <motion.div 
-      className="bg-white p-8 rounded-lg shadow-md"
+      className="bg-white p-8 rounded-lg shadow-md border border-gray-200"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.3 }}

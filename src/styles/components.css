@@ -27,16 +27,16 @@
 
   /* Hamburger menu styling */
   .hamburger-button {
-    @apply relative w-8 h-6 flex flex-col justify-around cursor-pointer;
+    @apply relative w-8 h-6 flex flex-col justify-around cursor-pointer bg-white border border-gray-200 shadow-sm rounded p-1;
   }
 
   .hamburger-line {
-    @apply w-8 h-0.5 bg-foreground rounded-full transition-all duration-300;
+    @apply w-6 h-0.5 bg-gray-700 rounded-full transition-all duration-300;
   }
 
   /* Navigation improvements */
   .navigation-bg {
-    @apply bg-background/95 backdrop-blur-md shadow-sm border-b border-border/40;
+    @apply bg-white shadow-sm border-b border-border/40;
   }
 
   /* Mobile dropdown menu - ensuring it's not transparent */
@@ -63,7 +63,21 @@
 
   /* Card improvements */
   .card-fancy {
-    @apply bg-background border border-border rounded-lg shadow-sm hover:shadow-md transition-all;
+    @apply bg-white border border-border rounded-lg shadow-sm hover:shadow-md transition-all;
+  }
+
+  /* Form styling - ensuring solid backgrounds */
+  .form-input {
+    @apply bg-white border border-gray-300 rounded-md px-3 py-2 text-sm;
+  }
+
+  .form-dialog {
+    @apply bg-white border border-gray-200 shadow-md;
+  }
+  
+  /* Dialog improvements */
+  .dialog-content {
+    @apply bg-white border border-gray-200 shadow-lg;
   }
 
   /* Thought bubble animation */
@@ -75,5 +89,10 @@
   /* Brain animation container */
   .brain-container {
     @apply relative w-full h-full flex items-center justify-center;
+  }
+
+  /* Ensure footer is not transparent */
+  .footer {
+    @apply bg-white border-t border-gray-200;
   }
 }

@@ -66,24 +66,24 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       
       {/* Enhanced hamburger button with better visibility */}
       <button
-        className="hamburger-button text-foreground p-2 rounded-md hover:bg-accent flex flex-col items-center justify-center shadow-sm border border-gray-200"
+        className="flex flex-col items-center justify-center p-2 rounded-md border border-gray-300 bg-white shadow-sm hover:bg-gray-50"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label="Toggle mobile menu"
         aria-expanded={isMobileMenuOpen}
-        style={{ width: '40px', height: '40px', background: isMobileMenuOpen ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.03)' }}
+        style={{ width: '40px', height: '40px' }}
       >
         <motion.div 
-          className="hamburger-line mb-1 bg-foreground"
+          className="w-5 h-0.5 bg-gray-700 mb-1"
           animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className="hamburger-line bg-foreground"
+          className="w-5 h-0.5 bg-gray-700"
           animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2 }}
         />
         <motion.div 
-          className="hamburger-line mt-1 bg-foreground"
+          className="w-5 h-0.5 bg-gray-700 mt-1"
           animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.2 }}
         />
@@ -92,13 +92,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
-            className="mobile-menu-container absolute top-full right-0 mt-2 w-64 bg-white shadow-lg rounded-lg overflow-hidden z-50 border border-gray-200"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            className="fixed top-[4.5rem] right-0 w-64 bg-white shadow-xl rounded-lg overflow-hidden z-50 border border-gray-200 max-h-[80vh] overflow-y-auto"
+            initial={{ opacity: 0, y: -10, x: 10 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, y: -10, x: 10 }}
             transition={{ duration: 0.2 }}
+            style={{ marginRight: '1rem' }}
           >
-            <nav className="flex flex-col space-y-1">
+            <nav className="flex flex-col space-y-1 p-2">
               <button
                 onClick={() => scrollToSection("hero")}
                 className={mobileNavLinkClass}

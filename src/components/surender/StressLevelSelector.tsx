@@ -48,7 +48,7 @@ export const StressLevelSelector: React.FC<StressLevelSelectorProps> = ({
   return (
     <div className="mb-16">
       <div className="relative w-full h-8 bg-gradient-to-r from-green-500 via-yellow-500 via-orange-500 to-red-500 rounded-full mb-10 shadow-inner">
-        <div className="absolute top-0 w-full flex justify-between px-2 -mt-10 text-sm font-medium">
+        <div className="absolute top-0 w-full flex justify-between px-2 -mt-10 text-sm font-medium text-gray-800">
           <span>Low</span>
           <span>Medium</span>
           <span>High</span>
@@ -57,21 +57,26 @@ export const StressLevelSelector: React.FC<StressLevelSelectorProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {stressLevels.map((stress) => (
-          <div
-            key={stress.level}
-            className={`p-6 rounded-lg border hover:border-${stress.color.replace('bg-', '')} hover:shadow-lg cursor-pointer transition-all ${
-              selectedLevel === stress.level ? `border-${stress.color.replace('bg-', '')} shadow-lg` : "border-gray-200"
-            }`}
-            onClick={() => onSelectLevel(stress.level)}
-          >
-            <div className="flex flex-col items-center text-center">
-              {stress.icon}
-              <h3 className="font-semibold text-lg mt-4">{stress.level}</h3>
-              <p className="text-muted-foreground text-sm mt-2">{stress.description}</p>
+        {stressLevels.map((stress) => {
+          const colorClass = stress.color.replace('bg-', '');
+          return (
+            <div
+              key={stress.level}
+              className={`p-6 rounded-lg border bg-white hover:shadow-lg cursor-pointer transition-all ${
+                selectedLevel === stress.level 
+                  ? `border-${colorClass} shadow-lg` 
+                  : "border-gray-200"
+              }`}
+              onClick={() => onSelectLevel(stress.level)}
+            >
+              <div className="flex flex-col items-center text-center">
+                {stress.icon}
+                <h3 className="font-semibold text-lg mt-4">{stress.level}</h3>
+                <p className="text-muted-foreground text-sm mt-2">{stress.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
