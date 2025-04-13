@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { Toaster } from "@/components/ui/toaster";
 
 import Index from "@/pages/Index";
-import Layout from "./components/Layout"; // Changed from @/components/Layout to relative path
+import Layout from "./components/Layout"; 
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
@@ -24,6 +24,7 @@ import Games from "./pages/Games";
 import StudentPsychologists from "./pages/StudentPsychologists";
 import Webinars from "./pages/Webinars";
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 
 function App() {
   useEffect(() => {
@@ -60,10 +61,10 @@ function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/student-psychologists" element={<StudentPsychologists />} />
           <Route path="/webinars" element={<Webinars />} />
+          <Route path="/login" element={<Login />} />
           
           <Route path="/surrender" element={<Navigate to="/surender" replace />} />
           <Route path="/deaddiction" element={<Navigate to="/de-addiction" replace />} />
-          <Route path="/de-addiction" element={<DeAddiction />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

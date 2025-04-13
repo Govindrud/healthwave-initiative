@@ -66,12 +66,12 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         </nav>
       </div>
 
-      <div className="flex items-center space-x-2 md:space-x-2">
+      <div className="flex items-center space-x-2 md:space-x-3">
         <ThemeToggle />
-
-        <Link to="/admin-login" className="hidden sm:block">
-          <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50">
-            Admin
+        
+        <Link to="/login" className="hidden sm:block">
+          <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
+            Login
           </Button>
         </Link>
         
