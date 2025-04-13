@@ -8,7 +8,6 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { DropdownListItem } from "./DropdownListItem";
-import { Heart, BookOpen, Sparkles, MapPin, Video } from "lucide-react";
 
 export const SpiritualityDropdown: React.FC = () => {
   const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium text-center";
@@ -19,54 +18,20 @@ export const SpiritualityDropdown: React.FC = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger className={`${navLinkClass} bg-transparent p-0`}>Spirituality</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-white">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
               <DropdownListItem
                 href="/spirituality"
-                title="Spiritual Wellness"
-                icon={<Heart className="h-4 w-4 text-meant-600" />}
+                title="Spiritual Practices"
                 className="hover:bg-meant-50"
               >
-                Explore spiritual practices to enhance your well-being
+                Explore meditation, mindfulness, and spiritual healing
               </DropdownListItem>
               <DropdownListItem
-                href="/spirituality-new"
-                title="Spiritual Services"
-                icon={<Sparkles className="h-4 w-4 text-meant-600" />}
+                href="/surender"
+                title="Dr. Surender's Practice"
                 className="hover:bg-meant-50"
               >
-                Comprehensive spiritual guidance and practices
-              </DropdownListItem>
-              <DropdownListItem
-                href="/spirituality-new?tab=gurus"
-                title="Guru Consultations"
-                icon={<BookOpen className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
-              >
-                Connect with experienced spiritual teachers and guides
-              </DropdownListItem>
-              <DropdownListItem
-                href="/spirituality-new?tab=travel"
-                title="Spiritual Travel"
-                icon={<MapPin className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
-              >
-                Transformative journeys to sacred destinations worldwide
-              </DropdownListItem>
-              <DropdownListItem
-                href="/spirituality-new?tab=video"
-                title="Video Consultations"
-                icon={<Video className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
-              >
-                Connect with spiritual guides from anywhere
-              </DropdownListItem>
-              <DropdownListItem
-                href="/spirituality-new?tab=yoga"
-                title="Bhakti Yoga"
-                icon={<Heart className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
-              >
-                The devotional path to spiritual growth and well-being
+                Learn about holistic approaches to mental wellbeing
               </DropdownListItem>
             </ul>
           </NavigationMenuContent>
