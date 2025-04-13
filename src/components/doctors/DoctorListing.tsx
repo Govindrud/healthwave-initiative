@@ -254,7 +254,7 @@ const DoctorListing: React.FC = () => {
                   <SelectValue placeholder="All Specializations" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Specializations</SelectItem>
+                  <SelectItem value="all">All Specializations</SelectItem>
                   <SelectItem value="psychiatrist">Psychiatrist</SelectItem>
                   <SelectItem value="psychologist">Psychologist</SelectItem>
                   <SelectItem value="therapist">Therapist</SelectItem>
@@ -273,7 +273,7 @@ const DoctorListing: React.FC = () => {
                   <SelectValue placeholder="All Experience Levels" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Experience Levels</SelectItem>
+                  <SelectItem value="all">All Experience Levels</SelectItem>
                   <SelectItem value="0-5">0-5 years</SelectItem>
                   <SelectItem value="5-10">5-10 years</SelectItem>
                   <SelectItem value="10+">10+ years</SelectItem>
@@ -435,3 +435,4 @@ const DoctorListing: React.FC = () => {
 };
 
 export default DoctorListing;
+

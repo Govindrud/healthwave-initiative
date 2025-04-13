@@ -40,3 +40,4 @@ export const ActivitiesDropdown: React.FC = () => {
     </NavigationMenu>
   );
 };
+
