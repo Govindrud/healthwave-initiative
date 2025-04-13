@@ -1,10 +1,9 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { MobileDropdown } from "../MobileDropdown";
-import { MobileNavItem } from "./MobileNavItem";
 import { motion } from "framer-motion";
+import { MobileNavItem } from "./MobileNavItem";
+import { MobileDropdown } from "../MobileDropdown";
 
 interface MobileMenuContentProps {
   isOpen: boolean;
@@ -12,101 +11,89 @@ interface MobileMenuContentProps {
   scrollToSection: (id: string) => void;
 }
 
-export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
-  isOpen,
+export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ 
+  isOpen, 
   onClose,
   scrollToSection
 }) => {
-  if (!isOpen) return null;
-
-  const handleNavClick = (handler: () => void) => {
-    handler();
-    onClose();
-  };
-
   return (
-    <motion.div 
-      className="fixed top-[4.5rem] right-0 w-64 bg-white shadow-xl rounded-lg overflow-hidden z-50 border border-gray-200 max-h-[80vh] overflow-y-auto"
-      initial={{ opacity: 0, y: -10, x: 10 }}
-      animate={{ opacity: 1, y: 0, x: 0 }}
-      exit={{ opacity: 0, y: -10, x: 10 }}
+    <motion.div
+      className="fixed top-[4.5rem] left-0 right-0 bg-white dark:bg-gray-900 border-t border-b border-gray-200 dark:border-gray-800 
+               py-4 px-4 shadow-lg z-50 max-h-[80vh] overflow-y-auto"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
-      style={{ marginRight: '1rem' }}
     >
-      <nav className="flex flex-col space-y-1 p-2">
-        <MobileNavItem onClick={() => handleNavClick(() => scrollToSection("hero"))}>
+      <nav className="flex flex-col space-y-1">
+        <MobileNavItem onClick={() => scrollToSection("hero")}>
           Home
         </MobileNavItem>
         
-        <MobileNavItem onClick={() => handleNavClick(() => scrollToSection("about"))}>
+        <MobileNavItem onClick={() => scrollToSection("about")}>
           About
         </MobileNavItem>
         
         <MobileDropdown title="Services">
-          <Link to="/services" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">All Services</Link>
-          <Link to="/doctors" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Doctor Consultations</Link>
-          <Link to="/student-psychologists" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Student Psychologists</Link>
-          <Link to="/webinars" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Mental Health Webinars</Link>
-          <Link to="/corporate-plans" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Corporate Plans</Link>
-          <Link to="/corporate-certification" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Stress-Free Certification</Link>
+          <MobileNavItem to="/services">All Services</MobileNavItem>
+          <MobileNavItem to="/doctors">Book Consultation</MobileNavItem>
+          <MobileNavItem to="/corporate-plans">Corporate Plans</MobileNavItem>
+          <MobileNavItem to="/hosting">Hosting</MobileNavItem>
         </MobileDropdown>
         
-        <MobileNavItem onClick={() => handleNavClick(() => scrollToSection("solutions"))}>
+        <MobileNavItem onClick={() => scrollToSection("solutions")}>
           Solutions
         </MobileNavItem>
         
         <MobileDropdown title="Activities">
-          <Link to="/adventures" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Stress-Free Adventures</Link>
-          <Link to="/games" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Mental Health Games</Link>
+          <MobileNavItem to="/adventures">Adventures</MobileNavItem>
+          <MobileNavItem to="/games">Games</MobileNavItem>
+          <MobileNavItem to="/webinars">Webinars</MobileNavItem>
+          <MobileNavItem to="/student-psychologists">Student Psychologists</MobileNavItem>
         </MobileDropdown>
         
-        <MobileNavItem to="/products" onClick={onClose}>
+        <MobileNavItem to="/products">
           Products
         </MobileNavItem>
         
         <MobileDropdown title="Spirituality">
-          <Link to="/spirituality" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Spiritual Wellness</Link>
-          <Link to="/spirituality-new" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Spiritual Services</Link>
-          <Link to="/spirituality-new?tab=gurus" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Guru Consultations</Link>
-          <Link to="/spirituality-new?tab=travel" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Spiritual Travel</Link>
-          <Link to="/spirituality-new?tab=yoga" className="block pl-4 py-3 text-foreground hover:text-meant-600 transition-colors text-sm font-medium">Bhakti Yoga</Link>
+          <MobileNavItem to="/spirituality">Spiritual Guidance</MobileNavItem>
+          <MobileNavItem to="/spirituality-new">New Experience</MobileNavItem>
         </MobileDropdown>
-        
-        <MobileNavItem to="/surender" onClick={onClose}>
+
+        <MobileNavItem to="/surender">
           Surender
         </MobileNavItem>
 
-        <MobileNavItem to="/de-addiction" onClick={onClose}>
+        <MobileNavItem to="/de-addiction">
           De-addiction
         </MobileNavItem>
         
-        <MobileNavItem onClick={() => handleNavClick(() => scrollToSection("problem"))}>
+        <MobileNavItem onClick={() => scrollToSection("problem")}>
           Contribute
         </MobileNavItem>
         
-        <MobileNavItem onClick={() => handleNavClick(() => scrollToSection("contact"))}>
+        <MobileNavItem onClick={() => scrollToSection("contact")}>
           Contact
         </MobileNavItem>
-        
-        <div className="pt-2">
+
+        <div className="pt-2 mt-2 border-t border-gray-200 dark:border-gray-800">
           <Link 
-            to="/admin-login" 
-            className="block px-4 py-2" 
+            to="/doctors" 
+            className="block w-full py-2.5 px-4 bg-meant-600 hover:bg-meant-700 text-white text-center rounded-md font-medium"
             onClick={onClose}
           >
-            <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50 w-full">
-              Admin
-            </Button>
+            Book Consultation
+          </Link>
+          
+          <Link 
+            to="/admin-login" 
+            className="block w-full mt-2 py-2 px-4 text-meant-600 dark:text-meant-400 border border-meant-600 dark:border-meant-400 text-center rounded-md font-medium"
+            onClick={onClose}
+          >
+            Admin Login
           </Link>
         </div>
-        
-        <Link to="/doctors" onClick={onClose}>
-          <Button 
-            className="bg-meant-600 hover:bg-meant-700 text-white rounded-full hover:shadow-md transition-all w-full mt-2"
-          >
-            Book Consultation
-          </Button>
-        </Link>
       </nav>
     </motion.div>
   );

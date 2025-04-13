@@ -42,7 +42,7 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
   return (
     <PageTransition>
       <motion.div 
-        className="min-h-screen flex flex-col"
+        className="min-h-screen flex flex-col bg-white dark:bg-gray-900 dark:text-gray-100"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
