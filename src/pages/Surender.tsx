@@ -7,7 +7,7 @@ import { StressLevelSelector } from "@/components/surender/StressLevelSelector";
 import { HelpInfo } from "@/components/surender/HelpInfo";
 import { ContactForm } from "@/components/surender/ContactForm";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageCircle, HelpCircle, HeartHandshake } from "lucide-react";
+import { Phone, MessageCircle, HelpCircle, HeartHandshake, Heart } from "lucide-react";
 
 const Surender = () => {
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
@@ -55,13 +55,13 @@ const Surender = () => {
 
   return (
     <MainLayout title="Surrender Your Stress | MeantToHelp">
-      <section className="py-16 bg-gradient-to-b from-white to-meant-50/50 dark:from-background dark:to-background">
+      <section className="py-16 bg-gradient-to-b from-white to-love-50/50 dark:from-background dark:to-background">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
-            <div className="inline-block p-2 bg-meant-100 dark:bg-meant-900/30 rounded-full mb-4">
-              <HeartHandshake className="h-8 w-8 text-meant-600 dark:text-meant-400" />
+            <div className="inline-block p-2 bg-love-100 dark:bg-love-900/30 rounded-full mb-4">
+              <Heart className="h-8 w-8 text-love-600 dark:text-love-400" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-meant-800 dark:text-white">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-love-800 dark:text-love-300">
               Surrender Your Stress
             </h1>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -110,30 +110,30 @@ const Surender = () => {
           />
           
           {/* Support resources section */}
-          <div className="mt-16 bg-white dark:bg-meant-900/20 p-6 rounded-xl shadow-md border border-meant-100 dark:border-meant-800/50">
-            <h2 className="text-2xl font-bold mb-4 text-meant-800 dark:text-white flex items-center">
-              <HelpCircle className="mr-2 h-6 w-6 text-meant-600 dark:text-meant-400" />
+          <div className="mt-16 bg-white dark:bg-love-900/20 p-6 rounded-xl shadow-md border border-love-100 dark:border-love-800/50">
+            <h2 className="text-2xl font-bold mb-4 text-love-800 dark:text-love-200 flex items-center">
+              <HelpCircle className="mr-2 h-6 w-6 text-love-600 dark:text-love-400" />
               Additional Support Resources
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-              <div className="bg-meant-50 dark:bg-meant-900/30 p-5 rounded-lg border border-meant-100 dark:border-meant-800/50">
-                <h3 className="font-semibold text-meant-700 dark:text-meant-300 mb-2">Crisis Text Line</h3>
+              <div className="bg-love-50 dark:bg-love-900/30 p-5 rounded-lg border border-love-100 dark:border-love-800/50">
+                <h3 className="font-semibold text-love-700 dark:text-love-300 mb-2">Crisis Text Line</h3>
                 <p className="text-sm text-muted-foreground mb-4">Text HOME to 741741 to connect with a Crisis Counselor.</p>
-                <Button variant="outline" className="w-full border-meant-300 text-meant-700 dark:border-meant-700 dark:text-meant-400">
+                <Button variant="outline" className="w-full border-love-300 text-love-700 dark:border-love-700 dark:text-love-400">
                   Learn More
                 </Button>
               </div>
-              <div className="bg-meant-50 dark:bg-meant-900/30 p-5 rounded-lg border border-meant-100 dark:border-meant-800/50">
-                <h3 className="font-semibold text-meant-700 dark:text-meant-300 mb-2">Veteran's Crisis Line</h3>
+              <div className="bg-love-50 dark:bg-love-900/30 p-5 rounded-lg border border-love-100 dark:border-love-800/50">
+                <h3 className="font-semibold text-love-700 dark:text-love-300 mb-2">Veteran's Crisis Line</h3>
                 <p className="text-sm text-muted-foreground mb-4">Call 1-800-273-8255 and Press 1, or text 838255.</p>
-                <Button variant="outline" className="w-full border-meant-300 text-meant-700 dark:border-meant-700 dark:text-meant-400">
+                <Button variant="outline" className="w-full border-love-300 text-love-700 dark:border-love-700 dark:text-love-400">
                   Learn More
                 </Button>
               </div>
-              <div className="bg-meant-50 dark:bg-meant-900/30 p-5 rounded-lg border border-meant-100 dark:border-meant-800/50">
-                <h3 className="font-semibold text-meant-700 dark:text-meant-300 mb-2">SAMHSA Helpline</h3>
+              <div className="bg-love-50 dark:bg-love-900/30 p-5 rounded-lg border border-love-100 dark:border-love-800/50">
+                <h3 className="font-semibold text-love-700 dark:text-love-300 mb-2">SAMHSA Helpline</h3>
                 <p className="text-sm text-muted-foreground mb-4">Call 1-800-662-4357 for treatment referrals.</p>
-                <Button variant="outline" className="w-full border-meant-300 text-meant-700 dark:border-meant-700 dark:text-meant-400">
+                <Button variant="outline" className="w-full border-love-300 text-love-700 dark:border-love-700 dark:text-love-400">
                   Learn More
                 </Button>
               </div>

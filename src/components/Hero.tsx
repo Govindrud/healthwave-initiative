@@ -1,16 +1,16 @@
 
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Heart, HeartHandshake, HeartPulse } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-purple-50 to-background dark:from-purple-950/30 dark:to-background pt-16">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-love-50 to-background dark:from-love-950/30 dark:to-background pt-16">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
-          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-purple-200 dark:bg-purple-800/20 opacity-30"
+          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-love-200 dark:bg-love-800/20 opacity-30"
           animate={{ 
             y: [0, 15, 0],
             scale: [1, 1.05, 1]
@@ -22,7 +22,7 @@ const Hero = () => {
           }}
         />
         <motion.div 
-          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-purple-300 dark:bg-purple-700/20 opacity-30"
+          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-love-300 dark:bg-love-700/20 opacity-30"
           animate={{ 
             y: [0, -20, 0],
             scale: [1, 1.03, 1]
@@ -35,7 +35,7 @@ const Hero = () => {
           }}
         />
         <motion.div 
-          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-purple-100 dark:bg-purple-900/20 opacity-30"
+          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-love-100 dark:bg-love-900/20 opacity-30"
           animate={{ 
             y: [0, 25, 0],
             scale: [1, 1.04, 1]
@@ -58,7 +58,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
           >
             <motion.span 
-              className="inline-block py-1 px-3 rounded-full bg-purple-200 dark:bg-purple-800/50 text-purple-800 dark:text-purple-200 text-sm font-medium mb-5"
+              className="inline-block py-1 px-3 rounded-full bg-love-200 dark:bg-love-800/50 text-love-800 dark:text-love-200 text-sm font-medium mb-5"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.4 }}
@@ -72,7 +72,7 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-purple-600 dark:from-purple-400 dark:to-purple-300">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-love-700 to-love-600 dark:from-love-400 dark:to-love-300">
                 Break Free From Mental Loops
               </span>
             </motion.h1>
@@ -96,15 +96,17 @@ const Hero = () => {
             >
               <Button 
                 size="lg" 
-                className="bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
+                variant="love"
+                className="rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
                 onClick={() => document.getElementById('problem')?.scrollIntoView({ behavior: 'smooth' })}
               >
+                <Heart size={18} className="mr-1" />
                 Share Your Challenge
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-full px-8 py-6 border-purple-300 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 text-purple-800 dark:text-purple-300 hover:shadow-md transition-all w-full sm:w-auto"
+                className="rounded-full px-8 py-6 border-love-300 dark:border-love-700 hover:bg-love-50 dark:hover:bg-love-900/30 text-love-800 dark:text-love-300 hover:shadow-md transition-all w-full sm:w-auto"
                 onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Explore Solutions
@@ -133,10 +135,10 @@ const Hero = () => {
       >
         <button 
           onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          className="p-3 rounded-full bg-white dark:bg-purple-900/50 shadow-lg hover:shadow-xl transition-all group pulse-animation"
+          className="p-3 rounded-full bg-white dark:bg-love-900/50 shadow-lg hover:shadow-xl transition-all group pulse-animation"
           aria-label="Scroll down"
         >
-          <ArrowDown className="text-purple-700 dark:text-purple-300 group-hover:text-purple-800 dark:group-hover:text-purple-200 transition-colors" size={24} />
+          <ArrowDown className="text-love-700 dark:text-love-300 group-hover:text-love-800 dark:group-hover:text-love-200 transition-colors" size={24} />
         </button>
       </motion.div>
     </section>
