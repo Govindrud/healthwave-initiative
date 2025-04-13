@@ -1,6 +1,7 @@
+
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastProvider } from "./hooks/use-toast";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
 
 import Index from "@/pages/Index";
 import Layout from "@/components/Layout";
@@ -37,7 +38,7 @@ function App() {
   }, []);
   
   return (
-    <ToastProvider>
+    <>
       <Router>
         <Routes>
           <Route path="/" element={<Layout><Index /></Layout>} />
@@ -67,7 +68,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </ToastProvider>
+      <Toaster />
+    </>
   );
 }
 

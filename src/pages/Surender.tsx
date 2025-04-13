@@ -53,10 +53,10 @@ const Surender = () => {
 
   return (
     <MainLayout>
-      <section className="py-16 bg-gradient-to-b from-white to-meant-50/50">
+      <section className="py-16 bg-gradient-to-b from-white to-blue-50/50">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-meant-800">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-blue-800">
               Surrender Your Stress
             </h1>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">

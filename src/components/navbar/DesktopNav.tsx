@@ -7,6 +7,7 @@ import { NavLink } from "./NavLink";
 import { ServicesDropdown } from "./ServicesDropdown";
 import { ActivitiesDropdown } from "./ActivitiesDropdown";
 import { SpiritualityDropdown } from "./SpiritualityDropdown";
+import ThemeToggle from "../ThemeToggle";
 
 interface DesktopNavProps {
   location: Location;
@@ -69,8 +70,10 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         Contact
       </NavLink>
 
+      <ThemeToggle />
+
       <Link to="/admin-login">
-        <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
+        <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50">
           Admin
         </Button>
       </Link>
@@ -78,7 +81,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
       <Link to="/doctors">
         <Button 
           size="sm"
-          className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-4 hover:shadow-md transition-all"
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 hover:shadow-md transition-all"
         >
           Book Consultation
         </Button>
@@ -86,7 +89,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
       
       <Link to="/cart" className="relative">
         <ShoppingCart size={22} className="text-foreground/80 hover:text-foreground" />
-        <span className="absolute -top-1 -right-1 bg-meant-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
           2
         </span>
       </Link>
