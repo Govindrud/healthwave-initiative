@@ -46,7 +46,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   };
 
   return (
-    <div className="flex items-center space-x-2 md:hidden" ref={menuRef}>
+    <div className="flex items-center space-x-2 md:hidden z-50" ref={menuRef}>
       <CartIcon />
       <HamburgerButton isOpen={isMobileMenuOpen} onClick={toggleMenu} />
       

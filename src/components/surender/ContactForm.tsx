@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Phone, AlertCircle, HelpCircle } from "lucide-react";
 
 interface FormData {
   name: string;
@@ -40,7 +41,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       <DialogTrigger asChild>
         <span className="hidden">Trigger</span>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-white border-meant-300 shadow-xl">
         <form onSubmit={onSubmit}>
           <DialogHeader>
             <DialogTitle>Request Professional Help</DialogTitle>
@@ -57,6 +58,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.name}
                 onChange={onChange}
                 required
+                className="bg-white border-meant-300"
               />
             </div>
             <div className="grid gap-2">
@@ -68,6 +70,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.phone}
                 onChange={onChange}
                 required
+                className="bg-white border-meant-300"
               />
             </div>
             <div className="grid gap-2">
@@ -79,6 +82,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.email}
                 onChange={onChange}
                 required
+                className="bg-white border-meant-300"
               />
             </div>
             <div className="grid gap-2">
@@ -89,10 +93,30 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 value={formData.concerns}
                 onChange={onChange}
                 placeholder="Tell us briefly about your situation"
+                className="bg-white border-meant-300"
               />
             </div>
           </div>
-          <DialogFooter>
+          
+          {/* Emergency helpline section */}
+          <div className="bg-red-50 p-3 rounded-md mb-4 border border-red-200">
+            <div className="flex items-start space-x-2">
+              <AlertCircle className="h-5 w-5 text-red-600 mt-0.5" />
+              <div>
+                <h4 className="font-medium text-red-800">Emergency Helpline</h4>
+                <p className="text-sm text-red-700">If you're in immediate distress, please call our 24/7 crisis line:</p>
+                <a href="tel:1800-273-8255" className="flex items-center mt-2 text-red-700 font-medium">
+                  <Phone className="h-4 w-4 mr-2" />
+                  1800-273-8255
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <DialogFooter className="flex-col sm:flex-row gap-3">
+            <Button type="button" variant="outline" className="flex items-center gap-2" onClick={() => window.open('/help-resources', '_blank')}>
+              <HelpCircle className="h-4 w-4" /> Support Resources
+            </Button>
             <Button type="submit" variant="meant">Submit</Button>
           </DialogFooter>
         </form>

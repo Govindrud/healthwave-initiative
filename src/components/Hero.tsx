@@ -6,11 +6,11 @@ import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-accent/50 to-background pt-16">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-meant-50 to-background pt-16">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
-          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-purple-200 opacity-30"
+          className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-meant-200 opacity-30"
           animate={{ 
             y: [0, 15, 0],
             scale: [1, 1.05, 1]
@@ -22,7 +22,7 @@ const Hero = () => {
           }}
         />
         <motion.div 
-          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-purple-300 opacity-30"
+          className="absolute top-1/3 -left-10 w-40 h-40 rounded-full bg-meant-300 opacity-30"
           animate={{ 
             y: [0, -20, 0],
             scale: [1, 1.03, 1]
@@ -35,7 +35,7 @@ const Hero = () => {
           }}
         />
         <motion.div 
-          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-purple-100 opacity-30"
+          className="absolute bottom-20 right-1/3 w-52 h-52 rounded-full bg-meant-100 opacity-30"
           animate={{ 
             y: [0, 25, 0],
             scale: [1, 1.04, 1]
@@ -58,7 +58,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
           >
             <motion.span 
-              className="inline-block py-1 px-3 rounded-full bg-purple-200 text-purple-800 text-sm font-medium mb-5"
+              className="inline-block py-1 px-3 rounded-full bg-meant-200 text-meant-800 text-sm font-medium mb-5"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.4 }}
@@ -72,7 +72,7 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-indigo-600">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-700 to-meant-600">
                 Break Free From Mental Loops
               </span>
             </motion.h1>
@@ -96,7 +96,7 @@ const Hero = () => {
             >
               <Button 
                 size="lg" 
-                className="bg-purple-700 hover:bg-purple-800 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
+                className="bg-meant-700 hover:bg-meant-800 text-white rounded-full px-8 py-6 hover:shadow-lg transition-all w-full sm:w-auto"
                 onClick={() => document.getElementById('problem')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Share Your Challenge
@@ -104,7 +104,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-full px-8 py-6 border-purple-300 hover:bg-purple-50 text-purple-800 hover:shadow-md transition-all w-full sm:w-auto"
+                className="rounded-full px-8 py-6 border-meant-300 hover:bg-meant-50 text-meant-800 hover:shadow-md transition-all w-full sm:w-auto"
                 onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Explore Solutions
@@ -136,7 +136,7 @@ const Hero = () => {
           className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl transition-all group pulse-animation"
           aria-label="Scroll down"
         >
-          <ArrowDown className="text-purple-700 group-hover:text-purple-800 transition-colors" size={24} />
+          <ArrowDown className="text-meant-700 group-hover:text-meant-800 transition-colors" size={24} />
         </button>
       </motion.div>
     </section>
