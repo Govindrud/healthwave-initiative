@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children, title }: MainLayoutProps) => {
   const location = useLocation();
+  const { theme } = useTheme();
   
   useEffect(() => {
     // Scroll to top when route changes
@@ -42,7 +44,7 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
   return (
     <PageTransition>
       <motion.div 
-        className="min-h-screen flex flex-col"
+        className={`min-h-screen flex flex-col ${theme}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

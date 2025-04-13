@@ -1,58 +1,71 @@
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Index from "./pages/Index";
-import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Services from "./pages/Services";
-import Hosting from "./pages/Hosting";
-import NotFound from "./pages/NotFound";
-import SpiritualityPage from "./pages/SpiritualityPage";
-import Spirituality from "./pages/Spirituality";
-import CorporateCertification from "./pages/CorporateCertification";
-import Surender from "./pages/Surender";
-import DeAddiction from "./pages/DeAddiction";
-import AdminLogin from "./pages/AdminLogin";
-import CorporatePlans from "./pages/CorporatePlans";
-import Doctors from "./pages/Doctors";
-import Adventures from "./pages/Adventures";
-import Games from "./pages/Games";
-import StudentPsychologists from "./pages/StudentPsychologists";
-import Webinars from "./pages/Webinars";
-import Admin from "./pages/Admin";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Index from "@/pages/Index";
+import Products from "@/pages/Products";
+import ProductDetail from "@/pages/ProductDetail";
+import Cart from "@/pages/Cart";
+import Doctors from "@/pages/Doctors";
+import Spirituality from "@/pages/Spirituality";
+import Services from "@/pages/Services";
+import Surender from "@/pages/Surender";
+import NotFound from "@/pages/NotFound";
+import AdminLogin from "@/pages/AdminLogin";
+import Admin from "@/pages/Admin";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import CorporatePlans from "@/pages/CorporatePlans";
+import CorporateCertification from "@/pages/CorporateCertification";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
+import StudentPsychologists from "@/pages/StudentPsychologists";
+import Webinars from "@/pages/Webinars";
+import Games from "@/pages/Games";
+import Adventures from "@/pages/Adventures";
+import DeAddiction from "@/pages/DeAddiction";
+import MainLayout from "@/components/layouts/MainLayout";
+import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { Toaster as SonnerToaster } from "sonner";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/hosting" element={<Hosting />} />
-        <Route path="/spirituality" element={<Spirituality />} />
-        <Route path="/spirituality-new" element={<SpiritualityPage />} />
-        <Route path="/corporate-certification" element={<CorporateCertification />} />
-        <Route path="/corporate-plans" element={<CorporatePlans />} />
-        <Route path="/surender" element={<Surender />} />
-        <Route path="/de-addiction" element={<DeAddiction />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/adventures" element={<Adventures />} />
-        <Route path="/games" element={<Games />} />
-        <Route path="/student-psychologists" element={<StudentPsychologists />} />
-        <Route path="/webinars" element={<Webinars />} />
-        
-        {/* Redirect for common misspellings */}
-        <Route path="/surrender" element={<Navigate to="/surender" replace />} />
-        <Route path="/deaddiction" element={<Navigate to="/de-addiction" replace />} />
-        <Route path="/de-addiction" element={<DeAddiction />} />
-        
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainLayout><Index /></MainLayout>} />
+            <Route path="/products" element={<MainLayout><Products /></MainLayout>} />
+            <Route path="/products/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
+            <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
+            <Route path="/doctors" element={<MainLayout><Doctors /></MainLayout>} />
+            <Route path="/spirituality" element={<MainLayout><Spirituality /></MainLayout>} />
+            <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
+            <Route path="/surender" element={<MainLayout><Surender /></MainLayout>} />
+            <Route path="/corporate-plans" element={<MainLayout><CorporatePlans /></MainLayout>} />
+            <Route path="/corporate-certification" element={<MainLayout><CorporateCertification /></MainLayout>} />
+            <Route path="/student-psychologists" element={<MainLayout><StudentPsychologists /></MainLayout>} />
+            <Route path="/webinars" element={<MainLayout><Webinars /></MainLayout>} />
+            <Route path="/games" element={<MainLayout><Games /></MainLayout>} />
+            <Route path="/adventures" element={<MainLayout><Adventures /></MainLayout>} />
+            <Route path="/de-addiction" element={<MainLayout><DeAddiction /></MainLayout>} />
+            <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route 
+              path="/admin/*"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+        <Toaster />
+        <SonnerToaster position="top-right" />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
