@@ -1,10 +1,10 @@
 
 import React from "react";
-import { Link, Location, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { MobileDropdown } from "./MobileDropdown";
-import { motion, AnimatePresence } from "framer-motion";
+import { Location, useNavigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { CartIcon } from "./mobile/CartIcon";
+import { HamburgerButton } from "./mobile/HamburgerButton";
+import { MobileMenuContent } from "./mobile/MobileMenuContent";
 
 interface MobileNavProps {
   location: Location;
@@ -53,155 +53,22 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     }
   };
 
-  const mobileNavLinkClass = "text-foreground hover:text-meant-600 transition-colors px-4 py-3 rounded-md text-sm font-medium";
-
   return (
     <div className="flex items-center space-x-2 md:hidden" ref={menuRef}>
-      <Link to="/cart" className="relative mr-2">
-        <ShoppingCart size={22} className="text-foreground" />
-        <span className="absolute -top-1 -right-1 bg-meant-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-          2
-        </span>
-      </Link>
+      <CartIcon itemCount={2} />
       
-      {/* Enhanced hamburger button with better visibility */}
-      <button
-        className="flex flex-col items-center justify-center p-2 rounded-md border border-gray-300 bg-white shadow-sm hover:bg-gray-50"
+      <HamburgerButton 
+        isOpen={isMobileMenuOpen}
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        aria-label="Toggle mobile menu"
-        aria-expanded={isMobileMenuOpen}
-        style={{ width: '40px', height: '40px' }}
-      >
-        <motion.div 
-          className="w-5 h-0.5 bg-gray-700 mb-1"
-          animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-        <motion.div 
-          className="w-5 h-0.5 bg-gray-700"
-          animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        />
-        <motion.div 
-          className="w-5 h-0.5 bg-gray-700 mt-1"
-          animate={isMobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      </button>
+      />
 
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
-            className="fixed top-[4.5rem] right-0 w-64 bg-white shadow-xl rounded-lg overflow-hidden z-50 border border-gray-200 max-h-[80vh] overflow-y-auto"
-            initial={{ opacity: 0, y: -10, x: 10 }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
-            exit={{ opacity: 0, y: -10, x: 10 }}
-            transition={{ duration: 0.2 }}
-            style={{ marginRight: '1rem' }}
-          >
-            <nav className="flex flex-col space-y-1 p-2">
-              <button
-                onClick={() => scrollToSection("hero")}
-                className={mobileNavLinkClass}
-              >
-                Home
-              </button>
-              
-              <button
-                onClick={() => scrollToSection("about")}
-                className={mobileNavLinkClass}
-              >
-                About
-              </button>
-              
-              <MobileDropdown title="Services">
-                <Link to="/services" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>All Services</Link>
-                <Link to="/doctors" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Doctor Consultations</Link>
-                <Link to="/student-psychologists" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Student Psychologists</Link>
-                <Link to="/webinars" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Mental Health Webinars</Link>
-                <Link to="/corporate-plans" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Corporate Plans</Link>
-                <Link to="/corporate-certification" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Stress-Free Certification</Link>
-              </MobileDropdown>
-              
-              <button
-                onClick={() => scrollToSection("solutions")}
-                className={mobileNavLinkClass}
-              >
-                Solutions
-              </button>
-              
-              <MobileDropdown title="Activities">
-                <Link to="/adventures" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Stress-Free Adventures</Link>
-                <Link to="/games" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Mental Health Games</Link>
-              </MobileDropdown>
-              
-              <Link 
-                to="/products" 
-                className={mobileNavLinkClass}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Products
-              </Link>
-              
-              <MobileDropdown title="Spirituality">
-                <Link to="/spirituality" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Spiritual Wellness</Link>
-                <Link to="/spirituality-new" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Spiritual Services</Link>
-                <Link to="/spirituality-new?tab=gurus" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Guru Consultations</Link>
-                <Link to="/spirituality-new?tab=travel" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Spiritual Travel</Link>
-                <Link to="/spirituality-new?tab=yoga" className={`block pl-4 py-3 ${mobileNavLinkClass}`}>Bhakti Yoga</Link>
-              </MobileDropdown>
-              
-              <Link 
-                to="/surender"
-                className={mobileNavLinkClass}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Surender
-              </Link>
-
-              <Link 
-                to="/de-addiction"
-                className={mobileNavLinkClass}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                De-addiction
-              </Link>
-              
-              <button
-                onClick={() => scrollToSection("problem")}
-                className={mobileNavLinkClass}
-              >
-                Contribute
-              </button>
-              
-              <button
-                onClick={() => scrollToSection("contact")}
-                className={mobileNavLinkClass}
-              >
-                Contact
-              </button>
-              
-              <div className="pt-2">
-                <Link 
-                  to="/admin-login" 
-                  className="block px-4 py-2" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <Button variant="outline" className="text-meant-600 border-meant-600 hover:bg-meant-50 w-full">
-                    Admin
-                  </Button>
-                </Link>
-              </div>
-              
-              <Link to="/doctors" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button 
-                  className="bg-meant-600 hover:bg-meant-700 text-white rounded-full hover:shadow-md transition-all w-full mt-2"
-                >
-                  Book Consultation
-                </Button>
-              </Link>
-            </nav>
-          </motion.div>
+          <MobileMenuContent 
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+            scrollToSection={scrollToSection}
+          />
         )}
       </AnimatePresence>
     </div>
