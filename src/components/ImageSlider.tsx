@@ -47,6 +47,25 @@ const ImageSlider = ({ images, autoPlayInterval = 5000, className = "" }: ImageS
     setCurrentIndex(index);
   };
 
+  // Higher quality product imagery
+  const enhancedImages = images.length > 0 ? images : [
+    {
+      url: "https://images.unsplash.com/photo-1602192509154-0b900ee1f851?q=80&w=2000&auto=format&fit=crop",
+      alt: "Wellness products for meditation",
+      caption: "Premium meditation and relaxation products"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=2000&auto=format&fit=crop",
+      alt: "Aromatherapy collection",
+      caption: "Handcrafted aromatherapy for mental balance"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1575552286453-4c751d2988b4?q=80&w=2000&auto=format&fit=crop",
+      alt: "Relaxation accessories",
+      caption: "Tools for mindfulness and peace"
+    }
+  ];
+
   return (
     <div className={`relative overflow-hidden rounded-xl ${className}`}>
       <div className="relative h-[400px] md:h-[500px] overflow-hidden">
@@ -61,13 +80,13 @@ const ImageSlider = ({ images, autoPlayInterval = 5000, className = "" }: ImageS
           >
             <div className="absolute inset-0 bg-black/30 z-10" />
             <img
-              src={images[currentIndex].url}
-              alt={images[currentIndex].alt}
+              src={enhancedImages[currentIndex].url}
+              alt={enhancedImages[currentIndex].alt}
               className="w-full h-full object-cover"
             />
-            {images[currentIndex].caption && (
+            {enhancedImages[currentIndex].caption && (
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent text-white z-20">
-                <p className="text-lg md:text-xl font-medium">{images[currentIndex].caption}</p>
+                <p className="text-lg md:text-xl font-medium">{enhancedImages[currentIndex].caption}</p>
               </div>
             )}
           </motion.div>
@@ -96,7 +115,7 @@ const ImageSlider = ({ images, autoPlayInterval = 5000, className = "" }: ImageS
 
       {/* Dots indicator */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
-        {images.map((_, index) => (
+        {enhancedImages.map((_, index) => (
           <button
             key={index}
             className={`w-2.5 h-2.5 rounded-full transition-all ${

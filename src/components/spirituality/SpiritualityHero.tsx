@@ -8,8 +8,8 @@ const SpiritualityHero: React.FC = () => {
       <div className="relative rounded-lg overflow-hidden h-80 md:h-96">
         <div className="absolute inset-0 bg-gradient-to-r from-meant-900/80 to-meant-700/40 z-10"></div>
         <img 
-          src="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb" 
-          alt="Spiritual Journey" 
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000&auto=format&fit=crop" 
+          alt="Spiritual Journey by the Ocean" 
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center p-4">
