@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { StressLevelSelector } from "@/components/surender/StressLevelSelector";
 import { HelpInfo } from "@/components/surender/HelpInfo";
 import { ContactForm } from "@/components/surender/ContactForm";
@@ -35,7 +35,6 @@ const Surender = () => {
     toast({
       title: "Help is on the way",
       description: "We've received your information. A counselor will contact you shortly.",
-      duration: 5000,
     });
     
     // Navigate to thank you page or show confirmation
@@ -52,7 +51,7 @@ const Surender = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout title="Surrender Your Stress">
       <section className="py-16 bg-gradient-to-b from-white to-meant-50/50">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
