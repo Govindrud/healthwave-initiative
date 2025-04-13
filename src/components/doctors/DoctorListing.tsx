@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -142,7 +141,6 @@ const DoctorListing: React.FC = () => {
   const [showCustomerForm, setShowCustomerForm] = useState<Record<number, boolean>>({});
   const [isProcessing, setIsProcessing] = useState<Record<number, boolean>>({});
 
-  // Apply filters
   const filteredDoctors = doctors.filter(doctor => {
     const matchesSpecialization = !filters.specialization || doctor.specialization === filters.specialization;
     
@@ -210,32 +208,14 @@ const DoctorListing: React.FC = () => {
       return;
     }
     
-    // Start processing
-    setIsProcessing({
-      ...isProcessing,
+    setIsProcessing(prev => ({
+      ...prev,
       [doctor.id]: true
-    });
+    }));
     
-    // Show payment options
-    showPaymentOptions({
-      orderId: `ORD-${Math.random().toString(36).substr(2, 9)}`,
-      productName: `Consultation with ${doctor.name}`,
-      amount: doctor.price,
-      customerInfo,
-      dateTime: selectedSlots[doctor.id]
-    });
-  };
-  
-  const showPaymentOptions = (data: any) => {
-    // Simulate API call delay
     setTimeout(() => {
-      setIsProcessing({
-        ...isProcessing,
-        [data.doctorId]: false
-      });
-      
       toast.success("Payment successful!", {
-        description: `Your appointment has been booked for ${data.dateTime}`,
+        description: `Your appointment has been booked for ${selectedSlots[doctor.id]}`,
         duration: 5000,
         action: {
           label: "View Details",
@@ -243,19 +223,22 @@ const DoctorListing: React.FC = () => {
         }
       });
       
-      // Reset form after successful booking
+      setIsProcessing(prev => ({
+        ...prev,
+        [doctor.id]: false
+      }));
+      
       setSelectedSlots(prev => {
         const newState = {...prev};
-        delete newState[data.doctorId];
+        delete newState[doctor.id];
         return newState;
       });
       
       setShowCustomerForm(prev => {
         const newState = {...prev};
-        delete newState[data.doctorId];
+        delete newState[doctor.id];
         return newState;
       });
-      
     }, 2000);
   };
 
@@ -286,7 +269,6 @@ const DoctorListing: React.FC = () => {
           <p className="text-muted-foreground mt-1">Connect with mental health professionals</p>
         </div>
         
-        {/* Filter toggle for mobile */}
         <Button variant="outline" className="mt-4 md:hidden w-full">
           <Filter className="h-4 w-4 mr-2" />
           Filter Options
@@ -294,7 +276,6 @@ const DoctorListing: React.FC = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Filters sidebar */}
         <div className="hidden md:block bg-white p-6 rounded-lg shadow-sm border">
           <h2 className="font-semibold text-lg mb-4">Filters</h2>
           
@@ -371,12 +352,11 @@ const DoctorListing: React.FC = () => {
           </div>
         </div>
         
-        {/* Doctor listings */}
         <div className="col-span-1 md:col-span-3">
           {filteredDoctors.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredDoctors.map((doctor) => (
-                <Card key={doctor.id} className="overflow-hidden">
+                <Card key={doctor.id} className="overflow-hidden bg-white">
                   <div className="aspect-[16/9] relative">
                     <img 
                       src={doctor.imageUrl} 
@@ -391,7 +371,7 @@ const DoctorListing: React.FC = () => {
                     </div>
                   </div>
                   
-                  <CardHeader>
+                  <CardHeader className="bg-white">
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle>{doctor.name}</CardTitle>
@@ -414,7 +394,7 @@ const DoctorListing: React.FC = () => {
                     </div>
                   </CardHeader>
                   
-                  <CardContent>
+                  <CardContent className="bg-white">
                     <p className="text-sm text-muted-foreground mb-4">{doctor.bio}</p>
                     
                     <div>
@@ -453,21 +433,21 @@ const DoctorListing: React.FC = () => {
                             placeholder="Your Name *" 
                             value={customerInfo.name}
                             onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                            className="border-gray-300"
+                            className="border-gray-300 bg-white"
                           />
                           <Input 
                             placeholder="Your Email *" 
                             type="email"
                             value={customerInfo.email}
                             onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
-                            className="border-gray-300"
+                            className="border-gray-300 bg-white"
                           />
                           <Input 
                             placeholder="Your Phone *" 
                             type="tel"
                             value={customerInfo.phone}
                             onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                            className="border-gray-300"
+                            className="border-gray-300 bg-white"
                           />
                           {customerInfo.name && customerInfo.email && customerInfo.phone && (
                             <div className="flex items-center text-green-600 text-xs">
@@ -480,7 +460,7 @@ const DoctorListing: React.FC = () => {
                     </div>
                   </CardContent>
                   
-                  <CardFooter className="flex justify-between">
+                  <CardFooter className="flex justify-between bg-white">
                     <div>
                       <p className="text-sm text-muted-foreground">Consultation Fee</p>
                       <p className="font-semibold">₹{doctor.price}</p>
