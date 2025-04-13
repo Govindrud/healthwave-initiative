@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Lock, AlertCircle } from "lucide-react";
 import Logo from "@/components/Logo";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import MainLayout from "@/components/layouts/MainLayout";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -59,83 +60,85 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-background/80 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 flex flex-col items-center">
-          <Logo size="lg" variant="full" />
-          <CardTitle className="text-2xl mt-4">Reset Password</CardTitle>
-          <CardDescription>
-            Create a new password for your account
-          </CardDescription>
-        </CardHeader>
-        
-        {isSubmitted ? (
-          <CardContent className="space-y-4">
-            <Alert>
-              <AlertDescription>
-                Your password has been reset successfully. You can now log in with your new password.
-              </AlertDescription>
-            </Alert>
-            <Button onClick={goToLogin} className="w-full bg-meant-600 hover:bg-meant-700">
-              Go to Login
-            </Button>
-          </CardContent>
-        ) : (
-          <form onSubmit={handleSubmit}>
+    <MainLayout title="Reset Password">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-background/80 p-4 -mt-24">
+        <Card className="w-full max-w-md">
+          <CardHeader className="space-y-1 flex flex-col items-center">
+            <Logo size="lg" variant="full" />
+            <CardTitle className="text-2xl mt-4">Reset Password</CardTitle>
+            <CardDescription>
+              Create a new password for your account
+            </CardDescription>
+          </CardHeader>
+          
+          {isSubmitted ? (
             <CardContent className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-              
-              <div className="space-y-2">
-                <Label htmlFor="password">New Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter new password"
-                    className="pl-10"
-                    required
-                  />
-                  <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <div className="relative">
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm new password"
-                    className="pl-10"
-                    required
-                  />
-                  <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                </div>
-              </div>
-            </CardContent>
-            
-            <CardFooter>
-              <Button 
-                type="submit" 
-                className="w-full bg-meant-600 hover:bg-meant-700"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Resetting..." : "Reset Password"}
+              <Alert>
+                <AlertDescription>
+                  Your password has been reset successfully. You can now log in with your new password.
+                </AlertDescription>
+              </Alert>
+              <Button onClick={goToLogin} className="w-full bg-meant-600 hover:bg-meant-700">
+                Go to Login
               </Button>
-            </CardFooter>
-          </form>
-        )}
-      </Card>
-    </div>
+            </CardContent>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <CardContent className="space-y-4">
+                {error && (
+                  <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                )}
+                
+                <div className="space-y-2">
+                  <Label htmlFor="password">New Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter new password"
+                      className="pl-10"
+                      required
+                    />
+                    <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm new password"
+                      className="pl-10"
+                      required
+                    />
+                    <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
+                  </div>
+                </div>
+              </CardContent>
+              
+              <CardFooter>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-meant-600 hover:bg-meant-700"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Resetting..." : "Reset Password"}
+                </Button>
+              </CardFooter>
+            </form>
+          )}
+        </Card>
+      </div>
+    </MainLayout>
   );
 };
 

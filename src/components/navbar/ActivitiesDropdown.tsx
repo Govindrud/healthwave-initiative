@@ -18,7 +18,7 @@ export const ActivitiesDropdown: React.FC = () => {
         <NavigationMenuItem>
           <NavigationMenuTrigger className={`${navLinkClass} bg-transparent px-2 py-2 text-xs lg:text-sm`}>Activities</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-white border border-border/20 shadow-md rounded-md">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-background border border-border/20 shadow-md rounded-md">
               <DropdownListItem
                 href="/adventures"
                 title="Stress-Free Adventures"
