@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "py-2 bg-background shadow-md border-b border-border/40"
           : "py-3 bg-background shadow-sm border-b border-border/10"
