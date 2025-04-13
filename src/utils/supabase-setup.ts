@@ -1,3 +1,4 @@
+
 import { supabase } from "@/lib/supabase";
 
 /**
@@ -8,10 +9,11 @@ export async function setupTables() {
   console.log("Setting up Supabase tables...");
 
   try {
-    // Create products table using SQL directly rather than RPC
-    const { error: productsError } = await supabase.from('_sql').select('*').execute(`
-      SELECT create_products_table();
-    `);
+    // Create products table using SQL directly
+    const { error: productsError } = await supabase
+      .rpc('exec', { 
+        query: `SELECT create_products_table();` 
+      });
     
     if (productsError) {
       if (productsError.message.includes('already exists')) {
