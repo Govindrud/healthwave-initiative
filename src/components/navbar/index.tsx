@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileNav } from "./MobileNav";
-import DesktopNav from "./DesktopNav";
+import { DesktopNav } from "./DesktopNav";
 import Logo from "../Logo";
 import { motion } from "framer-motion";
 
@@ -11,7 +11,6 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const location = useLocation();
   const isMobile = useIsMobile();
-  const isHomePage = location.pathname === "/";
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +25,7 @@ const Navbar: React.FC = () => {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "py-3 bg-white shadow-md border-b border-border/40 dark:bg-background/95 dark:shadow-lg dark:border-border/10"
+          ? "py-3 bg-white shadow-md border-b border-border/40"
           : "py-4 bg-background/95 backdrop-blur-sm border-b border-border/10"
       }`}
       initial={{ y: -100 }}
@@ -35,7 +34,7 @@ const Navbar: React.FC = () => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Logo size="md" variant="full" />
-        {isMobile ? <MobileNav location={location} /> : <DesktopNav isHomePage={isHomePage} />}
+        {isMobile ? <MobileNav location={location} /> : <DesktopNav location={location} />}
       </div>
     </motion.header>
   );

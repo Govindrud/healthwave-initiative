@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Thermometer, HeartPulse, Heart } from "lucide-react";
+import { Thermometer } from "lucide-react";
 
 export interface StressLevel {
   level: string;
@@ -14,19 +14,19 @@ export const stressLevels: StressLevel[] = [
     level: "Low",
     color: "bg-green-500",
     description: "Manageable daily stress",
-    icon: <Heart className="h-10 w-10 text-green-500" />,
+    icon: <Thermometer className="h-10 w-10 text-green-500" />,
   },
   {
     level: "Medium",
     color: "bg-yellow-500",
     description: "Persistent stress affecting your daily life",
-    icon: <HeartPulse className="h-10 w-10 text-yellow-500" />,
+    icon: <Thermometer className="h-10 w-10 text-yellow-500" />,
   },
   {
     level: "High",
     color: "bg-orange-500",
     description: "Overwhelming stress impacting your wellbeing",
-    icon: <HeartPulse className="h-10 w-10 text-orange-500" />,
+    icon: <Thermometer className="h-10 w-10 text-orange-500" />,
   },
   {
     level: "Extreme",
@@ -60,11 +60,9 @@ export const StressLevelSelector: React.FC<StressLevelSelectorProps> = ({
         {stressLevels.map((stress) => (
           <div
             key={stress.level}
-            className={`p-6 rounded-lg border hover:shadow-lg cursor-pointer transition-all ${
-              selectedLevel === stress.level 
-                ? `border-${stress.color.replace('bg-', '')} shadow-lg` 
-                : "border-gray-200 dark:border-gray-700"
-            } hover:border-${stress.color.replace('bg-', '')} bg-white dark:bg-background/80`}
+            className={`p-6 rounded-lg border hover:border-${stress.color.replace('bg-', '')} hover:shadow-lg cursor-pointer transition-all ${
+              selectedLevel === stress.level ? `border-${stress.color.replace('bg-', '')} shadow-lg` : "border-gray-200"
+            }`}
             onClick={() => onSelectLevel(stress.level)}
           >
             <div className="flex flex-col items-center text-center">

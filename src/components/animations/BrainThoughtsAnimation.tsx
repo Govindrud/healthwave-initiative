@@ -36,14 +36,15 @@ export const BrainThoughtsAnimation: React.FC = () => {
       "Insomnia"
     ];
     
-    // Purple color palette
+    // Updated color palette to match project UI colors
     const colors = [
-      "bg-purple-200/90 border-purple-400 text-purple-800",
       "bg-purple-300/90 border-purple-500 text-purple-900",
-      "bg-purple-100/90 border-purple-300 text-purple-700",
-      "bg-indigo-200/80 border-indigo-400 text-indigo-800",
-      "bg-indigo-300/80 border-indigo-500 text-indigo-900",
-      "bg-indigo-100/80 border-indigo-300 text-indigo-700",
+      "bg-rose-300/90 border-rose-500 text-rose-900",
+      "bg-amber-300/90 border-amber-500 text-amber-900",
+      "bg-cyan-300/90 border-cyan-500 text-cyan-900",
+      "bg-indigo-300/90 border-indigo-500 text-indigo-900",
+      "bg-violet-300/90 border-violet-500 text-violet-900",
+      "bg-meant-200/90 border-meant-500 text-meant-900",
     ];
     
     const newThoughts = Array.from({ length: 15 }, (_, i) => ({
@@ -116,9 +117,9 @@ export const BrainThoughtsAnimation: React.FC = () => {
         </motion.div>
       ))}
       
-      {/* Break free message - improved contrast and visibility with purple colors */}
+      {/* Break free message - improved contrast and visibility */}
       <motion.div
-        className="absolute -bottom-20 bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-3 rounded-full text-base font-medium shadow-lg border border-purple-300"
+        className="absolute -bottom-12 bg-gradient-to-r from-purple-700 to-indigo-700 text-white px-6 py-3 rounded-full text-base font-medium shadow-lg border border-purple-300"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}

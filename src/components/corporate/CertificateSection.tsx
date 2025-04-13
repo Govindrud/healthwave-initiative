@@ -20,10 +20,10 @@ export const CertificateSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
-            <Badge className="mb-3 bg-purple-100 text-purple-800 hover:bg-purple-200">
+            <Badge className="mb-3 bg-meant-100 text-meant-800 hover:bg-meant-200">
               Recognition
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-purple-800">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-meant-800">
               Our Stress-Free Certification
             </h2>
             <p className="text-lg mb-6 text-muted-foreground">
@@ -33,26 +33,26 @@ export const CertificateSection = () => {
             
             <ul className="space-y-3 mb-8">
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-purple-600 mr-3 flex-shrink-0" />
+                <CheckCircle className="h-5 w-5 text-meant-600 mr-3 flex-shrink-0" />
                 <span>Digital and physical certificate</span>
               </li>
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-purple-600 mr-3 flex-shrink-0" />
+                <CheckCircle className="h-5 w-5 text-meant-600 mr-3 flex-shrink-0" />
                 <span>Website badge for digital display</span>
               </li>
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-purple-600 mr-3 flex-shrink-0" />
+                <CheckCircle className="h-5 w-5 text-meant-600 mr-3 flex-shrink-0" />
                 <span>Promotional materials for recruitment</span>
               </li>
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-purple-600 mr-3 flex-shrink-0" />
+                <CheckCircle className="h-5 w-5 text-meant-600 mr-3 flex-shrink-0" />
                 <span>Annual recertification to maintain standards</span>
               </li>
             </ul>
             
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-md"
+              className="bg-gradient-to-r from-meant-600 to-meant-700 hover:from-meant-700 hover:to-meant-800 shadow-md"
               onClick={handleApplyNow}
             >
               Apply Now

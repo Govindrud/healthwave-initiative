@@ -16,18 +16,18 @@ export const HeroSection = () => {
   };
   
   return (
-    <section className="relative bg-gradient-to-b from-purple-50 to-white py-16 md:py-24 overflow-hidden">
-      <div className="absolute opacity-5 -right-64 -top-64 w-[500px] h-[500px] rounded-full bg-purple-300"></div>
-      <div className="absolute opacity-5 -left-32 top-32 w-[300px] h-[300px] rounded-full bg-purple-500"></div>
+    <section className="relative bg-gradient-to-b from-meant-50 to-white py-16 md:py-24 overflow-hidden">
+      <div className="absolute opacity-5 -right-64 -top-64 w-[500px] h-[500px] rounded-full bg-meant-300"></div>
+      <div className="absolute opacity-5 -left-32 top-32 w-[300px] h-[300px] rounded-full bg-meant-500"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="max-w-xl">
-            <Badge className="mb-4 bg-purple-100 text-purple-800 hover:bg-purple-200 animate-fade-in">
+            <Badge className="mb-4 bg-meant-100 text-meant-800 hover:bg-meant-200 animate-fade-in">
               Corporate Wellness Program
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-purple-800">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-800">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-meant-800">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
                 Stress-Free Certification
               </span> for Organizations
             </h1>
@@ -39,14 +39,14 @@ export const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 shadow-md"
+                className="bg-gradient-to-r from-meant-600 to-meant-700 hover:from-meant-700 hover:to-meant-800 shadow-md"
                 onClick={handleApplyNow}
               >
                 Apply for Certification
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Link to="/services">
-                <Button size="lg" variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50">
+                <Button size="lg" variant="outline" className="border-meant-600 text-meant-600 hover:bg-meant-50">
                   Learn More
                 </Button>
               </Link>
@@ -57,7 +57,7 @@ export const HeroSection = () => {
                 {[1, 2, 3].map((i) => (
                   <div 
                     key={i} 
-                    className="h-8 w-8 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-purple-600 font-medium border-2 border-white shadow-sm"
+                    className="h-8 w-8 rounded-full bg-gradient-to-br from-meant-100 to-meant-200 flex items-center justify-center text-meant-600 font-medium border-2 border-white shadow-sm"
                   >
                     {i === 1 && <CheckCircle className="h-4 w-4" />}
                     {i === 2 && <Star className="h-4 w-4" />}
@@ -73,7 +73,7 @@ export const HeroSection = () => {
           
           <div className="lg:pl-10 flex justify-center">
             <div className="relative">
-              <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-purple-100 to-white rounded-full blur-3xl opacity-70 animate-pulse"></div>
+              <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-meant-100 to-white rounded-full blur-3xl opacity-70 animate-pulse"></div>
               <CertificationLogo size="lg" animated />
             </div>
           </div>
