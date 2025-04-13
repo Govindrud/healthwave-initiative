@@ -9,6 +9,7 @@ import { ActivitiesDropdown } from "./ActivitiesDropdown";
 import { SpiritualityDropdown } from "./SpiritualityDropdown";
 import ThemeToggle from "../ThemeToggle";
 import Logo from "@/components/Logo";
+import { MainMenuDropdown } from "./MainMenuDropdown";
 
 interface DesktopNavProps {
   location: Location;
@@ -29,65 +30,56 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
     }
   };
 
+  // Categorized primary menu items
+  const primaryMenuItems = [
+    { label: "Home", action: () => scrollToSection("hero") },
+    { label: "About", action: () => scrollToSection("about") },
+    { label: "Solutions", action: () => scrollToSection("solutions") },
+    { label: "Products", to: "/products" },
+    { label: "Contact", action: () => scrollToSection("contact") },
+  ];
+
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center">
-        <Logo size="md" variant="full" className="mr-6" />
+        <Logo size="md" variant="full" className="mr-4 lg:mr-6" />
         
-        <nav className="flex items-center space-x-4">
-          <NavLink onClick={() => scrollToSection("hero")}>
-            Home
-          </NavLink>
-          
-          <NavLink onClick={() => scrollToSection("about")}>
-            About
-          </NavLink>
-          
+        <nav className="hidden md:flex items-center space-x-1 lg:space-x-3">
+          {/* Primary navigation links (always visible on desktop) */}
+          {primaryMenuItems.map((item, index) => (
+            <NavLink 
+              key={index}
+              to={item.to} 
+              onClick={item.action}
+              className="text-xs lg:text-sm whitespace-nowrap"
+            >
+              {item.label}
+            </NavLink>
+          ))}
+
+          {/* Dropdown menus */}
           <ServicesDropdown />
-          
-          <NavLink onClick={() => scrollToSection("solutions")}>
-            Solutions
-          </NavLink>
-          
           <ActivitiesDropdown />
-          
-          <NavLink to="/products">
-            Products
-          </NavLink>
-          
           <SpiritualityDropdown />
-
-          <NavLink to="/surender">
-            Surender
-          </NavLink>
-
-          <NavLink to="/de-addiction">
-            De-addiction
-          </NavLink>
           
-          <NavLink onClick={() => scrollToSection("problem")}>
-            Contribute
-          </NavLink>
-          
-          <NavLink onClick={() => scrollToSection("contact")}>
-            Contact
-          </NavLink>
+          {/* More menu for additional items */}
+          <MainMenuDropdown scrollToSection={scrollToSection} />
         </nav>
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-3 lg:space-x-4">
         <ThemeToggle />
 
         <Link to="/admin-login">
-          <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+          <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50 hidden sm:inline-flex">
             Admin
           </Button>
         </Link>
         
-        <Link to="/doctors">
+        <Link to="/doctors" className="hidden sm:block">
           <Button 
             size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-4 hover:shadow-md transition-all"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-3 md:px-4 hover:shadow-md transition-all text-xs lg:text-sm"
           >
             Book Consultation
           </Button>
