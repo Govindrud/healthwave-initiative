@@ -42,7 +42,7 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
   return (
     <PageTransition>
       <motion.div 
-        className="min-h-screen flex flex-col"
+        className="min-h-screen flex flex-col bg-white"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -52,7 +52,7 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
         <AnimatePresence mode="wait">
           <motion.main 
             key={location.pathname}
-            className="flex-grow pt-24 md:pt-28 w-full overflow-x-hidden"
+            className="flex-grow pt-24 md:pt-28 w-full overflow-x-hidden bg-white"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
