@@ -18,13 +18,13 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
 }) => {
   return (
     <motion.div
-      className="fixed inset-0 top-[60px] z-50 bg-background"
+      className="fixed inset-0 top-[56px] z-50 bg-background"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)]">
+      <div className="p-4 overflow-y-auto max-h-[calc(100vh-56px)]">
         <div className="flex flex-col space-y-1">
           <MobileNavItem onClick={() => scrollToSection("hero")}>Home</MobileNavItem>
           <MobileNavItem onClick={() => scrollToSection("about")}>About</MobileNavItem>

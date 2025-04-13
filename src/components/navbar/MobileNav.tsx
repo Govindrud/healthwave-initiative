@@ -56,8 +56,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full" ref={menuRef}>
-      <Logo size="md" variant="full" />
+    <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
+      <div className="flex items-center">
+        <Logo size="sm" variant="full" />
+      </div>
       
       <div className="flex items-center space-x-2">
         <ThemeToggle />

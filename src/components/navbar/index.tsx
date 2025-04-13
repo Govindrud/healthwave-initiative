@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { MobileNav } from "./MobileNav";
 import { DesktopNav } from "./DesktopNav";
@@ -24,8 +24,8 @@ const Navbar: React.FC = () => {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "py-3 bg-white shadow-md border-b border-border/40 dark:bg-background"
-          : "py-4 bg-background shadow-sm border-b border-border/10"
+          ? "py-2 bg-background shadow-md border-b border-border/40 dark:bg-background"
+          : "py-3 bg-background shadow-sm border-b border-border/10"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}

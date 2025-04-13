@@ -9,22 +9,22 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { DropdownListItem } from "./DropdownListItem";
-import { Heart, Shield, HelpCircle } from "lucide-react";
+import { Heart, Shield, HelpCircle, Lightbulb } from "lucide-react";
 
 interface MainMenuDropdownProps {
   scrollToSection: (id: string) => void;
 }
 
 export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSection }) => {
-  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium text-center";
+  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium";
 
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={`${navLinkClass} bg-transparent p-0 text-xs lg:text-sm`}>More</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={`${navLinkClass} bg-transparent p-1 text-xs lg:text-sm`}>More</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-white">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-background border border-border/20 rounded-md shadow-md">
               <DropdownListItem
                 href="/surender"
                 title="Surender"
@@ -40,6 +40,14 @@ export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSect
                 className="hover:bg-meant-50"
               >
                 Support for overcoming addiction
+              </DropdownListItem>
+              <DropdownListItem
+                onClick={() => scrollToSection("solutions")}
+                title="Solutions"
+                icon={<Lightbulb className="h-4 w-4 text-meant-600" />}
+                className="hover:bg-meant-50"
+              >
+                Explore our mental health solutions
               </DropdownListItem>
               <li className="lg:col-span-2">
                 <button

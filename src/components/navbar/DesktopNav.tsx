@@ -34,24 +34,23 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const primaryMenuItems = [
     { label: "Home", action: () => scrollToSection("hero") },
     { label: "About", action: () => scrollToSection("about") },
-    { label: "Solutions", action: () => scrollToSection("solutions") },
     { label: "Products", to: "/products" },
     { label: "Contact", action: () => scrollToSection("contact") },
   ];
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center">
-        <Logo size="md" variant="full" className="mr-4 lg:mr-6" />
+      <div className="flex items-center space-x-2">
+        <Logo size="md" variant="full" className="mr-2 lg:mr-4" />
         
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-3">
+        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
           {/* Primary navigation links (always visible on desktop) */}
           {primaryMenuItems.map((item, index) => (
             <NavLink 
               key={index}
               to={item.to} 
               onClick={item.action}
-              className="text-xs lg:text-sm whitespace-nowrap"
+              className="text-xs lg:text-sm whitespace-nowrap py-2"
             >
               {item.label}
             </NavLink>
@@ -67,7 +66,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         </nav>
       </div>
 
-      <div className="flex items-center space-x-2 md:space-x-3 lg:space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-2 lg:space-x-3">
         <ThemeToggle />
 
         <Link to="/admin-login">
@@ -86,7 +85,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         </Link>
         
         <Link to="/cart" className="relative">
-          <ShoppingCart size={22} className="text-foreground/80 hover:text-foreground" />
+          <ShoppingCart size={20} className="text-foreground/80 hover:text-foreground" />
           <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
             2
           </span>
