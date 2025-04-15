@@ -36,7 +36,7 @@ export const initiatePayment = (options: PaymentOptions) => {
 
   initializeRazorpay(() => {
     const razorpayOptions = {
-      key: "rzp_test_YOUR_KEY_HERE", // Will be replaced with actual key
+      key: "rzp_test_YOUR_KEY_HERE", // Will be replaced with actual key in production
       amount: amount * 100, // Razorpay expects amount in smallest currency unit
       currency,
       name: "MeantToHelp",
