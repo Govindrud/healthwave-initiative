@@ -1,11 +1,12 @@
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
-import Home from "@/pages/Home";
+import Index from "./pages/Index";
 import Doctors from "@/pages/Doctors";
 import SpiritualityServices from "@/pages/SpiritualityServices";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import PaymentSuccess from "@/pages/PaymentSuccess";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Router>
         <Toaster position="top-right" />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Index />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/spirituality" element={<SpiritualityServices />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
