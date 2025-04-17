@@ -13,6 +13,7 @@ import { useEmotionDetection } from "@/hooks/use-emotion-detection";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 const EmotionBadge = ({ emotion }: { emotion: { label: string; score: number } }) => {
   const getColorForEmotion = (emotion: string) => {
