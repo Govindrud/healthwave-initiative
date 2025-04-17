@@ -10,6 +10,7 @@ interface VoiceControlsProps {
   toggleListening: () => void;
   stopSpeaking: () => void;
   adjustVolume: (volume: number) => void;
+  disabled?: boolean;
 }
 
 const VoiceControls: React.FC<VoiceControlsProps> = ({
@@ -19,6 +20,7 @@ const VoiceControls: React.FC<VoiceControlsProps> = ({
   toggleListening,
   stopSpeaking,
   adjustVolume,
+  disabled = false,
 }) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-gray-100 rounded-md">
@@ -28,6 +30,7 @@ const VoiceControls: React.FC<VoiceControlsProps> = ({
           variant={isListening ? "destructive" : "default"}
           className={isListening ? "bg-red-500" : "bg-meant-600"}
           size="lg"
+          disabled={disabled}
         >
           {isListening ? <MicOff className="mr-2" /> : <Mic className="mr-2" />}
           {isListening ? "Stop" : "Start"} Speaking
@@ -38,6 +41,12 @@ const VoiceControls: React.FC<VoiceControlsProps> = ({
             Listening...
           </div>
         )}
+        
+        {disabled && (
+          <div className="text-sm text-amber-600">
+            Please configure API key first
+          </div>
+        )}
       </div>
       
       <div className="flex items-center gap-4">
@@ -45,6 +54,7 @@ const VoiceControls: React.FC<VoiceControlsProps> = ({
           <button 
             onClick={() => adjustVolume(0)}
             className="p-2 hover:bg-gray-200 rounded-full"
+            disabled={disabled}
           >
             <VolumeX size={18} />
           </button>
@@ -55,11 +65,13 @@ const VoiceControls: React.FC<VoiceControlsProps> = ({
             step="0.1"
             value={volume}
             onChange={(e) => adjustVolume(parseFloat(e.target.value))}
-            className="w-24 h-2 mx-2"
+            className={`w-24 h-2 mx-2 ${disabled ? "opacity-50" : ""}`}
+            disabled={disabled}
           />
           <button 
             onClick={() => adjustVolume(1)}
             className="p-2 hover:bg-gray-200 rounded-full"
+            disabled={disabled}
           >
             <Volume2 size={18} />
           </button>
@@ -70,6 +82,7 @@ const VoiceControls: React.FC<VoiceControlsProps> = ({
             onClick={stopSpeaking} 
             variant="outline" 
             size="sm"
+            disabled={disabled}
           >
             <VolumeX className="mr-2 h-4 w-4" />
             Stop Audio

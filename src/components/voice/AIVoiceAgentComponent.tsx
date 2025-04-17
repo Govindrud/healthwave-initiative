@@ -13,7 +13,7 @@ import { useVoiceAssistant } from "@/hooks/use-voice-assistant";
 import { useEmotionDetection } from "@/hooks/use-emotion-detection";
 import { toast } from "sonner";
 
-// Import our new components
+// Import our components
 import APIKeyInput from "./APIKeyInput";
 import ConversationArea from "./ConversationArea";
 import EmotionDetectionArea from "./EmotionDetectionArea";
@@ -21,6 +21,15 @@ import VoiceControls from "./VoiceControls";
 import VoiceAssistantHelp from "./VoiceAssistantHelp";
 
 const AIVoiceAgentComponent: React.FC = () => {
+  // Check for stored API key on component mount
+  const [elevenLabsApiKey, setElevenLabsApiKey] = useState(() => {
+    const storedKey = localStorage.getItem("elevenlabs-api-key");
+    return storedKey || '';
+  });
+  
+  const [apiKeyConfigured, setApiKeyConfigured] = useState(Boolean(elevenLabsApiKey));
+  
+  // Only initialize voice assistant when API key is configured
   const {
     messages,
     isListening,
@@ -30,7 +39,9 @@ const AIVoiceAgentComponent: React.FC = () => {
     stopSpeaking,
     adjustVolume,
     resetConversation,
-  } = useVoiceAssistant();
+  } = useVoiceAssistant({
+    elevenLabsApiKey: elevenLabsApiKey
+  });
 
   const {
     detectEmotion,
@@ -41,7 +52,6 @@ const AIVoiceAgentComponent: React.FC = () => {
   } = useEmotionDetection();
 
   const [emotionEnabled, setEmotionEnabled] = useState(false);
-  const [elevenLabsApiKey, setElevenLabsApiKey] = useState('');
 
   useEffect(() => {
     if (emotionEnabled && !modelLoaded) {
@@ -63,14 +73,40 @@ const AIVoiceAgentComponent: React.FC = () => {
     setEmotionEnabled(!emotionEnabled);
   };
 
+  const handleApiKeySave = () => {
+    setApiKeyConfigured(true);
+    // Force reload the component with the new API key
+    resetConversation();
+  };
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
-        {!elevenLabsApiKey && (
+        {!apiKeyConfigured ? (
           <APIKeyInput 
             value={elevenLabsApiKey} 
-            onChange={setElevenLabsApiKey} 
+            onChange={setElevenLabsApiKey}
+            onSave={handleApiKeySave}
           />
+        ) : (
+          <div className="mb-4 flex justify-between items-center">
+            <div className="text-sm text-green-600 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              ElevenLabs API Key configured
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => {
+                setApiKeyConfigured(false);
+              }}
+            >
+              Change API Key
+            </Button>
+          </div>
         )}
 
         <div className="max-w-4xl mx-auto">
@@ -132,6 +168,7 @@ const AIVoiceAgentComponent: React.FC = () => {
                   toggleListening={toggleListening}
                   stopSpeaking={stopSpeaking}
                   adjustVolume={adjustVolume}
+                  disabled={!apiKeyConfigured}
                 />
               </div>
             </CardContent>
@@ -143,7 +180,7 @@ const AIVoiceAgentComponent: React.FC = () => {
                 onClick={toggleEmotionDetection}
                 variant={emotionEnabled ? "default" : "outline"}
                 className="w-full"
-                disabled={isEmotionLoading}
+                disabled={isEmotionLoading || !apiKeyConfigured}
               >
                 <Brain className="mr-2 h-4 w-4" />
                 {emotionEnabled ? "Disable" : "Enable"} Emotion Detection
