@@ -1,11 +1,11 @@
-
 import React, { useEffect } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Brain, Users, HeartPulse, Sparkles, CheckCircle, Star } from "lucide-react";
+import { ArrowRight, Brain, Users, HeartPulse, Sparkles, CheckCircle, Star, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
+import VoiceTherapyService from "@/components/services/VoiceTherapyService";
 
 const Services = () => {
   useEffect(() => {
@@ -25,7 +25,8 @@ const Services = () => {
       ],
       icon: <Brain className="h-10 w-10 text-meant-600" />,
       price: "$149",
-      cta: "Schedule Assessment"
+      cta: "Schedule Assessment",
+      link: "#"
     },
     {
       title: "Corporate Wellness Programs",
@@ -38,7 +39,8 @@ const Services = () => {
       ],
       icon: <Users className="h-10 w-10 text-meant-600" />,
       price: "Custom pricing",
-      cta: "Request Consultation"
+      cta: "Request Consultation",
+      link: "/corporate-plans"
     },
     {
       title: "Therapy Matching Service",
@@ -51,7 +53,8 @@ const Services = () => {
       ],
       icon: <HeartPulse className="h-10 w-10 text-meant-600" />,
       price: "$99/month",
-      cta: "Find Your Therapist"
+      cta: "Find Your Therapist",
+      link: "/doctors"
     },
     {
       title: "AI Mental Health Assistant",
@@ -64,7 +67,8 @@ const Services = () => {
       ],
       icon: <Sparkles className="h-10 w-10 text-meant-600" />,
       price: "$39/month",
-      cta: "Try Free Demo"
+      cta: "Try Free Demo",
+      link: "/#ai-assistant"
     }
   ];
 
@@ -126,7 +130,9 @@ const Services = () => {
               </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+              <VoiceTherapyService />
+              
               {services.map((service, index) => (
                 <Card key={index} className="border-meant-100 hover:shadow-md transition-shadow">
                   <CardHeader>
@@ -146,10 +152,12 @@ const Services = () => {
                   </CardContent>
                   <CardFooter className="flex flex-col items-start">
                     <div className="text-xl font-bold text-meant-800 mb-4">{service.price}</div>
-                    <Button className="bg-meant-600 hover:bg-meant-700">
-                      {service.cta}
-                      <ArrowRight size={16} className="ml-2" />
-                    </Button>
+                    <Link to={service.link}>
+                      <Button className="bg-meant-600 hover:bg-meant-700">
+                        {service.cta}
+                        <ArrowRight size={16} className="ml-2" />
+                      </Button>
+                    </Link>
                   </CardFooter>
                 </Card>
               ))}

@@ -11,6 +11,7 @@ import Contact from "@/components/Contact";
 import AIMentalHealthAssistant from "@/components/AIMentalHealthAssistant";
 import Spirituality from "@/components/Spirituality";
 import ServicesSlider from "@/components/ServicesSlider";
+import VoiceAssistantPromo from '@/components/voice/VoiceAssistantPromo';
 
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
       <About />
       <ServicesSlider />
       <BusinessSolutions />
+      <VoiceAssistantPromo />
       <ProductsSection />
       <Spirituality />
       <ProblemForm />
