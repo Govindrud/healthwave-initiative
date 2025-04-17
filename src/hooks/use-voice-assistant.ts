@@ -25,13 +25,13 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
   );
   const [volume, setVolume] = useState(options?.initialVolume || 0.8);
   
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
   const voicesLoadedRef = useRef<boolean>(false);
 
   // Initialize speech recognition
   useEffect(() => {
-    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     
     if (SpeechRecognition) {
       recognitionRef.current = new SpeechRecognition();
@@ -39,12 +39,12 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
       recognitionRef.current.interimResults = false;
       recognitionRef.current.lang = 'en-US';
 
-      recognitionRef.current.onresult = (event: any) => {
+      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
         const transcript = event.results[event.results.length - 1][0].transcript;
         handleUserMessage(transcript);
       };
 
-      recognitionRef.current.onerror = (event: any) => {
+      recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
         console.error("Speech recognition error", event);
         toast.error("There was an error with the speech recognition");
         setIsListening(false);
@@ -94,19 +94,22 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
         
         // Try restarting recognition if it failed
         try {
-          recognitionRef.current = new (window.SpeechRecognition || (window as any).webkitSpeechRecognition)();
-          recognitionRef.current.continuous = true;
-          recognitionRef.current.interimResults = false;
-          recognitionRef.current.lang = 'en-US';
-          
-          recognitionRef.current.onresult = (event: any) => {
-            const transcript = event.results[event.results.length - 1][0].transcript;
-            handleUserMessage(transcript);
-          };
-          
-          recognitionRef.current.start();
-          setIsListening(true);
-          toast.success("Listening... Speak now");
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          if (SpeechRecognition) {
+            recognitionRef.current = new SpeechRecognition();
+            recognitionRef.current.continuous = true;
+            recognitionRef.current.interimResults = false;
+            recognitionRef.current.lang = 'en-US';
+            
+            recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+              const transcript = event.results[event.results.length - 1][0].transcript;
+              handleUserMessage(transcript);
+            };
+            
+            recognitionRef.current.start();
+            setIsListening(true);
+            toast.success("Listening... Speak now");
+          }
         } catch (retryErr) {
           toast.error("Could not start speech recognition. Please refresh the page and try again.");
         }

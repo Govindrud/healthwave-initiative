@@ -6,7 +6,6 @@ import Doctors from "@/pages/Doctors";
 import SpiritualityServices from "@/pages/SpiritualityServices";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import PaymentSuccess from "@/pages/PaymentSuccess";
-import { ThemeProvider } from "@/components/ui/theme-provider";
 import Surender from "@/pages/Surender";
 import StudentPsychologists from "@/pages/StudentPsychologists";
 import Webinars from "@/pages/Webinars";
@@ -19,7 +18,7 @@ import Services from "@/pages/Services";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="mean-to-help-theme">
+    <>
       <Router>
         <Toaster position="top-right" />
         <Routes>
@@ -40,7 +39,7 @@ function App() {
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>
-    </ThemeProvider>
+    </>
   );
 }
 
