@@ -15,10 +15,11 @@ import Products from "@/pages/Products";
 import Cart from "@/pages/Cart";
 import AIVoiceAgent from "@/pages/AIVoiceAgent";
 import Services from "@/pages/Services";
+import { StrictMode } from 'react';
 
 function App() {
   return (
-    <>
+    <StrictMode>
       <Router>
         <Toaster position="top-right" />
         <Routes>
@@ -39,7 +40,7 @@ function App() {
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>
-    </>
+    </StrictMode>
   );
 }
 

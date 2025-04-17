@@ -2,7 +2,6 @@
 "use client"
 
 import * as React from "react"
-import { createContext, useContext, useEffect, useState } from "react"
 
 type Theme = "dark" | "light" | "system"
 
@@ -17,12 +16,13 @@ type ThemeProviderState = {
   setTheme: (theme: Theme) => void
 }
 
+// Create the context with a default value that matches the expected shape
 const initialState: ThemeProviderState = {
   theme: "system",
   setTheme: () => null,
 }
 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
+const ThemeProviderContext = React.createContext<ThemeProviderState>(initialState)
 
 export function ThemeProvider({
   children,
@@ -30,11 +30,17 @@ export function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  const [theme, setTheme] = React.useState<Theme>(
+    () => {
+      // Try to get from localStorage, fallback to defaultTheme
+      if (typeof window !== 'undefined') {
+        return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+      }
+      return defaultTheme
+    }
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     const root = window.document.documentElement
 
     root.classList.remove("light", "dark")
@@ -52,13 +58,13 @@ export function ThemeProvider({
     root.classList.add(theme)
   }, [theme])
 
-  const value = {
+  const value = React.useMemo(() => ({
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme)
-      setTheme(theme)
+    setTheme: (newTheme: Theme) => {
+      localStorage.setItem(storageKey, newTheme)
+      setTheme(newTheme)
     },
-  }
+  }), [theme, storageKey])
 
   return (
     <ThemeProviderContext.Provider value={value} {...props}>
@@ -68,10 +74,11 @@ export function ThemeProvider({
 }
 
 export const useTheme = () => {
-  const context = useContext(ThemeProviderContext)
+  const context = React.useContext(ThemeProviderContext)
 
-  if (context === undefined)
+  if (context === undefined) {
     throw new Error("useTheme must be used within a ThemeProvider")
+  }
 
   return context
 }
