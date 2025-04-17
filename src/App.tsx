@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import Index from "./pages/Index";
 import Doctors from "@/pages/Doctors";
 import SpiritualityServices from "@/pages/SpiritualityServices";
+import Spirituality from "@/pages/Spirituality"; // Import for spirituality-new route
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import Surender from "@/pages/Surender";
@@ -16,6 +17,8 @@ import Cart from "@/pages/Cart";
 import AIVoiceAgent from "@/pages/AIVoiceAgent";
 import Services from "@/pages/Services";
 import WhatsAppConfig from "@/pages/WhatsAppConfig";
+import { Adventures } from "@/pages/Adventures";
+import { Games } from "@/pages/Games";
 
 function App() {
   return (
@@ -26,6 +29,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/spirituality" element={<SpiritualityServices />} />
+          <Route path="/spirituality-new" element={<Spirituality />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/surender" element={<Surender />} />
@@ -36,6 +40,9 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/activities" element={<Index />} /> {/* Add activities route temporarily pointing to Index */}
+          <Route path="/adventures" element={<Adventures />} />
+          <Route path="/games" element={<Games />} />
           <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
           <Route path="/whatsapp-config" element={<WhatsAppConfig />} />
           <Route path="*" element={<Index />} />

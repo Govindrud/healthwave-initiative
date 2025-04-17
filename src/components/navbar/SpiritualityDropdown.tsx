@@ -37,7 +37,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 Comprehensive spiritual guidance and practices
               </DropdownListItem>
               <DropdownListItem
-                href="/spirituality-new?tab=gurus"
+                href="/spirituality?tab=gurus"
                 title="Guru Consultations"
                 icon={<BookOpen className="h-4 w-4 text-meant-600" />}
                 className="hover:bg-meant-50"
@@ -45,7 +45,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 Connect with experienced spiritual teachers and guides
               </DropdownListItem>
               <DropdownListItem
-                href="/spirituality-new?tab=travel"
+                href="/spirituality?tab=travel"
                 title="Spiritual Travel"
                 icon={<MapPin className="h-4 w-4 text-meant-600" />}
                 className="hover:bg-meant-50"
@@ -53,7 +53,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 Transformative journeys to sacred destinations worldwide
               </DropdownListItem>
               <DropdownListItem
-                href="/spirituality-new?tab=video"
+                href="/spirituality?tab=video"
                 title="Video Consultations"
                 icon={<Video className="h-4 w-4 text-meant-600" />}
                 className="hover:bg-meant-50"
@@ -61,7 +61,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 Connect with spiritual guides from anywhere
               </DropdownListItem>
               <DropdownListItem
-                href="/spirituality-new?tab=yoga"
+                href="/spirituality?tab=yoga"
                 title="Bhakti Yoga"
                 icon={<Heart className="h-4 w-4 text-meant-600" />}
                 className="hover:bg-meant-50"

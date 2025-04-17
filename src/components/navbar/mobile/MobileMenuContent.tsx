@@ -48,10 +48,10 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
           <MobileDropdown title="Spirituality">
             <MobileNavItem to="/spirituality">Spiritual Wellness</MobileNavItem>
             <MobileNavItem to="/spirituality-new">Spiritual Services</MobileNavItem>
-            <MobileNavItem to="/spirituality-new?tab=gurus">Guru Consultations</MobileNavItem>
-            <MobileNavItem to="/spirituality-new?tab=travel">Spiritual Travel</MobileNavItem>
-            <MobileNavItem to="/spirituality-new?tab=video">Video Consultations</MobileNavItem>
-            <MobileNavItem to="/spirituality-new?tab=yoga">Bhakti Yoga</MobileNavItem>
+            <MobileNavItem to="/spirituality?tab=gurus">Guru Consultations</MobileNavItem>
+            <MobileNavItem to="/spirituality?tab=travel">Spiritual Travel</MobileNavItem>
+            <MobileNavItem to="/spirituality?tab=video">Video Consultations</MobileNavItem>
+            <MobileNavItem to="/spirituality?tab=yoga">Bhakti Yoga</MobileNavItem>
           </MobileDropdown>
           
           <MobileNavItem to="/surender">Surender</MobileNavItem>
