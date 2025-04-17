@@ -274,6 +274,7 @@ const WhatsAppTemplateEditor = () => {
                         <Button 
                           variant="ghost" 
                           size="sm" 
+                          type="button"
                           onClick={() => removeVariable(index)}
                         >
                           ✕
@@ -284,12 +285,18 @@ const WhatsAppTemplateEditor = () => {
                     <div className="flex gap-2 mt-3">
                       <Input
                         value={newVariable}
-                        onChange={(e) => setNewVariable(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewVariable(e.target.value)}
                         placeholder="Add a new variable"
                         className="flex-1"
-                        onKeyPress={(e) => e.key === 'Enter' && addVariable()}
+                        onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => 
+                          e.key === 'Enter' && addVariable()
+                        }
                       />
-                      <Button onClick={addVariable} variant="outline">
+                      <Button 
+                        type="button"
+                        onClick={addVariable} 
+                        variant="outline"
+                      >
                         Add
                       </Button>
                     </div>
