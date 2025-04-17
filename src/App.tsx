@@ -19,7 +19,7 @@ import { StrictMode } from 'react';
 
 function App() {
   return (
-    <StrictMode>
+    <>
       <Router>
         <Toaster position="top-right" />
         <Routes>
@@ -40,7 +40,7 @@ function App() {
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>
-    </StrictMode>
+    </>
   );
 }
 
