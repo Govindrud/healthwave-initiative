@@ -21,7 +21,7 @@ const SpiritualServiceBooking = ({
   price,
   duration,
   location,
-  maxParticipants,
+  maxParticipants = 5,
   isGroup = false
 }: SpiritualServiceBookingProps) => {
   const navigate = useNavigate();
@@ -30,14 +30,20 @@ const SpiritualServiceBooking = ({
   const [selectedTime, setSelectedTime] = useState("");
   const [isBooking, setIsBooking] = useState(false);
   
-  // Example available dates (in a real app, these would come from an API)
-  const availableDates = [
-    new Date(Date.now() + 86400000).toISOString().split("T")[0], // Tomorrow
-    new Date(Date.now() + 2*86400000).toISOString().split("T")[0], // Day after tomorrow
-    new Date(Date.now() + 3*86400000).toISOString().split("T")[0], // 3 days from now
-  ];
+  // Generate available dates (next 7 days)
+  const generateAvailableDates = () => {
+    const dates = [];
+    for (let i = 1; i <= 7; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+      dates.push(date.toISOString().split("T")[0]);
+    }
+    return dates;
+  };
   
-  // Example available times (in a real app, these would come from an API based on the selected date)
+  const availableDates = generateAvailableDates();
+  
+  // Example available times
   const availableTimes = ["09:00", "11:00", "14:00", "16:00", "18:00"];
   
   const handleBookNow = () => {
@@ -72,7 +78,7 @@ const SpiritualServiceBooking = ({
     });
     const formattedTime = timeFormatter.format(new Date(`2000-01-01T${selectedTime}`));
     
-    // Redirect to booking confirmation page
+    // Redirect to booking confirmation page with all necessary details
     setTimeout(() => {
       setIsBooking(false);
       navigate(`/booking-confirmation?service_id=${serviceId}&title=${encodeURIComponent(title)}&amount=${price}&participants=${participants}&duration=${encodeURIComponent(duration)}&date=${encodeURIComponent(formattedDate)}&time=${encodeURIComponent(formattedTime)}&location=${encodeURIComponent(location)}&type=spiritual`);

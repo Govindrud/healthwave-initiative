@@ -5,13 +5,12 @@ import MainLayout from "@/components/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, CalendarClock, MapPin, Users, Clock } from "lucide-react";
-import { initiatePayment } from "@/utils/payments";
 import { toast } from "sonner";
+import PaymentButton from "@/components/payment/PaymentButton";
 
 const BookingConfirmation = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [bookingDetails, setBookingDetails] = useState({
     title: searchParams.get("title") || "Service Booking",
     amount: Number(searchParams.get("amount")) || 0,
@@ -21,6 +20,8 @@ const BookingConfirmation = () => {
     time: searchParams.get("time") || "",
     location: searchParams.get("location") || "Online",
     type: searchParams.get("type") || "service",
+    serviceId: searchParams.get("service_id") || "",
+    doctorId: searchParams.get("doctor_id") || "",
     name: searchParams.get("name") || "",
     email: searchParams.get("email") || "",
     phone: searchParams.get("phone") || ""
@@ -29,46 +30,6 @@ const BookingConfirmation = () => {
   useEffect(() => {
     document.title = "MeantToHelp | Booking Confirmation";
   }, []);
-
-  const handlePayment = () => {
-    if (!bookingDetails.name || !bookingDetails.email || !bookingDetails.phone) {
-      toast.error("Please provide your contact information to proceed");
-      return;
-    }
-
-    setIsLoading(true);
-    
-    // Generate a unique order ID
-    const orderId = `ORD${Date.now()}${Math.floor(Math.random() * 1000)}`;
-    
-    // Format datetime for booking if date and time are provided
-    let bookingDatetime = "";
-    if (bookingDetails.date && bookingDetails.date !== "To be scheduled") {
-      bookingDatetime = bookingDetails.time 
-        ? `${bookingDetails.date} ${bookingDetails.time}` 
-        : bookingDetails.date;
-    }
-    
-    initiatePayment({
-      amount: bookingDetails.amount,
-      description: `Booking for ${bookingDetails.title}`,
-      name: bookingDetails.name,
-      email: bookingDetails.email,
-      phone: bookingDetails.phone,
-      orderId: orderId,
-      bookingDatetime,
-      successCallback: (response) => {
-        setIsLoading(false);
-        // Redirect to payment success page with relevant info
-        navigate(`/payment-success?order_id=${orderId}&payment_id=${response.razorpay_payment_id}&title=${bookingDetails.title}&amount=${bookingDetails.amount}`);
-      },
-      errorCallback: (error) => {
-        setIsLoading(false);
-        console.error("Payment failed:", error);
-        toast.error("Payment failed. Please try again.");
-      }
-    });
-  };
 
   const groupedDateTime = bookingDetails.date !== "To be scheduled" && bookingDetails.time
     ? `${bookingDetails.date} at ${bookingDetails.time}`
@@ -184,17 +145,29 @@ const BookingConfirmation = () => {
             <Button 
               variant="outline" 
               onClick={() => navigate(-1)}
-              disabled={isLoading}
             >
               Back
             </Button>
-            <Button 
-              onClick={handlePayment}
-              className="bg-meant-600 hover:bg-meant-700 text-white w-full md:w-auto"
-              disabled={isLoading}
-            >
-              {isLoading ? "Processing..." : "Proceed to Payment"}
-            </Button>
+            <PaymentButton
+              amount={bookingDetails.amount * bookingDetails.participants}
+              title={bookingDetails.title}
+              bookingDetails={{
+                date: bookingDetails.date,
+                time: bookingDetails.time,
+                location: bookingDetails.location,
+                duration: bookingDetails.duration,
+                participants: bookingDetails.participants,
+                type: bookingDetails.type,
+                serviceId: bookingDetails.serviceId,
+                doctorId: bookingDetails.doctorId
+              }}
+              customerInfo={{
+                name: bookingDetails.name,
+                email: bookingDetails.email,
+                phone: bookingDetails.phone
+              }}
+              className="w-full md:w-auto"
+            />
           </div>
         </Card>
       </div>
