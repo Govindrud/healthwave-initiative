@@ -269,7 +269,9 @@ const WhatsAppTemplateEditor = () => {
                     {formData.variables.map((variable, index) => (
                       <div key={index} className="flex items-center gap-2">
                         <div className="flex-1 flex items-center gap-2 bg-meant-50 p-2 rounded-md">
-                          <span className="text-xs font-medium bg-meant-100 px-2 py-1 rounded-md">{{index + 1}}</span>
+                          <span className="text-xs font-medium bg-meant-100 px-2 py-1 rounded-md">
+                            {`{{${index + 1}}}`}
+                          </span>
                           <span>{variable}</span>
                         </div>
                         <Button variant="ghost" size="sm" onClick={() => removeVariable(index)}>✕</Button>
