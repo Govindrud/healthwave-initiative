@@ -1,6 +1,6 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { useElevenLabsVoice } from './use-eleven-labs-voice';
 
 export type VoiceMessageType = {
   role: "user" | "assistant";
@@ -11,6 +11,7 @@ export type VoiceMessageType = {
 export type VoiceAssistantOptions = {
   initialMessages?: VoiceMessageType[];
   initialVolume?: number;
+  elevenLabsApiKey?: string;
 };
 
 export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
@@ -26,8 +27,14 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
   );
   const [volume, setVolume] = useState(options?.initialVolume || 0.8);
   
+  // ElevenLabs Voice Synthesis
+  const { synthesizeSpeech, isLoading: isSynthesizing } = useElevenLabsVoice(
+    options?.elevenLabsApiKey || '', 
+    { voiceId: 'EXAVITQu4vr4xnSDxMaL' }
+  );
+
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const voicesLoadedRef = useRef<boolean>(false);
 
   // Initialize speech recognition
@@ -203,60 +210,36 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
     }, 1000);
   };
 
-  const speakText = (text: string) => {
-    if (!window.speechSynthesis) {
-      toast.error("Text-to-speech is not supported by your browser");
-      return;
-    }
+  const speakText = async (text: string) => {
+    if (isSynthesizing) return;
 
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-    
-    // Create a new utterance
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesisRef.current = utterance;
-    
-    // Set voice - try to use a female voice if available
-    const voices = window.speechSynthesis.getVoices();
-    const femaleVoice = voices.find(voice => 
-      voice.name.includes('female') || 
-      voice.name.includes('Samantha') || 
-      voice.name.includes('Lisa')
-    );
-    
-    if (femaleVoice) {
-      utterance.voice = femaleVoice;
-    }
-    
-    // Set properties
-    utterance.volume = volume;
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    
-    // Events
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = (event) => {
-      console.error("Speech synthesis error", event);
+    setIsSpeaking(true);
+    try {
+      const audioUrl = await synthesizeSpeech(text);
+      if (audioUrl) {
+        const audio = new Audio(audioUrl);
+        audioRef.current = audio;
+        audio.onended = () => setIsSpeaking(false);
+        audio.play();
+      }
+    } catch (error) {
+      toast.error('Failed to speak text');
       setIsSpeaking(false);
-      toast.error("There was an error with the speech synthesis");
-    };
-    
-    // Speak
-    window.speechSynthesis.speak(utterance);
+    }
   };
 
   const stopSpeaking = () => {
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
       setIsSpeaking(false);
     }
   };
 
   const adjustVolume = (newVolume: number) => {
     setVolume(newVolume);
-    if (speechSynthesisRef.current) {
-      speechSynthesisRef.current.volume = newVolume;
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
     }
   };
 
@@ -276,8 +259,9 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
       content: "Hi, I'm your mental health voice assistant. How are you feeling today?",
     }]);
     
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
     }
     
     if (isListening) {

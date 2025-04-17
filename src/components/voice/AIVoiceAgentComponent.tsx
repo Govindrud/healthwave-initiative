@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,9 +11,10 @@ import {
 import { useVoiceAssistant } from "@/hooks/use-voice-assistant";
 import { useEmotionDetection } from "@/hooks/use-emotion-detection";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const EmotionBadge = ({ emotion }: { emotion: { label: string; score: number } }) => {
-  // Get appropriate color based on emotion
   const getColorForEmotion = (emotion: string) => {
     const emotionColors: Record<string, string> = {
       joy: "bg-green-100 text-green-800",
@@ -67,15 +67,14 @@ const AIVoiceAgentComponent: React.FC = () => {
   } = useEmotionDetection();
 
   const [emotionEnabled, setEmotionEnabled] = useState(false);
+  const [elevenLabsApiKey, setElevenLabsApiKey] = useState('');
 
-  // Initialize emotion detection model
   useEffect(() => {
     if (emotionEnabled && !modelLoaded) {
       initializeModel();
     }
   }, [emotionEnabled, modelLoaded, initializeModel]);
 
-  // Process the new user message for emotion detection
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
     if (emotionEnabled && lastMessage?.role === 'user') {
@@ -85,15 +84,37 @@ const AIVoiceAgentComponent: React.FC = () => {
 
   const toggleEmotionDetection = async () => {
     if (!emotionEnabled) {
-      // If enabling, initialize the model
       await initializeModel();
     }
     setEmotionEnabled(!emotionEnabled);
   };
 
+  const renderApiKeyInput = () => (
+    <div className="mb-4 p-4 bg-gray-50 rounded-md border border-gray-200">
+      <Label htmlFor="elevenlabs-api-key">ElevenLabs API Key</Label>
+      <div className="flex items-center space-x-2 mt-2">
+        <Input 
+          id="elevenlabs-api-key"
+          type="password"
+          placeholder="Enter your ElevenLabs API key"
+          value={elevenLabsApiKey}
+          onChange={(e) => setElevenLabsApiKey(e.target.value)}
+        />
+        <Button variant="default" onClick={() => toast.success('API Key saved')}>
+          Save
+        </Button>
+      </div>
+      <p className="text-xs text-gray-500 mt-2">
+        You can get your API key from the ElevenLabs dashboard
+      </p>
+    </div>
+  );
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
+        {!elevenLabsApiKey && renderApiKeyInput()}
+
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold mb-3">AI Voice Therapy Assistant</h2>
@@ -161,7 +182,6 @@ const AIVoiceAgentComponent: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Emotions section */}
                 {emotionEnabled && (
                   <div className="mb-4 p-3 bg-gray-50 rounded-md border border-gray-200">
                     <div className="flex items-center mb-2">
@@ -182,7 +202,6 @@ const AIVoiceAgentComponent: React.FC = () => {
                   </div>
                 )}
 
-                {/* Voice controls */}
                 <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-gray-100 rounded-md">
                   <div className="flex items-center gap-2">
                     <Button
