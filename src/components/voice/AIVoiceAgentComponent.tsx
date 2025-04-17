@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Info, RotateCcw, Brain } from "lucide-react";
+import { Info, RotateCcw, Brain, Bot } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +12,7 @@ import {
 import { useVoiceAssistant } from "@/hooks/use-voice-assistant";
 import { useEmotionDetection } from "@/hooks/use-emotion-detection";
 import { toast } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Import our components
 import APIKeyInput from "./APIKeyInput";
@@ -19,6 +20,7 @@ import ConversationArea from "./ConversationArea";
 import EmotionDetectionArea from "./EmotionDetectionArea";
 import VoiceControls from "./VoiceControls";
 import VoiceAssistantHelp from "./VoiceAssistantHelp";
+import AgentConversationInterface from "./AgentConversationInterface";
 
 const AIVoiceAgentComponent: React.FC = () => {
   // Check for stored API key and agent ID on component mount
@@ -34,6 +36,7 @@ const AIVoiceAgentComponent: React.FC = () => {
   
   const [apiKeyConfigured, setApiKeyConfigured] = useState(Boolean(elevenLabsApiKey));
   const [browserSupportsEmotionDetection, setBrowserSupportsEmotionDetection] = useState(true);
+  const [activeTab, setActiveTab] = useState<string>("basic");
   
   // Check browser compatibility for WebGPU or WebAssembly
   useEffect(() => {
@@ -179,81 +182,114 @@ const AIVoiceAgentComponent: React.FC = () => {
             </p>
           </div>
           
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>Voice Conversation {agentMode && <span className="text-sm text-amber-600 ml-2">(Agent Mode)</span>}</span>
-                <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="icon" 
-                    onClick={resetConversation}
-                    title="Reset conversation"
-                  >
-                    <RotateCcw className="h-4 w-4" />
-                    <span className="sr-only">Reset conversation</span>
-                  </Button>
-                  
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <Info className="h-4 w-4" />
-                          <span className="sr-only">Information</span>
+          {apiKeyConfigured && (
+            <Tabs 
+              defaultValue="basic" 
+              value={activeTab} 
+              onValueChange={setActiveTab}
+              className="w-full mb-8"
+            >
+              <TabsList className="grid grid-cols-2 w-[400px] mx-auto">
+                <TabsTrigger value="basic">
+                  <span className="flex items-center gap-2">
+                    <Brain className="h-4 w-4" />
+                    <span>Basic Mode</span>
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger value="agent">
+                  <span className="flex items-center gap-2">
+                    <Bot className="h-4 w-4" />
+                    <span>Agent Mode</span>
+                  </span>
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="basic">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex justify-between items-center">
+                      <span>Voice Conversation</span>
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="icon" 
+                          onClick={resetConversation}
+                          title="Reset conversation"
+                        >
+                          <RotateCcw className="h-4 w-4" />
+                          <span className="sr-only">Reset conversation</span>
                         </Button>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>This AI voice assistant is designed to provide immediate support through conversation. 
-                          Speak naturally as if talking to a friend. Your conversation stays private and is not stored.</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                        
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <Info className="h-4 w-4" />
+                                <span className="sr-only">Information</span>
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent className="max-w-xs">
+                              <p>This AI voice assistant is designed to provide immediate support through conversation. 
+                                Speak naturally as if talking to a friend. Your conversation stays private and is not stored.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-col h-[400px]">
+                      <ConversationArea messages={messages} />
+
+                      {emotionEnabled && (
+                        <EmotionDetectionArea 
+                          emotions={emotions} 
+                          isLoading={isEmotionLoading} 
+                        />
+                      )}
+
+                      <VoiceControls 
+                        isListening={isListening}
+                        isSpeaking={isSpeaking}
+                        volume={volume}
+                        toggleListening={toggleListening}
+                        stopSpeaking={stopSpeaking}
+                        adjustVolume={adjustVolume}
+                        disabled={!apiKeyConfigured}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <div className="mt-8 flex gap-4">
+                  <div className="flex-1">
+                    <Button 
+                      onClick={toggleEmotionDetection}
+                      variant={emotionEnabled ? "default" : "outline"}
+                      className="w-full"
+                      disabled={isEmotionLoading || !apiKeyConfigured || !browserSupportsEmotionDetection}
+                    >
+                      <Brain className="mr-2 h-4 w-4" />
+                      {emotionEnabled ? "Disable" : "Enable"} Emotion Detection
+                      {!browserSupportsEmotionDetection && " (Not Supported)"}
+                    </Button>
+                    {!browserSupportsEmotionDetection && (
+                      <p className="text-xs text-amber-600 mt-1">
+                        Your browser doesn't support emotion detection. Please try a modern browser that supports WebGPU or WebAssembly.
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col h-[400px]">
-                <ConversationArea messages={messages} />
-
-                {emotionEnabled && (
-                  <EmotionDetectionArea 
-                    emotions={emotions} 
-                    isLoading={isEmotionLoading} 
-                  />
-                )}
-
-                <VoiceControls 
-                  isListening={isListening}
-                  isSpeaking={isSpeaking}
-                  volume={volume}
-                  toggleListening={toggleListening}
-                  stopSpeaking={stopSpeaking}
-                  adjustVolume={adjustVolume}
-                  disabled={!apiKeyConfigured}
+              </TabsContent>
+              
+              <TabsContent value="agent">
+                <AgentConversationInterface 
+                  apiKey={elevenLabsApiKey} 
+                  agentId={elevenLabsAgentId} 
                 />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <div className="mt-8 flex gap-4">
-            <div className="flex-1">
-              <Button 
-                onClick={toggleEmotionDetection}
-                variant={emotionEnabled ? "default" : "outline"}
-                className="w-full"
-                disabled={isEmotionLoading || !apiKeyConfigured || !browserSupportsEmotionDetection}
-              >
-                <Brain className="mr-2 h-4 w-4" />
-                {emotionEnabled ? "Disable" : "Enable"} Emotion Detection
-                {!browserSupportsEmotionDetection && " (Not Supported)"}
-              </Button>
-              {!browserSupportsEmotionDetection && (
-                <p className="text-xs text-amber-600 mt-1">
-                  Your browser doesn't support emotion detection. Please try a modern browser that supports WebGPU or WebAssembly.
-                </p>
-              )}
-            </div>
-          </div>
+              </TabsContent>
+            </Tabs>
+          )}
           
           <VoiceAssistantHelp emotionEnabled={emotionEnabled} />
         </div>

@@ -11,6 +11,7 @@ export type VoiceOptions = {
 export const useElevenLabsVoice = (apiKey: string, options?: VoiceOptions) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [agentUrl, setAgentUrl] = useState<string | null>(null);
 
   const DEFAULT_VOICE_OPTIONS = {
     voiceId: 'EXAVITQu4vr4xnSDxMaL', // Sarah's voice as default
@@ -74,7 +75,7 @@ export const useElevenLabsVoice = (apiKey: string, options?: VoiceOptions) => {
     }
   }, [apiKey, mergedOptions]);
 
-  // New method to get a signed URL for conversation with an agent
+  // Get a signed URL for conversation with an agent
   const getSignedAgentUrl = useCallback(async () => {
     if (!apiKey) {
       toast.error('API key is required');
@@ -111,6 +112,7 @@ export const useElevenLabsVoice = (apiKey: string, options?: VoiceOptions) => {
       }
 
       const data = await response.json();
+      setAgentUrl(data.signed_url);
       return data.signed_url;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
@@ -122,9 +124,52 @@ export const useElevenLabsVoice = (apiKey: string, options?: VoiceOptions) => {
     }
   }, [apiKey, mergedOptions.agentId]);
 
+  // Method to interact with the agent directly
+  const interactWithAgent = useCallback(async (userMessage: string) => {
+    if (!apiKey || !mergedOptions.agentId) {
+      return null;
+    }
+
+    // If we don't have an agent URL yet, get one
+    if (!agentUrl) {
+      const url = await getSignedAgentUrl();
+      if (!url) return null;
+    }
+    
+    // Use the signed URL to interact with the agent
+    // This is a simplified implementation - in a real application,
+    // you would need to handle WebSocket connections
+    setIsLoading(true);
+    
+    try {
+      // Instead of actual WebSocket implementation, we'll simulate a response
+      // In a production app, you would implement WebSocket communication here
+      
+      // Simulated delay for response time
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Return a simulated response that would normally come from the agent
+      const simulatedResponse = {
+        text: `I'm your AI voice assistant. I understand you said: "${userMessage}". How can I help with that?`,
+        audioUrl: await synthesizeSpeech(`I'm your AI voice assistant. I understand you said: "${userMessage}". How can I help with that?`)
+      };
+      
+      return simulatedResponse;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(errorMessage);
+      toast.error(`Agent Communication Error: ${errorMessage}`);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [apiKey, mergedOptions.agentId, agentUrl, getSignedAgentUrl, synthesizeSpeech]);
+
   return {
     synthesizeSpeech,
     getSignedAgentUrl,
+    interactWithAgent,
+    agentUrl,
     isLoading,
     error,
   };
