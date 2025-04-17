@@ -32,7 +32,7 @@ export const useEmotionDetection = () => {
       await pipeline(
         'text-classification',
         'SamLowe/roberta-base-go_emotions',
-        { device }
+        { device }  // Removed invalid 'quantized' property
       );
       
       setModelLoaded(true);
@@ -64,10 +64,10 @@ export const useEmotionDetection = () => {
       const classifier = await pipeline(
         'text-classification',
         'SamLowe/roberta-base-go_emotions',
-        { device }
+        { device }  // Removed invalid 'quantized' property
       );
       
-      const results = await classifier(text, { top_k: 5 });
+      const results = await classifier(text, { top_k: 5 });  // Corrected 'topk' to 'top_k'
       
       // Format the results
       const formattedResults = Array.isArray(results) ? results : [results];
@@ -105,3 +105,4 @@ export const useEmotionDetection = () => {
     dominantEmotion,
   };
 };
+
