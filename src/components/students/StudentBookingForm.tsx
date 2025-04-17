@@ -1,12 +1,13 @@
 
 import React, { useState } from "react";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, MapPin, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import ServicePaymentButton from "../services/ServicePaymentButton";
 import { StudentPsychologist } from "@/data/students";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface StudentBookingFormProps {
   student: StudentPsychologist;
@@ -39,39 +40,55 @@ const StudentBookingForm: React.FC<StudentBookingFormProps> = ({
   const sessionTitle = `Consultation with ${student.name}`;
 
   return (
-    <Card className="w-full border-meant-100 bg-white">
-      <CardHeader className="bg-gradient-to-r from-meant-50 to-white">
-        <CardTitle className="text-meant-800">Book Student Consultation</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 pt-6">
-        <div className="flex items-start gap-4 mb-4">
-          <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-            <img 
-              src={student.image} 
-              alt={student.name} 
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = "/placeholder.svg";
-              }}
-            />
-          </div>
-          <div>
-            <div className="font-medium text-lg">{student.name}</div>
-            <div className="text-sm text-muted-foreground">{student.university}</div>
-            <div className="text-sm text-muted-foreground">{student.specialInterests.join(", ")}</div>
+    <Card className="w-full border-meant-100 shadow-md overflow-hidden">
+      <CardHeader className="bg-meant-600 text-white">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-10 w-10 border-2 border-white/20">
+              <AvatarImage src={student.image} />
+              <AvatarFallback className="bg-meant-700 text-white">{student.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div>
+              <CardTitle className="text-white">Book Session with {student.name}</CardTitle>
+              <p className="text-white/80 text-sm">{student.university}</p>
+            </div>
           </div>
         </div>
-
-        <div className="bg-meant-50 p-4 rounded-lg mb-4 flex gap-4 items-center">
+      </CardHeader>
+      <CardContent className="space-y-6 pt-6">
+        <div className="bg-meant-50 p-4 rounded-lg flex gap-4 items-center border border-meant-100">
           <CalendarIcon className="h-5 w-5 text-meant-600" />
           <div>
-            <div className="font-medium">Appointment</div>
+            <div className="font-medium">Appointment Details</div>
             <div className="text-sm">{selectedDate} at {selectedTime}</div>
           </div>
         </div>
         
+        <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-14 w-14">
+              <AvatarImage 
+                src={student.image}
+                alt={student.name}
+                className="object-cover"
+              />
+              <AvatarFallback>{student.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div>
+              <div className="font-medium text-lg">{student.name}</div>
+              <div className="text-sm text-muted-foreground flex items-center">
+                <MapPin size={14} className="mr-1" /> {student.location}
+              </div>
+              <div className="text-sm text-muted-foreground flex items-center">
+                <Clock size={14} className="mr-1" /> {student.availability}
+              </div>
+            </div>
+          </div>
+          <div className="text-xl font-bold text-meant-800">₹{student.sessionFee}</div>
+        </div>
+        
         <div className="space-y-4">
+          <h3 className="font-semibold text-lg">Your Information</h3>
           <div className="space-y-2">
             <Label htmlFor="name">Your Name</Label>
             <Input
@@ -81,6 +98,7 @@ const StudentBookingForm: React.FC<StudentBookingFormProps> = ({
               value={customerInfo.name}
               onChange={handleInputChange}
               required
+              className="bg-white"
             />
           </div>
           <div className="space-y-2">
@@ -93,6 +111,7 @@ const StudentBookingForm: React.FC<StudentBookingFormProps> = ({
               value={customerInfo.email}
               onChange={handleInputChange}
               required
+              className="bg-white"
             />
           </div>
           <div className="space-y-2">
@@ -104,19 +123,20 @@ const StudentBookingForm: React.FC<StudentBookingFormProps> = ({
               value={customerInfo.phone}
               onChange={handleInputChange}
               required
+              className="bg-white"
             />
           </div>
         </div>
       </CardContent>
       <CardFooter className="flex-col items-start border-t border-gray-100 pt-4">
-        <div className="text-xl font-bold text-meant-800 mb-4">₹{student.sessionFee}</div>
         <div className="flex gap-3 w-full">
           <Button 
             variant="outline" 
             onClick={onCancel}
             className="flex-1"
           >
-            Cancel
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
           </Button>
           <ServicePaymentButton 
             amount={student.sessionFee}
@@ -126,7 +146,7 @@ const StudentBookingForm: React.FC<StudentBookingFormProps> = ({
             customerInfo={customerInfo}
             disabled={!formIsValid}
             className="flex-1"
-            buttonText="Pay Now"
+            buttonText="Pay & Confirm"
           />
         </div>
       </CardFooter>

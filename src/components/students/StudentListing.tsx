@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { MapPin, BookOpen, Clock, UserCheck, Calendar } from "lucide-react";
+import { MapPin, BookOpen, Clock, UserCheck, Calendar, Search, Filter, Info } from "lucide-react";
 import { studentPsychologists } from "@/data/students";
 import { Badge } from "@/components/ui/badge";
 import StudentBookingForm from "./StudentBookingForm";
+import { toast } from "sonner";
 
 const StudentListing = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,10 +17,11 @@ const StudentListing = () => {
   const [isBookingFormOpen, setIsBookingFormOpen] = useState(false);
 
   const filteredStudents = studentPsychologists.filter(student => {
-    return student.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-           student.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const searchLower = searchTerm.toLowerCase();
+    return student.name.toLowerCase().includes(searchLower) || 
+           student.university.toLowerCase().includes(searchLower) ||
            student.specialInterests.some(interest => 
-             interest.toLowerCase().includes(searchTerm.toLowerCase())
+             interest.toLowerCase().includes(searchLower)
            );
   });
 
@@ -35,6 +37,7 @@ const StudentListing = () => {
     setSelectedDate(today);
     setSelectedTime("10:00 AM"); // Default time
     setIsBookingFormOpen(true);
+    toast.info(`Booking session with ${student.name}`);
   };
 
   const handleCancelBooking = () => {
@@ -45,51 +48,46 @@ const StudentListing = () => {
   };
 
   return (
-    <div className="bg-white w-full">
-      <div className="container mx-auto px-4 py-12 bg-white">
-        <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl font-bold">Student Psychologists Program</h1>
-          <p className="text-muted-foreground max-w-3xl">
-            Our internship program connects you with psychology students who provide quality support at reduced rates. 
-            They're supervised by licensed professionals, making mental health care more accessible while giving students valuable experience.
-          </p>
-        </div>
-
-        <div className="bg-meant-50 border border-meant-100 rounded-lg p-6 my-8">
-          <h2 className="text-xl font-semibold text-meant-800 mb-2">Why Choose Student Psychologists?</h2>
-          <ul className="list-disc list-inside space-y-2 text-meant-700">
-            <li>Affordable sessions (50-70% lower than standard rates)</li>
-            <li>Fresh perspectives from students trained in the latest therapeutic approaches</li>
-            <li>All sessions supervised by licensed psychologists</li>
-            <li>Flexible scheduling options including evenings and weekends</li>
-            <li>Support students in gaining valuable practical experience</li>
-          </ul>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4 my-8">
-          <div className="flex-1">
-            <Input
-              placeholder="Search by name, university or interest areas..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white"
-            />
+    <div className="container mx-auto px-4">
+      {!isBookingFormOpen ? (
+        <>
+          <div className="bg-white rounded-lg shadow-sm p-4 mb-8">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              <div className="relative flex-1 w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Search by name, university or interest areas..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-white"
+                />
+              </div>
+              <Button variant="outline" size="sm" className="flex gap-2 items-center">
+                <Filter className="h-4 w-4" />
+                <span>Filters</span>
+              </Button>
+            </div>
           </div>
-        </div>
 
-        {isBookingFormOpen && selectedStudent ? (
-          <div className="max-w-2xl mx-auto">
-            <StudentBookingForm 
-              student={selectedStudent}
-              selectedDate={selectedDate}
-              selectedTime={selectedTime}
-              onCancel={handleCancelBooking}
-            />
+          <div className="bg-meant-50 border border-meant-100 rounded-lg p-6 mb-8">
+            <div className="flex items-start gap-3">
+              <Info className="h-5 w-5 text-meant-600 flex-shrink-0 mt-1" />
+              <div>
+                <h2 className="text-xl font-semibold text-meant-800 mb-2">Why Choose Student Psychologists?</h2>
+                <ul className="list-disc list-inside space-y-2 text-meant-700">
+                  <li>Affordable sessions (50-70% lower than standard rates)</li>
+                  <li>Fresh perspectives from students trained in the latest therapeutic approaches</li>
+                  <li>All sessions supervised by licensed psychologists</li>
+                  <li>Flexible scheduling options including evenings and weekends</li>
+                  <li>Support students in gaining valuable practical experience</li>
+                </ul>
+              </div>
+            </div>
           </div>
-        ) : (
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {filteredStudents.map((student) => (
-              <Card key={student.id} className="overflow-hidden hover:shadow-lg transition-shadow bg-white border-border">
+              <Card key={student.id} className="service-card hover:shadow-lg transition-shadow bg-white border-border">
                 <div className="relative">
                   <img 
                     src={student.image} 
@@ -138,8 +136,7 @@ const StudentListing = () => {
                 </CardContent>
                 <CardFooter className="bg-white">
                   <Button 
-                    variant="meant" 
-                    className="w-full bg-meant-600 hover:bg-meant-700" 
+                    className="w-full service-button" 
                     onClick={() => handleBooking(student)}
                   >
                     <Calendar className="mr-2 h-4 w-4" /> Book Consultation
@@ -148,15 +145,31 @@ const StudentListing = () => {
               </Card>
             ))}
           </div>
-        )}
 
-        {filteredStudents.length === 0 && !isBookingFormOpen && (
-          <div className="text-center py-12 bg-white">
-            <h3 className="text-xl font-medium">No student psychologists found matching your search</h3>
-            <p className="text-muted-foreground mt-2">Try adjusting your search term</p>
-          </div>
-        )}
-      </div>
+          {filteredStudents.length === 0 && (
+            <div className="text-center py-12 bg-white rounded-lg shadow-sm">
+              <h3 className="text-xl font-medium">No student psychologists found matching your search</h3>
+              <p className="text-muted-foreground mt-2">Try adjusting your search term</p>
+              <Button 
+                variant="outline" 
+                className="mt-4"
+                onClick={() => setSearchTerm("")}
+              >
+                Clear Search
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="max-w-2xl mx-auto">
+          <StudentBookingForm 
+            student={selectedStudent}
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            onCancel={handleCancelBooking}
+          />
+        </div>
+      )}
     </div>
   );
 };
