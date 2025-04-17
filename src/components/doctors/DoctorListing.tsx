@@ -53,8 +53,8 @@ const doctors = [
 
 const DoctorListing = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedSpecialization, setSelectedSpecialization] = useState<string>("all");
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(null);
   
   const filteredDoctors = doctors.filter(doctor => {
@@ -64,12 +64,12 @@ const DoctorListing = () => {
       doctor.about.toLowerCase().includes(searchTerm.toLowerCase());
     
     // Filter by specialization
-    const matchesSpecialization = selectedSpecialization ? 
-      doctor.specialization.toLowerCase() === selectedSpecialization.toLowerCase() : true;
+    const matchesSpecialization = selectedSpecialization === "all" ? 
+      true : doctor.specialization.toLowerCase() === selectedSpecialization.toLowerCase();
     
     // Filter by language
-    const matchesLanguage = selectedLanguage ?
-      doctor.languages.some(lang => lang.toLowerCase() === selectedLanguage.toLowerCase()) : true;
+    const matchesLanguage = selectedLanguage === "all" ?
+      true : doctor.languages.some(lang => lang.toLowerCase() === selectedLanguage.toLowerCase());
     
     return matchesSearch && matchesSpecialization && matchesLanguage;
   });
@@ -101,9 +101,9 @@ const DoctorListing = () => {
             <SelectValue placeholder="Specialization" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Specializations</SelectItem>
+            <SelectItem value="all">All Specializations</SelectItem>
             {specializations.map(spec => (
-              <SelectItem key={spec} value={spec}>{spec}</SelectItem>
+              <SelectItem key={spec} value={spec.toLowerCase()}>{spec}</SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -113,9 +113,9 @@ const DoctorListing = () => {
             <SelectValue placeholder="Language" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Languages</SelectItem>
+            <SelectItem value="all">All Languages</SelectItem>
             {languages.map(lang => (
-              <SelectItem key={lang} value={lang}>{lang}</SelectItem>
+              <SelectItem key={lang} value={lang.toLowerCase()}>{lang}</SelectItem>
             ))}
           </SelectContent>
         </Select>
