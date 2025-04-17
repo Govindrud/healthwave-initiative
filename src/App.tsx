@@ -13,6 +13,7 @@ import Webinars from "@/pages/Webinars";
 import CorporatePlans from "@/pages/CorporatePlans";
 import CorporateCertification from "@/pages/CorporateCertification";
 import Products from "@/pages/Products";
+import Cart from "@/pages/Cart";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/corporate-plans" element={<CorporatePlans />} />
           <Route path="/corporate-certification" element={<CorporateCertification />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>
