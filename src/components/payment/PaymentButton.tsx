@@ -54,6 +54,7 @@ const PaymentButton = ({
     }
 
     setIsLoading(true);
+    toast.info("Setting up payment gateway...");
     
     // Generate a unique order ID
     const orderId = `ORD${Date.now()}${Math.floor(Math.random() * 1000)}`;
@@ -91,8 +92,17 @@ const PaymentButton = ({
       },
       errorCallback: (error) => {
         setIsLoading(false);
-        console.error("Payment failed:", error);
-        toast.error("Payment failed. Please try again.");
+        
+        // Provide more user-friendly error messages
+        let errorMessage = "Payment failed. Please try again.";
+        if (error.error && error.error.description) {
+          errorMessage = `Payment failed: ${error.error.description}`;
+        } else if (typeof error === "string") {
+          errorMessage = error;
+        }
+        
+        console.error("Payment error:", error);
+        toast.error(errorMessage);
       }
     });
   };
@@ -101,7 +111,7 @@ const PaymentButton = ({
     <Button 
       onClick={handlePayment}
       className={`bg-meant-600 hover:bg-meant-700 text-white ${className}`}
-      disabled={isLoading}
+      disabled={isLoading || !isScriptLoaded}
     >
       {isLoading ? "Processing..." : buttonText}
     </Button>

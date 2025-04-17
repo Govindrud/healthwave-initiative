@@ -50,13 +50,20 @@ export const initiatePayment = (options: PaymentOptions) => {
 
   initializeRazorpay(() => {
     try {
+      if (!(window as any).Razorpay) {
+        console.error("Razorpay is not available. Script might have failed to load.");
+        errorCallback({ error: { description: "Payment gateway unavailable" } });
+        return;
+      }
+      
       const razorpayOptions = {
-        key: "rzp_test_i63UYUocvNrIqx", // Updated with your test key
-        amount: amount * 100, // Razorpay expects amount in smallest currency unit
+        key: "rzp_test_i63UYUocvNrIqx", // Using your test key
+        amount: amount * 100, // Razorpay expects amount in smallest currency unit (paise)
         currency,
         name: "MeantToHelp",
         description,
-        order_id: orderId,
+        // Don't include order_id in test mode unless you're creating it server-side
+        // order_id: orderId,
         handler: function(response: any) {
           // Handle successful payment
           console.log("Payment successful:", response);
@@ -73,6 +80,12 @@ export const initiatePayment = (options: PaymentOptions) => {
         },
         theme: {
           color: "#0284c7"
+        },
+        modal: {
+          ondismiss: function() {
+            console.log("Payment modal dismissed");
+            errorCallback({ error: { description: "Payment cancelled by user" } });
+          }
         }
       };
       
@@ -80,12 +93,14 @@ export const initiatePayment = (options: PaymentOptions) => {
       
       // @ts-ignore - Razorpay will be available globally after script loads
       const razorpayInstance = new window.Razorpay(razorpayOptions);
+      
       razorpayInstance.on('payment.failed', function(response: any) {
         console.error("Payment failed:", response.error);
         errorCallback({
           error: response.error
         });
       });
+      
       razorpayInstance.open();
     } catch (error) {
       console.error("Razorpay initialization error:", error);
@@ -133,3 +148,4 @@ export const verifyPayment = async (
     return { success: false, error: 'Payment verification failed' };
   }
 };
+
