@@ -25,14 +25,16 @@ export const useEmotionDetection = () => {
       setIsLoading(true);
       toast.info("Loading emotion detection model...");
       
-      // Try to use WebGPU if available for better performance
-      const device = 'webgpu' in navigator ? 'webgpu' : 'cpu';
+      // Use wasm as fallback if webgpu is not available
+      const device = 'webgpu' in navigator ? 'webgpu' : 'wasm';
+      
+      console.log(`Initializing model with device: ${device}`);
       
       // Use a smaller, browser-friendly model for emotion analysis
       await pipeline(
         'text-classification',
         'SamLowe/roberta-base-go_emotions',
-        { device }  // Removed invalid 'quantized' property
+        { device }
       );
       
       setModelLoaded(true);
@@ -59,15 +61,17 @@ export const useEmotionDetection = () => {
       setIsLoading(true);
       
       // Use the device that was determined during initialization
-      const device = 'webgpu' in navigator ? 'webgpu' : 'cpu';
+      const device = 'webgpu' in navigator ? 'webgpu' : 'wasm';
+      
+      console.log(`Detecting emotions with device: ${device}`);
       
       const classifier = await pipeline(
         'text-classification',
         'SamLowe/roberta-base-go_emotions',
-        { device }  // Removed invalid 'quantized' property
+        { device }
       );
       
-      const results = await classifier(text, { top_k: 5 });  // Corrected 'topk' to 'top_k'
+      const results = await classifier(text, { top_k: 5 });
       
       // Format the results
       const formattedResults = Array.isArray(results) ? results : [results];

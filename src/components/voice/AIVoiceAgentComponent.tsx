@@ -28,6 +28,20 @@ const AIVoiceAgentComponent: React.FC = () => {
   });
   
   const [apiKeyConfigured, setApiKeyConfigured] = useState(Boolean(elevenLabsApiKey));
+  const [browserSupportsEmotionDetection, setBrowserSupportsEmotionDetection] = useState(true);
+  
+  // Check browser compatibility for WebGPU or WebAssembly
+  useEffect(() => {
+    const checkBrowserCompatibility = async () => {
+      // Check if browser supports WebGPU or WebAssembly
+      if (!('webgpu' in navigator) && typeof WebAssembly === 'undefined') {
+        setBrowserSupportsEmotionDetection(false);
+        toast.warning("Your browser doesn't support features needed for emotion detection");
+      }
+    };
+    
+    checkBrowserCompatibility();
+  }, []);
   
   // Only initialize voice assistant when API key is configured
   const {
@@ -54,23 +68,41 @@ const AIVoiceAgentComponent: React.FC = () => {
   const [emotionEnabled, setEmotionEnabled] = useState(false);
 
   useEffect(() => {
-    if (emotionEnabled && !modelLoaded) {
-      initializeModel();
+    if (emotionEnabled && !modelLoaded && browserSupportsEmotionDetection) {
+      initializeModel().catch(error => {
+        console.error("Error initializing emotion model:", error);
+        toast.error("Failed to initialize emotion detection model. This feature may not be available on your browser.");
+        setEmotionEnabled(false);
+      });
     }
-  }, [emotionEnabled, modelLoaded, initializeModel]);
+  }, [emotionEnabled, modelLoaded, initializeModel, browserSupportsEmotionDetection]);
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
     if (emotionEnabled && lastMessage?.role === 'user') {
-      detectEmotion(lastMessage.content);
+      detectEmotion(lastMessage.content).catch(error => {
+        console.error("Error detecting emotion:", error);
+      });
     }
   }, [messages, emotionEnabled, detectEmotion]);
 
   const toggleEmotionDetection = async () => {
-    if (!emotionEnabled) {
-      await initializeModel();
+    if (!browserSupportsEmotionDetection) {
+      toast.error("Emotion detection is not supported in your browser. Please try a browser that supports WebGPU or WebAssembly.");
+      return;
     }
-    setEmotionEnabled(!emotionEnabled);
+    
+    if (!emotionEnabled) {
+      try {
+        await initializeModel();
+        setEmotionEnabled(true);
+      } catch (error) {
+        console.error("Failed to enable emotion detection:", error);
+        toast.error("Could not enable emotion detection. Your browser may not support this feature.");
+      }
+    } else {
+      setEmotionEnabled(false);
+    }
   };
 
   const handleApiKeySave = () => {
@@ -180,11 +212,17 @@ const AIVoiceAgentComponent: React.FC = () => {
                 onClick={toggleEmotionDetection}
                 variant={emotionEnabled ? "default" : "outline"}
                 className="w-full"
-                disabled={isEmotionLoading || !apiKeyConfigured}
+                disabled={isEmotionLoading || !apiKeyConfigured || !browserSupportsEmotionDetection}
               >
                 <Brain className="mr-2 h-4 w-4" />
                 {emotionEnabled ? "Disable" : "Enable"} Emotion Detection
+                {!browserSupportsEmotionDetection && " (Not Supported)"}
               </Button>
+              {!browserSupportsEmotionDetection && (
+                <p className="text-xs text-amber-600 mt-1">
+                  Your browser doesn't support emotion detection. Please try a modern browser that supports WebGPU or WebAssembly.
+                </p>
+              )}
             </div>
           </div>
           

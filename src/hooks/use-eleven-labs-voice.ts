@@ -13,19 +13,23 @@ export const useElevenLabsVoice = (apiKey: string, options?: VoiceOptions) => {
 
   const DEFAULT_VOICE_OPTIONS = {
     voiceId: 'EXAVITQu4vr4xnSDxMaL', // Sarah's voice as default
-    model: 'eleven_multilingual_v2'
+    model: 'eleven_multilingual_v2' as const
   };
 
   const mergedOptions = { ...DEFAULT_VOICE_OPTIONS, ...options };
 
   const synthesizeSpeech = useCallback(async (text: string) => {
     if (!text) return null;
+    if (!apiKey) {
+      toast.error('API key is required');
+      return null;
+    }
 
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/stream', {
+      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + mergedOptions.voiceId + '/stream', {
         method: 'POST',
         headers: {
           'xi-api-key': apiKey,
@@ -37,13 +41,21 @@ export const useElevenLabsVoice = (apiKey: string, options?: VoiceOptions) => {
             stability: 0.5,
             similarity_boost: 0.5,
           },
-          voice_id: mergedOptions.voiceId,
+          model_id: mergedOptions.model,
         }),
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`ElevenLabs API Error: ${errorText}`);
+        const errorData = await response.json().catch(() => null);
+        console.error('ElevenLabs API Error:', response.status, errorData);
+        
+        if (response.status === 401) {
+          throw new Error('Invalid API key. Please check your ElevenLabs API key.');
+        } else if (response.status === 400) {
+          throw new Error('Bad request. Please check your voice ID and parameters.');
+        } else {
+          throw new Error(`ElevenLabs API Error: ${response.status}`);
+        }
       }
 
       const audioBlob = await response.blob();
