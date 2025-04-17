@@ -5,6 +5,7 @@ import MainLayout from "@/components/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, Download } from "lucide-react";
+import { toast } from "sonner";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -15,7 +16,20 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     document.title = "MeantToHelp | Payment Successful";
-  }, []);
+    
+    // Log successful payment details
+    console.log("Payment success page loaded with params:", {
+      orderId,
+      paymentId,
+      title,
+      amount
+    });
+    
+    // Show success toast on page load
+    if (paymentId) {
+      toast.success("Payment completed successfully!");
+    }
+  }, [orderId, paymentId, title, amount]);
 
   // Format the current date for receipt
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -23,6 +37,34 @@ const PaymentSuccess = () => {
     month: "long",
     day: "numeric",
   });
+  
+  const handleDownloadReceipt = () => {
+    // In a real app, this would generate and download a PDF receipt
+    toast.info("Receipt download functionality would be implemented in a production environment");
+    
+    // Create a simple text receipt for demo purposes
+    const receiptText = `
+      Receipt
+      -------
+      Order ID: ${orderId}
+      Payment ID: ${paymentId}
+      Date: ${currentDate}
+      Service: ${title}
+      Amount: ₹${amount}
+      
+      Thank you for your payment!
+    `;
+    
+    const blob = new Blob([receiptText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `receipt-${orderId}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <MainLayout title="Payment Successful">
@@ -76,10 +118,7 @@ const PaymentSuccess = () => {
             <Button 
               variant="outline" 
               className="flex gap-2"
-              onClick={() => {
-                // In a real app, this would generate and download a PDF receipt
-                alert("Receipt download functionality would be implemented in a production environment");
-              }}
+              onClick={handleDownloadReceipt}
             >
               <Download size={18} />
               Download Receipt
@@ -89,8 +128,8 @@ const PaymentSuccess = () => {
               className="bg-meant-600 hover:bg-meant-700 text-white"
               asChild
             >
-              <Link to="/spirituality">
-                Explore More Services
+              <Link to="/">
+                Return Home
               </Link>
             </Button>
           </div>

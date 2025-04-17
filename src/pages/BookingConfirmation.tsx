@@ -26,14 +26,57 @@ const BookingConfirmation = () => {
     email: searchParams.get("email") || "",
     phone: searchParams.get("phone") || ""
   });
+  
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    phone: false
+  });
 
   useEffect(() => {
     document.title = "MeantToHelp | Booking Confirmation";
+    
+    // Log payment parameters for debugging
+    console.log("Booking confirmation parameters:", {
+      title: bookingDetails.title,
+      amount: bookingDetails.amount,
+      type: bookingDetails.type
+    });
   }, []);
+  
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+  
+  const handleInputChange = (field: string, value: string) => {
+    setBookingDetails(prev => ({
+      ...prev,
+      [field]: value
+    }));
+    
+    // Clear error for this field
+    if (field in errors) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: false
+      }));
+    }
+  };
 
   const groupedDateTime = bookingDetails.date !== "To be scheduled" && bookingDetails.time
     ? `${bookingDetails.date} at ${bookingDetails.time}`
     : bookingDetails.date;
+    
+  const validateFields = () => {
+    const newErrors = {
+      name: !bookingDetails.name,
+      email: !bookingDetails.email || !validateEmail(bookingDetails.email),
+      phone: !bookingDetails.phone || bookingDetails.phone.length < 10
+    };
+    
+    setErrors(newErrors);
+    return !Object.values(newErrors).some(Boolean);
+  };
 
   return (
     <MainLayout title="Booking Confirmation">
@@ -77,45 +120,43 @@ const BookingConfirmation = () => {
             
             <div className="border-b pb-4">
               <h3 className="font-medium mb-3">Contact Information</h3>
-              {(!bookingDetails.name || !bookingDetails.email || !bookingDetails.phone) ? (
-                <div className="text-red-500 mb-2">
-                  Please fill in your contact information to proceed with payment
-                </div>
-              ) : null}
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-muted-foreground mb-1">Name</label>
                   <input 
                     type="text"
-                    className="w-full p-2 border rounded-md"
+                    className={`w-full p-2 border rounded-md ${errors.name ? 'border-red-500' : ''}`}
                     value={bookingDetails.name}
-                    onChange={(e) => setBookingDetails({...bookingDetails, name: e.target.value})}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
                     placeholder="Your full name"
                     required
                   />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">Name is required</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-muted-foreground mb-1">Email</label>
                   <input 
                     type="email"
-                    className="w-full p-2 border rounded-md"
+                    className={`w-full p-2 border rounded-md ${errors.email ? 'border-red-500' : ''}`}
                     value={bookingDetails.email}
-                    onChange={(e) => setBookingDetails({...bookingDetails, email: e.target.value})}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     placeholder="Your email address"
                     required
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">Valid email is required</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-muted-foreground mb-1">Phone</label>
                   <input 
                     type="tel"
-                    className="w-full p-2 border rounded-md"
+                    className={`w-full p-2 border rounded-md ${errors.phone ? 'border-red-500' : ''}`}
                     value={bookingDetails.phone}
-                    onChange={(e) => setBookingDetails({...bookingDetails, phone: e.target.value})}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
                     placeholder="Your phone number"
                     required
                   />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">Valid phone number is required</p>}
                 </div>
               </div>
             </div>

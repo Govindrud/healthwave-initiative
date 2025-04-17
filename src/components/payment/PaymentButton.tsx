@@ -1,8 +1,8 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { initiatePayment } from "@/utils/payments";
+import { initializeRazorpay, initiatePayment } from "@/utils/payments";
 import { toast } from "sonner";
 
 interface PaymentButtonProps {
@@ -37,6 +37,15 @@ const PaymentButton = ({
 }: PaymentButtonProps) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+  
+  // Preload the Razorpay script when component mounts
+  useEffect(() => {
+    initializeRazorpay(() => {
+      setIsScriptLoaded(true);
+      console.log("Razorpay script preloaded");
+    });
+  }, []);
   
   const handlePayment = () => {
     if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
@@ -57,6 +66,8 @@ const PaymentButton = ({
         : bookingDetails.date;
     }
     
+    console.log("Initiating payment with customer info:", customerInfo);
+    
     initiatePayment({
       amount,
       description: `Booking for ${title}`,
@@ -67,6 +78,14 @@ const PaymentButton = ({
       bookingDatetime,
       successCallback: (response) => {
         setIsLoading(false);
+        toast.success("Payment successful!");
+        console.log("Payment success, redirecting with data:", {
+          orderId,
+          paymentId: response.razorpay_payment_id,
+          title,
+          amount
+        });
+        
         // Redirect to payment success page with relevant info
         navigate(`/payment-success?order_id=${orderId}&payment_id=${response.razorpay_payment_id}&title=${encodeURIComponent(title)}&amount=${amount}`);
       },

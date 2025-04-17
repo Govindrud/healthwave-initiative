@@ -22,7 +22,13 @@ export const initializeRazorpay = (callback: () => void) => {
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   script.async = true;
-  script.onload = callback;
+  script.onload = () => {
+    console.log("Razorpay script loaded successfully");
+    callback();
+  };
+  script.onerror = () => {
+    console.error("Failed to load Razorpay script");
+  };
   document.body.appendChild(script);
 };
 
@@ -40,43 +46,47 @@ export const initiatePayment = (options: PaymentOptions) => {
     errorCallback
   } = options;
 
+  console.log("Initiating payment with options:", { amount, orderId, name, email });
+
   initializeRazorpay(() => {
-    const razorpayOptions = {
-      key: "rzp_test_YOUR_KEY_HERE", // Will be replaced with actual key in production
-      amount: amount * 100, // Razorpay expects amount in smallest currency unit
-      currency,
-      name: "MeantToHelp",
-      description,
-      order_id: orderId,
-      handler: function(response: any) {
-        // Handle successful payment
-        console.log("Payment successful:", response);
-        successCallback(response);
-      },
-      prefill: {
-        name,
-        email,
-        contact: phone
-      },
-      notes: {
-        order_id: orderId,
-        booking_datetime: bookingDatetime || ""
-      },
-      theme: {
-        color: "#0284c7"
-      }
-    };
-    
     try {
+      const razorpayOptions = {
+        key: "rzp_test_nCq1NOJiPYTfJy", // Replace with your actual test key
+        amount: amount * 100, // Razorpay expects amount in smallest currency unit
+        currency,
+        name: "MeantToHelp",
+        description,
+        order_id: orderId,
+        handler: function(response: any) {
+          // Handle successful payment
+          console.log("Payment successful:", response);
+          successCallback(response);
+        },
+        prefill: {
+          name,
+          email,
+          contact: phone
+        },
+        notes: {
+          order_id: orderId,
+          booking_datetime: bookingDatetime || ""
+        },
+        theme: {
+          color: "#0284c7"
+        }
+      };
+      
+      console.log("Creating Razorpay instance with options:", razorpayOptions);
+      
       // @ts-ignore - Razorpay will be available globally after script loads
       const razorpayInstance = new window.Razorpay(razorpayOptions);
-      razorpayInstance.open();
       razorpayInstance.on('payment.failed', function(response: any) {
         console.error("Payment failed:", response.error);
         errorCallback({
           error: response.error
         });
       });
+      razorpayInstance.open();
     } catch (error) {
       console.error("Razorpay initialization error:", error);
       errorCallback(error);
