@@ -13,9 +13,9 @@ define('CONTROLLERS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/controllers/');
 define('VIEWS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/views/');
 
 // Payment Gateway credentials
-// Replace these with actual credentials in production
-define('RAZORPAY_KEY_ID', 'rzp_test_XXXXXXXXXX');
-define('RAZORPAY_KEY_SECRET', 'XXXXXXXXXXXXXXXXXXXXXXXX');
+// Using the provided test credentials
+define('RAZORPAY_KEY_ID', 'rzp_test_i63UYUocvNrIqx');
+define('RAZORPAY_KEY_SECRET', 'iy31ugrhbhjRryIQznmn84yS');
 
 // UPI Payment details
 define('UPI_ID', 'yourupi@bank');
