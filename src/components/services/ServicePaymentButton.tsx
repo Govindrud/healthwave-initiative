@@ -16,6 +16,7 @@ interface ServicePaymentButtonProps {
     email: string;
     phone: string;
   };
+  disabled?: boolean; // Added disabled prop
 }
 
 const ServicePaymentButton = ({
@@ -25,7 +26,8 @@ const ServicePaymentButton = ({
   className = "",
   serviceId,
   serviceType,
-  customerInfo
+  customerInfo,
+  disabled = false // Added with default value
 }: ServicePaymentButtonProps) => {
   const { isLoading, isScriptLoaded, handlePayment } = usePayment({
     amount,
@@ -41,7 +43,7 @@ const ServicePaymentButton = ({
     <Button 
       onClick={handlePayment}
       className={`bg-meant-600 hover:bg-meant-700 text-white ${className}`}
-      disabled={isLoading || !isScriptLoaded}
+      disabled={isLoading || !isScriptLoaded || disabled} // Updated to include the disabled prop
     >
       {isLoading ? "Processing..." : (
         <>
