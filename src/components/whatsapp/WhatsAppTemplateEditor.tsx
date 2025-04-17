@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -257,7 +258,7 @@ const WhatsAppTemplateEditor = () => {
                       rows={5}
                     />
                     <p className="text-xs text-muted-foreground">
-                      Use placeholders like {{1}}, {{2}} for variable content
+                      Use placeholders like {"{{1}}"}, {"{{2}}"} for variable content
                     </p>
                   </div>
                   
