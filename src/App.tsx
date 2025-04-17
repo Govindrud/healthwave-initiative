@@ -15,7 +15,7 @@ import Products from "@/pages/Products";
 import Cart from "@/pages/Cart";
 import AIVoiceAgent from "@/pages/AIVoiceAgent";
 import Services from "@/pages/Services";
-import { StrictMode } from 'react';
+import WhatsAppConfig from "@/pages/WhatsAppConfig";
 
 function App() {
   return (
@@ -37,6 +37,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/services" element={<Services />} />
           <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
+          <Route path="/whatsapp-config" element={<WhatsAppConfig />} />
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>

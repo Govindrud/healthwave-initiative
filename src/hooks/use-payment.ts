@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { initializeRazorpay, initiatePayment } from "@/utils/payments";
 import { toast } from "sonner";
+import { sendBookingConfirmationWhatsApp } from "@/utils/whatsapp-notifications";
 
 interface PaymentDetails {
   amount: number;
@@ -85,6 +86,17 @@ export const usePayment = (paymentDetails: PaymentDetails): PaymentHookReturn =>
           amount,
           serviceType: bookingDetails.type
         });
+        
+        // Send WhatsApp notification if phone number is provided
+        if (customerInfo.phone) {
+          sendBookingConfirmationWhatsApp({
+            customerName: customerInfo.name,
+            customerPhone: customerInfo.phone,
+            serviceName: title,
+            bookingDate: bookingDetails.date || "To be scheduled",
+            bookingTime: bookingDetails.time || ""
+          });
+        }
         
         // Redirect to payment success page with relevant info
         navigate(`/payment-success?order_id=${orderId}&payment_id=${response.razorpay_payment_id}&title=${encodeURIComponent(title)}&amount=${amount}&service_type=${bookingDetails.type}`);
