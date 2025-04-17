@@ -6,11 +6,14 @@ import MainLayout from "@/components/layouts/MainLayout";
 const Doctors = () => {
   useEffect(() => {
     document.title = "MeantToHelp | Consult with Doctors";
+    window.scrollTo(0, 0);
   }, []);
 
   return (
     <MainLayout title="Consult with Doctors">
-      <DoctorListing />
+      <div className="bg-gradient-to-b from-meant-50 to-white pt-6 pb-12">
+        <DoctorListing />
+      </div>
     </MainLayout>
   );
 };

@@ -1,21 +1,14 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import { BrowserRouter } from 'react-router-dom';
+import './index.css';
+import './styles/service-page.css';
 
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { AuthProvider } from './context/AuthContext'
-import { ThemeProvider } from './components/ui/theme-provider'
-import { StrictMode } from 'react'
-
-// Create the root first
-const root = createRoot(document.getElementById("root")!);
-
-// Then render the app
-root.render(
-  <StrictMode>
-    <AuthProvider>
-      <ThemeProvider defaultTheme="light" storageKey="mean-to-help-theme">
-        <App />
-      </ThemeProvider>
-    </AuthProvider>
-  </StrictMode>
-);
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
+)
