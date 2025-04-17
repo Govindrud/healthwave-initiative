@@ -17,8 +17,8 @@ import Cart from "@/pages/Cart";
 import AIVoiceAgent from "@/pages/AIVoiceAgent";
 import Services from "@/pages/Services";
 import WhatsAppConfig from "@/pages/WhatsAppConfig";
-import { Adventures } from "@/pages/Adventures";
-import { Games } from "@/pages/Games";
+import Adventures from "@/pages/Adventures";  // Fixed import syntax
+import Games from "@/pages/Games";  // Fixed import syntax
 
 function App() {
   return (

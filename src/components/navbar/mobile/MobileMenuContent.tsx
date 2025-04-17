@@ -43,6 +43,7 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
           <MobileDropdown title="Activities">
             <MobileNavItem to="/adventures">Stress-Free Adventures</MobileNavItem>
             <MobileNavItem to="/games">Mental Health Games</MobileNavItem>
+            <MobileNavItem to="/activities">All Activities</MobileNavItem>
           </MobileDropdown>
           
           <MobileDropdown title="Spirituality">
