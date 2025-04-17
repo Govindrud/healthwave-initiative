@@ -32,7 +32,7 @@ export const useEmotionDetection = () => {
       await pipeline(
         'text-classification',
         'SamLowe/roberta-base-go_emotions',
-        { quantized: true, device }
+        { device }
       );
       
       setModelLoaded(true);
@@ -64,10 +64,10 @@ export const useEmotionDetection = () => {
       const classifier = await pipeline(
         'text-classification',
         'SamLowe/roberta-base-go_emotions',
-        { quantized: true, device }
+        { device }
       );
       
-      const results = await classifier(text, { topk: 5 });
+      const results = await classifier(text, { top_k: 5 });
       
       // Format the results
       const formattedResults = Array.isArray(results) ? results : [results];
