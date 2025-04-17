@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -129,12 +128,10 @@ const WhatsAppTemplateEditor = () => {
     let updatedTemplates: Template[];
     
     if (selectedTemplate) {
-      // Update existing template
       updatedTemplates = templates.map(t => 
         t.id === selectedTemplate.id ? formData : t
       );
     } else {
-      // Add new template
       updatedTemplates = [...templates, formData];
     }
     
@@ -274,19 +271,27 @@ const WhatsAppTemplateEditor = () => {
                           </span>
                           <span>{variable}</span>
                         </div>
-                        <Button variant="ghost" size="sm" onClick={() => removeVariable(index)}>✕</Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => removeVariable(index)}
+                        >
+                          ✕
+                        </Button>
                       </div>
                     ))}
                     
                     <div className="flex gap-2 mt-3">
                       <Input
                         value={newVariable}
-                        onChange={e => setNewVariable(e.target.value)}
+                        onChange={(e) => setNewVariable(e.target.value)}
                         placeholder="Add a new variable"
                         className="flex-1"
-                        onKeyPress={e => e.key === 'Enter' && addVariable()}
+                        onKeyPress={(e) => e.key === 'Enter' && addVariable()}
                       />
-                      <Button onClick={addVariable} variant="outline">Add</Button>
+                      <Button onClick={addVariable} variant="outline">
+                        Add
+                      </Button>
                     </div>
                   </div>
                   
