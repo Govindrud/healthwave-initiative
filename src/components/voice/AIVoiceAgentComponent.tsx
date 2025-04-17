@@ -21,10 +21,15 @@ import VoiceControls from "./VoiceControls";
 import VoiceAssistantHelp from "./VoiceAssistantHelp";
 
 const AIVoiceAgentComponent: React.FC = () => {
-  // Check for stored API key on component mount
+  // Check for stored API key and agent ID on component mount
   const [elevenLabsApiKey, setElevenLabsApiKey] = useState(() => {
     const storedKey = localStorage.getItem("elevenlabs-api-key");
     return storedKey || '';
+  });
+  
+  const [elevenLabsAgentId, setElevenLabsAgentId] = useState(() => {
+    const storedAgentId = localStorage.getItem("elevenlabs-agent-id");
+    return storedAgentId || '0iVgYogaiePekeUt2C1h'; // Default to provided agent ID
   });
   
   const [apiKeyConfigured, setApiKeyConfigured] = useState(Boolean(elevenLabsApiKey));
@@ -49,12 +54,14 @@ const AIVoiceAgentComponent: React.FC = () => {
     isListening,
     isSpeaking,
     volume,
+    agentMode,
     toggleListening,
     stopSpeaking,
     adjustVolume,
     resetConversation,
   } = useVoiceAssistant({
-    elevenLabsApiKey: elevenLabsApiKey
+    elevenLabsApiKey: elevenLabsApiKey,
+    agentId: elevenLabsAgentId
   });
 
   const {
@@ -107,19 +114,40 @@ const AIVoiceAgentComponent: React.FC = () => {
 
   const handleApiKeySave = () => {
     setApiKeyConfigured(true);
+    localStorage.setItem("elevenlabs-agent-id", elevenLabsAgentId);
     // Force reload the component with the new API key
     resetConversation();
+    toast.success("Settings saved successfully!");
   };
 
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
         {!apiKeyConfigured ? (
-          <APIKeyInput 
-            value={elevenLabsApiKey} 
-            onChange={setElevenLabsApiKey}
-            onSave={handleApiKeySave}
-          />
+          <div className="mb-6 space-y-4">
+            <APIKeyInput 
+              value={elevenLabsApiKey} 
+              onChange={setElevenLabsApiKey}
+              onSave={handleApiKeySave}
+            />
+            <div className="p-4 bg-gray-50 rounded-md border border-gray-200">
+              <label htmlFor="agent-id" className="block text-gray-700 font-medium mb-2">
+                ElevenLabs Agent ID
+              </label>
+              <input 
+                id="agent-id"
+                type="text"
+                value={elevenLabsAgentId}
+                onChange={(e) => setElevenLabsAgentId(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-meant-500"
+                placeholder="Enter your ElevenLabs Agent ID"
+              />
+              <p className="text-xs text-gray-500 mt-2">
+                Using ElevenLabs Agents enables more advanced conversation capabilities.
+                Default: 0iVgYogaiePekeUt2C1h
+              </p>
+            </div>
+          </div>
         ) : (
           <div className="mb-4 flex justify-between items-center">
             <div className="text-sm text-green-600 flex items-center gap-2">
@@ -128,6 +156,7 @@ const AIVoiceAgentComponent: React.FC = () => {
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
               ElevenLabs API Key configured
+              {agentMode && <span className="ml-2 text-amber-600">(Agent Mode)</span>}
             </div>
             <Button 
               variant="outline" 
@@ -136,7 +165,7 @@ const AIVoiceAgentComponent: React.FC = () => {
                 setApiKeyConfigured(false);
               }}
             >
-              Change API Key
+              Change API Keys
             </Button>
           </div>
         )}
@@ -153,7 +182,7 @@ const AIVoiceAgentComponent: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex justify-between items-center">
-                <span>Voice Conversation</span>
+                <span>Voice Conversation {agentMode && <span className="text-sm text-amber-600 ml-2">(Agent Mode)</span>}</span>
                 <div className="flex gap-2">
                   <Button 
                     variant="outline" 

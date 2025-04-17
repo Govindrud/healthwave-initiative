@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { useElevenLabsVoice } from './use-eleven-labs-voice';
@@ -12,6 +13,7 @@ export type VoiceAssistantOptions = {
   initialMessages?: VoiceMessageType[];
   initialVolume?: number;
   elevenLabsApiKey?: string;
+  agentId?: string;
 };
 
 export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
@@ -26,11 +28,15 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
     ]
   );
   const [volume, setVolume] = useState(options?.initialVolume || 0.8);
+  const [agentMode, setAgentMode] = useState(!!options?.agentId);
   
   // ElevenLabs Voice Synthesis
-  const { synthesizeSpeech, isLoading: isSynthesizing } = useElevenLabsVoice(
+  const { synthesizeSpeech, getSignedAgentUrl, isLoading: isSynthesizing } = useElevenLabsVoice(
     options?.elevenLabsApiKey || '', 
-    { voiceId: 'EXAVITQu4vr4xnSDxMaL' }
+    { 
+      voiceId: 'EXAVITQu4vr4xnSDxMaL',
+      agentId: options?.agentId
+    }
   );
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -86,6 +92,16 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
     };
   }, []);
 
+  // Initialize agent mode if agent ID is provided
+  useEffect(() => {
+    if (options?.agentId && options?.elevenLabsApiKey) {
+      setAgentMode(true);
+      toast.info("Agent mode activated. Using ElevenLabs conversation agent.");
+    } else {
+      setAgentMode(false);
+    }
+  }, [options?.agentId, options?.elevenLabsApiKey]);
+
   const toggleListening = () => {
     if (isListening) {
       recognitionRef.current?.stop();
@@ -135,6 +151,50 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
   };
 
   const generateAIResponse = (userMessage: string, detectedEmotion?: string) => {
+    if (agentMode && options?.elevenLabsApiKey) {
+      // If in agent mode and we have an API key, use the agent for conversation
+      generateAgentResponse(userMessage);
+    } else {
+      // Use the simple response generation otherwise
+      generateSimpleResponse(userMessage, detectedEmotion);
+    }
+  };
+  
+  const generateAgentResponse = async (userMessage: string) => {
+    // This is a placeholder for agent conversation - would need to be 
+    // replaced with actual agent conversation implementation
+    toast.info("Connecting to ElevenLabs Agent...");
+    
+    try {
+      // Get a signed URL for the conversation
+      const signedUrl = await getSignedAgentUrl();
+      
+      if (!signedUrl) {
+        throw new Error("Failed to get signed URL for agent conversation");
+      }
+      
+      toast.success("Connected to ElevenLabs Agent");
+      
+      // Simulate agent response
+      setTimeout(() => {
+        const response = "I'm the ElevenLabs agent assistant. I'm here to help with your mental health concerns. To fully utilize the agent functionality, you'll need to implement the full ElevenLabs Conversation API.";
+        const assistantMessage: VoiceMessageType = { role: "assistant", content: response };
+        setMessages((prev) => [...prev, assistantMessage]);
+        
+        // Speak the response
+        speakText(response);
+      }, 1000);
+      
+    } catch (error) {
+      console.error("Agent conversation error:", error);
+      toast.error("Failed to connect to agent. Falling back to simple response generation.");
+      
+      // Fall back to simple response generation
+      generateSimpleResponse(userMessage);
+    }
+  };
+
+  const generateSimpleResponse = (userMessage: string, detectedEmotion?: string) => {
     // Extend responses based on emotions (if emotion detection is enabled)
     const emotionResponses: Record<string, string[]> = {
       joy: [
@@ -275,6 +335,7 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
     isListening,
     isSpeaking,
     volume,
+    agentMode,
     toggleListening,
     addMessage,
     speakText,
