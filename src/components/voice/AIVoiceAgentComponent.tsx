@@ -1,8 +1,8 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, Volume2, VolumeX, Info, RotateCcw } from "lucide-react";
+import { Mic, MicOff, Volume2, VolumeX, Info, RotateCcw, Brain } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -10,6 +10,40 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useVoiceAssistant } from "@/hooks/use-voice-assistant";
+import { useEmotionDetection } from "@/hooks/use-emotion-detection";
+import { Badge } from "@/components/ui/badge";
+
+const EmotionBadge = ({ emotion }: { emotion: { label: string; score: number } }) => {
+  // Get appropriate color based on emotion
+  const getColorForEmotion = (emotion: string) => {
+    const emotionColors: Record<string, string> = {
+      joy: "bg-green-100 text-green-800",
+      sadness: "bg-blue-100 text-blue-800",
+      anger: "bg-red-100 text-red-800",
+      fear: "bg-purple-100 text-purple-800",
+      surprise: "bg-yellow-100 text-yellow-800",
+      disgust: "bg-orange-100 text-orange-800",
+      neutral: "bg-gray-100 text-gray-800",
+      approval: "bg-teal-100 text-teal-800",
+      disapproval: "bg-rose-100 text-rose-800",
+      admiration: "bg-indigo-100 text-indigo-800",
+      optimism: "bg-emerald-100 text-emerald-800",
+      disappointment: "bg-amber-100 text-amber-800",
+      love: "bg-pink-100 text-pink-800",
+      caring: "bg-cyan-100 text-cyan-800",
+    };
+    return emotionColors[emotion.toLowerCase()] || "bg-gray-100 text-gray-800";
+  };
+
+  const percentage = Math.round(emotion.score * 100);
+  const colorClass = getColorForEmotion(emotion.label);
+  
+  return (
+    <Badge variant="outline" className={`${colorClass} font-medium`}>
+      {emotion.label}: {percentage}%
+    </Badge>
+  );
+};
 
 const AIVoiceAgentComponent: React.FC = () => {
   const {
@@ -20,8 +54,42 @@ const AIVoiceAgentComponent: React.FC = () => {
     toggleListening,
     stopSpeaking,
     adjustVolume,
-    resetConversation
+    resetConversation,
+    addMessage,
   } = useVoiceAssistant();
+
+  const {
+    detectEmotion,
+    initializeModel,
+    isLoading: isEmotionLoading,
+    modelLoaded,
+    emotions,
+  } = useEmotionDetection();
+
+  const [emotionEnabled, setEmotionEnabled] = useState(false);
+
+  // Initialize emotion detection model
+  useEffect(() => {
+    if (emotionEnabled && !modelLoaded) {
+      initializeModel();
+    }
+  }, [emotionEnabled, modelLoaded, initializeModel]);
+
+  // Process the new user message for emotion detection
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (emotionEnabled && lastMessage?.role === 'user') {
+      detectEmotion(lastMessage.content);
+    }
+  }, [messages, emotionEnabled, detectEmotion]);
+
+  const toggleEmotionDetection = async () => {
+    if (!emotionEnabled) {
+      // If enabling, initialize the model
+      await initializeModel();
+    }
+    setEmotionEnabled(!emotionEnabled);
+  };
 
   return (
     <section className="py-16">
@@ -30,7 +98,7 @@ const AIVoiceAgentComponent: React.FC = () => {
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold mb-3">AI Voice Therapy Assistant</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Speak freely about what's on your mind. Our AI voice assistant is designed to help you 
+              Speak freely about what's on your mind. Our AI voice assistant with emotion detection is designed to help you 
               talk through your thoughts and feelings, providing a judgment-free space for stress relief.
             </p>
           </div>
@@ -93,6 +161,27 @@ const AIVoiceAgentComponent: React.FC = () => {
                   ))}
                 </div>
 
+                {/* Emotions section */}
+                {emotionEnabled && (
+                  <div className="mb-4 p-3 bg-gray-50 rounded-md border border-gray-200">
+                    <div className="flex items-center mb-2">
+                      <Brain className="h-4 w-4 mr-2 text-meant-600" />
+                      <h3 className="text-sm font-medium">Detected Emotions</h3>
+                      {isEmotionLoading && (
+                        <div className="ml-2 text-xs text-gray-500">Analyzing...</div>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {emotions.slice(0, 3).map((emotion, index) => (
+                        <EmotionBadge key={index} emotion={emotion} />
+                      ))}
+                      {emotions.length === 0 && !isEmotionLoading && (
+                        <span className="text-sm text-gray-500">No emotions detected yet</span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* Voice controls */}
                 <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-gray-100 rounded-md">
                   <div className="flex items-center gap-2">
@@ -154,12 +243,27 @@ const AIVoiceAgentComponent: React.FC = () => {
             </CardContent>
           </Card>
           
-          <div className="mt-8 bg-blue-50 p-6 rounded-lg border border-blue-100">
+          <div className="mt-8 flex gap-4">
+            <div className="flex-1">
+              <Button 
+                onClick={toggleEmotionDetection}
+                variant={emotionEnabled ? "default" : "outline"}
+                className="w-full"
+                disabled={isEmotionLoading}
+              >
+                <Brain className="mr-2 h-4 w-4" />
+                {emotionEnabled ? "Disable" : "Enable"} Emotion Detection
+              </Button>
+            </div>
+          </div>
+          
+          <div className="mt-6 bg-blue-50 p-6 rounded-lg border border-blue-100">
             <h3 className="text-xl font-semibold mb-2 text-blue-800">How to use the Voice Assistant</h3>
             <ul className="list-disc pl-5 space-y-2 text-blue-700">
               <li>Click the "Start Speaking" button and allow microphone access</li>
               <li>Speak naturally about how you're feeling or what's on your mind</li>
               <li>The assistant will listen and respond with supportive guidance</li>
+              {emotionEnabled && <li>Your emotions will be analyzed to provide more tailored responses</li>}
               <li>You can adjust the volume or stop the assistant from speaking at any time</li>
               <li>Click "Stop" when you're done with the conversation</li>
             </ul>

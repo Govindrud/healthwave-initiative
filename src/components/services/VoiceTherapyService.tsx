@@ -2,28 +2,30 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mic } from "lucide-react";
+import { ArrowRight, Mic, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const VoiceTherapyService = () => {
   return (
     <Card className="border-meant-100 hover:shadow-md transition-shadow">
       <CardHeader>
-        <div className="mb-4">
+        <div className="mb-4 flex">
           <Mic className="h-10 w-10 text-meant-600" />
+          <Brain className="h-10 w-10 text-meant-600 ml-2" />
         </div>
         <CardTitle>AI Voice Therapy Assistant</CardTitle>
         <CardDescription>
           Speak your mind freely with our AI voice assistant designed to help you express and 
-          process your thoughts and feelings through natural conversation.
+          process your thoughts and feelings through natural conversation with emotional intelligence.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <ul className="space-y-2">
           {[
             "Voice-based natural conversations",
+            "Advanced emotion detection technology",
+            "Receive emotionally-aware supportive responses",
             "Express your feelings in a judgment-free space",
-            "Receive supportive responses and coping suggestions",
             "Available 24/7 whenever you need to talk",
           ].map((feature, i) => (
             <li key={i} className="flex items-start">

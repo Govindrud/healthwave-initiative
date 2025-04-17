@@ -1,145 +1,92 @@
 
 import React from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Brain, Mic, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Mic, Speech } from "lucide-react";
 
 const VoiceAssistantPromo: React.FC = () => {
   return (
-    <section id="voice-assistant" className="py-16 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="text-center md:text-left">
-            <span className="inline-block py-1 px-3 rounded-full bg-meant-100 text-meant-800 text-sm font-medium mb-4">
-              New Feature
-            </span>
-            <h2 className="text-3xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-meant-600">
-                AI Voice Therapy Assistant
-              </span>
-            </h2>
-            <p className="text-lg text-gray-700 mb-6">
-              Our innovative voice assistant lets you speak freely about what's on your mind, providing
-              a judgment-free space to express your thoughts and feelings. It's like having a supportive
-              listener available 24/7.
-            </p>
-            <ul className="space-y-2 mb-6 text-left max-w-md mx-auto md:mx-0">
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-meant-600 mr-2 flex-shrink-0 mt-1"
-                  fill="none"
-                  height="24"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Speak naturally and receive supportive responses</span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-meant-600 mr-2 flex-shrink-0 mt-1"
-                  fill="none"
-                  height="24"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Express your thoughts to help clear your mind</span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-meant-600 mr-2 flex-shrink-0 mt-1"
-                  fill="none"
-                  height="24"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Receive personalized coping strategies and support</span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-meant-600 mr-2 flex-shrink-0 mt-1"
-                  fill="none"
-                  height="24"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Available 24/7, completely private and secure</span>
-              </li>
-            </ul>
-            <div className="flex flex-wrap justify-center md:justify-start gap-4">
-              <Link to="/ai-voice-agent">
-                <Button className="bg-meant-600 hover:bg-meant-700">
-                  <Mic className="mr-2 h-4 w-4" />
-                  Try Voice Assistant
-                </Button>
-              </Link>
-              <Link to="/services">
-                <Button variant="outline">
-                  View All Services
-                </Button>
-              </Link>
-            </div>
-          </div>
-          <div className="relative flex items-center justify-center">
-            <div className="absolute inset-0 bg-blue-500 rounded-full opacity-10 animate-pulse"></div>
-            <div className="relative bg-white rounded-xl shadow-xl p-6 border border-gray-100">
-              <div className="flex items-center justify-center h-64 w-full rounded-lg bg-blue-50">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Talk Through Your Feelings</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Our AI voice assistant provides a judgment-free space to express yourself
+            and process your emotions in real-time.
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <Card className="overflow-hidden border-meant-100">
+            <div className="md:flex">
+              <div className="md:w-1/2 bg-gradient-to-br from-meant-600 to-meant-800 p-8 text-white flex items-center justify-center">
                 <div className="text-center">
-                  <div className="flex justify-center mb-4">
-                    <div className="relative">
-                      <Speech className="h-20 w-20 text-meant-600" />
-                      <span className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 animate-ping"></span>
-                      <span className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500"></span>
+                  <div className="flex justify-center mb-6">
+                    <div className="h-20 w-20 rounded-full bg-white/10 flex items-center justify-center">
+                      <Mic className="h-10 w-10" />
                     </div>
                   </div>
-                  <h3 className="text-lg font-medium mb-2">Voice Assistant</h3>
-                  <p className="text-gray-600 mb-4">
-                    "I'm here to listen and help you process your thoughts. What's on your mind today?"
+                  <h3 className="text-2xl font-bold mb-2">AI Voice Assistant</h3>
+                  <p className="opacity-90">
+                    Speak naturally and receive supportive responses tailored to your emotional state
                   </p>
-                  <div className="flex justify-center gap-3">
-                    <span className="inline-block h-2 w-2 rounded-full bg-gray-400 animate-bounce"></span>
-                    <span className="inline-block h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-                    <span className="inline-block h-2 w-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+                </div>
+              </div>
+
+              <CardContent className="md:w-1/2 p-8">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">How It Works</h3>
+                    <p className="text-gray-600">
+                      Our AI voice assistant uses advanced emotion detection to understand how you're feeling and provide relevant support.
+                    </p>
+                  </div>
+
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <div className="mr-3 bg-meant-100 rounded-full p-1">
+                        <Mic className="h-4 w-4 text-meant-600" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Speak naturally</span>
+                        <p className="text-sm text-gray-500">Express your thoughts and feelings as they come to you</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="mr-3 bg-meant-100 rounded-full p-1">
+                        <Brain className="h-4 w-4 text-meant-600" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Emotion awareness</span>
+                        <p className="text-sm text-gray-500">AI analyzes your emotional state to provide relevant guidance</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="mr-3 bg-meant-100 rounded-full p-1">
+                        <svg className="h-4 w-4 text-meant-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <span className="font-medium">Private & secure</span>
+                        <p className="text-sm text-gray-500">Your conversations stay on your device and aren't stored</p>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <div className="pt-4">
+                    <Link to="/ai-voice-agent">
+                      <Button className="w-full bg-meant-600 hover:bg-meant-700 text-white">
+                        Try Voice Assistant
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 flex gap-2 items-center justify-center">
-                <button className="flex items-center justify-center h-12 w-12 rounded-full bg-meant-600 text-white">
-                  <Mic className="h-5 w-5" />
-                </button>
-                <div className="flex-1">
-                  <div className="h-2 bg-gray-200 rounded w-full animate-pulse"></div>
-                </div>
-              </div>
+              </CardContent>
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
