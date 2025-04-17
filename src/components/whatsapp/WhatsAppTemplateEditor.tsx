@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -303,7 +302,7 @@ const WhatsAppTemplateEditor = () => {
                     </div>
                   </div>
                   
-                  <Alert variant="warning">
+                  <Alert>
                     <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>Important</AlertTitle>
                     <AlertDescription>

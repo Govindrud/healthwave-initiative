@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { WhatsappLogo, Check, Webhook, Bell, Calendar, Sparkles, CircleOff, Copy } from "lucide-react";
+import { MessageSquare, Check, Webhook, Bell, Calendar, Sparkles, CircleOff, Copy } from "lucide-react";
 import WhatsAppStatusCard from "@/components/whatsapp/WhatsAppStatusCard";
 import WhatsAppTemplateEditor from "@/components/whatsapp/WhatsAppTemplateEditor";
 
@@ -60,7 +60,7 @@ const WhatsAppConfig = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold flex items-center">
-            <WhatsappLogo className="h-8 w-8 mr-2 text-green-500" />
+            <MessageSquare className="h-8 w-8 mr-2 text-green-500" />
             WhatsApp Integration
           </h1>
           <p className="text-muted-foreground mt-2">
