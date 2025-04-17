@@ -65,6 +65,7 @@ export const usePayment = (paymentDetails: PaymentDetails): PaymentHookReturn =>
     }
     
     console.log("Initiating payment with customer info:", customerInfo);
+    console.log("Booking details:", bookingDetails);
     
     initiatePayment({
       amount,
@@ -81,11 +82,12 @@ export const usePayment = (paymentDetails: PaymentDetails): PaymentHookReturn =>
           orderId,
           paymentId: response.razorpay_payment_id,
           title,
-          amount
+          amount,
+          serviceType: bookingDetails.type
         });
         
         // Redirect to payment success page with relevant info
-        navigate(`/payment-success?order_id=${orderId}&payment_id=${response.razorpay_payment_id}&title=${encodeURIComponent(title)}&amount=${amount}`);
+        navigate(`/payment-success?order_id=${orderId}&payment_id=${response.razorpay_payment_id}&title=${encodeURIComponent(title)}&amount=${amount}&service_type=${bookingDetails.type}`);
       },
       errorCallback: (error) => {
         setIsLoading(false);

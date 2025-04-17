@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ArrowRight, Brain, Users, HeartPulse, Sparkles, CheckCircle, Star, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
 import VoiceTherapyService from "@/components/services/VoiceTherapyService";
+import ServiceBookingForm from "@/components/services/ServiceBookingForm";
 
 const Services = () => {
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  
   useEffect(() => {
     document.title = "Services | MeantToHelp";
     window.scrollTo(0, 0);
@@ -15,6 +18,7 @@ const Services = () => {
 
   const services = [
     {
+      id: "mental-health-assessment",
       title: "Personalized Mental Health Assessment",
       description: "A comprehensive evaluation to understand your unique mental health profile and needs.",
       features: [
@@ -24,11 +28,13 @@ const Services = () => {
         "Regular progress tracking"
       ],
       icon: <Brain className="h-10 w-10 text-meant-600" />,
-      price: "$149",
+      price: 14900,
+      displayPrice: "₹14,900",
       cta: "Schedule Assessment",
-      link: "#"
+      serviceType: "assessment"
     },
     {
+      id: "corporate-wellness",
       title: "Corporate Wellness Programs",
       description: "Tailored mental health services designed specifically for workplace implementation.",
       features: [
@@ -38,11 +44,13 @@ const Services = () => {
         "Wellness metric tracking dashboard"
       ],
       icon: <Users className="h-10 w-10 text-meant-600" />,
-      price: "Custom pricing",
+      price: 50000,
+      displayPrice: "₹50,000",
       cta: "Request Consultation",
-      link: "/corporate-plans"
+      serviceType: "corporate"
     },
     {
+      id: "therapy-matching",
       title: "Therapy Matching Service",
       description: "We'll connect you with therapists specially matched to your needs and preferences.",
       features: [
@@ -52,11 +60,13 @@ const Services = () => {
         "Ongoing support and check-ins"
       ],
       icon: <HeartPulse className="h-10 w-10 text-meant-600" />,
-      price: "$99/month",
+      price: 9900,
+      displayPrice: "₹9,900",
       cta: "Find Your Therapist",
-      link: "/doctors"
+      serviceType: "matching"
     },
     {
+      id: "ai-assistant",
       title: "AI Mental Health Assistant",
       description: "24/7 access to our AI-powered mental health support system for daily guidance.",
       features: [
@@ -66,9 +76,10 @@ const Services = () => {
         "Seamless integration with other services"
       ],
       icon: <Sparkles className="h-10 w-10 text-meant-600" />,
-      price: "$39/month",
+      price: 3900,
+      displayPrice: "₹3,900",
       cta: "Try Free Demo",
-      link: "/#ai-assistant"
+      serviceType: "ai_assistant"
     }
   ];
 
@@ -133,32 +144,44 @@ const Services = () => {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
               <VoiceTherapyService />
               
-              {services.map((service, index) => (
-                <Card key={index} className="border-meant-100 hover:shadow-md transition-shadow">
+              {services.map((service) => (
+                <Card key={service.id} className="border-meant-100 hover:shadow-md transition-shadow">
                   <CardHeader>
                     <div className="mb-4">{service.icon}</div>
                     <CardTitle>{service.title}</CardTitle>
                     <CardDescription>{service.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, i) => (
-                        <li key={i} className="flex items-start">
-                          <CheckCircle className="h-5 w-5 text-meant-600 mr-2 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {selectedService !== service.id ? (
+                      <ul className="space-y-2">
+                        {service.features.map((feature, i) => (
+                          <li key={i} className="flex items-start">
+                            <CheckCircle className="h-5 w-5 text-meant-600 mr-2 flex-shrink-0" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <ServiceBookingForm 
+                        serviceTitle={service.title}
+                        servicePrice={service.price}
+                        serviceId={service.id}
+                        serviceType={service.serviceType}
+                      />
+                    )}
                   </CardContent>
-                  <CardFooter className="flex flex-col items-start">
-                    <div className="text-xl font-bold text-meant-800 mb-4">{service.price}</div>
-                    <Link to={service.link}>
-                      <Button className="bg-meant-600 hover:bg-meant-700">
+                  {selectedService !== service.id && (
+                    <CardFooter className="flex flex-col items-start">
+                      <div className="text-xl font-bold text-meant-800 mb-4">{service.displayPrice}</div>
+                      <Button 
+                        className="bg-meant-600 hover:bg-meant-700"
+                        onClick={() => setSelectedService(service.id)}
+                      >
                         {service.cta}
                         <ArrowRight size={16} className="ml-2" />
                       </Button>
-                    </Link>
-                  </CardFooter>
+                    </CardFooter>
+                  )}
                 </Card>
               ))}
             </div>
