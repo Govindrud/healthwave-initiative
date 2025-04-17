@@ -7,6 +7,12 @@ import SpiritualityServices from "@/pages/SpiritualityServices";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import Surender from "@/pages/Surender";
+import StudentPsychologists from "@/pages/StudentPsychologists";
+import Webinars from "@/pages/Webinars";
+import CorporatePlans from "@/pages/CorporatePlans";
+import CorporateCertification from "@/pages/CorporateCertification";
+import Products from "@/pages/Products";
 
 function App() {
   return (
@@ -19,7 +25,13 @@ function App() {
           <Route path="/spirituality" element={<SpiritualityServices />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
-          {/* Add other routes as needed */}
+          <Route path="/surender" element={<Surender />} />
+          <Route path="/student-psychologists" element={<StudentPsychologists />} />
+          <Route path="/webinars" element={<Webinars />} />
+          <Route path="/corporate-plans" element={<CorporatePlans />} />
+          <Route path="/corporate-certification" element={<CorporateCertification />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="*" element={<Index />} />
         </Routes>
       </Router>
     </ThemeProvider>
