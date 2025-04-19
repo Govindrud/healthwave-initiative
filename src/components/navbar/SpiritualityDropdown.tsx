@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   NavigationMenu,
@@ -17,14 +16,14 @@ export const SpiritualityDropdown: React.FC = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={`${navLinkClass} bg-transparent px-2 py-2 text-xs lg:text-sm`}>Spirituality</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={`${navLinkClass} bg-white px-2 py-2 text-xs lg:text-sm`}>Spirituality</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-white border border-border/20 shadow-md rounded-md">
               <DropdownListItem
                 href="/spirituality"
                 title="Spiritual Wellness"
                 icon={<Heart className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Explore spiritual practices to enhance your well-being
               </DropdownListItem>
@@ -32,7 +31,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 href="/spirituality-new"
                 title="Spiritual Services"
                 icon={<Sparkles className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Comprehensive spiritual guidance and practices
               </DropdownListItem>
@@ -40,7 +39,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 href="/spirituality?tab=gurus"
                 title="Guru Consultations"
                 icon={<BookOpen className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Connect with experienced spiritual teachers and guides
               </DropdownListItem>
@@ -48,7 +47,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 href="/spirituality?tab=travel"
                 title="Spiritual Travel"
                 icon={<MapPin className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Transformative journeys to sacred destinations worldwide
               </DropdownListItem>
@@ -56,7 +55,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 href="/spirituality?tab=video"
                 title="Video Consultations"
                 icon={<Video className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 Connect with spiritual guides from anywhere
               </DropdownListItem>
@@ -64,7 +63,7 @@ export const SpiritualityDropdown: React.FC = () => {
                 href="/spirituality?tab=yoga"
                 title="Bhakti Yoga"
                 icon={<Heart className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50"
+                className="hover:bg-meant-50 bg-white"
               >
                 The devotional path to spiritual growth and well-being
               </DropdownListItem>
