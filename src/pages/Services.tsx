@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +8,7 @@ import { ArrowRight, Brain, Users, HeartPulse, Sparkles, CheckCircle, Star, Mic 
 import { Link } from "react-router-dom";
 import VoiceTherapyService from "@/components/services/VoiceTherapyService";
 import ServiceBookingForm from "@/components/services/ServiceBookingForm";
+import AIInsightPanel from "@/components/ai/AIInsightPanel"; // Import AI Insight Panel
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -184,6 +186,12 @@ const Services = () => {
                   )}
                 </Card>
               ))}
+
+              {/* Add the AI Insight Panel */}
+              <AIInsightPanel 
+                initialText="I've been feeling anxious lately and having trouble sleeping. What services might help me?"
+                className="border-meant-200 shadow-sm" 
+              />
             </div>
 
             <div className="text-center mt-12">
