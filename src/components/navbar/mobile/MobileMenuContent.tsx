@@ -17,13 +17,13 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
 }) => {
   return (
     <motion.div
-      className="fixed inset-0 top-[56px] z-50 bg-background"
+      className="fixed inset-0 top-[56px] z-50 bg-white"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="p-4 overflow-y-auto max-h-[calc(100vh-56px)]">
+      <div className="p-4 overflow-y-auto max-h-[calc(100vh-56px)] bg-white mobile-menu-container">
         <MobileNavigation onClose={onClose} scrollToSection={scrollToSection} />
         
         <div className="pt-4 mt-4 border-t border-gray-200">

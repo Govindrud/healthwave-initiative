@@ -14,7 +14,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
   const mobileNavLinkClass = "text-foreground hover:text-meant-600 transition-colors px-4 py-3 rounded-md text-sm font-medium flex items-center";
 
   return (
-    <div className="relative bg-white"> {/* Explicitly set solid white background */}
+    <div className="relative bg-white"> 
       <button 
         className={`${mobileNavLinkClass} justify-between w-full`}
         onClick={() => setIsOpen(!isOpen)}
@@ -34,7 +34,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
         {isOpen && (
           <motion.div 
             id={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
-            className="ml-4 mt-1 space-y-1 border-l-2 border-blue-100 pl-2 bg-white shadow-md rounded-md overflow-hidden z-10" // Changed to solid white background
+            className="ml-4 mt-1 space-y-1 border-l-2 border-blue-100 pl-2 bg-white shadow-md rounded-md overflow-hidden z-50"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

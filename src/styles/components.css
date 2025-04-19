@@ -16,7 +16,7 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24;
   }
 
-  /* Improved dropdown styling */
+  /* Improved dropdown styling with solid backgrounds */
   .dropdown-menu {
     @apply bg-white border border-border shadow-lg rounded-md py-2 px-1 z-50;
   }
@@ -34,7 +34,7 @@
     @apply w-6 h-0.5 bg-gray-700 rounded-full transition-all duration-300;
   }
 
-  /* Navigation improvements */
+  /* Navigation improvements with solid backgrounds */
   .navigation-bg {
     @apply bg-white shadow-sm border-b border-border/40;
   }
@@ -44,7 +44,7 @@
     @apply bg-white border border-border/20 rounded-md shadow-md overflow-hidden z-50;
   }
 
-  /* Mobile menu container - ensuring it's not transparent */
+  /* Mobile menu container - ensuring full opacity */
   .mobile-menu-container {
     @apply fixed top-[4.5rem] left-0 right-0 bg-white border-t border-b border-border 
            py-4 px-4 shadow-lg z-50 max-h-[80vh] overflow-y-auto;

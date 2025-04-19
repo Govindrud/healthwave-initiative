@@ -20,7 +20,7 @@ export const SpiritualityDropdown: React.FC = () => {
           <NavigationMenuTrigger className={`${navLinkClass} bg-white px-2 py-2 text-xs lg:text-sm`}>
             Spirituality
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="z-50 bg-white border border-border shadow-lg">
             <DropdownContent items={spiritualityItems} />
           </NavigationMenuContent>
         </NavigationMenuItem>
