@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { HandCoins, Utensils, PawPrint, Temple, HandHelping } from 'lucide-react';
+import { HandCoins, Utensils, PawPrint, Church, HandHelping } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 const services = [
   {
-    icon: Temple,
+    icon: Church,  // Replace Temple with Church
     title: "Temple Donations",
     description: "Support local temples in preserving our spiritual heritage and helping maintain sacred spaces for devotees.",
     action: "Donate Now"
