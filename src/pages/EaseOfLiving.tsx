@@ -6,6 +6,7 @@ import NatureInsights from '@/components/biomimicry/NatureInsights';
 import PurposefulLiving from '@/components/biomimicry/PurposefulLiving';
 import BiodiversitySection from '@/components/biomimicry/BiodiversitySection';
 import ServiceOpportunities from '@/components/biomimicry/ServiceOpportunities';
+import AgricultureTourism from '@/components/biomimicry/AgricultureTourism';
 
 const EaseOfLiving = () => {
   return (
@@ -14,6 +15,7 @@ const EaseOfLiving = () => {
         <BiomimicryHero />
         <NatureInsights />
         <BiodiversitySection />
+        <AgricultureTourism />
         <ServiceOpportunities />
         <PurposefulLiving />
       </div>
@@ -22,3 +24,4 @@ const EaseOfLiving = () => {
 };
 
 export default EaseOfLiving;
+
