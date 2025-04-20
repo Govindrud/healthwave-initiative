@@ -11,6 +11,23 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import { CoreBhaktiPractices } from "@/components/spirituality/CoreBhaktiPractices";
 
+// Define animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+  
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1 }
+};
+
 const SpiritualityPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -27,23 +44,6 @@ const SpiritualityPage: React.FC = () => {
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     navigate(`/spirituality?tab=${value}`);
-  };
-
-  // Define animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
   };
 
   return (
