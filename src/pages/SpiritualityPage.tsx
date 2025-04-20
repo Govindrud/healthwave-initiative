@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { User, Video, MapPin, Calendar, BookOpen, Heart, BookUser } from "lucide-react";  // Added BookUser here
+import { User, Video, MapPin, Calendar, BookOpen, Heart, BookUser } from "lucide-react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import { CoreBhaktiPractices } from "@/components/spirituality/CoreBhaktiPractices";
@@ -51,8 +50,8 @@ const SpiritualityPage: React.FC = () => {
         <div className="relative h-[60vh] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-meant-900/80 to-meant-700/40 z-10"></div>
           <img 
-            src="https://images.unsplash.com/photo-1604883781269-d121d9ad20f6"
-            alt="Spiritual Journey" 
+            src="https://images.unsplash.com/photo-1561361058-c24627d4dc43"
+            alt="ISKCON Temple" 
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center p-4">
@@ -100,34 +99,34 @@ const SpiritualityPage: React.FC = () => {
             >
               {[
                 {
-                  title: "Sacred Temple Retreat",
-                  location: "Varanasi, India",
-                  image: "https://images.unsplash.com/photo-1561361058-c24627d4dc43",
-                  description: "Experience spiritual awakening in the holy city of Varanasi. Join morning prayers, witness sacred ceremonies, and explore ancient temples.",
+                  title: "Sacred Vrindavan Pilgrimage",
+                  location: "Vrindavan, India",
+                  image: "https://images.unsplash.com/photo-1589738216835-38edf0ee8c37",
+                  description: "Experience divine bliss in the holy land of Lord Krishna. Visit ancient temples, participate in sacred rituals, and explore spiritual heritage.",
                   duration: "7 Days",
                   price: "$1,200"
                 },
                 {
-                  title: "Himalayan Meditation Journey",
-                  location: "Rishikesh, India",
-                  image: "https://images.unsplash.com/photo-1593096726133-35640a03d595",
-                  description: "Immerse yourself in meditation and yoga practices in the spiritual capital of the world, nestled in the Himalayas.",
+                  title: "Spiritual Mathura Journey",
+                  location: "Mathura, India",
+                  image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55",
+                  description: "Visit the birthplace of Lord Krishna and immerse yourself in devotional activities at various historical temples.",
                   duration: "5 Days",
                   price: "$950"
                 },
                 {
-                  title: "Temple Architecture Tour",
-                  location: "Tamil Nadu, India",
-                  image: "https://images.unsplash.com/photo-1549989831-3798b5d23911",
-                  description: "Explore the magnificent Dravidian temple architecture and learn about ancient spiritual practices.",
+                  title: "Dwarka Temple Tour",
+                  location: "Dwarka, Gujarat",
+                  image: "https://images.unsplash.com/photo-1619837374214-f5b9eb80876d",
+                  description: "Explore the magnificent Dwarkadhish Temple and learn about Lord Krishna's divine kingdom.",
                   duration: "10 Days",
                   price: "$2,100"
                 },
                 {
-                  title: "Mindfulness Retreat",
-                  location: "Bodh Gaya, India",
-                  image: "https://images.unsplash.com/photo-1578324672514-16ffa1901349",
-                  description: "Practice mindfulness and meditation at the sacred site where Buddha attained enlightenment.",
+                  title: "Jagannath Puri Retreat",
+                  location: "Puri, Odisha",
+                  image: "https://images.unsplash.com/photo-1583830379747-068bd6aa0b58",
+                  description: "Experience the divine presence at the ancient Jagannath Temple and participate in traditional rituals.",
                   duration: "14 Days",
                   price: "$1,800"
                 }
@@ -649,22 +648,22 @@ const SpiritualityPage: React.FC = () => {
             >
               <div className="rounded-lg overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1604881991720-f91add269bed" 
-                  alt="Offering flowers at temple" 
+                  src="https://images.unsplash.com/photo-1545126178-862cdb469409" 
+                  alt="Krishna Temple Offerings" 
                   className="w-full h-64 object-cover"
                 />
               </div>
               <div className="rounded-lg overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be" 
-                  alt="Sacred ritual" 
+                  src="https://images.unsplash.com/photo-1584721284194-98544293b6c9" 
+                  alt="Temple Architecture" 
                   className="w-full h-64 object-cover"
                 />
               </div>
               <div className="rounded-lg overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1600510068651-5fe4a2570a8c"
-                  alt="Devotional practice"
+                  src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be"
+                  alt="Devotional Practices"
                   className="w-full h-64 object-cover"
                 />
               </div>
