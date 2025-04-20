@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Sparkles, Heart } from "lucide-react";
+import { Sparkles, Heart, Images } from "lucide-react";
 
 // Custom Meditation icon since it's not available in Lucide
 const MeditationIcon = () => (
@@ -29,23 +29,29 @@ interface ServiceCardProps {
   description: string;
   icon: React.ReactNode;
   index: number;
+  imageSrc?: string;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, index }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, index, imageSrc }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="glass rounded-xl p-6 hover-effect"
+      className="glass rounded-xl p-6 hover-effect flex flex-col"
     >
       <div className="w-12 h-12 rounded-full bg-meant-100 flex items-center justify-center mb-4">
         <div className="text-meant-600">{icon}</div>
       </div>
+      {imageSrc && (
+        <div className="h-40 rounded-lg overflow-hidden mb-4">
+          <img src={imageSrc} alt={title} className="w-full h-full object-cover" />
+        </div>
+      )}
       <h3 className="text-xl font-medium mb-2">{title}</h3>
       <p className="text-muted-foreground mb-4">{description}</p>
-      <Link to="/spirituality">
+      <Link to="/spirituality" className="mt-auto">
         <Button variant="outline" className="w-full">Learn More</Button>
       </Link>
     </motion.div>
@@ -57,17 +63,20 @@ const Spirituality: React.FC = () => {
     {
       title: "Meditation Sessions",
       description: "Guided meditation sessions to help you find inner peace and mindfulness in your daily life.",
-      icon: <MeditationIcon />
+      icon: <MeditationIcon />,
+      imageSrc: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e"
     },
     {
       title: "Spiritual Counseling",
       description: "One-on-one sessions with spiritual guides to help you navigate life's challenges with wisdom.",
-      icon: <Heart />
+      icon: <Heart />,
+      imageSrc: "https://images.unsplash.com/photo-1466442929976-97f336a657be"
     },
     {
       title: "Mindfulness Workshops",
       description: "Group workshops focused on developing mindfulness techniques for mental health improvement.",
-      icon: <Sparkles />
+      icon: <Sparkles />,
+      imageSrc: "https://images.unsplash.com/photo-1473177104440-ffee2f376098"
     }
   ];
 
@@ -96,6 +105,7 @@ const Spirituality: React.FC = () => {
             description={service.description}
             icon={service.icon}
             index={index}
+            imageSrc={service.imageSrc}
           />
         ))}
       </div>

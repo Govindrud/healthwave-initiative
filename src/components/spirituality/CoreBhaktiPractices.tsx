@@ -37,12 +37,12 @@ export const CoreBhaktiPractices: React.FC = () => {
     {
       title: "Seva (Selfless Service)",
       description: "Discover how acts of service can become spiritual practice and expression of devotion.",
-      imageSrc: "https://images.unsplash.com/photo-1472396961693-142e6e269027"
+      imageSrc: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e"
     },
     {
       title: "Satsang (Spiritual Community)",
       description: "Join like-minded seekers for group study, discussion, and practice.",
-      imageSrc: "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
+      imageSrc: "https://images.unsplash.com/photo-1551038247-3d9af20df552"
     }
   ];
 

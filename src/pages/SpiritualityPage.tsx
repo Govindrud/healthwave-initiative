@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -50,7 +51,7 @@ const SpiritualityPage: React.FC = () => {
         <div className="relative h-[60vh] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-meant-900/80 to-meant-700/40 z-10"></div>
           <img 
-            src="https://images.unsplash.com/photo-1602333158362-8dbf6e4b3a5d"
+            src="https://images.unsplash.com/photo-1473177104440-ffee2f376098"
             alt="Ancient Temple Architecture" 
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -101,7 +102,7 @@ const SpiritualityPage: React.FC = () => {
                 {
                   title: "Sacred Vrindavan Pilgrimage",
                   location: "Vrindavan, India",
-                  image: "https://images.unsplash.com/photo-1627894006066-a03fb281c888",
+                  image: "https://images.unsplash.com/photo-1466442929976-97f336a657be",
                   description: "Experience divine bliss in the holy land of Lord Krishna. Visit ancient temples, participate in sacred rituals, and explore spiritual heritage.",
                   duration: "7 Days",
                   price: "$1,200"
@@ -109,7 +110,7 @@ const SpiritualityPage: React.FC = () => {
                 {
                   title: "Spiritual Mathura Journey",
                   location: "Mathura, India",
-                  image: "https://images.unsplash.com/photo-1625124576491-f8e6c437debe",
+                  image: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e",
                   description: "Visit the birthplace of Lord Krishna and immerse yourself in devotional activities at various historical temples.",
                   duration: "5 Days",
                   price: "$950"
@@ -117,7 +118,7 @@ const SpiritualityPage: React.FC = () => {
                 {
                   title: "Dwarka Temple Tour",
                   location: "Dwarka, Gujarat",
-                  image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be",
+                  image: "https://images.unsplash.com/photo-1551038247-3d9af20df552",
                   description: "Explore the magnificent Dwarkadhish Temple and learn about Lord Krishna's divine kingdom.",
                   duration: "10 Days",
                   price: "$2,100"
@@ -125,7 +126,7 @@ const SpiritualityPage: React.FC = () => {
                 {
                   title: "Jagannath Puri Retreat",
                   location: "Puri, Odisha",
-                  image: "https://images.unsplash.com/photo-1623841675698-8a9b80659c6c",
+                  image: "https://images.unsplash.com/photo-1473177104440-ffee2f376098",
                   description: "Experience the divine presence at the ancient Jagannath Temple and participate in traditional rituals.",
                   duration: "14 Days",
                   price: "$1,800"
@@ -648,21 +649,21 @@ const SpiritualityPage: React.FC = () => {
             >
               <div className="rounded-lg overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1627894006066-a03fb281c888" 
+                  src="https://images.unsplash.com/photo-1466442929976-97f336a657be" 
                   alt="Temple Offerings" 
                   className="w-full h-64 object-cover"
                 />
               </div>
               <div className="rounded-lg overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1625124576491-f8e6c437debe" 
+                  src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e" 
                   alt="Temple Architecture" 
                   className="w-full h-64 object-cover"
                 />
               </div>
               <div className="rounded-lg overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1602333158362-8dbf6e4b3a5d"
+                  src="https://images.unsplash.com/photo-1473177104440-ffee2f376098"
                   alt="Devotional Practices"
                   className="w-full h-64 object-cover"
                 />
