@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Tractor, Sun, Wheat, Trees } from 'lucide-react';
+import { Tractor, TreePine, Trees, Wheat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 const farmActivities = [
   {
-    icon: Wheat,  // Replaced Farm with Wheat
+    icon: Trees,  // Changed to Trees icon
     title: "Farm Stay Experience",
     description: "Immerse yourself in the authentic farm life. Stay with farming families, learn their ways, and experience the peace that comes from living close to nature.",
     action: "Book Farm Stay"
@@ -19,13 +19,13 @@ const farmActivities = [
     action: "Join Harvest"
   },
   {
-    icon: Trees,
+    icon: Wheat,  // Changed to Wheat icon
     title: "Organic Farming Workshop",
     description: "Learn sustainable farming practices from experienced farmers. Get hands-on experience in organic farming methods and understand the importance of natural cultivation.",
     action: "Register Workshop"
   },
   {
-    icon: Sun,
+    icon: TreePine,  // Changed to TreePine icon
     title: "Farmer's Life Experience",
     description: "Spend a day with our hardworking farmers. Witness their unwavering spirit and learn valuable life lessons about perseverance and contentment.",
     action: "Book Experience"
