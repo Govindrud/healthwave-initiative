@@ -1,8 +1,11 @@
 
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import SpiritualServiceBooking from "@/components/spirituality/SpiritualServiceBooking";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const SpiritualityServices = () => {
   useEffect(() => {
@@ -58,7 +61,14 @@ const SpiritualityServices = () => {
     <MainLayout title="Spiritual Services">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
+          <div className="mb-6">
+            <Link to="/">
+              <Button variant="outline" className="mb-4">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Home
+              </Button>
+            </Link>
+            
             <h1 className="text-3xl font-bold mb-4">Spiritual Services</h1>
             <p className="text-muted-foreground">
               Connect with spiritual guides and experiences that support your mental wellbeing journey.

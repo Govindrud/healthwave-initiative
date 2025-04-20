@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 import Index from "./pages/Index";
 import Doctors from "@/pages/Doctors";
 import SpiritualityServices from "@/pages/SpiritualityServices";
-import Spirituality from "@/pages/Spirituality"; // Import for spirituality-new route
+import Spirituality from "@/pages/Spirituality";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import Surender from "@/pages/Surender";
@@ -19,9 +19,9 @@ import Services from "@/pages/Services";
 import WhatsAppConfig from "@/pages/WhatsAppConfig";
 import Adventures from "@/pages/Adventures";
 import Games from "@/pages/Games";
-import Activities from "@/pages/Activities"; // Import the new Activities page
-import DeAddiction from "@/pages/DeAddiction"; // Import the new DeAddiction page
-import { AIProvider } from "@/providers/AIProvider"; // Import AI Provider
+import Activities from "@/pages/Activities";
+import DeAddiction from "@/pages/DeAddiction";
+import { AIProvider } from "@/providers/AIProvider";
 
 function App() {
   return (
@@ -31,8 +31,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/doctors" element={<Doctors />} />
-          <Route path="/spirituality" element={<SpiritualityServices />} />
-          <Route path="/spirituality-new" element={<Spirituality />} />
+          <Route path="/spirituality" element={<Spirituality />} />
+          <Route path="/spirituality-services" element={<SpiritualityServices />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/surender" element={<Surender />} />

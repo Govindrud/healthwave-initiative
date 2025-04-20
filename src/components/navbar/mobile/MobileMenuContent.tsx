@@ -27,6 +27,12 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
         <MobileNavigation onClose={onClose} scrollToSection={scrollToSection} />
         
         <div className="pt-4 mt-4 border-t border-gray-200">
+          <Link to="/spirituality" className="w-full block mb-3">
+            <button className="w-full py-3 px-4 bg-meant-600 text-white rounded-md font-medium">
+              Spiritual Services
+            </button>
+          </Link>
+          
           <Link to="/doctors" className="w-full">
             <button className="w-full py-3 px-4 bg-meant-600 text-white rounded-md font-medium">
               Book Consultation

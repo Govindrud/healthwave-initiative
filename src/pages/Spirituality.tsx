@@ -1,10 +1,11 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Users, Heart, DollarSign, Star } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Heart, DollarSign, Star, ArrowLeft } from "lucide-react";
 import PageTransition from "@/components/PageTransition";
 import { useToast } from "@/hooks/use-toast";
 
@@ -94,7 +95,17 @@ const SpiritualService: React.FC<SpiritualServiceProps> = ({
 };
 
 const SpiritualityPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("services");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const tabParam = queryParams.get('tab');
+  const [activeTab, setActiveTab] = useState(tabParam || "services");
+  
+  // Update active tab when URL parameters change
+  useEffect(() => {
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
   
   const meditationServices = [
     {
@@ -175,10 +186,41 @@ const SpiritualityPage: React.FC = () => {
     },
   ];
 
+  // Video consultation services
+  const videoServices = [
+    {
+      title: "Online Spiritual Guidance",
+      description: "Connect with spiritual guides from the comfort of your home through video conferencing.",
+      price: "$65 / session",
+      duration: "45 minutes",
+      location: "Online",
+      image: "/images/user-placeholder.jpg",
+      rating: 4.7,
+      participants: "Individual",
+    },
+    {
+      title: "Group Meditation Circle",
+      description: "Join a virtual community meditation session led by experienced facilitators.",
+      price: "$25 / session",
+      duration: "60 minutes",
+      location: "Online",
+      image: "/images/priest-placeholder.jpg",
+      rating: 4.6,
+      participants: "Group (max 15)",
+    },
+  ];
+
   return (
     <PageTransition>
       <section className="relative bg-gradient-to-b from-meant-100 to-white py-20 px-4">
         <div className="container mx-auto pt-16">
+          <Link to="/">
+            <Button variant="outline" className="mb-6">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Home
+            </Button>
+          </Link>
+
           <div className="max-w-3xl mx-auto text-center mb-16">
             <span className="inline-block py-1 px-3 rounded-full bg-meant-200 text-meant-800 text-sm font-medium mb-3">
               Spiritual Services
@@ -202,17 +244,19 @@ const SpiritualityPage: React.FC = () => {
               className="w-full"
             >
               <div className="flex justify-center mb-8">
-                <TabsList className="glass">
+                <TabsList className="glass bg-white">
                   <TabsTrigger value="services">All Services</TabsTrigger>
                   <TabsTrigger value="meditation">Meditation</TabsTrigger>
-                  <TabsTrigger value="counseling">Spiritual Counseling</TabsTrigger>
+                  <TabsTrigger value="consultations">Guru Consultations</TabsTrigger>
+                  <TabsTrigger value="tours">Spiritual Travel</TabsTrigger>
+                  <TabsTrigger value="video">Video Consultations</TabsTrigger>
                   <TabsTrigger value="yoga">Yoga Therapy</TabsTrigger>
                 </TabsList>
               </div>
               
               <TabsContent value="services">
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[...meditationServices, ...counselingServices, ...yogaServices]
+                  {[...meditationServices, ...counselingServices, ...yogaServices, ...videoServices]
                     .sort(() => 0.5 - Math.random())
                     .slice(0, 6)
                     .map((service, index) => (
@@ -237,9 +281,33 @@ const SpiritualityPage: React.FC = () => {
                 </div>
               </TabsContent>
               
-              <TabsContent value="counseling">
+              <TabsContent value="consultations">
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {counselingServices.map((service, index) => (
+                    <SpiritualService
+                      key={index}
+                      {...service}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="tours">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {yogaServices.map((service, index) => (
+                    <SpiritualService
+                      key={index}
+                      {...service}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="video">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {videoServices.map((service, index) => (
                     <SpiritualService
                       key={index}
                       {...service}
@@ -264,7 +332,7 @@ const SpiritualityPage: React.FC = () => {
           </div>
 
           <div className="max-w-3xl mx-auto mt-16">
-            <Card className="glass">
+            <Card className="glass bg-white">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl font-bold">Our Spiritual Approach</CardTitle>
                 <CardDescription>
