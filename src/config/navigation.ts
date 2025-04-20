@@ -1,5 +1,4 @@
-
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award } from "lucide-react";
+import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Tree, Leaf } from "lucide-react";
 
 export const spiritualityItems = [
   {
@@ -89,6 +88,12 @@ export const activitiesItems = [
     href: "/games",
     title: "Mental Health Games",
     description: "Fun activities designed to boost mood and reduce stress"
+  },
+  {
+    href: "/ease-of-living",
+    title: "Ease of Living",
+    icon: Tree,
+    description: "Explore holistic approaches to simplify and enhance life"
   }
 ];
 
