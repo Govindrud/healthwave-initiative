@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Tractor, Sun, Farm, Trees } from 'lucide-react';
+import { Tractor, Sun, Wheat, Trees } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 const farmActivities = [
   {
-    icon: Farm,
+    icon: Wheat,  // Replaced Farm with Wheat
     title: "Farm Stay Experience",
     description: "Immerse yourself in the authentic farm life. Stay with farming families, learn their ways, and experience the peace that comes from living close to nature.",
     action: "Book Farm Stay"
