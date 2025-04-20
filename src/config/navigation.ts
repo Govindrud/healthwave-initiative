@@ -9,7 +9,7 @@ export const spiritualityItems = [
     description: "Explore spiritual practices to enhance your well-being"
   },
   {
-    href: "/spirituality-new",
+    href: "/spirituality-services",
     title: "Spiritual Services",
     icon: Sparkles,
     description: "Comprehensive spiritual guidance and practices"

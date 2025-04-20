@@ -8,35 +8,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { DropdownContent } from "./common/DropdownContent";
-import { Heart, Book, MapPin, Video } from "lucide-react";
-
-// Define spirituality dropdown items with proper links
-const spiritualityItems = [
-  {
-    title: "Spiritual Wellness",
-    description: "Explore spiritual practices to enhance your mental wellbeing",
-    href: "/spirituality",
-    icon: Heart
-  },
-  {
-    title: "Guru Consultations",
-    description: "Connect with experienced spiritual teachers and guides",
-    href: "/spirituality?tab=consultations",
-    icon: Book
-  },
-  {
-    title: "Spiritual Travel",
-    description: "Transformative journeys to sacred destinations worldwide",
-    href: "/spirituality?tab=tours",
-    icon: MapPin
-  },
-  {
-    title: "Video Consultations",
-    description: "Connect with spiritual guides from anywhere in the world",
-    href: "/spirituality?tab=video",
-    icon: Video
-  }
-];
+import { Heart, Book, MapPin, Video, Sparkles } from "lucide-react";
+import { spiritualityItems } from "@/config/navigation";
 
 export const SpiritualityDropdown: React.FC = () => {
   const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium";
