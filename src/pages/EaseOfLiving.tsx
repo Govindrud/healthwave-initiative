@@ -9,7 +9,7 @@ import BiodiversitySection from '@/components/biomimicry/BiodiversitySection';
 const EaseOfLiving = () => {
   return (
     <MainLayout>
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-b from-green-50 via-white to-green-50">
         <BiomimicryHero />
         <NatureInsights />
         <BiodiversitySection />
