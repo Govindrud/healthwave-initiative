@@ -1,4 +1,5 @@
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Tree, Leaf } from "lucide-react";
+
+import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf } from "lucide-react";
 
 export const spiritualityItems = [
   {
@@ -92,7 +93,7 @@ export const activitiesItems = [
   {
     href: "/ease-of-living",
     title: "Ease of Living",
-    icon: Tree,
+    icon: Trees,
     description: "Explore holistic approaches to simplify and enhance life"
   }
 ];
