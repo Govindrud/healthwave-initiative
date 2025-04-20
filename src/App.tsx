@@ -1,4 +1,4 @@
-
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import Index from "./pages/Index";
@@ -21,6 +21,7 @@ import Adventures from "@/pages/Adventures";
 import Games from "@/pages/Games";
 import Activities from "@/pages/Activities";
 import DeAddiction from "@/pages/DeAddiction";
+import EaseOfLiving from "@/pages/EaseOfLiving";
 import { AIProvider } from "@/providers/AIProvider";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
           <Route path="/whatsapp-config" element={<WhatsAppConfig />} />
           <Route path="/de-addiction" element={<DeAddiction />} />
+          <Route path="/ease-of-living" element={<EaseOfLiving />} />
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>
