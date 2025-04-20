@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -715,3 +716,16 @@ const SpiritualityPage: React.FC = () => {
             </div>
             <div className="rounded-lg overflow-hidden">
               <img
+                src="https://images.unsplash.com/photo-1600510068651-5fe4a2570a8c"
+                alt="Devotional practice"
+                className="w-full h-64 object-cover"
+              />
+            </div>
+          </motion.div>
+        </TabsContent>
+      </Tabs>
+    </MainLayout>
+  );
+};
+
+export default SpiritualityPage;
