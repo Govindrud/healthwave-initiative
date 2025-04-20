@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -6,12 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { User, Video, MapPin, Calendar, BookOpen, Heart, BookUser } from "lucide-react";
+import { User, Video, MapPin, Calendar, BookOpen, Heart } from "lucide-react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import { CoreBhaktiPractices } from "@/components/spirituality/CoreBhaktiPractices";
 
-// Define animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { 
@@ -52,7 +50,7 @@ const SpiritualityPage: React.FC = () => {
         <div className="relative h-[60vh] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-meant-900/80 to-meant-700/40 z-10"></div>
           <img 
-            src="https://images.unsplash.com/photo-1466442929976-97f336a657be"
+            src="https://images.unsplash.com/photo-1604883781269-d121d9ad20f6"
             alt="Spiritual Journey" 
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -101,34 +99,34 @@ const SpiritualityPage: React.FC = () => {
             >
               {[
                 {
-                  title: "Rishikesh Retreat",
-                  location: "Rishikesh, India",
-                  image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-                  description: "A 7-day immersive retreat in the yoga capital of the world. Experience meditation by the Ganges, visit ancient temples, and participate in traditional ceremonies.",
+                  title: "Sacred Temple Retreat",
+                  location: "Varanasi, India",
+                  image: "https://images.unsplash.com/photo-1561361058-c24627d4dc43",
+                  description: "Experience spiritual awakening in the holy city of Varanasi. Join morning prayers, witness sacred ceremonies, and explore ancient temples.",
                   duration: "7 Days",
                   price: "$1,200"
                 },
                 {
-                  title: "Zen Buddhist Temple Stay",
-                  location: "Kyoto, Japan",
-                  image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9",
-                  description: "Live like a Buddhist monk in this authentic temple experience. Learn zazen meditation, participate in morning chanting, and enjoy traditional vegetarian cuisine.",
+                  title: "Himalayan Meditation Journey",
+                  location: "Rishikesh, India",
+                  image: "https://images.unsplash.com/photo-1593096726133-35640a03d595",
+                  description: "Immerse yourself in meditation and yoga practices in the spiritual capital of the world, nestled in the Himalayas.",
                   duration: "5 Days",
                   price: "$950"
                 },
                 {
-                  title: "Sacred Valley Journey",
-                  location: "Cusco, Peru",
-                  image: "https://images.unsplash.com/photo-1518495973542-4542c06a5843",
-                  description: "Connect with ancient wisdom traditions in the Sacred Valley. Experience healing ceremonies with local shamans and visit Incan sacred sites.",
+                  title: "Temple Architecture Tour",
+                  location: "Tamil Nadu, India",
+                  image: "https://images.unsplash.com/photo-1549989831-3798b5d23911",
+                  description: "Explore the magnificent Dravidian temple architecture and learn about ancient spiritual practices.",
                   duration: "10 Days",
                   price: "$2,100"
                 },
                 {
-                  title: "Silent Meditation Retreat",
-                  location: "Chiang Mai, Thailand",
-                  image: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-                  description: "Find inner peace through silence in this guided meditation retreat in the mountains of Northern Thailand. Daily yoga, meditation, and mindfulness practices.",
+                  title: "Mindfulness Retreat",
+                  location: "Bodh Gaya, India",
+                  image: "https://images.unsplash.com/photo-1578324672514-16ffa1901349",
+                  description: "Practice mindfulness and meditation at the sacred site where Buddha attained enlightenment.",
                   duration: "14 Days",
                   price: "$1,800"
                 }
@@ -542,15 +540,15 @@ const SpiritualityPage: React.FC = () => {
                 >
                   <div className="rounded-lg overflow-hidden">
                     <img 
-                      src="https://images.unsplash.com/photo-1508672019048-805c876b67e2" 
-                      alt="Devotees at a temple ceremony" 
+                      src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb" 
+                      alt="Temple meditation hall"
                       className="w-full h-48 object-cover"
                     />
                   </div>
                   <div className="rounded-lg overflow-hidden">
                     <img 
-                      src="https://images.unsplash.com/photo-1600510068651-5fe4a2570a8c" 
-                      alt="Traditional puja ceremony" 
+                      src="https://images.unsplash.com/photo-1626128665085-483d736e3ea2" 
+                      alt="Sacred ritual space" 
                       className="w-full h-48 object-cover"
                     />
                   </div>
