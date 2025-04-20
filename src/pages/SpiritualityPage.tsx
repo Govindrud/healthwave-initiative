@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ const SpiritualityPage: React.FC = () => {
   
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    navigate(`/spirituality-new?tab=${value}`);
+    navigate(`/spirituality?tab=${value}`);
   };
 
   const containerVariants = {
@@ -654,7 +653,7 @@ const SpiritualityPage: React.FC = () => {
               
               <div className="rounded-lg overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1564391744677-0e146f4a5e68" 
+                  src="https://images.unsplash.com/photo-1604881991720-f91add269bed" 
                   alt="Meditation practice" 
                   className="w-full h-48 object-cover"
                 />

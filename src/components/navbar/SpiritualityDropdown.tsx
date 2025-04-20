@@ -8,7 +8,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { DropdownContent } from "./common/DropdownContent";
-import { Heart, Book, MapPin, Video, Sparkles } from "lucide-react";
+import { Heart, BookOpen, MapPin, Video, Sparkles } from "lucide-react";
 import { spiritualityItems } from "@/config/navigation";
 
 export const SpiritualityDropdown: React.FC = () => {
