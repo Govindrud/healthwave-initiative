@@ -1,11 +1,12 @@
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { User, Video, MapPin, Calendar, BookOpen, Heart } from "lucide-react";
+import { User, Video, MapPin, Calendar, BookOpen, Heart, BookUser } from "lucide-react";  // Added BookUser here
 import { useSearchParams, useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
 import { CoreBhaktiPractices } from "@/components/spirituality/CoreBhaktiPractices";
