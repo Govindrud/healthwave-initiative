@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -489,8 +488,8 @@ const SpiritualityPage: React.FC = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/RgHw9H50sPs" 
-                    title="Swami Premananda - Bhakti Yoga Discourse" 
+                    src="https://www.youtube.com/embed/K0ELzIgCWuY" 
+                    title="Swami Premanand Maharaj - Divine Discourse on Bhakti" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowFullScreen
@@ -541,15 +540,15 @@ const SpiritualityPage: React.FC = () => {
                 >
                   <div className="rounded-lg overflow-hidden">
                     <img 
-                      src="https://images.unsplash.com/photo-1609619385002-f40f1df9b7eb" 
-                      alt="Temple meditation hall"
+                      src="https://images.unsplash.com/photo-1466442929976-97f336a657be" 
+                      alt="Sacred temple architecture"
                       className="w-full h-48 object-cover"
                     />
                   </div>
                   <div className="rounded-lg overflow-hidden">
                     <img 
-                      src="https://images.unsplash.com/photo-1626128665085-483d736e3ea2" 
-                      alt="Sacred ritual space" 
+                      src="https://images.unsplash.com/photo-1473177104440-ffee2f376098" 
+                      alt="Temple meditation hall" 
                       className="w-full h-48 object-cover"
                     />
                   </div>
