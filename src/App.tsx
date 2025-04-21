@@ -22,6 +22,7 @@ import Games from "@/pages/Games";
 import Activities from "@/pages/Activities";
 import DeAddiction from "@/pages/DeAddiction";
 import EaseOfLiving from "@/pages/EaseOfLiving";
+import AdminDashboard from "./pages/AdminDashboard";
 import { AIProvider } from "@/providers/AIProvider";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/whatsapp-config" element={<WhatsAppConfig />} />
           <Route path="/de-addiction" element={<DeAddiction />} />
           <Route path="/ease-of-living" element={<EaseOfLiving />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>

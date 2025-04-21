@@ -110,5 +110,11 @@ export const mainMenuItems = [
     title: "De-addiction",
     icon: Heart,
     description: "Support for overcoming addiction"
+  },
+  {
+    href: "/admin-dashboard",
+    title: "Admin Dashboard",
+    icon: Building,
+    description: "Manage bookings, inquiries, and events"
   }
 ];
