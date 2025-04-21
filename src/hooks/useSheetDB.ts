@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 
 interface SheetDBOptions {
@@ -15,22 +14,21 @@ export interface SheetDBResponse {
 export function useSheetDB() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  const BASE_URL = "https://sheetdb.io/api/v1/3vs91pj6cmoaw";
-  
-  // GET - Fetch records from a sheet
+
+  const BASE_URL = "https://sheetdb.io/api/v1/j1gquxx0sghmg";
+
   const getRecords = async (options: SheetDBOptions = {}) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const sheetParam = options.sheet ? `/sheet=${options.sheet}` : '';
       const response = await fetch(`${BASE_URL}${sheetParam}`);
-      
+
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       return data;
     } catch (err: any) {
@@ -41,19 +39,16 @@ export function useSheetDB() {
       setLoading(false);
     }
   };
-  
-  // POST - Create a new record
+
   const createRecord = async (data: any, options: SheetDBOptions = {}) => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      // Add createdAt timestamp if not present
       if (!data.CreatedAt) {
         data.CreatedAt = new Date().toISOString();
       }
-      
-      // Generate ID if it's a primary key field based on sheet type
+
       if (options.sheet === 'Customers' && !data.CustomerID) {
         data.CustomerID = `CUST-${Date.now()}`;
       } else if (options.sheet === 'Bookings' && !data.BookingID) {
@@ -67,7 +62,7 @@ export function useSheetDB() {
       } else if (options.sheet === 'Plans' && !data.PlanID) {
         data.PlanID = `PLAN-${Date.now()}`;
       }
-      
+
       const sheetParam = options.sheet ? `/sheet=${options.sheet}` : '';
       const response = await fetch(`${BASE_URL}${sheetParam}`, {
         method: 'POST',
@@ -76,11 +71,11 @@ export function useSheetDB() {
         },
         body: JSON.stringify(data),
       });
-      
+
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
-      
+
       const result = await response.json();
       return { created: true, data: result };
     } catch (err: any) {
@@ -91,12 +86,11 @@ export function useSheetDB() {
       setLoading(false);
     }
   };
-  
-  // PUT - Update an existing record
+
   const updateRecord = async (id: string, data: any, options: SheetDBOptions = {}) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const idField = getIdFieldName(options.sheet);
       const sheetParam = options.sheet ? `/sheet=${options.sheet}` : '';
@@ -107,11 +101,11 @@ export function useSheetDB() {
         },
         body: JSON.stringify(data),
       });
-      
+
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
-      
+
       const result = await response.json();
       return { updated: true, data: result };
     } catch (err: any) {
@@ -122,23 +116,22 @@ export function useSheetDB() {
       setLoading(false);
     }
   };
-  
-  // DELETE - Delete a record
+
   const deleteRecord = async (id: string, options: SheetDBOptions = {}) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const idField = getIdFieldName(options.sheet);
       const sheetParam = options.sheet ? `/sheet=${options.sheet}` : '';
       const response = await fetch(`${BASE_URL}${sheetParam}/${idField}/${id}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
-      
+
       const result = await response.json();
       return { deleted: true, data: result };
     } catch (err: any) {
@@ -149,8 +142,7 @@ export function useSheetDB() {
       setLoading(false);
     }
   };
-  
-  // Helper function to get the ID field name based on the sheet
+
   const getIdFieldName = (sheet?: string): string => {
     switch (sheet) {
       case 'Customers':
@@ -169,13 +161,13 @@ export function useSheetDB() {
         return 'id';
     }
   };
-  
-  return { 
-    getRecords, 
-    createRecord, 
-    updateRecord, 
-    deleteRecord, 
-    loading, 
-    error 
+
+  return {
+    getRecords,
+    createRecord,
+    updateRecord,
+    deleteRecord,
+    loading,
+    error
   };
 }
