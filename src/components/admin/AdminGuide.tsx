@@ -85,7 +85,7 @@ const AdminGuide: React.FC = () => {
                   <h3 className="font-semibold">Using Excel Filters</h3>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Click on Data > Filter to enable filtering. This allows you to quickly sort and find specific records based on any column value.
+                  Click on Data {'>>'} Filter to enable filtering. This allows you to quickly sort and find specific records based on any column value.
                 </p>
               </div>
               
