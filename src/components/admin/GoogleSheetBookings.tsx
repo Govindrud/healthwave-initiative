@@ -3,18 +3,30 @@ import React from "react";
 import { useGoogleSheet } from "@/hooks/useGoogleSheet";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-const DEMO_SHEET_ID = "1abcDEFgHiJKLmnoPQRSTuVwXyZ1234567890abcdefg"; // <- REPLACE with your actual sheetId
-const BOOKINGS_SHEET_NAME = "Bookings"; // <- The tab name holding your booking data
+// Your real sheet from the link: https://docs.google.com/spreadsheets/d/1_ERza0_tr3ZZ3k71QtpMbDmPz3BAsrCOko0TIsFUAHI
+const ACTUAL_SHEET_ID = "1_ERza0_tr3ZZ3k71QtpMbDmPz3BAsrCOko0TIsFUAHI";
+const BOOKINGS_SHEET_NAME = "Bookings"; // Make sure the tab in your Sheet is named "Bookings"!
 
 const GoogleSheetBookings: React.FC = () => {
-  const { data, loading, error } = useGoogleSheet({ sheetId: DEMO_SHEET_ID, sheetName: BOOKINGS_SHEET_NAME });
+  const { data, loading, error } = useGoogleSheet({ sheetId: ACTUAL_SHEET_ID, sheetName: BOOKINGS_SHEET_NAME });
+
+  // If data is missing headers, fallback to an empty array
+  const tableHeaders = data.length > 0 ? Object.keys(data[0]) : [];
 
   return (
     <Card className="mb-8">
       <CardHeader>
         <CardTitle>Live Bookings (from Google Sheets)</CardTitle>
         <CardDescription>
-          This data is synced in real time with a public Google Sheet.
+          This data is synced in real time with your public Google Sheet.&nbsp;
+          <a
+            href="https://docs.google.com/spreadsheets/d/1_ERza0_tr3ZZ3k71QtpMbDmPz3BAsrCOko0TIsFUAHI/edit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600"
+          >
+            Open the sheet
+          </a>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -25,20 +37,23 @@ const GoogleSheetBookings: React.FC = () => {
             <table className="min-w-full border text-left text-sm">
               <thead>
                 <tr>
-                  {data.length > 0 &&
-                    Object.keys(data[0]).map((k) => (
-                      <th key={k} className="border px-2 py-1 bg-meant-50">
-                        {k}
-                      </th>
-                    ))}
+                  {tableHeaders.map((header) => (
+                    <th
+                      key={header}
+                      className="border px-2 py-1 bg-meant-50 whitespace-nowrap"
+                    >
+                      {header}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {data.map((row, idx) => (
-                  <tr key={idx}>
-                    {Object.values(row).map((v, i) => (
-                      <td key={i} className="border px-2 py-1">
-                        {v !== null && v !== undefined ? String(v) : ""}
+                {data.map((row, rowIdx) => (
+                  <tr key={rowIdx}>
+                    {tableHeaders.map((header) => (
+                      <td key={header} className="border px-2 py-1">
+                        {/* Safely render any value as string */}
+                        {row[header] !== null && row[header] !== undefined ? String(row[header]) : ""}
                       </td>
                     ))}
                   </tr>
