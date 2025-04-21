@@ -28,11 +28,20 @@ const mockData = {
   webinars: [
     { id: 'web_1', title: 'Mental Health Awareness', date: '2025-05-20', registrations: 45, host: 'Dr. Smith' },
     { id: 'web_2', title: 'Stress Management', date: '2025-06-05', registrations: 32, host: 'Dr. Johnson' }
+  ],
+  // Adding the new data types
+  appointments: [
+    { id: 'appt_1', customerName: 'John Doe', dateTime: '2025-05-15 10:00 AM', withPerson: 'Dr. Smith', status: 'Scheduled' },
+    { id: 'appt_2', customerName: 'Jane Smith', dateTime: '2025-05-17 2:30 PM', withPerson: 'Dr. Johnson', status: 'Done' }
+  ],
+  plans: [
+    { id: 'plan_1', name: 'Basic Plan', price: 999, duration: 1, features: 'Email support, Basic resources', active: 'Yes' },
+    { id: 'plan_2', name: 'Premium Plan', price: 2999, duration: 3, features: '24/7 support, Advanced resources, Weekly calls', active: 'Yes' }
   ]
 };
 
 interface ExcelExporterProps {
-  dataType: 'bookings' | 'inquiries' | 'payments' | 'events' | 'webinars';
+  dataType: 'bookings' | 'inquiries' | 'payments' | 'events' | 'webinars' | 'appointments' | 'plans';
   title: string;
   description?: string;
 }
