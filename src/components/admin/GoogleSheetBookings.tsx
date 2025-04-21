@@ -38,7 +38,7 @@ const GoogleSheetBookings: React.FC = () => {
                   <tr key={idx}>
                     {Object.values(row).map((v, i) => (
                       <td key={i} className="border px-2 py-1">
-                        {v}
+                        {v !== null && v !== undefined ? String(v) : ""}
                       </td>
                     ))}
                   </tr>
