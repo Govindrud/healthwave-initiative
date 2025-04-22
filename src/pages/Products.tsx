@@ -21,7 +21,8 @@ const Products = () => {
     // Simulate product loading with a slight delay to ensure DOM stability
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 1000); // Increased delay for better stability
+    
     return () => clearTimeout(timer);
   }, []);
 

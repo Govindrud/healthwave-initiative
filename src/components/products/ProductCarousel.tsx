@@ -64,9 +64,9 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                     </Link>
                     <Link to="/cart">
                       <Button 
-                        variant="meant" 
+                        variant="default"
                         size="sm"
-                        className="flex items-center gap-1"
+                        className="flex items-center gap-1 bg-meant-600 hover:bg-meant-700"
                       >
                         <ShoppingCart size={16} />
                         Add to Cart
