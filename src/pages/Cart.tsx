@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
@@ -8,29 +8,53 @@ import { getFeaturedProducts } from "@/data/products";
 import { ArrowLeft, Plus, Minus, X, ShoppingCart } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
 
+type CartItem = {
+  product: ReturnType<typeof getFeaturedProducts>[0];
+  quantity: number;
+};
+
+function formatINR(val: number) {
+  return "₹" + val.toLocaleString("en-IN");
+}
+
 const Cart = () => {
   useEffect(() => {
     document.title = "Your Cart | MeantToHelp";
     window.scrollTo(0, 0);
   }, []);
 
-  // This is a placeholder cart with items based on featured products
-  // In a real app, this would come from state management, context, or local storage
-  const mockCart = getFeaturedProducts(2).map(product => ({
-    product,
-    quantity: 1
-  }));
+  // INTERACTIVE cart: use state instead of static mockCart
+  const [cart, setCart] = useState<CartItem[]>(
+    getFeaturedProducts(2).map(product => ({
+      product,
+      quantity: 1
+    }))
+  );
 
-  const subtotal = mockCart.reduce((sum, item) => {
+  const handleQuantityChange = (index: number, delta: number) => {
+    setCart(cart =>
+      cart.map((item, i) =>
+        i === index
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item
+      )
+    );
+  };
+
+  const handleRemove = (index: number) => {
+    setCart(cart => cart.filter((_, i) => i !== index));
+  };
+
+  const subtotal = cart.reduce((sum, item) => {
     const price = item.product.discountPrice || item.product.price;
-    return sum + (price * item.quantity);
+    return sum + price * item.quantity;
   }, 0);
 
-  const shipping = 5.99;
-  const tax = subtotal * 0.07; // 7% tax rate
+  const shipping = subtotal === 0 ? 0 : (subtotal > 1500 ? 0 : 100);
+  const tax = subtotal * 0.18; // 18% GST
   const total = subtotal + shipping + tax;
 
-  if (mockCart.length === 0) {
+  if (cart.length === 0) {
     return (
       <MainLayout>
         <div className="container mx-auto px-4 py-12">
@@ -74,7 +98,7 @@ const Cart = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {mockCart.map((item) => (
+                  {cart.map((item, index) => (
                     <tr key={item.product.id}>
                       <td className="p-4">
                         <div className="flex items-center">
@@ -85,7 +109,7 @@ const Cart = () => {
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
-                                target.src = "https://placehold.co/100x100/meant/white?text=Product";
+                                target.src = "/placeholder.svg";
                               }}
                             />
                           </div>
@@ -99,27 +123,39 @@ const Cart = () => {
                       </td>
                       <td className="p-4">
                         <div className="flex items-center justify-center">
-                          <button className="p-1 rounded-full hover:bg-muted">
+                          <button
+                            className="p-1 rounded-full hover:bg-muted"
+                            onClick={() => handleQuantityChange(index, -1)}
+                            aria-label="Decrease quantity"
+                          >
                             <Minus size={14} />
                           </button>
                           <span className="mx-3 w-8 text-center">{item.quantity}</span>
-                          <button className="p-1 rounded-full hover:bg-muted">
+                          <button
+                            className="p-1 rounded-full hover:bg-muted"
+                            onClick={() => handleQuantityChange(index, 1)}
+                            aria-label="Increase quantity"
+                          >
                             <Plus size={14} />
                           </button>
                         </div>
                       </td>
                       <td className="p-4 text-right">
                         <div className="font-medium">
-                          ${(item.product.discountPrice || item.product.price).toFixed(2)}
+                          {formatINR((item.product.discountPrice || item.product.price) * item.quantity)}
                         </div>
                         {item.product.discountPrice && (
                           <div className="text-sm text-muted-foreground line-through">
-                            ${item.product.price.toFixed(2)}
+                            {formatINR(item.product.price * item.quantity)}
                           </div>
                         )}
                       </td>
                       <td className="p-4">
-                        <button className="p-1 text-muted-foreground hover:text-destructive">
+                        <button
+                          className="p-1 text-muted-foreground hover:text-destructive"
+                          onClick={() => handleRemove(index)}
+                          aria-label="Remove from cart"
+                        >
                           <X size={16} />
                         </button>
                       </td>
@@ -136,20 +172,20 @@ const Cart = () => {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{formatINR(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span>${shipping.toFixed(2)}</span>
+                  <span>{shipping > 0 ? formatINR(shipping) : "Free"}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <span>Tax (18% GST)</span>
+                  <span>{formatINR(tax)}</span>
                 </div>
                 <div className="pt-3 border-t">
                   <div className="flex justify-between font-semibold">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>{formatINR(total)}</span>
                   </div>
                 </div>
               </div>

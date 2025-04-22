@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Smile, Angry } from "lucide-react";
+import AngerManagementServices from "@/components/anger/AngerManagementServices";
 
 const angerTips = [
   {
@@ -50,6 +51,10 @@ const AngerManagement: React.FC = () => {
           </Card>
         ))}
       </div>
+
+      {/* NEW: Anger Management Services Section */}
+      <AngerManagementServices />
+
       <div className="flex flex-col items-center my-10">
         <h2 className="text-2xl font-semibold mb-3 text-[#9b87f5]">Helpful Resources</h2>
         <ul className="mb-6 space-y-2">
@@ -83,4 +88,3 @@ const AngerManagement: React.FC = () => {
 };
 
 export default AngerManagement;
-

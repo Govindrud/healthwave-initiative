@@ -73,13 +73,14 @@ const ProductDetail = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div>
               <div className="aspect-square bg-muted rounded-lg overflow-hidden">
+                {/* Show actual product image, fallback to placeholder if missing */}
                 <img
                   src={product.image}
                   alt={product.name}
                   className="object-cover w-full h-full"
-                  onError={(e) => {
+                  onError={e => {
                     const target = e.target as HTMLImageElement;
-                    target.src = "https://placehold.co/600x600/meant/white?text=Product+Image";
+                    target.src = "/placeholder.svg";
                   }}
                 />
               </div>
@@ -126,15 +127,15 @@ const ProductDetail = () => {
                   {product.discountPrice ? (
                     <>
                       <span className="text-2xl font-bold text-meant-700">
-                        ${product.discountPrice.toFixed(2)}
+                        ₹{product.discountPrice.toLocaleString("en-IN")}
                       </span>
                       <span className="ml-2 text-lg text-muted-foreground line-through">
-                        ${product.price.toFixed(2)}
+                        ₹{product.price.toLocaleString("en-IN")}
                       </span>
                     </>
                   ) : (
                     <span className="text-2xl font-bold text-meant-700">
-                      ${product.price.toFixed(2)}
+                      ₹{product.price.toLocaleString("en-IN")}
                     </span>
                   )}
                 </div>
