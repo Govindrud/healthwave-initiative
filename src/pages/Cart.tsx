@@ -1,12 +1,14 @@
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { getFeaturedProducts } from "@/data/products";
 import { ArrowLeft, Plus, Minus, X, ShoppingCart } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
+import { toast } from "sonner";
+import { initializeRazorpay, initiatePayment } from "@/utils/payments";
 
 type CartItem = {
   product: ReturnType<typeof getFeaturedProducts>[0];
@@ -30,6 +32,8 @@ const Cart = () => {
       quantity: 1
     }))
   );
+  const [isPaying, setIsPaying] = useState(false);
+  const navigate = useNavigate();
 
   const handleQuantityChange = (index: number, delta: number) => {
     setCart(cart =>
@@ -53,6 +57,54 @@ const Cart = () => {
   const shipping = subtotal === 0 ? 0 : (subtotal > 1500 ? 0 : 100);
   const tax = subtotal * 0.18; // 18% GST
   const total = subtotal + shipping + tax;
+
+  // Simple customer info (could be replaced with user profile if available)
+  const customerInfo = {
+    name: "Test User",
+    email: "testuser@example.com",
+    phone: "9999999999"
+  };
+
+  const handleCheckout = async () => {
+    if (cart.length === 0) {
+      toast.error("Your cart is empty.");
+      return;
+    }
+    setIsPaying(true);
+    toast.info("Setting up payment gateway...");
+
+    const description = cart
+      .map(item => `${item.product.name} x${item.quantity}`)
+      .join(", ");
+
+    initializeRazorpay(() => {
+      initiatePayment({
+        amount: Math.round(total),
+        description: `Cart purchase: ${description}`,
+        name: customerInfo.name,
+        email: customerInfo.email,
+        phone: customerInfo.phone,
+        orderId: `ORDER${Date.now()}`,
+        successCallback: (response) => {
+          setIsPaying(false);
+          toast.success("Payment successful!");
+          navigate(
+            `/payment-success?payment_id=${response.razorpay_payment_id}&amount=${total}`
+          );
+        },
+        errorCallback: (error) => {
+          setIsPaying(false);
+          let errorMessage = "Payment failed. Please try again.";
+          if (error?.error?.description) {
+            errorMessage = `Payment failed: ${error.error.description}`;
+          } else if (typeof error === "string") {
+            errorMessage = error;
+          }
+          toast.error(errorMessage);
+        }
+      });
+    });
+  };
 
   if (cart.length === 0) {
     return (
@@ -190,8 +242,12 @@ const Cart = () => {
                 </div>
               </div>
               
-              <Button className="w-full bg-meant-600 hover:bg-meant-700 rounded-full">
-                Proceed to Checkout
+              <Button
+                className="w-full bg-meant-600 hover:bg-meant-700 rounded-full"
+                onClick={handleCheckout}
+                disabled={isPaying}
+              >
+                {isPaying ? "Processing Payment..." : "Proceed to Checkout"}
               </Button>
               
               <div className="mt-6 space-y-3">
