@@ -15,6 +15,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
   const [imageError, setImageError] = React.useState(false);
+  const [imageSrc, setImageSrc] = React.useState(product.image);
 
   // Function to extract the image filename from full path
   const getImageName = (imagePath: string) => {
@@ -22,36 +23,45 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     return parts[parts.length - 1];
   };
 
+  const handleImageError = React.useCallback(() => {
+    setImageError(true);
+    
+    // Try to load from public/images folder if the path contains 'products/'
+    if (product.image.includes('products/')) {
+      const imageName = getImageName(product.image);
+      // Try loading directly from public/images/products
+      setImageSrc(`/images/products/${imageName}`);
+    } else {
+      // Final fallback
+      setImageSrc("/placeholder.svg");
+    }
+  }, [product.image]);
+
   return (
-    <Link to={`/products/${product.id}`} className="group">
-      <Card className="overflow-hidden transition-all border hover:shadow-md">
+    <Link to={`/products/${product.id}`} className="group block">
+      <Card className="overflow-hidden transition-all border hover:shadow-md h-full">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-          {!imageLoaded && !imageError && (
+          {!imageLoaded && (
             <Skeleton className="absolute inset-0 w-full h-full" />
           )}
           <img
-            src={product.image}
+            src={imageSrc}
             alt={product.name}
             className={`object-cover w-full h-full transition-transform group-hover:scale-105 ${
               !imageLoaded ? "opacity-0" : "opacity-100"
             }`}
             onLoad={() => setImageLoaded(true)}
-            onError={(e) => {
-              setImageError(true);
-              setImageLoaded(true);
-              const target = e.target as HTMLImageElement;
-              
-              // Try to load from public/images folder if the path contains 'products/'
-              if (product.image.includes('products/')) {
-                const imageName = getImageName(product.image);
-                target.src = `/images/products/${imageName}`;
+            onError={() => {
+              if (!imageError) {
+                handleImageError();
               } else {
-                target.src = "/placeholder.svg";
+                // If we've already tried a fallback, just show a placeholder div
+                setImageLoaded(true);
               }
             }}
           />
-          {imageError && (
-            <div className="absolute inset-0 flex items-center justify-center bg-muted/80 text-muted-foreground text-sm">
+          {imageError && imageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted/80 text-muted-foreground text-sm p-2 text-center">
               {product.name}
             </div>
           )}

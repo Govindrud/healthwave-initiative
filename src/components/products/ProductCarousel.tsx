@@ -54,9 +54,11 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
           <CarouselContent className="-ml-4">
             {products.map((product) => (
               <CarouselItem key={product.id} className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                <div className="relative flex flex-col h-full">
-                  <ProductCard product={product} />
-                  <div className="mt-auto pt-3 flex justify-between items-center">
+                <div className="flex flex-col h-full">
+                  <div className="flex-grow">
+                    <ProductCard product={product} />
+                  </div>
+                  <div className="mt-3 flex justify-between items-center">
                     <Link to={`/products/${product.id}`}>
                       <Button variant="outline" size="sm">View Details</Button>
                     </Link>

@@ -1,7 +1,5 @@
 
 import React, { useState, useEffect } from "react";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/Footer";
 import ProductGrid from "@/components/products/ProductGrid";
 import { products, productCategories } from "@/data/products";
 import { Button } from "@/components/ui/button";
@@ -17,15 +15,17 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isIOS } = useIsPlatform();
 
+  // Ensure the layout is stable before displaying products
   useEffect(() => {
     document.title = "Products | MeantToHelp";
-    // Simulate product loading
+    // Simulate product loading with a slight delay to ensure DOM stability
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 500);
     return () => clearTimeout(timer);
   }, []);
 
+  // Filter products based on search term and selected category
   useEffect(() => {
     let result = products;
     
