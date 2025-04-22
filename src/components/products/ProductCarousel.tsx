@@ -45,36 +45,44 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         </Link>
       </div>
 
-      <Carousel className="w-full">
-        <CarouselContent className="-ml-4">
-          {products.map((product) => (
-            <CarouselItem key={product.id} className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-              <div className="relative flex flex-col h-full">
-                <ProductCard product={product} />
-                <div className="mt-auto pt-3 flex justify-between items-center">
-                  <Link to={`/products/${product.id}`}>
-                    <Button variant="outline" size="sm">View Details</Button>
-                  </Link>
-                  <Link to="/cart">
-                    <Button 
-                      variant="meant" 
-                      size="sm"
-                      className="flex items-center gap-1"
-                    >
-                      <ShoppingCart size={16} />
-                      Add to Cart
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <div className="flex justify-end gap-2 mt-4">
-          <CarouselPrevious className="static transform-none mx-0" />
-          <CarouselNext className="static transform-none mx-0" />
+      {products.length === 0 ? (
+        <div className="text-center py-8 bg-muted/30 rounded-lg">
+          <p className="text-muted-foreground">No products available</p>
         </div>
-      </Carousel>
+      ) : (
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-4">
+            {products.map((product) => (
+              <CarouselItem key={product.id} className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                <div className="relative flex flex-col h-full">
+                  <ProductCard product={product} />
+                  <div className="mt-auto pt-3 flex justify-between items-center">
+                    <Link to={`/products/${product.id}`}>
+                      <Button variant="outline" size="sm">View Details</Button>
+                    </Link>
+                    <Link to="/cart">
+                      <Button 
+                        variant="meant" 
+                        size="sm"
+                        className="flex items-center gap-1"
+                      >
+                        <ShoppingCart size={16} />
+                        Add to Cart
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {products.length > 1 && (
+            <div className="flex justify-end gap-2 mt-4">
+              <CarouselPrevious className="static transform-none mx-0" />
+              <CarouselNext className="static transform-none mx-0" />
+            </div>
+          )}
+        </Carousel>
+      )}
     </div>
   );
 };

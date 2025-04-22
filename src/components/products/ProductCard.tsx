@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Product } from "@/types/product";
@@ -5,25 +6,55 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import { formatINR } from "@/data/products";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+  const [imageError, setImageError] = React.useState(false);
+
+  // Function to extract the image filename from full path
+  const getImageName = (imagePath: string) => {
+    const parts = imagePath.split('/');
+    return parts[parts.length - 1];
+  };
+
   return (
     <Link to={`/products/${product.id}`} className="group">
       <Card className="overflow-hidden transition-all border hover:shadow-md">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+          {!imageLoaded && !imageError && (
+            <Skeleton className="absolute inset-0 w-full h-full" />
+          )}
           <img
             src={product.image}
             alt={product.name}
-            className="object-cover w-full h-full transition-transform group-hover:scale-105"
+            className={`object-cover w-full h-full transition-transform group-hover:scale-105 ${
+              !imageLoaded ? "opacity-0" : "opacity-100"
+            }`}
+            onLoad={() => setImageLoaded(true)}
             onError={(e) => {
+              setImageError(true);
+              setImageLoaded(true);
               const target = e.target as HTMLImageElement;
-              target.src = "/placeholder.svg";
+              
+              // Try to load from public/images folder if the path contains 'products/'
+              if (product.image.includes('products/')) {
+                const imageName = getImageName(product.image);
+                target.src = `/images/products/${imageName}`;
+              } else {
+                target.src = "/placeholder.svg";
+              }
             }}
           />
+          {imageError && (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted/80 text-muted-foreground text-sm">
+              {product.name}
+            </div>
+          )}
           {product.badge && (
             <Badge 
               className={`absolute top-2 right-2 ${
