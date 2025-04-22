@@ -23,6 +23,7 @@ import Activities from "@/pages/Activities";
 import DeAddiction from "@/pages/DeAddiction";
 import EaseOfLiving from "@/pages/EaseOfLiving";
 import AdminDashboard from "./pages/AdminDashboard";
+import AngerManagement from "@/pages/AngerManagement";
 import { AIProvider } from "@/providers/AIProvider";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
           <Route path="/de-addiction" element={<DeAddiction />} />
           <Route path="/ease-of-living" element={<EaseOfLiving />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/anger-management" element={<AngerManagement />} />
           <Route path="*" element={<Index />} />
         </Routes>
       </Router>
