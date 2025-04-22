@@ -1,10 +1,10 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Product } from "@/types/product";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
+import { formatINR } from "@/data/products";
 
 interface ProductCardProps {
   product: Product;
@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className="object-cover w-full h-full transition-transform group-hover:scale-105"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              target.src = "https://placehold.co/400x300/meant/white?text=Product+Image";
+              target.src = "/placeholder.svg";
             }}
           />
           {product.badge && (
@@ -70,15 +70,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.discountPrice ? (
               <div className="flex items-center gap-1">
                 <span className="font-semibold text-meant-700">
-                  ${product.discountPrice.toFixed(2)}
+                  {formatINR(product.discountPrice)}
                 </span>
                 <span className="text-sm text-muted-foreground line-through">
-                  ${product.price.toFixed(2)}
+                  {formatINR(product.price)}
                 </span>
               </div>
             ) : (
               <span className="font-semibold text-meant-700">
-                ${product.price.toFixed(2)}
+                {formatINR(product.price)}
               </span>
             )}
           </div>

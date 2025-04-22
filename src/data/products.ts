@@ -1,4 +1,3 @@
-
 import { Product, ProductCategory } from "@/types/product";
 
 export const productCategories: ProductCategory[] = [
@@ -191,6 +190,10 @@ export const products: Product[] = [
     ]
   }
 ];
+
+export function formatINR(val: number) {
+  return "₹" + val.toLocaleString("en-IN");
+}
 
 export const getProductsByCategory = (category: string): Product[] => {
   return products.filter(product => product.category === category);
