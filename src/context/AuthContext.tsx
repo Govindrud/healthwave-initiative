@@ -8,6 +8,7 @@ type AuthContextType = {
   logout: () => void;
   requestPasswordReset: (email: string) => Promise<boolean>;
   resetPassword: (token: string, newPassword: string) => Promise<boolean>;
+  ADMIN_EMAIL: string;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -95,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, requestPasswordReset, resetPassword }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, requestPasswordReset, resetPassword, ADMIN_EMAIL }}>
       {children}
     </AuthContext.Provider>
   );

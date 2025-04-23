@@ -1,62 +1,67 @@
 
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Lock, AlertCircle } from "lucide-react";
+import { Lock, ArrowLeft, AlertTriangle } from "lucide-react";
 import Logo from "@/components/Logo";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import MainLayout from "@/components/layouts/MainLayout";
 
 const ResetPassword = () => {
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const { resetPassword } = useAuth();
   const navigate = useNavigate();
   const { token } = useParams<{ token: string }>();
 
-  useEffect(() => {
+  const validateToken = () => {
     if (!token) {
-      navigate("/admin-login");
+      setError("Invalid or missing reset token");
+      return false;
     }
-  }, [token, navigate]);
+    return true;
+  };
+
+  useEffect(() => {
+    validateToken();
+  }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
+    if (newPassword !== confirmPassword) {
+      setError("Passwords don't match");
       return;
     }
     
-    if (password.length < 6) {
+    if (newPassword.length < 6) {
       setError("Password must be at least 6 characters");
       return;
     }
     
+    if (!validateToken() || !token) return;
+    
     setIsSubmitting(true);
     
     try {
-      if (token) {
-        const success = await resetPassword(token, password);
-        if (success) {
-          setIsSubmitted(true);
-        }
+      const success = await resetPassword(token, newPassword);
+      if (success) {
+        setIsSuccess(true);
+      } else {
+        setError("Failed to reset password. Token may be invalid or expired.");
       }
+    } catch (err) {
+      setError("An unexpected error occurred");
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const goToLogin = () => {
-    navigate("/admin-login");
   };
 
   return (
@@ -67,39 +72,30 @@ const ResetPassword = () => {
             <Logo size="lg" variant="full" />
             <CardTitle className="text-2xl mt-4">Reset Password</CardTitle>
             <CardDescription>
-              Create a new password for your account
+              {!isSuccess ? "Create a new password for your account" : "Your password has been reset successfully"}
             </CardDescription>
           </CardHeader>
           
-          {isSubmitted ? (
-            <CardContent className="space-y-4">
-              <Alert>
-                <AlertDescription>
-                  Your password has been reset successfully. You can now log in with your new password.
-                </AlertDescription>
-              </Alert>
-              <Button onClick={goToLogin} className="w-full bg-meant-600 hover:bg-meant-700">
-                Go to Login
-              </Button>
+          {error && (
+            <CardContent className="pt-0">
+              <div className="bg-destructive/10 text-destructive p-3 rounded-md flex items-start gap-2 mb-4">
+                <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                <p>{error}</p>
+              </div>
             </CardContent>
-          ) : (
+          )}
+          
+          {!isSuccess ? (
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-                
                 <div className="space-y-2">
-                  <Label htmlFor="password">New Password</Label>
+                  <Label htmlFor="new-password">New Password</Label>
                   <div className="relative">
                     <Input
-                      id="password"
+                      id="new-password"
                       type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Enter new password"
                       className="pl-10"
                       required
@@ -109,10 +105,10 @@ const ResetPassword = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Label htmlFor="confirm-password">Confirm Password</Label>
                   <div className="relative">
                     <Input
-                      id="confirmPassword"
+                      id="confirm-password"
                       type="password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
@@ -124,8 +120,7 @@ const ResetPassword = () => {
                   </div>
                 </div>
               </CardContent>
-              
-              <CardFooter>
+              <CardFooter className="flex flex-col space-y-2">
                 <Button 
                   type="submit" 
                   className="w-full bg-meant-600 hover:bg-meant-700"
@@ -133,8 +128,27 @@ const ResetPassword = () => {
                 >
                   {isSubmitting ? "Resetting..." : "Reset Password"}
                 </Button>
+                <div className="text-center w-full">
+                  <Link 
+                    to="/admin-login" 
+                    className="text-sm text-primary hover:underline inline-flex items-center"
+                  >
+                    <ArrowLeft className="h-3 w-3 mr-1" />
+                    Back to Login
+                  </Link>
+                </div>
               </CardFooter>
             </form>
+          ) : (
+            <CardContent className="space-y-6 text-center p-6">
+              <p className="mb-4">Your password has been successfully reset.</p>
+              <Button 
+                onClick={() => navigate("/admin-login")}
+                className="bg-meant-600 hover:bg-meant-700"
+              >
+                Login with New Password
+              </Button>
+            </CardContent>
           )}
         </Card>
       </div>

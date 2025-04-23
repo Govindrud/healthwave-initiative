@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Lock } from "lucide-react";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layouts/MainLayout";
+import { toast } from "sonner";
 
 const AdminLogin = () => {
   const [password, setPassword] = useState("");
@@ -18,7 +19,10 @@ const AdminLogin = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (login(password)) {
+      toast.success("Login successful! Redirecting to admin dashboard...");
       navigate("/admin");
+    } else {
+      toast.error("Invalid password. Please try again.");
     }
   };
 
