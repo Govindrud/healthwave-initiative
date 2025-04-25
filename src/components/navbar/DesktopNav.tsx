@@ -88,7 +88,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
           <div className="flex items-center space-x-2">
             <Link to="/admin-dashboard">
               <Button 
-                variant="outline" 
+                variant="meant" 
                 size="sm" 
                 className="flex items-center gap-2"
               >
@@ -107,7 +107,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 align="end" 
-                className="w-48 z-50" 
+                className="w-48 bg-background z-50" 
                 sideOffset={4}
               >
                 <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
