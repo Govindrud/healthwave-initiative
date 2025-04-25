@@ -85,42 +85,49 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         <ThemeToggle />
         
         {isAuthenticated ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
-                <Users size={16} />
-                <span className="hidden sm:inline">Admin</span>
-                <ChevronDown size={14} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent 
-              align="end" 
-              className="w-48 z-50" 
-              sideOffset={4}
-            >
-              <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link to="/admin" className="flex items-center gap-2 w-full">
-                  <FileText size={16} />
-                  <span>Admin Panel</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="cursor-pointer">
-                <Link to="/admin-dashboard" className="flex items-center gap-2 w-full">
-                  <Home size={16} />
-                  <span>Admin Dashboard</span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem 
-                onClick={handleLogout} 
-                className="text-red-500 cursor-pointer"
+          <div className="flex items-center space-x-2">
+            <Link to="/admin-dashboard">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-2"
               >
-                <span className="flex items-center gap-2 w-full">Log Out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <Home size={16} />
+                <span>Admin Dashboard</span>
+              </Button>
+            </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Users size={16} />
+                  <span className="hidden sm:inline">Admin</span>
+                  <ChevronDown size={14} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="end" 
+                className="w-48 z-50" 
+                sideOffset={4}
+              >
+                <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link to="/admin" className="flex items-center gap-2 w-full">
+                    <FileText size={16} />
+                    <span>Admin Panel</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={handleLogout} 
+                  className="text-red-500 cursor-pointer"
+                >
+                  <span className="flex items-center gap-2 w-full">Log Out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         ) : (
           <Link to="/admin-login">
             <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
