@@ -23,11 +23,11 @@ export const AdminMenu = () => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex items-center gap-2 font-medium hover:bg-accent transition-colors border border-meant-600/30 hover:shadow-soft"
+          className="flex items-center gap-2 font-medium hover:bg-accent transition-colors border hover:shadow-soft"
         >
-          <Users size={16} className="text-meant-600" />
+          <Users size={16} className="text-primary" />
           <span className="hidden sm:inline">Admin</span>
-          <ChevronDown size={14} className="text-meant-600/70" />
+          <ChevronDown size={14} className="text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
