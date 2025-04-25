@@ -1,7 +1,6 @@
-
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
-import { ShoppingCart, Users, FileText, Home, ChevronDown } from "lucide-react";
+import { ShoppingCart, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "./NavLink";
 import { ServicesDropdown } from "./ServicesDropdown";
@@ -11,14 +10,7 @@ import ThemeToggle from "../ThemeToggle";
 import Logo from "@/components/Logo";
 import { MainMenuDropdown } from "./MainMenuDropdown";
 import { useAuth } from "@/context/AuthContext";
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
+import { AdminMenu } from "@/components/admin/AdminMenu";
 
 interface DesktopNavProps {
   location: Location;
@@ -40,7 +32,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
     }
   };
 
-  // Categorized primary menu items
   const primaryMenuItems = [
     { label: "Home", action: () => scrollToSection("hero") },
     { label: "About", action: () => scrollToSection("about") },
@@ -59,7 +50,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         <Logo size="md" variant="full" className="mr-4" />
         
         <nav className="hidden md:flex items-center space-x-1">
-          {/* Primary navigation links (always visible on desktop) */}
           {primaryMenuItems.map((item, index) => (
             <NavLink 
               key={index}
@@ -71,7 +61,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
             </NavLink>
           ))}
 
-          {/* Dropdown menus with appropriate spacing */}
           <div className="flex items-center space-x-1">
             <ServicesDropdown />
             <ActivitiesDropdown />
@@ -97,36 +86,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
               </Button>
             </Link>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Users size={16} />
-                  <span className="hidden sm:inline">Admin</span>
-                  <ChevronDown size={14} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                align="end" 
-                className="w-48 bg-background z-50" 
-                sideOffset={4}
-              >
-                <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/admin" className="flex items-center gap-2 w-full">
-                    <FileText size={16} />
-                    <span>Admin Panel</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                  onClick={handleLogout} 
-                  className="text-red-500 cursor-pointer"
-                >
-                  <span className="flex items-center gap-2 w-full">Log Out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <AdminMenu />
           </div>
         ) : (
           <Link to="/admin-login">
