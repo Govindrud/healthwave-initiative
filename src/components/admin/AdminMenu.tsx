@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { cn } from "@/lib/utils";
 
 export const AdminMenu = () => {
   const { logout } = useAuth();
@@ -22,7 +23,7 @@ export const AdminMenu = () => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex items-center gap-2 font-medium hover:bg-accent transition-colors border-meant-600/30"
+          className="flex items-center gap-2 font-medium hover:bg-accent transition-colors border border-meant-600/30"
         >
           <Users size={16} className="text-meant-600" />
           <span className="hidden sm:inline">Admin</span>
@@ -31,7 +32,7 @@ export const AdminMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end" 
-        className="w-64 p-2 bg-white dark:bg-gray-900 shadow-lg border border-border/50 rounded-lg z-50" 
+        className="w-64 p-2 bg-white dark:bg-gray-900 shadow-lg border rounded-lg z-50" 
         sideOffset={4}
       >
         <DropdownMenuLabel className="px-2 text-sm font-semibold text-foreground/80">
