@@ -93,24 +93,31 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
                 <ChevronDown size={14} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 z-50 bg-background border border-border shadow-md">
+            <DropdownMenuContent 
+              align="end" 
+              className="w-48 z-50" 
+              sideOffset={4}
+            >
               <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link to="/admin" className="flex items-center gap-2 w-full cursor-pointer">
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link to="/admin" className="flex items-center gap-2 w-full">
                   <FileText size={16} />
                   <span>Admin Panel</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/admin-dashboard" className="flex items-center gap-2 w-full cursor-pointer">
+              <DropdownMenuItem asChild className="cursor-pointer">
+                <Link to="/admin-dashboard" className="flex items-center gap-2 w-full">
                   <Home size={16} />
                   <span>Admin Dashboard</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="text-red-500 cursor-pointer flex items-center gap-2 w-full">
-                Log Out
+              <DropdownMenuItem 
+                onClick={handleLogout} 
+                className="text-red-500 cursor-pointer"
+              >
+                <span className="flex items-center gap-2 w-full">Log Out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
