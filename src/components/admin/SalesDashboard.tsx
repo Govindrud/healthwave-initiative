@@ -83,7 +83,12 @@ const SalesDashboard: React.FC = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center">
-                <ChartContainer className="h-6 w-6" config={{}}>{<></>}</ChartContainer>
+                <ChartContainer 
+                  className="h-6 w-6" 
+                  config={{}}
+                >
+                  <></>
+                </ChartContainer>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Transactions</p>
