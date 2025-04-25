@@ -9,11 +9,8 @@ import CartTable from "@/components/cart/CartTable";
 import CartSummary from "@/components/cart/CartSummary";
 import CartEmptyState from "@/components/cart/CartEmptyState";
 import { ArrowLeft } from "lucide-react";
-
-// Helper for INR formatting
-function formatINR(val: number) {
-  return "₹" + val.toLocaleString("en-IN");
-}
+import { useRegion } from "@/context/RegionContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 type CartItem = {
   product: ReturnType<typeof getFeaturedProducts>[0];
@@ -35,6 +32,8 @@ const Cart = () => {
   );
   const [isPaying, setIsPaying] = useState(false);
   const navigate = useNavigate();
+  const { formatPrice } = useRegion();
+  const { t } = useTranslation();
 
   const handleQuantityChange = (index: number, delta: number) => {
     setCart(cart =>
@@ -120,10 +119,10 @@ const Cart = () => {
       <div className="container mx-auto px-4 py-12">
         <Link to="/products" className="inline-flex items-center text-meant-600 hover:text-meant-800 mb-6">
           <ArrowLeft size={16} className="mr-2" />
-          Continue Shopping
+          {t('continue_shopping')}
         </Link>
         
-        <h1 className="text-2xl font-bold mb-6">Your Shopping Cart</h1>
+        <h1 className="text-2xl font-bold mb-6">{t('your_cart')}</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
@@ -131,7 +130,6 @@ const Cart = () => {
               cart={cart}
               onQuantityChange={handleQuantityChange}
               onRemove={handleRemove}
-              formatINR={formatINR}
             />
           </div>
           <div className="lg:col-span-1">
@@ -142,7 +140,6 @@ const Cart = () => {
               total={total}
               isPaying={isPaying}
               onCheckout={handleCheckout}
-              formatINR={formatINR}
             />
           </div>
         </div>

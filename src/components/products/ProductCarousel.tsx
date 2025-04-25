@@ -1,90 +1,84 @@
 
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Product } from "@/types/product";
 import ProductCard from "./ProductCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ProductCarouselProps {
-  title: string;
-  description?: string;
   products: Product[];
+  title?: string;
 }
 
-const ProductCarousel: React.FC<ProductCarouselProps> = ({
-  title,
-  description,
-  products,
+const ProductCarousel: React.FC<ProductCarouselProps> = ({ 
+  products, 
+  title 
 }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const scrollAmount = container.clientWidth * 0.75;
+      
+      if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
+  if (!products.length) return null;
+
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {title}
-          </h2>
-          {description && (
-            <p className="text-muted-foreground max-w-[65ch]">
-              {description}
-            </p>
-          )}
-        </div>
-        <Link to="/products">
-          <Button variant="outline" className="gap-2">
-            View all products
-            <ArrowRight size={16} />
-          </Button>
-        </Link>
+    <div className="relative">
+      {title && (
+        <h2 className="text-2xl font-bold mb-6">{title}</h2>
+      )}
+
+      <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1/2 z-10">
+        <Button
+          variant="secondary"
+          size="icon"
+          className="rounded-full bg-white shadow-md h-10 w-10"
+          onClick={() => scroll('left')}
+        >
+          <ChevronLeft size={20} />
+        </Button>
       </div>
 
-      {products.length === 0 ? (
-        <div className="text-center py-8 bg-muted/30 rounded-lg">
-          <p className="text-muted-foreground">No products available</p>
-        </div>
-      ) : (
-        <Carousel className="w-full">
-          <CarouselContent className="-ml-4">
-            {products.map((product) => (
-              <CarouselItem key={product.id} className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                <div className="flex flex-col h-full">
-                  <div className="flex-grow">
-                    <ProductCard product={product} />
-                  </div>
-                  <div className="mt-3 flex justify-between items-center">
-                    <Link to={`/products/${product.id}`}>
-                      <Button variant="outline" size="sm">View Details</Button>
-                    </Link>
-                    <Link to="/cart">
-                      <Button 
-                        variant="default"
-                        size="sm"
-                        className="flex items-center gap-1 bg-meant-600 hover:bg-meant-700"
-                      >
-                        <ShoppingCart size={16} />
-                        Add to Cart
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          {products.length > 1 && (
-            <div className="flex justify-end gap-2 mt-4">
-              <CarouselPrevious className="static transform-none mx-0" />
-              <CarouselNext className="static transform-none mx-0" />
-            </div>
-          )}
-        </Carousel>
-      )}
+      <div className="absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/2 z-10">
+        <Button
+          variant="secondary"
+          size="icon"
+          className="rounded-full bg-white shadow-md h-10 w-10"
+          onClick={() => scroll('right')}
+        >
+          <ChevronRight size={20} />
+        </Button>
+      </div>
+
+      <div 
+        ref={scrollContainerRef}
+        className="flex overflow-x-auto gap-4 pb-4 px-2 -mx-2 hide-scrollbar snap-x"
+      >
+        {products.map(product => (
+          <div key={product.id} className="min-w-[280px] snap-start">
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+      
+      <style jsx>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };

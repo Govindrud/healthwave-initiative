@@ -1,31 +1,31 @@
 
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail } from "lucide-react";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layouts/MainLayout";
+import { useAuth } from "@/context/AuthContext";
+import { useRegion } from "@/context/RegionContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { requestPasswordReset, ADMIN_EMAIL } = useAuth();
-  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      const success = await requestPasswordReset(email);
-      if (success) {
-        setIsSubmitted(true);
-      }
+      await requestPasswordReset(email);
+      setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -37,11 +37,11 @@ const ForgotPassword = () => {
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1 flex flex-col items-center">
             <Logo size="lg" variant="full" />
-            <CardTitle className="text-2xl mt-4">Reset Password</CardTitle>
+            <CardTitle className="text-2xl mt-4">Forgot Password</CardTitle>
             <CardDescription>
-              {!isSubmitted 
-                ? "Enter your email to receive a password reset link" 
-                : "Check your email for further instructions"}
+              {isSubmitted 
+                ? "Please check your email for reset instructions" 
+                : "Enter your email to reset your password"}
             </CardDescription>
           </CardHeader>
           
@@ -49,14 +49,14 @@ const ForgotPassword = () => {
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email">Email</Label>
                   <div className="relative">
                     <Input
                       id="email"
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder={`Admin email (hint: ${ADMIN_EMAIL})`}
+                      placeholder={ADMIN_EMAIL}
                       className="pl-10"
                       required
                     />
@@ -70,35 +70,33 @@ const ForgotPassword = () => {
                   className="w-full bg-meant-600 hover:bg-meant-700"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Sending..." : "Send Reset Link"}
+                  {isSubmitting ? "Sending..." : "Reset Password"}
                 </Button>
                 <div className="text-center w-full">
                   <Link 
                     to="/admin-login" 
-                    className="text-sm text-primary hover:underline inline-flex items-center"
+                    className="text-sm text-primary hover:underline"
                   >
-                    <ArrowLeft className="h-3 w-3 mr-1" />
                     Back to Login
                   </Link>
                 </div>
               </CardFooter>
             </form>
           ) : (
-            <CardContent className="space-y-6 text-center">
+            <CardContent className="space-y-4 text-center">
               <div className="p-4">
+                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Mail className="h-8 w-8" />
+                </div>
                 <p className="mb-4">
-                  If an account exists with the email <strong>{email}</strong>, a password reset link has been sent.
+                  If {email} is associated with an account, we've sent instructions to reset your password.
                 </p>
-                <p className="text-sm text-muted-foreground">
-                  Note: For this demo, check your console logs to see the reset link
-                </p>
+                <Link to="/admin-login">
+                  <Button variant="outline" className="w-full">
+                    Return to Login
+                  </Button>
+                </Link>
               </div>
-              <Button 
-                onClick={() => navigate("/admin-login")}
-                className="bg-meant-600 hover:bg-meant-700"
-              >
-                Return to Login
-              </Button>
             </CardContent>
           )}
         </Card>

@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useIsPlatform } from "@/hooks/use-mobile";
 import MainLayout from "@/components/layouts/MainLayout";
+import { useTranslation } from "@/hooks/useTranslation";
+import RegionSelector from "@/components/region/RegionSelector";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,6 +16,7 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [isLoading, setIsLoading] = useState(true);
   const { isIOS } = useIsPlatform();
+  const { t } = useTranslation();
 
   // Ensure the layout is stable before displaying products
   useEffect(() => {
@@ -55,6 +58,9 @@ const Products = () => {
           <p className="text-muted-foreground">
             Browse our collection of products designed to support your mental wellbeing and complement our digital services.
           </p>
+          <div className="mt-4 flex justify-center">
+            <RegionSelector />
+          </div>
         </div>
 
         <div className="flex flex-col gap-6 md:flex-row mb-8">
@@ -115,7 +121,7 @@ const Products = () => {
               <ProductGrid products={filteredProducts} />
             ) : (
               <div className="text-center py-12">
-                <h3 className="text-lg font-medium mb-2">No products found</h3>
+                <h3 className="text-lg font-medium mb-2">{t('no_products_found')}</h3>
                 <p className="text-muted-foreground">
                   Try adjusting your search or filter criteria
                 </p>
