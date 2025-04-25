@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -35,9 +34,7 @@ const SalesDashboard: React.FC = () => {
     fetchPayments();
   }, []);
 
-  // Prepare chart data from payments
   const prepareChartData = () => {
-    // This is sample data - in a real system, we would aggregate the actual payment data
     const salesData = [
       { month: "Jan", revenue: 4000, profit: 2400 },
       { month: "Feb", revenue: 5000, profit: 3100 },
@@ -52,7 +49,6 @@ const SalesDashboard: React.FC = () => {
 
   const salesData = prepareChartData();
 
-  // Filter payments based on search
   const filteredPayments = payments.filter(payment => 
     (payment.CustomerName?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
     (payment.PaymentID?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
@@ -62,7 +58,6 @@ const SalesDashboard: React.FC = () => {
   const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
   const currentPayments = filteredPayments.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  // Calculate total revenue
   const totalRevenue = filteredPayments.reduce((sum, payment) => {
     const amount = parseFloat(payment.Amount) || 0;
     return sum + amount;
@@ -88,7 +83,7 @@ const SalesDashboard: React.FC = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center">
-                <ChartContainer className="h-6 w-6" config={{}} />
+                <ChartContainer className="h-6 w-6" config={{}}>{<></>}</ChartContainer>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Transactions</p>
