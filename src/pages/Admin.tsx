@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,15 +28,39 @@ const Admin = () => {
       try {
         const bookings = await getRecords({ sheet: 'Bookings' });
         const payments = await getRecords({ sheet: 'Payments' });
+        // Get the doctor appointments
+        const doctorAppointments = await getRecords({ sheet: 'Appointments' });
+        // Get spiritual bookings
+        const spiritualBookings = await getRecords({ sheet: 'SpiritualBookings' });
         
-        const uniqueClients = new Set(bookings?.map(b => b.CustomerEmail || b.CustomerName) || []);
+        // Count all types of appointments
+        const allBookings = [
+          ...(bookings || []),
+          ...(doctorAppointments || []),
+          ...(spiritualBookings || [])
+        ];
+        
+        // Get unique clients from all booking types
+        const uniqueClients = new Set([
+          ...(bookings?.map(b => b.CustomerEmail || b.CustomerName) || []),
+          ...(doctorAppointments?.map(a => a.CustomerEmail || a.CustomerName) || []),
+          ...(spiritualBookings?.map(s => s.CustomerEmail || s.CustomerName) || [])
+        ]);
+        
         const totalRevenue = payments?.reduce((sum, payment) => sum + (parseFloat(payment.Amount) || 0), 0) || 0;
         
+        // Count scheduled appointments across all booking types
+        const scheduledAppointments = allBookings.filter(b => 
+          b.Status?.toLowerCase() === 'scheduled' || 
+          b.Status?.toLowerCase() === 'upcoming' ||
+          b.Status?.toLowerCase() === 'confirmed'
+        ).length;
+        
         setStats({
-          bookings: bookings?.length || 0,
+          bookings: allBookings.length,
           clients: uniqueClients.size,
           revenue: totalRevenue,
-          appointments: bookings?.filter(b => b.Status?.toLowerCase() === 'scheduled')?.length || 0
+          appointments: scheduledAppointments
         });
       } catch (err) {
         console.error("Failed to fetch dashboard stats:", err);

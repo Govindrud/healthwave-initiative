@@ -88,7 +88,7 @@ const SalesDashboard: React.FC = () => {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center">
-                <ChartContainer className="h-6 w-6" />
+                <ChartContainer className="h-6 w-6" config={{}} />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Transactions</p>
@@ -108,7 +108,13 @@ const SalesDashboard: React.FC = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          <ChartContainer className="h-[300px]" config={{ revenue: { color: "#7c3aed" }, profit: { color: "#10b981" } }}>
+          <ChartContainer 
+            className="h-[300px]" 
+            config={{ 
+              revenue: { color: "#7c3aed" }, 
+              profit: { color: "#10b981" } 
+            }}
+          >
             <>
               <ChartTooltip content={<ChartTooltipContent />} />
               <ResponsiveContainer width="100%" height="100%">

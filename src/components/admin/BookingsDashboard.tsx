@@ -137,7 +137,14 @@ const BookingsDashboard: React.FC = () => {
           <CardTitle>Bookings Overview</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer className="h-[300px]">
+          <ChartContainer 
+            className="h-[300px]"
+            config={{
+              completed: { color: "#10b981" },
+              upcoming: { color: "#3b82f6" },
+              canceled: { color: "#ef4444" }
+            }}
+          >
             <>
               <ChartTooltip content={<ChartTooltipContent />} />
               <ResponsiveContainer width="100%" height="100%">
