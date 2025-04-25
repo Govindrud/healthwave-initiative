@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import BookingsDashboard from "@/components/admin/BookingsDashboard";
 import SalesDashboard from "@/components/admin/SalesDashboard";
 import AppointmentsDashboard from "@/components/admin/AppointmentsDashboard";
+import ServicesManagement from "@/components/admin/ServicesManagement";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSheetDB } from "@/hooks/useSheetDB";
@@ -28,19 +28,15 @@ const Admin = () => {
       try {
         const bookings = await getRecords({ sheet: 'Bookings' });
         const payments = await getRecords({ sheet: 'Payments' });
-        // Get the doctor appointments
         const doctorAppointments = await getRecords({ sheet: 'Appointments' });
-        // Get spiritual bookings
         const spiritualBookings = await getRecords({ sheet: 'SpiritualBookings' });
         
-        // Count all types of appointments
         const allBookings = [
           ...(bookings || []),
           ...(doctorAppointments || []),
           ...(spiritualBookings || [])
         ];
         
-        // Get unique clients from all booking types
         const uniqueClients = new Set([
           ...(bookings?.map(b => b.CustomerEmail || b.CustomerName) || []),
           ...(doctorAppointments?.map(a => a.CustomerEmail || a.CustomerName) || []),
@@ -49,7 +45,6 @@ const Admin = () => {
         
         const totalRevenue = payments?.reduce((sum, payment) => sum + (parseFloat(payment.Amount) || 0), 0) || 0;
         
-        // Count scheduled appointments across all booking types
         const scheduledAppointments = allBookings.filter(b => 
           b.Status?.toLowerCase() === 'scheduled' || 
           b.Status?.toLowerCase() === 'upcoming' ||
@@ -188,7 +183,7 @@ const Admin = () => {
             <TabsTrigger value="bookings">Bookings</TabsTrigger>
             <TabsTrigger value="sales">Sales</TabsTrigger>
             <TabsTrigger value="appointments">Appointments</TabsTrigger>
-            <TabsTrigger value="services">Services</TabsTrigger>
+            <TabsTrigger value="services">Services Management</TabsTrigger>
             <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
           </TabsList>
           <TabsContent value="bookings">
@@ -201,20 +196,7 @@ const Admin = () => {
             <AppointmentsDashboard />
           </TabsContent>
           <TabsContent value="services">
-            <Card>
-              <CardHeader>
-                <CardTitle>Service Management</CardTitle>
-                <CardDescription>Manage all offered services</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Add, edit, or remove services including therapy sessions, spiritual consultations, corporate services, and student psychologist sessions.</p>
-                <Button variant="outline" className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  Manage Services
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Button>
-              </CardContent>
-            </Card>
+            <ServicesManagement />
           </TabsContent>
           <TabsContent value="inquiries">
             <Card>
