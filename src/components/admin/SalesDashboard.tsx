@@ -1,73 +1,107 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Download, Search } from "lucide-react";
+import { ChevronRight, Download, Search, DollarSign } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend } from "recharts";
+import { useSheetDB } from "@/hooks/useSheetDB";
+import { Badge } from "@/components/ui/badge";
 
 const SalesDashboard: React.FC = () => {
-  // Sample data for the sales chart
-  const salesData = [
-    { month: "Jan", revenue: 4000, profit: 2400 },
-    { month: "Feb", revenue: 5000, profit: 3100 },
-    { month: "Mar", revenue: 6000, profit: 3700 },
-    { month: "Apr", revenue: 7000, profit: 4300 },
-    { month: "May", revenue: 8000, profit: 5000 },
-    { month: "Jun", revenue: 9500, profit: 5800 },
-  ];
+  const [payments, setPayments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  
+  const { getRecords, error } = useSheetDB();
+  
+  useEffect(() => {
+    const fetchPayments = async () => {
+      setLoading(true);
+      try {
+        const paymentsData = await getRecords({ sheet: 'Payments' });
+        setPayments(paymentsData || []);
+      } catch (err) {
+        console.error("Failed to fetch payments data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchPayments();
+  }, []);
 
-  // Sample sales data for the table
-  const recentSales = [
-    {
-      id: "S-5001",
-      client: "Corporate Wellness Inc.",
-      service: "Mental Health Workshop",
-      amount: 1800,
-      date: "2023-06-12",
-      status: "Paid",
-    },
-    {
-      id: "S-5002",
-      client: "Sarah Johnson",
-      service: "Therapy Package (10 Sessions)",
-      amount: 1200,
-      date: "2023-06-14",
-      status: "Paid",
-    },
-    {
-      id: "S-5003",
-      client: "Innovative Tech Co.",
-      service: "Team Building Sessions",
-      amount: 2500,
-      date: "2023-06-15",
-      status: "Pending",
-    },
-    {
-      id: "S-5004",
-      client: "David Wilson",
-      service: "Premium Counseling",
-      amount: 500,
-      date: "2023-06-15",
-      status: "Paid",
-    },
-    {
-      id: "S-5005",
-      client: "Education First School",
-      service: "Student Wellness Program",
-      amount: 3200,
-      date: "2023-06-16",
-      status: "Pending",
-    },
-  ];
+  // Prepare chart data from payments
+  const prepareChartData = () => {
+    // This is sample data - in a real system, we would aggregate the actual payment data
+    const salesData = [
+      { month: "Jan", revenue: 4000, profit: 2400 },
+      { month: "Feb", revenue: 5000, profit: 3100 },
+      { month: "Mar", revenue: 6000, profit: 3700 },
+      { month: "Apr", revenue: 7000, profit: 4300 },
+      { month: "May", revenue: 8000, profit: 5000 },
+      { month: "Jun", revenue: 9500, profit: 5800 },
+    ];
+    
+    return salesData;
+  };
+
+  const salesData = prepareChartData();
+
+  // Filter payments based on search
+  const filteredPayments = payments.filter(payment => 
+    (payment.CustomerName?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+    (payment.PaymentID?.toLowerCase().includes(searchQuery.toLowerCase()) || '') ||
+    (payment.ServiceType?.toLowerCase().includes(searchQuery.toLowerCase()) || '')
+  );
+  
+  const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
+  const currentPayments = filteredPayments.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // Calculate total revenue
+  const totalRevenue = filteredPayments.reduce((sum, payment) => {
+    const amount = parseFloat(payment.Amount) || 0;
+    return sum + amount;
+  }, 0);
 
   return (
     <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-green-100 text-green-800 flex items-center justify-center">
+                <DollarSign className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
+                <h3 className="text-2xl font-bold">${totalRevenue.toLocaleString()}</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center">
+                <ChartContainer className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Transactions</p>
+                <h3 className="text-2xl font-bold">{payments.length}</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Sales Overview</CardTitle>
+          <CardTitle>Revenue Overview</CardTitle>
           <Button variant="outline" size="sm">
             <Download className="mr-2 h-4 w-4" />
             Download CSV
@@ -75,7 +109,6 @@ const SalesDashboard: React.FC = () => {
         </CardHeader>
         <CardContent>
           <ChartContainer className="h-[300px]" config={{ revenue: { color: "#7c3aed" }, profit: { color: "#10b981" } }}>
-            {/* Wrap the children in a Fragment to fix the type error */}
             <>
               <ChartTooltip content={<ChartTooltipContent />} />
               <ResponsiveContainer width="100%" height="100%">
@@ -103,59 +136,92 @@ const SalesDashboard: React.FC = () => {
               type="search"
               placeholder="Search sales..."
               className="w-full bg-background pl-8"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Invoice ID</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Service</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentSales.map((sale) => (
-                <TableRow key={sale.id}>
-                  <TableCell className="font-medium">{sale.id}</TableCell>
-                  <TableCell>{sale.client}</TableCell>
-                  <TableCell>{sale.service}</TableCell>
-                  <TableCell>${sale.amount.toLocaleString()}</TableCell>
-                  <TableCell>{sale.date}</TableCell>
-                  <TableCell>
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        sale.status === "Paid"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
-                    >
-                      {sale.status}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">
-                      <span className="sr-only">View details</span>
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="flex items-center justify-end mt-4 space-x-2">
-            <Button variant="outline" size="sm">
-              Previous
-            </Button>
-            <Button variant="outline" size="sm">
-              Next
-            </Button>
-          </div>
+          {loading ? (
+            <div className="text-center py-8">Loading payment data...</div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-500">Error loading payments: {error}</div>
+          ) : (
+            <>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Payment ID</TableHead>
+                    <TableHead>Client</TableHead>
+                    <TableHead>Service</TableHead>
+                    <TableHead>Amount</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {currentPayments.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                        No payment records found
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    currentPayments.map((payment) => (
+                      <TableRow key={payment.PaymentID || payment.id}>
+                        <TableCell className="font-medium">{payment.PaymentID || 'N/A'}</TableCell>
+                        <TableCell>{payment.CustomerName || 'N/A'}</TableCell>
+                        <TableCell>{payment.ServiceType || 'N/A'}</TableCell>
+                        <TableCell>${parseFloat(payment.Amount || 0).toLocaleString()}</TableCell>
+                        <TableCell>{payment.PaymentDate || 'N/A'}</TableCell>
+                        <TableCell>
+                          <Badge className={
+                            payment.Status?.toLowerCase() === "paid" 
+                              ? "bg-green-100 text-green-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }>
+                            {payment.Status || 'Pending'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button variant="ghost" size="sm">
+                            <span className="sr-only">View details</span>
+                            <ChevronRight className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+              
+              <div className="flex items-center justify-between mt-4 space-x-2">
+                <div className="text-sm text-muted-foreground">
+                  Showing <span className="font-medium">{Math.min((currentPage - 1) * itemsPerPage + 1, filteredPayments.length)}-{Math.min(currentPage * itemsPerPage, filteredPayments.length)}</span> of{" "}
+                  <span className="font-medium">{filteredPayments.length}</span> records
+                </div>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                  >
+                    Previous
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages || totalPages === 0}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
