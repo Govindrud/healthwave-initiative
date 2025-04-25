@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -43,24 +42,21 @@ const MainLayout = ({ children, title }: MainLayoutProps) => {
   return (
     <PageTransition>
       <motion.div 
-        className="min-h-screen flex flex-col bg-background"
+        className="min-h-screen flex flex-col bg-white"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
       >
         <Navbar />
         <AnimatePresence mode="wait">
           <motion.main 
             key={location.pathname}
-            className={cn(
-              "flex-grow pt-24 md:pt-28 w-full overflow-x-hidden",
-              "bg-background text-foreground"
-            )}
+            className="flex-grow pt-24 md:pt-28 w-full overflow-x-hidden bg-white"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            transition={{ duration: 0.4 }}
           >
             {children}
           </motion.main>

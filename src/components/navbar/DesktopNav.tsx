@@ -51,7 +51,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
               key={index}
               to={item.to} 
               onClick={item.action}
-              className="text-xs lg:text-sm whitespace-nowrap px-3 py-2.5 hover:text-meant-600 transition-colors"
+              className="text-xs lg:text-sm whitespace-nowrap px-2 py-2"
             >
               {item.label}
             </NavLink>
@@ -66,7 +66,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         </nav>
       </div>
 
-      <div className="flex items-center space-x-2 md:space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-3">
         <ThemeToggle />
         
         {isAuthenticated ? (
@@ -75,7 +75,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
           </div>
         ) : (
           <Link to="/admin-login">
-            <Button variant="outline" size="sm" className="text-meant-600 border-meant-600/30 hover:bg-meant-50 hover:shadow-soft transition-all duration-200">
+            <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
               Login
             </Button>
           </Link>
@@ -84,19 +84,17 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         <Link to="/doctors" className="hidden sm:block">
           <Button 
             size="sm"
-            className="bg-meant-600 hover:bg-meant-700 text-white rounded-full px-4 md:px-5 hover:shadow-md transition-all text-xs lg:text-sm btn-pulse"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-3 md:px-4 hover:shadow-md transition-all text-xs lg:text-sm"
           >
             Book Consultation
           </Button>
         </Link>
         
         <Link to="/cart" className="relative">
-          <div className="p-1.5 rounded-full hover:bg-gray-100 transition-colors">
-            <ShoppingCart size={20} className="text-foreground/80 hover:text-foreground" />
-            <span className="absolute -top-1 -right-1 bg-meant-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-fade-in">
-              2
-            </span>
-          </div>
+          <ShoppingCart size={20} className="text-foreground/80 hover:text-foreground" />
+          <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+            2
+          </span>
         </Link>
       </div>
     </div>
