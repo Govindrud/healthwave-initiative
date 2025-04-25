@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
-import { ShoppingCart, Users, FileText, Home } from "lucide-react";
+import { ShoppingCart, Users, FileText, Home, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "./NavLink";
 import { ServicesDropdown } from "./ServicesDropdown";
@@ -90,26 +90,27 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
               <Button variant="outline" size="sm" className="flex items-center gap-2">
                 <Users size={16} />
                 <span className="hidden sm:inline">Admin</span>
+                <ChevronDown size={14} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 bg-background border border-border shadow-md">
+            <DropdownMenuContent align="end" className="w-48 z-50 bg-background border border-border shadow-md">
               <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                <Link to="/admin" className="flex items-center gap-2 w-full cursor-pointer">
                   <FileText size={16} />
                   <span>Admin Panel</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/admin-dashboard" className="flex items-center gap-2 cursor-pointer">
+                <Link to="/admin-dashboard" className="flex items-center gap-2 w-full cursor-pointer">
                   <Home size={16} />
                   <span>Admin Dashboard</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="text-red-500 cursor-pointer">
-                Logout
+              <DropdownMenuItem onClick={handleLogout} className="text-red-500 cursor-pointer flex items-center gap-2 w-full">
+                Log Out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
