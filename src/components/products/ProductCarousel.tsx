@@ -8,11 +8,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 interface ProductCarouselProps {
   products: Product[];
   title?: string;
+  description?: string;
 }
 
 const ProductCarousel: React.FC<ProductCarouselProps> = ({ 
   products, 
-  title 
+  title,
+  description
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +37,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
     <div className="relative">
       {title && (
         <h2 className="text-2xl font-bold mb-6">{title}</h2>
+      )}
+      
+      {description && (
+        <p className="text-muted-foreground mb-6">{description}</p>
       )}
 
       <div className="absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1/2 z-10">
@@ -70,7 +76,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         ))}
       </div>
       
-      <style jsx>{`
+      <style>{`
         .hide-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;

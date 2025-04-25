@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
-import DesktopNav from "@/components/navbar/DesktopNav";
+import { DesktopNav } from "@/components/navbar/DesktopNav";
 import RegionSelector from "@/components/region/RegionSelector";
 
 const Navbar = () => {
@@ -42,7 +42,7 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
-            <DesktopNav />
+            <DesktopNav location={location} />
             <div className="flex items-center space-x-2">
               <RegionSelector variant="minimal" />
               <Link to="/admin-login">

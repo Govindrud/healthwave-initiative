@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
@@ -93,3 +94,5 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
     </div>
   );
 };
+
+export default DesktopNav;
