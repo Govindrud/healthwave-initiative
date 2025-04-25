@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
 import { ShoppingCart, Home } from "lucide-react";
@@ -19,7 +20,7 @@ interface DesktopNavProps {
 export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const isHomePage = location.pathname === "/";
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const scrollToSection = (id: string) => {
     if (isHomePage) {
@@ -38,11 +39,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
     { label: "Products", to: "/products" },
     { label: "Contact", action: () => scrollToSection("contact") },
   ];
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -75,17 +71,6 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         
         {isAuthenticated ? (
           <div className="flex items-center space-x-2">
-            <Link to="/admin-dashboard">
-              <Button 
-                variant="meant" 
-                size="sm" 
-                className="flex items-center gap-2"
-              >
-                <Home size={16} />
-                <span>Admin Dashboard</span>
-              </Button>
-            </Link>
-
             <AdminMenu />
           </div>
         ) : (
