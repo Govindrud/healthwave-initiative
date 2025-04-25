@@ -1,15 +1,17 @@
+
 import React, { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronDown, Calendar, Users, DollarSign, TrendingUp, ArrowRight, LogOut, FileText, MessageSquare, Clock } from "lucide-react";
+import { ChevronDown, Calendar, Users, DollarSign, TrendingUp, ArrowRight, LogOut, FileText, MessageSquare, Clock, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BookingsDashboard from "@/components/admin/BookingsDashboard";
 import SalesDashboard from "@/components/admin/SalesDashboard";
 import AppointmentsDashboard from "@/components/admin/AppointmentsDashboard";
 import ServicesManagement from "@/components/admin/ServicesManagement";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useSheetDB } from "@/hooks/useSheetDB";
+import { useToast } from "@/components/ui/use-toast";
 
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState("bookings");
@@ -22,6 +24,7 @@ const Admin = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { getRecords } = useSheetDB();
+  const { toast } = useToast();
   
   useEffect(() => {
     const fetchStats = async () => {
@@ -57,8 +60,18 @@ const Admin = () => {
           revenue: totalRevenue,
           appointments: scheduledAppointments
         });
+
+        toast({
+          title: "Admin panel loaded",
+          description: "Successfully loaded admin statistics"
+        });
       } catch (err) {
         console.error("Failed to fetch dashboard stats:", err);
+        toast({
+          title: "Error loading data",
+          description: "Could not fetch dashboard statistics",
+          variant: "destructive"
+        });
       }
     };
     
@@ -78,12 +91,19 @@ const Admin = () => {
             MeantToHelp Admin
           </h1>
           <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="text-sm font-medium transition-colors hover:text-primary"
             >
               Back to Website
-            </a>
+            </Link>
+            <Link
+              to="/admin-dashboard"
+              className="text-sm font-medium transition-colors hover:text-primary flex items-center gap-1"
+            >
+              <Home className="h-4 w-4" />
+              Admin Dashboard
+            </Link>
           </nav>
           <div className="ml-auto flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={handleLogout}>

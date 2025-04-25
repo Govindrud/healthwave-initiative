@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,7 +10,8 @@ import BookingForm from '@/components/admin/BookingForm';
 import CustomerForm from '@/components/admin/CustomerForm';
 import CustomersListing from '@/components/admin/CustomersListing';
 import PaymentForm from '@/components/admin/PaymentForm';
-import { Download, HelpCircle, DatabaseIcon, UserPlus, CalendarPlus, CreditCard } from 'lucide-react';
+import { Download, HelpCircle, DatabaseIcon, UserPlus, CalendarPlus, CreditCard, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [showGuide, setShowGuide] = useState(false);
@@ -52,6 +52,16 @@ const AdminDashboard = () => {
                 <DatabaseIcon size={18} />
                 Open Google Sheet
               </a>
+            </Button>
+            <Button
+              variant="outline"
+              className="flex gap-2 items-center"
+              asChild
+            >
+              <Link to="/admin">
+                <FileText size={18} />
+                Admin Panel
+              </Link>
             </Button>
           </div>
         </div>

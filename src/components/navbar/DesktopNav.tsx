@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Users, FileText, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "./NavLink";
 import { ServicesDropdown } from "./ServicesDropdown";
@@ -10,6 +10,15 @@ import { SpiritualityDropdown } from "./SpiritualityDropdown";
 import ThemeToggle from "../ThemeToggle";
 import Logo from "@/components/Logo";
 import { MainMenuDropdown } from "./MainMenuDropdown";
+import { useAuth } from "@/context/AuthContext";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 interface DesktopNavProps {
   location: Location;
@@ -18,6 +27,7 @@ interface DesktopNavProps {
 export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const isHomePage = location.pathname === "/";
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   const scrollToSection = (id: string) => {
     if (isHomePage) {
@@ -37,6 +47,11 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
     { label: "Products", to: "/products" },
     { label: "Contact", action: () => scrollToSection("contact") },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -69,11 +84,42 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
       <div className="flex items-center space-x-2 md:space-x-3">
         <ThemeToggle />
         
-        <Link to="/login" className="hidden sm:block">
-          <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
-            Login
-          </Button>
-        </Link>
+        {isAuthenticated ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <Users size={16} />
+                <span className="hidden sm:inline">Admin</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 bg-background border border-border shadow-md">
+              <DropdownMenuLabel>Admin Navigation</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                  <FileText size={16} />
+                  <span>Admin Panel</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/admin-dashboard" className="flex items-center gap-2 cursor-pointer">
+                  <Home size={16} />
+                  <span>Admin Dashboard</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} className="text-red-500 cursor-pointer">
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Link to="/admin-login">
+            <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
+              Login
+            </Button>
+          </Link>
+        )}
         
         <Link to="/doctors" className="hidden sm:block">
           <Button 
