@@ -7,30 +7,43 @@ interface HamburgerButtonProps {
   onClick: () => void;
 }
 
-export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onClick }) => {
+export const HamburgerButton: React.FC<HamburgerButtonProps> = ({
+  isOpen,
+  onClick,
+}) => {
   return (
     <button
-      className="flex flex-col items-center justify-center p-2 rounded-md border border-gray-300 bg-white dark:bg-gray-800 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+      className="relative w-10 h-10 flex flex-col justify-center items-center rounded-md focus:outline-none"
       onClick={onClick}
-      aria-label="Toggle mobile menu"
+      aria-label={isOpen ? "Close menu" : "Open menu"}
       aria-expanded={isOpen}
-      style={{ width: '40px', height: '40px' }}
     >
-      <motion.div 
-        className="w-5 h-0.5 bg-gray-700 dark:bg-gray-300 mb-1"
-        animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-        transition={{ duration: 0.2 }}
-      />
-      <motion.div 
-        className="w-5 h-0.5 bg-gray-700 dark:bg-gray-300"
-        animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      />
-      <motion.div 
-        className="w-5 h-0.5 bg-gray-700 dark:bg-gray-300 mt-1"
-        animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-        transition={{ duration: 0.2 }}
-      />
+      <div className="w-8 h-8 flex flex-col justify-center items-center">
+        <motion.span
+          className="w-6 h-0.5 bg-gray-700 rounded-full block transition-all"
+          animate={{
+            rotate: isOpen ? 45 : 0,
+            y: isOpen ? 2 : 0,
+          }}
+          transition={{ duration: 0.2 }}
+        />
+        <motion.span
+          className="w-6 h-0.5 bg-gray-700 rounded-full block my-1.5 transition-all"
+          animate={{
+            opacity: isOpen ? 0 : 1,
+            width: isOpen ? 0 : 24,
+          }}
+          transition={{ duration: 0.2 }}
+        />
+        <motion.span
+          className="w-6 h-0.5 bg-gray-700 rounded-full block transition-all"
+          animate={{
+            rotate: isOpen ? -45 : 0,
+            y: isOpen ? -2 : 0,
+          }}
+          transition={{ duration: 0.2 }}
+        />
+      </div>
     </button>
   );
 };

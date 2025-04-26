@@ -6,7 +6,6 @@ import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
 import { MobileMenuContent } from "./mobile/MobileMenuContent";
 import ThemeToggle from "../ThemeToggle";
-import Logo from "@/components/Logo";
 
 interface MobileNavProps {
   location: Location;
@@ -21,6 +20,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   // Close mobile menu when route changes
   React.useEffect(() => {
     setIsMobileMenuOpen(false);
+    // Restore body scroll when menu closes due to route change
+    document.body.style.overflow = "auto";
   }, [location]);
 
   // Close menu when clicking outside
@@ -28,6 +29,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMobileMenuOpen(false);
+        document.body.style.overflow = "auto";
       }
     };
 
@@ -40,8 +42,15 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     };
   }, [isMobileMenuOpen]);
 
+  const toggleMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Prevent scrolling when menu is open
+    document.body.style.overflow = !isMobileMenuOpen ? "hidden" : "auto";
+  };
+
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
+    document.body.style.overflow = "auto";
     
     if (isHomePage) {
       // If we're on the home page, scroll to the section
@@ -57,9 +66,11 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
 
   return (
     <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
-      <div className="flex items-center">
-        <Logo size="sm" variant="full" />
-      </div>
+      <Link to="/" className="flex items-center">
+        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
+          <span className="font-extrabold">Meant</span>ToHelp
+        </span>
+      </Link>
       
       <div className="flex items-center space-x-2">
         <ThemeToggle />
@@ -67,14 +78,17 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
         
         <HamburgerButton 
           isOpen={isMobileMenuOpen}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={toggleMenu}
         />
 
         <AnimatePresence>
           {isMobileMenuOpen && (
             <MobileMenuContent 
               isOpen={isMobileMenuOpen}
-              onClose={() => setIsMobileMenuOpen(false)}
+              onClose={() => {
+                setIsMobileMenuOpen(false);
+                document.body.style.overflow = "auto";
+              }}
               scrollToSection={scrollToSection}
             />
           )}

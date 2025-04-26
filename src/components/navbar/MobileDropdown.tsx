@@ -11,10 +11,10 @@ interface MobileDropdownProps {
 export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
   
-  const mobileNavLinkClass = "text-foreground hover:text-meant-600 transition-colors px-4 py-3 rounded-md text-sm font-medium flex items-center";
+  const mobileNavLinkClass = "text-foreground hover:text-primary transition-colors px-4 py-3 rounded-md text-base font-medium flex items-center";
 
   return (
-    <div className="relative bg-white"> 
+    <div className="relative border-b border-gray-100 last:border-0"> 
       <button 
         className={`${mobileNavLinkClass} justify-between w-full`}
         onClick={() => setIsOpen(!isOpen)}
@@ -34,13 +34,15 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
         {isOpen && (
           <motion.div 
             id={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
-            className="ml-4 mt-1 space-y-1 border-l-2 border-blue-100 pl-2 bg-white shadow-md rounded-md overflow-hidden z-50"
+            className="bg-gray-50 rounded-md overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {children}
+            <div className="py-1 pl-4 border-l-2 border-primary/20 ml-4 space-y-1">
+              {children}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

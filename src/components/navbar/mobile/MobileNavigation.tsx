@@ -15,7 +15,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
   scrollToSection 
 }) => {
   return (
-    <nav className="flex flex-col space-y-1">
+    <nav className="flex flex-col space-y-1 rounded-lg overflow-hidden">
       <MobileNavItem to="/products" onClick={onClose}>
         Products
       </MobileNavItem>
@@ -30,7 +30,6 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`service-${index}`} 
             to={item.href} 
             onClick={onClose}
-            className="text-sm"
           >
             {item.title}
           </MobileNavItem>
@@ -43,7 +42,6 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`activity-${index}`} 
             to={item.href} 
             onClick={onClose}
-            className="text-sm"
           >
             {item.title}
           </MobileNavItem>
@@ -56,7 +54,6 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`spiritual-${index}`} 
             to={item.href} 
             onClick={onClose}
-            className="text-sm"
           >
             {item.title}
           </MobileNavItem>

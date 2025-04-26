@@ -25,42 +25,44 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
       transition={{ duration: 0.2 }}
     >
       <div className="p-4 overflow-y-auto max-h-[calc(100vh-70px)] bg-white mobile-menu-container">
-        <div className="mb-4 pb-4 border-b border-gray-200">
+        <div className="mb-6 pb-4 border-b border-gray-200">
           <Link to="/" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <Home size={20} className="mr-3" />
+            <Home size={20} className="mr-3 text-primary" />
             <span>Home</span>
           </Link>
           
           <Link to="/services" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <Phone size={20} className="mr-3" />
+            <Phone size={20} className="mr-3 text-primary" />
             <span>Services</span>
           </Link>
         </div>
         
-        <MobileNavigation onClose={onClose} scrollToSection={scrollToSection} />
+        <div className="mb-6">
+          <MobileNavigation onClose={onClose} scrollToSection={scrollToSection} />
+        </div>
         
-        <div className="pt-6 mt-6 border-t border-gray-200 space-y-3">
+        <div className="pt-4 mb-6 border-t border-gray-200 space-y-3">
           <Link to="/cart" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <ShoppingCart size={20} className="mr-3" />
+            <ShoppingCart size={20} className="mr-3 text-primary" />
             <span>Cart</span>
             <span className="ml-auto bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
           </Link>
           
           <Link to="/admin-login" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <User size={20} className="mr-3" />
+            <User size={20} className="mr-3 text-primary" />
             <span>Admin Login</span>
           </Link>
         </div>
 
-        <div className="pt-4 mt-4 border-t border-gray-200 grid grid-cols-2 gap-3">
+        <div className="pt-4 mt-4 border-t border-gray-200 grid grid-cols-2 gap-4">
           <Link to="/doctors" className="w-full" onClick={onClose}>
-            <button className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors">
+            <button className="w-full py-3 px-4 bg-primary hover:bg-primary/90 text-white rounded-md font-medium transition-colors">
               Book Consultation
             </button>
           </Link>
           
           <Link to="/spirituality" className="w-full" onClick={onClose}>
-            <button className="w-full py-3 px-4 border border-blue-600 text-blue-600 rounded-md font-medium hover:bg-blue-50 transition-colors">
+            <button className="w-full py-3 px-4 border border-primary text-primary rounded-md font-medium hover:bg-primary/5 transition-colors">
               Spiritual Services
             </button>
           </Link>

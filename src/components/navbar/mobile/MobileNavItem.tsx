@@ -15,7 +15,7 @@ export const MobileNavItem: React.FC<MobileNavItemProps> = ({
   className = "",
   children
 }) => {
-  const baseClass = "text-foreground hover:text-primary transition-colors px-4 py-3 rounded-md text-sm font-medium dark:text-gray-200 dark:hover:text-primary";
+  const baseClass = "block w-full text-left text-foreground hover:text-primary transition-colors px-4 py-2.5 rounded-md text-base font-medium";
   
   if (to) {
     return (
@@ -32,7 +32,7 @@ export const MobileNavItem: React.FC<MobileNavItemProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`${baseClass} ${className}`}
+      className={`${baseClass} ${className} w-full text-left`}
     >
       {children}
     </button>
