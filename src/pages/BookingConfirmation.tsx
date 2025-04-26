@@ -7,10 +7,13 @@ import { Card } from "@/components/ui/card";
 import { Check, CalendarClock, MapPin, Users, Clock } from "lucide-react";
 import { toast } from "sonner";
 import PaymentButton from "@/components/payment/PaymentButton";
+import { useAuth } from "@/hooks/useAuth";
+import { formatDate } from "@/utils/date-utils";
 
 const BookingConfirmation = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [bookingDetails, setBookingDetails] = useState({
     title: searchParams.get("title") || "Service Booking",
     amount: Number(searchParams.get("amount")) || 0,
@@ -19,11 +22,12 @@ const BookingConfirmation = () => {
     date: searchParams.get("date") || "To be scheduled",
     time: searchParams.get("time") || "",
     location: searchParams.get("location") || "Online",
+    provider: searchParams.get("provider") || "",
     type: searchParams.get("type") || "service",
     serviceId: searchParams.get("service_id") || "",
     doctorId: searchParams.get("doctor_id") || "",
-    name: searchParams.get("name") || "",
-    email: searchParams.get("email") || "",
+    name: user?.displayName || searchParams.get("name") || "",
+    email: user?.email || searchParams.get("email") || "",
     phone: searchParams.get("phone") || ""
   });
   
@@ -40,9 +44,19 @@ const BookingConfirmation = () => {
     console.log("Booking confirmation parameters:", {
       title: bookingDetails.title,
       amount: bookingDetails.amount,
-      type: bookingDetails.type
+      type: bookingDetails.type,
+      user: user?.email
     });
-  }, []);
+    
+    // Pre-fill user information if available
+    if (user) {
+      setBookingDetails(prev => ({
+        ...prev,
+        name: user.displayName || prev.name,
+        email: user.email || prev.email,
+      }));
+    }
+  }, [user]);
   
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -64,7 +78,7 @@ const BookingConfirmation = () => {
   };
 
   const groupedDateTime = bookingDetails.date !== "To be scheduled" && bookingDetails.time
-    ? `${bookingDetails.date} at ${bookingDetails.time}`
+    ? `${formatDate(bookingDetails.date)} at ${bookingDetails.time}`
     : bookingDetails.date;
     
   const validateFields = () => {
@@ -77,10 +91,27 @@ const BookingConfirmation = () => {
     setErrors(newErrors);
     return !Object.values(newErrors).some(Boolean);
   };
+  
+  const handleSubmitBooking = () => {
+    // Validate fields before proceeding to payment
+    if (!validateFields()) {
+      toast.error("Please fill in all required fields correctly");
+      return;
+    }
+    
+    // Here you would typically create a booking in your backend
+    console.log("Submitting booking:", bookingDetails);
+    
+    // For a real app, you'd make an API call here to create the booking
+    // and then proceed to payment
+    
+    // Simulate successful booking creation
+    toast.success("Booking details validated. Proceeding to payment.");
+  };
 
   return (
     <MainLayout title="Booking Confirmation">
-      <div className="max-w-3xl mx-auto p-4">
+      <div className="max-w-3xl mx-auto p-4 py-8">
         <Card className="p-6 shadow-md">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-semibold text-meant-700">Booking Summary</h2>
@@ -113,6 +144,13 @@ const BookingConfirmation = () => {
                   <div className="flex items-center text-meant-600">
                     <Users className="h-5 w-5 mr-2 flex-shrink-0" />
                     <span>{bookingDetails.participants} participants</span>
+                  </div>
+                )}
+                
+                {bookingDetails.provider && (
+                  <div className="flex items-center text-meant-600">
+                    <span className="font-medium">Provider:</span>
+                    <span className="ml-2">{bookingDetails.provider}</span>
                   </div>
                 )}
               </div>
@@ -192,6 +230,7 @@ const BookingConfirmation = () => {
             <PaymentButton
               amount={bookingDetails.amount * bookingDetails.participants}
               title={bookingDetails.title}
+              onBeforePayment={handleSubmitBooking}
               bookingDetails={{
                 date: bookingDetails.date,
                 time: bookingDetails.time,
@@ -200,7 +239,8 @@ const BookingConfirmation = () => {
                 participants: bookingDetails.participants,
                 type: bookingDetails.type,
                 serviceId: bookingDetails.serviceId,
-                doctorId: bookingDetails.doctorId
+                doctorId: bookingDetails.doctorId,
+                provider: bookingDetails.provider
               }}
               customerInfo={{
                 name: bookingDetails.name,

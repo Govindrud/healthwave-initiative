@@ -1,117 +1,256 @@
 
 import React from "react";
-import { Link, Location, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { NavLink } from "./NavLink";
-import { ServicesDropdown } from "./ServicesDropdown";
-import { ActivitiesDropdown } from "./ActivitiesDropdown";
-import { SpiritualityDropdown } from "./SpiritualityDropdown";
-import ThemeToggle from "../ThemeToggle";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LogOut, Settings, User } from "lucide-react";
 import Logo from "@/components/Logo";
-import { MainMenuDropdown } from "./MainMenuDropdown";
-import { useAuth } from "@/context/AuthContext";
-import { AdminMenu } from "@/components/admin/AdminMenu";
 
-interface DesktopNavProps {
-  location: Location;
-}
-
-export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
-  const isHomePage = location.pathname === "/";
-  const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
-
-  const scrollToSection = (id: string) => {
-    if (isHomePage) {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      navigate(`/#${id}`);
-    }
+export const DesktopNav = ({ location }: { location: any }) => {
+  const { user, logout } = useAuth();
+  
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    return name.split(" ").map(n => n[0]).join("").toUpperCase();
   };
 
-  const primaryMenuItems = [
-    { label: "Home", action: () => scrollToSection("hero") },
-    { label: "About", action: () => scrollToSection("about") },
-    { label: "Products", to: "/products" },
-    { label: "Contact", action: () => scrollToSection("contact") },
-  ];
-
   return (
-    <div className="flex items-center justify-between w-full h-16">
+    <div className="flex items-center justify-between w-full">
       <div className="flex items-center">
-        <Link to="/" className="mr-6">
-          <Logo size="md" variant="full" />
-        </Link>
+        <Logo className="mr-6" />
         
-        <nav className="flex items-center">
-          {/* Primary Menu Items - Home, About, etc */}
-          <div className="flex items-center">
-            {primaryMenuItems.map((item, index) => (
-              <NavLink 
-                key={index}
-                to={item.to} 
-                onClick={item.action}
-                className="px-3 py-2 mx-1 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors"
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </div>
-
-          {/* Dropdown Menus - Services, Activities, etc */}
-          <div className="flex items-center ml-2">
-            <ServicesDropdown />
-            <ActivitiesDropdown />
-            <SpiritualityDropdown />
-            <MainMenuDropdown scrollToSection={scrollToSection} />
-          </div>
-        </nav>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link to="/" className="font-medium text-meant-700 hover:text-meant-900 mr-6">
+                Home
+              </Link>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
+                  <MenuItem 
+                    title="Doctor Consultations" 
+                    href="/doctors"
+                    description="Online consultations with experienced doctors"
+                  />
+                  <MenuItem 
+                    title="Spiritual Guidance" 
+                    href="/spirituality"
+                    description="Connect with spiritual guides and healers"
+                  />
+                  <MenuItem 
+                    title="Student Psychologists" 
+                    href="/student-psychologists"
+                    description="Affordable counseling with psychology students"
+                  />
+                  <MenuItem 
+                    title="Wellness Activities" 
+                    href="/activities"
+                    description="Participate in wellness and mindfulness activities"
+                  />
+                  <MenuItem 
+                    title="Addiction Recovery" 
+                    href="/de-addiction"
+                    description="Comprehensive addiction recovery programs"
+                  />
+                  <MenuItem 
+                    title="All Services" 
+                    href="/services"
+                    description="Browse our complete range of services"
+                  />
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
+                  <MenuItem 
+                    title="Wellness Products" 
+                    href="/products"
+                    description="Products designed to improve your wellbeing"
+                  />
+                  <MenuItem 
+                    title="Self-Help Books" 
+                    href="/products?category=books"
+                    description="Curated collection of mental health books"
+                  />
+                  <MenuItem 
+                    title="Meditation Tools" 
+                    href="/products?category=meditation"
+                    description="Tools and accessories for meditation practice"
+                  />
+                  <MenuItem 
+                    title="Aromatherapy" 
+                    href="/products?category=aromatherapy"
+                    description="Essential oils and diffusers for aromatherapy"
+                  />
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Corporate</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
+                  <MenuItem 
+                    title="Corporate Wellness Plans" 
+                    href="/corporate-plans"
+                    description="Wellness programs for your organization"
+                  />
+                  <MenuItem 
+                    title="Employee Assistance" 
+                    href="/corporate-plans#assistance"
+                    description="Support services for your employees"
+                  />
+                  <MenuItem 
+                    title="Corporate Certifications" 
+                    href="/corporate-certification"
+                    description="Mental health certifications for your workplace"
+                  />
+                  <MenuItem 
+                    title="Workshops & Webinars" 
+                    href="/webinars"
+                    description="Educational sessions for corporate teams"
+                  />
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            
+            <NavigationMenuItem>
+              <Link to="/about" className="font-medium text-meant-700 hover:text-meant-900 mr-6">
+                About
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
-
-      <div className="flex items-center gap-3">
-        <ThemeToggle />
-        
-        {isAuthenticated ? (
-          <button 
-            onClick={logout} 
-            className="text-sm font-medium px-4 py-2 border border-gray-300 rounded-md hover:bg-accent"
-          >
-            Logout
-          </button>
+      
+      <div>
+        {user ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={user.photoURL || ""} alt={user.displayName || "User"} />
+                  <AvatarFallback>{getInitials(user.displayName || "User")}</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/profile" className="cursor-pointer flex items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/my-bookings" className="cursor-pointer flex items-center">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  <span>My Bookings</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/settings" className="cursor-pointer flex items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => logout()} className="cursor-pointer">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
-          <Link to="/login">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="font-medium"
-            >
-              Login
+          <div className="flex items-center gap-4">
+            <Button variant="outline" asChild>
+              <Link to="/login">Log In</Link>
             </Button>
-          </Link>
+            <Button asChild>
+              <Link to="/register">Sign Up</Link>
+            </Button>
+          </div>
         )}
-        
-        <Link to="/doctors" className="hidden sm:block">
-          <Button 
-            size="sm"
-            className="bg-meant-600 hover:bg-meant-700 text-white font-medium"
-          >
-            Book Consultation
-          </Button>
-        </Link>
-        
-        <Link to="/cart" className="relative">
-          <ShoppingCart size={20} className="text-foreground/80 hover:text-foreground transition-colors" />
-          <span className="absolute -top-1 -right-1 bg-meant-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-            2
-          </span>
-        </Link>
       </div>
     </div>
   );
 };
+
+const MenuItem = ({ 
+  title, 
+  href, 
+  description 
+}: { 
+  title: string; 
+  href: string;
+  description: string;
+}) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link
+          to={href}
+          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {description}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  );
+};
+
+const Calendar = (props: any) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M8 2v4" />
+    <path d="M16 2v4" />
+    <rect width="18" height="18" x="3" y="4" rx="2" />
+    <path d="M3 10h18" />
+    <path d="M8 14h.01" />
+    <path d="M12 14h.01" />
+    <path d="M16 14h.01" />
+    <path d="M8 18h.01" />
+    <path d="M12 18h.01" />
+    <path d="M16 18h.01" />
+  </svg>
+);
 
 export default DesktopNav;

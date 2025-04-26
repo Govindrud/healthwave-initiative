@@ -37,6 +37,7 @@ import ProductDetail from "@/pages/ProductDetail";
 import RehabilitationConfirmation from "@/pages/RehabilitationConfirmation";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
+import MyBookings from "@/pages/MyBookings";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
               <Route path="/login" element={<Login />} />
+              <Route path="/my-bookings" element={<MyBookings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>

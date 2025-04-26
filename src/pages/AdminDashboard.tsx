@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,6 +11,7 @@ import BookingForm from '@/components/admin/BookingForm';
 import CustomerForm from '@/components/admin/CustomerForm';
 import CustomersListing from '@/components/admin/CustomersListing';
 import PaymentForm from '@/components/admin/PaymentForm';
+import BookingManagement from '@/components/admin/BookingManagement';
 import { Download, HelpCircle, DatabaseIcon, UserPlus, CalendarPlus, CreditCard, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -109,17 +111,21 @@ const AdminDashboard = () => {
           </Card>
         </div>
         
-        <Tabs defaultValue="bookings" className="w-full">
+        <Tabs defaultValue="booking-management" className="w-full">
           <TabsList className="mb-4">
-            <TabsTrigger value="bookings">Bookings</TabsTrigger>
+            <TabsTrigger value="booking-management">Booking Management</TabsTrigger>
+            <TabsTrigger value="google-sheet-bookings">Google Sheet Bookings</TabsTrigger>
             <TabsTrigger value="customers">Customers</TabsTrigger>
             <TabsTrigger value="payments">Payments</TabsTrigger>
             <TabsTrigger value="appointments">Appointments</TabsTrigger>
             <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
-            <TabsTrigger value="plans">Plans</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="bookings">
+          <TabsContent value="booking-management">
+            <BookingManagement />
+          </TabsContent>
+          
+          <TabsContent value="google-sheet-bookings">
             <GoogleSheetBookings key={`bookings-${refreshTrigger}`} />
           </TabsContent>
           
@@ -173,23 +179,6 @@ const AdminDashboard = () => {
                   dataType="inquiries" 
                   title="Export Inquiries to Excel"
                   description="Download all customer inquiry data as an Excel file"
-                />
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="plans">
-            <Card>
-              <CardHeader>
-                <CardTitle>Service Plans</CardTitle>
-                <CardDescription>View and export service plan data</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">Service plans from Google Sheets will appear here.</p>
-                <ExcelExporter 
-                  dataType="plans" 
-                  title="Export Plans to Excel"
-                  description="Download all service plan data as an Excel file"
                 />
               </CardContent>
             </Card>
