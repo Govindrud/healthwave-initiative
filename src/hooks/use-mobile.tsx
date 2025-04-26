@@ -60,7 +60,7 @@ export function useIsMobile() {
   return !!isMobile;
 }
 
-// Add platform detection hooks
+// Enhanced platform detection hooks
 export function useIsPlatform() {
   const [platform, setPlatform] = React.useState({
     isIOS: false,
@@ -73,18 +73,26 @@ export function useIsPlatform() {
   });
 
   React.useEffect(() => {
+    const detectMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera || '';
+      
+      // Enhanced mobile detection - multiple checks
+      const checkUserAgent = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      const checkTouchPoints = navigator.maxTouchPoints > 0;
+      const checkTouch = 'ontouchstart' in window;
+      const checkMediaQuery = window.matchMedia('(max-width: 1024px)').matches;
+      const checkDocumentTouch = (window as any).DocumentTouch && 
+                                document instanceof (window as any).DocumentTouch;
+      
+      // Combined check - any one of these indicates mobile
+      return checkUserAgent || checkTouchPoints || checkTouch || 
+             checkMediaQuery || checkDocumentTouch || window.innerWidth < 1024;
+    };
+
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera || '';
     
-    // Enhanced mobile detection
-    // Check common mobile indicators
-    const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-    
-    // Additional check for touch screen devices
-    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || 
-                          (window as any).DocumentTouch && document instanceof (window as any).DocumentTouch;
-    
-    // Combined mobile detection
-    const isMobile = isMobileDevice || hasTouchScreen || window.innerWidth < 768;
+    // Combined mobile detection using the function
+    const isMobile = detectMobile();
     
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
     const isAndroid = /android/i.test(userAgent);
@@ -102,6 +110,14 @@ export function useIsPlatform() {
       isDesktop,
       isSafari
     });
+    
+    // Set a data attribute on the body for CSS targeting
+    if (isMobile) {
+      document.body.setAttribute('data-mobile', 'true');
+    } else {
+      document.body.removeAttribute('data-mobile');
+    }
+    
   }, []);
 
   return platform;

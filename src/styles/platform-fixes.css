@@ -57,6 +57,27 @@ a, button, input, textarea, select {
   }
 }
 
+/* Specific fix for mobile menu on Chrome mobile */
+body[data-mobile="true"] .mobile-menu-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: white;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for dropdowns in mobile view */
+body[data-mobile="true"] [data-state="open"] > [data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
 /* Fix for iOS notches and safe areas */
 @supports (padding-top: env(safe-area-inset-top)) {
   header {
@@ -69,4 +90,21 @@ a, button, input, textarea, select {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
+}
+
+/* Make sure mobile navigation button is always clickable */
+.hamburger-button {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Fix for full-screen overlays on mobile */
+.overlay-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  z-index: 100;
 }

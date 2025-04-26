@@ -9,9 +9,10 @@ interface HamburgerButtonProps {
 export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onClick }) => {
   return (
     <button
-      className="p-2 rounded-md bg-white border border-gray-200 shadow-sm z-50"
+      className="p-2 rounded-md bg-white border border-gray-200 shadow-sm z-50 focus:outline-none focus:ring-2 focus:ring-meant-600 focus:ring-opacity-50"
       onClick={onClick}
       aria-label={isOpen ? "Close menu" : "Open menu"}
+      aria-expanded={isOpen}
     >
       <div className="w-6 h-5 flex flex-col justify-between">
         <span

@@ -1,8 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import Logo from "@/components/Logo";
+import { useLocation } from "react-router-dom";
 import { DesktopNav } from "@/components/navbar/DesktopNav";
 import { MobileNav } from "@/components/navbar/MobileNav";
 import { useIsPlatform } from "@/hooks/use-mobile"; 
@@ -37,7 +35,7 @@ const Navbar = () => {
     };
   }, []);
 
-  // Force mobile view on mobile browsers
+  // Force mobile view on mobile browsers and small viewports
   const showMobileNav = isMobileView || isMobile;
 
   return (
@@ -48,7 +46,6 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Use mobile navigation for both small screens and mobile browsers */}
           {showMobileNav ? (
             <MobileNav location={location} />
           ) : (

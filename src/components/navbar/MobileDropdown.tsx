@@ -25,8 +25,9 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
+          className="flex items-center justify-center w-6 h-6"
         >
-          <ChevronDown size={16} className="text-gray-600" />
+          <ChevronDown size={18} className="text-gray-600" />
         </motion.div>
       </button>
       
