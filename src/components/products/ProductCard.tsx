@@ -35,18 +35,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
     setImageError(true);
     
     if (retryCount === 0) {
-      // First try: attempt to load from public/images folder
+      // First try: attempt to load from /images/products folder
       const imageName = getImageName(product.image);
       setImageSrc(`/images/products/${imageName}`);
       setRetryCount(1);
+      console.log(`First retry: attempting to load image from /images/products/${imageName}`);
     } else if (retryCount === 1) {
-      // Second try: attempt with different path structure
-      setImageSrc(`/products/${getImageName(product.image)}`);
+      // Second try: attempt with public/images/products path
+      const imageName = getImageName(product.image);
+      setImageSrc(`/public/images/products/${imageName}`);
       setRetryCount(2);
+      console.log(`Second retry: attempting to load image from /public/images/products/${imageName}`);
+    } else if (retryCount === 2) {
+      // Third try: attempt with just the basename
+      const imageName = getImageName(product.image);
+      setImageSrc(`/${imageName}`);
+      setRetryCount(3);
+      console.log(`Third retry: attempting to load image with just /${imageName}`);
     } else {
       // Final fallback
       setImageSrc("/placeholder.svg");
       setImageLoaded(true); // Mark as loaded to remove skeleton
+      console.log("Using placeholder image after all retries failed");
     }
   }, [product.image, retryCount]);
 
@@ -54,11 +64,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
     toast.success(`${product.name} added to cart`);
   };
 
+  React.useEffect(() => {
+    // Log the initial image path for debugging
+    console.log(`Initial image path for ${product.name}: ${product.image}`);
+  }, [product]);
+
   return (
     <Card className="overflow-hidden transition-all border hover:shadow-md h-full flex flex-col">
       <Link to={`/product/${product.id}`} className="flex-grow">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-          {!imageLoaded && (
+          {!imageLoaded && !imageError && (
             <Skeleton className="absolute inset-0 w-full h-full" />
           )}
           <img
@@ -67,17 +82,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
             className={`object-cover w-full h-full transition-transform group-hover:scale-105 ${
               !imageLoaded ? "opacity-0" : "opacity-100"
             }`}
-            onLoad={() => setImageLoaded(true)}
+            onLoad={() => {
+              setImageLoaded(true);
+              setImageError(false);
+              console.log(`Image loaded successfully: ${imageSrc}`);
+            }}
             onError={() => {
-              if (retryCount < 2) {
+              if (retryCount < 3) {
                 handleImageError();
               } else {
                 // We've tried all fallbacks
                 setImageLoaded(true);
+                console.log(`All image fallbacks failed for ${product.name}`);
               }
             }}
           />
-          {imageError && imageLoaded && retryCount >= 2 && (
+          {imageError && imageLoaded && retryCount >= 3 && (
             <div className="absolute inset-0 flex items-center justify-center bg-muted/80 text-muted-foreground text-sm p-2 text-center">
               {product.name}
             </div>
