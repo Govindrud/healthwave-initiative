@@ -1,6 +1,6 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Heart, Shield } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
 import { useToast } from "@/hooks/use-toast";
 import { StressLevelSelector } from "@/components/surender/StressLevelSelector";
@@ -29,7 +29,6 @@ const Surender = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Here you would typically send this data to your backend
     console.log("Form submitted", { ...formData, stressLevel: selectedLevel });
     
     toast({
@@ -38,7 +37,6 @@ const Surender = () => {
       duration: 5000,
     });
     
-    // Navigate to thank you page or show confirmation
     setTimeout(() => {
       navigate("/rehabilitation-confirmation");
     }, 1500);
