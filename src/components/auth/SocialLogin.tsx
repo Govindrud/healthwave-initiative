@@ -12,15 +12,26 @@ const SocialLogin: React.FC<SocialLoginProps> = ({ isLoading }) => {
     toast.info("Google login would be implemented here");
   };
 
-  const handleGuestLogin = () => {
-    // Generate a unique device ID (in real app would use fingerprinting)
-    const deviceId = `guest-${Math.random().toString(36).substring(2, 15)}`;
-    
-    // Store the guest ID in local storage
-    localStorage.setItem("guestId", deviceId);
-    
-    toast.success("Logged in as guest");
-    window.location.href = "/";
+  const handleGuestLogin = async () => {
+    try {
+      // Fetch the user's IP address using a public API
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      const deviceId = `guest-${data.ip}-${Math.random().toString(36).substring(2, 15)}`;
+      
+      // Store the guest ID and IP in local storage
+      localStorage.setItem("guestId", deviceId);
+      localStorage.setItem("guestIp", data.ip);
+      
+      toast.success("Logged in as guest");
+      window.location.href = "/";
+    } catch (error) {
+      // Fallback if IP fetch fails
+      const deviceId = `guest-${Math.random().toString(36).substring(2, 15)}`;
+      localStorage.setItem("guestId", deviceId);
+      toast.success("Logged in as guest");
+      window.location.href = "/";
+    }
   };
 
   return (
