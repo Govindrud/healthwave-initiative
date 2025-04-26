@@ -3,7 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MobileNavigation } from "./MobileNavigation";
-import { ShoppingCart, User, Home, Phone } from "lucide-react";
+import { ShoppingCart, User, Home, Phone, Globe } from "lucide-react";
+import RegionSelector from "@/components/region/RegionSelector";
+import Logo from "@/components/Logo";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface MobileMenuContentProps {
   isOpen: boolean;
@@ -16,25 +19,25 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
   onClose,
   scrollToSection
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <motion.div
-      className="fixed inset-0 top-[70px] z-50 bg-white"
+      className="fixed inset-0 top-[60px] z-50 bg-white"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="p-4 overflow-y-auto max-h-[calc(100vh-70px)] bg-white mobile-menu-container">
-        <div className="mb-6 pb-4 border-b border-gray-200">
-          <Link to="/" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <Home size={20} className="mr-3 text-primary" />
-            <span>Home</span>
-          </Link>
-          
-          <Link to="/services" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <Phone size={20} className="mr-3 text-primary" />
-            <span>Services</span>
-          </Link>
+      <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)] bg-white mobile-menu-container">
+        {/* Logo area */}
+        <div className="mb-4 flex justify-center">
+          <Logo size="md" variant="full" />
+        </div>
+      
+        {/* Language and Currency selection */}
+        <div className="mb-4 flex justify-center">
+          <RegionSelector variant="full" />
         </div>
         
         <div className="mb-6">

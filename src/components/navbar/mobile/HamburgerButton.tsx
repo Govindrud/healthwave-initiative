@@ -20,7 +20,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({
     >
       <div className="w-8 h-8 flex flex-col justify-center items-center">
         <motion.span
-          className="w-6 h-0.5 bg-gray-700 rounded-full block transition-all"
+          className="w-6 h-0.5 bg-primary rounded-full block transition-all"
           animate={{
             rotate: isOpen ? 45 : 0,
             y: isOpen ? 2 : 0,
@@ -28,7 +28,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({
           transition={{ duration: 0.2 }}
         />
         <motion.span
-          className="w-6 h-0.5 bg-gray-700 rounded-full block my-1.5 transition-all"
+          className="w-6 h-0.5 bg-primary rounded-full block my-1.5 transition-all"
           animate={{
             opacity: isOpen ? 0 : 1,
             width: isOpen ? 0 : 24,
@@ -36,7 +36,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({
           transition={{ duration: 0.2 }}
         />
         <motion.span
-          className="w-6 h-0.5 bg-gray-700 rounded-full block transition-all"
+          className="w-6 h-0.5 bg-primary rounded-full block transition-all"
           animate={{
             rotate: isOpen ? -45 : 0,
             y: isOpen ? -2 : 0,

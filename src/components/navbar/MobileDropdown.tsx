@@ -14,9 +14,9 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
   const mobileNavLinkClass = "text-foreground hover:text-primary transition-colors px-4 py-3 rounded-md text-base font-medium flex items-center";
 
   return (
-    <div className="relative border-b border-gray-100 last:border-0"> 
+    <div className="relative border-b border-gray-100 last:border-0 bg-white"> 
       <button 
-        className={`${mobileNavLinkClass} justify-between w-full`}
+        className={`${mobileNavLinkClass} justify-between w-full bg-white`}
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-controls={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
@@ -26,7 +26,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <ChevronDown size={16} />
+          <ChevronDown size={16} className="text-gray-600" />
         </motion.div>
       </button>
       
@@ -40,7 +40,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="py-1 pl-4 border-l-2 border-primary/20 ml-4 space-y-1">
+            <div className="py-2 pl-6 border-l-2 border-primary ml-5 space-y-2 pr-2 my-1">
               {children}
             </div>
           </motion.div>
