@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LoginFormProps {
   onSuccess: () => void;
@@ -24,24 +24,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     setIsLoading(true);
     
     try {
-      // Check for admin login
-      if (email === "admin@example.com") {
-        const success = login(password);
-        if (success) {
-          toast.success("Admin login successful!");
-          navigate("/admin");
-          return;
-        } else {
-          toast.error("Invalid admin password. Please try again.");
-        }
-      } else {
-        // Regular user login (simplified)
-        // Store fake user info for demo purposes
-        localStorage.setItem("user_email", email);
-        localStorage.setItem("admin_auth", "true");
-        
+      const success = await login(email, password);
+      if (success) {
         toast.success("Login successful!");
         onSuccess();
+      } else {
+        toast.error("Login failed. Please check your credentials.");
       }
     } catch (error) {
       toast.error("Login failed. Please try again.");

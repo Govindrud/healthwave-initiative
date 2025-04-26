@@ -29,7 +29,7 @@ import { AIProvider } from "@/providers/AIProvider";
 import AdminLogin from "@/pages/AdminLogin";
 import Admin from "@/pages/Admin";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/hooks/useAuth";
 import { RegionProvider } from "@/context/RegionContext";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
