@@ -29,7 +29,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Check if user was previously authenticated
     const authStatus = localStorage.getItem("admin_auth");
-    if (authStatus === "true") {
+    const guestId = localStorage.getItem("guestId");
+    
+    if (authStatus === "true" || guestId) {
       setIsAuthenticated(true);
     }
   }, []);
@@ -49,6 +51,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("admin_auth");
+    localStorage.removeItem("guestId");
+    localStorage.removeItem("guestIp");
     toast.info("Logged out successfully");
   };
 

@@ -26,7 +26,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     
     try {
       // Check for admin login
-      if (email === "admin@example.com") {
+      if (email === "admin@example.com" && password !== "") {
         const success = login(password);
         if (success) {
           toast.success("Admin login successful!");
@@ -37,6 +37,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
       
       // Regular user login (simplified)
       setTimeout(() => {
+        // Store fake user info for demo purposes
+        localStorage.setItem("user_email", email);
+        localStorage.setItem("admin_auth", "true");
+        
         toast.success("Login successful!");
         onSuccess();
       }, 1000);

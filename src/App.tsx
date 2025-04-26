@@ -35,6 +35,7 @@ import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
 import ProductDetail from "@/pages/ProductDetail";
 import RehabilitationConfirmation from "@/pages/RehabilitationConfirmation";
+import Login from "@/pages/Login";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+              <Route path="/login" element={<Login />} />
               <Route path="*" element={<Index />} />
             </Routes>
           </Router>
