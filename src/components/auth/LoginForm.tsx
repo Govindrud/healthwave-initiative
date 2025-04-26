@@ -1,11 +1,12 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 interface LoginFormProps {
   onSuccess: () => void;
@@ -16,14 +17,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
   
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
     try {
-      // This is a placeholder for actual authentication logic
-      // In the original code, this uses the login function from AuthContext
+      // Check for admin login
+      if (email === "admin@example.com") {
+        const success = login(password);
+        if (success) {
+          toast.success("Admin login successful!");
+          navigate("/admin");
+          return;
+        }
+      }
+      
+      // Regular user login (simplified)
       setTimeout(() => {
         toast.success("Login successful!");
         onSuccess();
