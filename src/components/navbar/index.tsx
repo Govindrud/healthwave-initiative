@@ -27,15 +27,8 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo shown only on desktop */}
-          <div className="hidden md:block">
-            <Link to="/" className="flex items-center justify-center">
-              <Logo size="md" variant="full" />
-            </Link>
-          </div>
-
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4 w-full">
+          <div className="hidden md:flex items-center w-full">
             <DesktopNav location={location} />
           </div>
 

@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link, Location, useNavigate } from "react-router-dom";
-import { ShoppingCart, Home } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "./NavLink";
 import { ServicesDropdown } from "./ServicesDropdown";
@@ -20,7 +20,7 @@ interface DesktopNavProps {
 export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const isHomePage = location.pathname === "/";
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const scrollToSection = (id: string) => {
     if (isHomePage) {
@@ -43,9 +43,11 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center">
-        <Logo size="md" variant="full" className="mr-4" />
+        <Link to="/" className="mr-6">
+          <Logo size="md" variant="full" />
+        </Link>
         
-        <nav className="hidden md:flex items-center space-x-1">
+        <nav className="flex items-center space-x-1">
           {primaryMenuItems.map((item, index) => (
             <NavLink 
               key={index}
@@ -72,13 +74,28 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         {isAuthenticated ? (
           <div className="flex items-center space-x-2">
             <AdminMenu />
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={logout}
+              className="text-meant-600 border-meant-600 hover:bg-meant-50"
+            >
+              Logout
+            </Button>
           </div>
         ) : (
-          <Link to="/admin-login">
-            <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
-              Login
-            </Button>
-          </Link>
+          <div className="flex items-center space-x-2">
+            <Link to="/login">
+              <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
+                Login
+              </Button>
+            </Link>
+            <Link to="/admin-login">
+              <Button variant="outline" size="sm" className="text-meant-600 border-meant-600 hover:bg-meant-50">
+                Admin
+              </Button>
+            </Link>
+          </div>
         )}
         
         <Link to="/doctors" className="hidden sm:block">

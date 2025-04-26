@@ -7,21 +7,24 @@ interface MobileNavItemProps {
   onClick?: () => void;
   className?: string;
   children: React.ReactNode;
+  active?: boolean;
 }
 
 export const MobileNavItem: React.FC<MobileNavItemProps> = ({
   to,
   onClick,
   className = "",
-  children
+  children,
+  active = false
 }) => {
   const baseClass = "block w-full text-left text-foreground hover:text-primary hover:bg-gray-50 transition-all px-4 py-3 rounded-md text-base font-medium";
+  const activeClass = active ? "text-meant-600 font-semibold" : "";
   
   if (to) {
     return (
       <Link 
         to={to} 
-        className={`${baseClass} ${className}`}
+        className={`${baseClass} ${activeClass} ${className}`}
         onClick={onClick}
       >
         {children}
@@ -32,7 +35,7 @@ export const MobileNavItem: React.FC<MobileNavItemProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`${baseClass} ${className} w-full text-left`}
+      className={`${baseClass} ${activeClass} ${className} w-full text-left`}
     >
       {children}
     </button>
