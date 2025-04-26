@@ -1,4 +1,4 @@
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf } from "lucide-react";
+import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield } from "lucide-react";
 
 export const spiritualityItems = [
   {
@@ -96,12 +96,12 @@ export const mainMenuItems = [
     href: "/surender",
     title: "Surender",
     icon: Heart,
-    description: "Explore surrender services and assistance"
+    description: "Find peace and professional support for stress"
   },
   {
     href: "/de-addiction",
     title: "De-addiction",
-    icon: Heart,
+    icon: Shield,
     description: "Support for overcoming addiction"
   },
   {
