@@ -29,6 +29,17 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  // Navigation links for mobile menu
+  const mobileNavLinks = [
+    { title: "Home", path: "/" },
+    { title: "Services", path: "/services" },
+    { title: "Products", path: "/products" },
+    { title: "Doctors", path: "/doctors" },
+    { title: "Spirituality", path: "/spirituality" },
+    { title: "Corporate", path: "/corporate-plans" },
+    { title: "Admin", path: "/admin-login" }
+  ];
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -65,31 +76,19 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Improved Mobile menu */}
         {isOpen && (
           <div className="md:hidden py-4 border-t bg-white">
-            <nav className="flex flex-col space-y-4">
-              <Link to="/" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Home
-              </Link>
-              <Link to="/services" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Services
-              </Link>
-              <Link to="/products" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Products
-              </Link>
-              <Link to="/doctors" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Doctors
-              </Link>
-              <Link to="/spirituality" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Spirituality
-              </Link>
-              <Link to="/corporate-plans" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Corporate
-              </Link>
-              <Link to="/admin-login" className="px-4 py-2 hover:bg-gray-100 rounded">
-                Admin
-              </Link>
+            <nav className="flex flex-col space-y-2">
+              {mobileNavLinks.map((item, index) => (
+                <Link 
+                  key={index} 
+                  to={item.path} 
+                  className="px-4 py-3 hover:bg-gray-100 rounded-md text-foreground/80 hover:text-foreground transition-colors"
+                >
+                  {item.title}
+                </Link>
+              ))}
             </nav>
           </div>
         )}
