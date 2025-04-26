@@ -6,6 +6,7 @@ import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
 import { MobileMenuContent } from "./mobile/MobileMenuContent";
 import ThemeToggle from "../ThemeToggle";
+import Logo from "../Logo";
 
 interface MobileNavProps {
   location: Location;
@@ -20,7 +21,6 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   // Close mobile menu when route changes
   React.useEffect(() => {
     setIsMobileMenuOpen(false);
-    // Restore body scroll when menu closes due to route change
     document.body.style.overflow = "auto";
   }, [location]);
 
@@ -44,7 +44,6 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
 
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-    // Prevent scrolling when menu is open
     document.body.style.overflow = !isMobileMenuOpen ? "hidden" : "auto";
   };
 
@@ -53,13 +52,11 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     document.body.style.overflow = "auto";
     
     if (isHomePage) {
-      // If we're on the home page, scroll to the section
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      // If we're on another page, navigate to home page with hash
       navigate(`/#${id}`);
     }
   };
@@ -67,9 +64,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   return (
     <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
       <Link to="/" className="flex items-center">
-        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
-          <span className="font-extrabold">Meant</span>ToHelp
-        </span>
+        <Logo size="md" variant="full" />
       </Link>
       
       <div className="flex items-center space-x-2">
@@ -97,3 +92,5 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     </div>
   );
 };
+
+export default MobileNav;
