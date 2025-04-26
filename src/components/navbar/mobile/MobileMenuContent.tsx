@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -22,20 +21,12 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
   const { t } = useTranslation();
   
   return (
-    <motion.div
-      className="fixed inset-0 top-[60px] z-50 bg-white"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.2 }}
-    >
+    <motion.div className="fixed inset-0 top-[60px] z-50 bg-white">
       <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)] bg-white mobile-menu-container">
-        {/* Logo area */}
         <div className="mb-4 flex justify-center">
           <Logo size="md" variant="full" />
         </div>
       
-        {/* Language and Currency selection */}
         <div className="mb-4 flex justify-center">
           <RegionSelector variant="full" />
         </div>
@@ -51,9 +42,9 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
             <span className="ml-auto bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
           </Link>
           
-          <Link to="/admin-login" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
+          <Link to="/login" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
             <User size={20} className="mr-3 text-primary" />
-            <span>Admin Login</span>
+            <span>Login</span>
           </Link>
         </div>
 

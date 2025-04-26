@@ -1,5 +1,4 @@
-
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield } from "lucide-react";
+import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield, Phone, MessageCircle } from "lucide-react";
 
 export const spiritualityItems = [
   {
@@ -104,11 +103,5 @@ export const mainMenuItems = [
     title: "De-addiction",
     icon: Shield,
     description: "Support for overcoming addiction"
-  },
-  {
-    href: "/admin-dashboard",
-    title: "Admin Dashboard",
-    icon: Building,
-    description: "Manage bookings, inquiries, and events"
   }
 ];

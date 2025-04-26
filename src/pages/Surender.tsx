@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Heart, Shield } from "lucide-react";
+import { Heart, Shield, Phone, MessageCircle, Headphones } from "lucide-react";
 import MainLayout from "@/components/layouts/MainLayout";
 import { useToast } from "@/hooks/use-toast";
 import { StressLevelSelector } from "@/components/surender/StressLevelSelector";
@@ -63,6 +63,40 @@ const Surender = () => {
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Taking the first step toward healing shows tremendous courage. We're here to support you through your journey of finding peace and balance.
             </p>
+          </div>
+
+          <div className="bg-red-50 border border-red-100 rounded-lg p-6 mb-8">
+            <h2 className="text-2xl font-semibold text-red-800 mb-4">24/7 Emergency Support</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="flex items-start gap-3">
+                <Phone className="w-6 h-6 text-red-600 mt-1" />
+                <div>
+                  <h3 className="font-semibold text-red-800">Emergency Helpline</h3>
+                  <p className="text-red-600 text-lg font-semibold">1800-599-0019</p>
+                  <p className="text-sm text-red-700">Available 24/7</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <MessageCircle className="w-6 h-6 text-red-600 mt-1" />
+                <div>
+                  <h3 className="font-semibold text-red-800">Live Chat Support</h3>
+                  <p className="text-red-600">Chat with a counselor</p>
+                  <button className="text-sm bg-red-600 text-white px-3 py-1 rounded-full mt-1 hover:bg-red-700">
+                    Start Chat
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <Headphones className="w-6 h-6 text-red-600 mt-1" />
+                <div>
+                  <h3 className="font-semibold text-red-800">Quick Help</h3>
+                  <p className="text-red-600">Call: +91 987-654-3210</p>
+                  <p className="text-sm text-red-700">Immediate assistance</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-8 mb-12">
