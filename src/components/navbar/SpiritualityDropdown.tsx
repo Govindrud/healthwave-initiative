@@ -8,7 +8,6 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { DropdownContent } from "./common/DropdownContent";
-import { Heart, BookOpen, MapPin, Video, Sparkles } from "lucide-react";
 import { spiritualityItems } from "@/config/navigation";
 
 export const SpiritualityDropdown: React.FC = () => {
@@ -18,14 +17,14 @@ export const SpiritualityDropdown: React.FC = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={`${navLinkClass} bg-white px-2 py-2 text-xs lg:text-sm`}>
+          <NavigationMenuTrigger className={`${navLinkClass} bg-background px-2 py-2 text-xs lg:text-sm`}>
             Spirituality
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50 bg-white border border-border shadow-lg">
+          <NavigationMenuContent className="z-50 bg-background border border-border shadow-lg rounded-md">
             <DropdownContent 
               items={spiritualityItems} 
               showViewAll={{
-                href: "/spirituality",
+                href: "/spirituality-services",
                 label: "View All Spiritual Services"
               }}
             />

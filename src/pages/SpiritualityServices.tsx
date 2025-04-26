@@ -2,10 +2,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layouts/MainLayout";
-import SpiritualServiceBooking from "@/components/spirituality/SpiritualServiceBooking";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock, MapPin, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SpiritualServiceBooking from "@/components/spirituality/SpiritualServiceBooking";
 
 const SpiritualityServices = () => {
   useEffect(() => {
@@ -17,7 +17,7 @@ const SpiritualityServices = () => {
     {
       id: "p1",
       title: "Spiritual Guidance Session",
-      description: "One-on-one guidance to help align your life with your deepest values and spiritual beliefs.",
+      description: "One-on-one guidance session to help align your life with your deepest values and spiritual beliefs.",
       price: 1500,
       duration: "60 minutes",
       location: "Online / In-person",
@@ -76,62 +76,72 @@ const SpiritualityServices = () => {
             </p>
           </div>
           
-          <Tabs defaultValue="consultations">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+          <Tabs defaultValue="tours" className="space-y-8">
+            <TabsList className="w-full grid grid-cols-2">
               <TabsTrigger value="consultations">Priest Consultations</TabsTrigger>
               <TabsTrigger value="tours">Spiritual Tours</TabsTrigger>
             </TabsList>
             
             <TabsContent value="consultations" className="space-y-6">
-              <div className="bg-meant-50 p-6 rounded-lg mb-6">
-                <h2 className="text-xl font-semibold mb-2">Connect with Spiritual Guides</h2>
-                <p className="mb-4">
-                  Our experienced spiritual guides offer personal consultations to help you navigate life's challenges 
-                  through a spiritual lens, providing rituals and practices that complement mental health care.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {priestConsultations.map(service => (
-                    <div key={service.id} className="bg-white p-4 rounded-lg shadow-md">
-                      <h3 className="text-lg font-medium mb-2">{service.title}</h3>
-                      <p className="text-muted-foreground mb-4 text-sm">{service.description}</p>
-                      <SpiritualServiceBooking
-                        serviceId={service.id}
-                        title={service.title}
-                        price={service.price}
-                        duration={service.duration}
-                        location={service.location}
-                        isGroup={service.isGroup}
-                      />
+              <div className="grid gap-6">
+                {priestConsultations.map(service => (
+                  <div key={service.id} className="bg-card p-6 rounded-lg shadow-sm border">
+                    <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+                    <p className="text-muted-foreground mb-4">{service.description}</p>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="flex items-center text-sm">
+                        <Clock className="h-4 w-4 mr-2" />
+                        <span>{service.duration}</span>
+                      </div>
+                      <div className="flex items-center text-sm">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <span>{service.location}</span>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                    <SpiritualServiceBooking
+                      serviceId={service.id}
+                      title={service.title}
+                      price={service.price}
+                      duration={service.duration}
+                      location={service.location}
+                      isGroup={service.isGroup}
+                    />
+                  </div>
+                ))}
               </div>
             </TabsContent>
             
             <TabsContent value="tours" className="space-y-6">
-              <div className="bg-meant-50 p-6 rounded-lg mb-6">
-                <h2 className="text-xl font-semibold mb-2">Experience Sacred Journeys</h2>
-                <p className="mb-4">
-                  Join our guided tours to sacred sites and retreats designed to provide space for reflection,
-                  meditation, and connecting with traditional spiritual practices.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {spiritualTours.map(tour => (
-                    <div key={tour.id} className="bg-white p-4 rounded-lg shadow-md">
-                      <h3 className="text-lg font-medium mb-2">{tour.title}</h3>
-                      <p className="text-muted-foreground mb-4 text-sm">{tour.description}</p>
-                      <SpiritualServiceBooking
-                        serviceId={tour.id}
-                        title={tour.title}
-                        price={tour.price}
-                        duration={tour.duration}
-                        location={tour.location}
-                        isGroup={tour.isGroup}
-                        maxParticipants={tour.maxParticipants}
-                      />
+              <div className="grid gap-6">
+                {spiritualTours.map(tour => (
+                  <div key={tour.id} className="bg-card p-6 rounded-lg shadow-sm border">
+                    <h3 className="text-xl font-semibold mb-2">{tour.title}</h3>
+                    <p className="text-muted-foreground mb-4">{tour.description}</p>
+                    <div className="grid grid-cols-3 gap-4 mb-4">
+                      <div className="flex items-center text-sm">
+                        <Clock className="h-4 w-4 mr-2" />
+                        <span>{tour.duration}</span>
+                      </div>
+                      <div className="flex items-center text-sm">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <span>{tour.location}</span>
+                      </div>
+                      <div className="flex items-center text-sm">
+                        <Users className="h-4 w-4 mr-2" />
+                        <span>Max {tour.maxParticipants}</span>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                    <SpiritualServiceBooking
+                      serviceId={tour.id}
+                      title={tour.title}
+                      price={tour.price}
+                      duration={tour.duration}
+                      location={tour.location}
+                      isGroup={tour.isGroup}
+                      maxParticipants={tour.maxParticipants}
+                    />
+                  </div>
+                ))}
               </div>
             </TabsContent>
           </Tabs>

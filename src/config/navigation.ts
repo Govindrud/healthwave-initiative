@@ -1,4 +1,3 @@
-
 import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf } from "lucide-react";
 
 export const spiritualityItems = [
@@ -12,31 +11,25 @@ export const spiritualityItems = [
     href: "/spirituality-services",
     title: "Spiritual Services",
     icon: Sparkles,
-    description: "Comprehensive spiritual guidance and practices"
+    description: "Book consultations with spiritual guides and sacred tours"
   },
   {
-    href: "/spirituality?tab=gurus",
+    href: "/spirituality-services?tab=consultations",
     title: "Guru Consultations",
     icon: BookOpen,
-    description: "Connect with experienced spiritual teachers and guides"
+    description: "One-on-one sessions with experienced spiritual guides"
   },
   {
-    href: "/spirituality?tab=travel",
-    title: "Spiritual Travel",
+    href: "/spirituality-services?tab=tours",
+    title: "Sacred Tours",
     icon: MapPin,
-    description: "Transformative journeys to sacred destinations worldwide"
+    description: "Guided journeys to temples and spiritual destinations"
   },
   {
-    href: "/spirituality?tab=video",
+    href: "/spirituality-services?tab=consultations&type=video",
     title: "Video Consultations",
     icon: Video,
     description: "Connect with spiritual guides from anywhere"
-  },
-  {
-    href: "/spirituality?tab=yoga",
-    title: "Bhakti Yoga",
-    icon: Heart,
-    description: "The devotional path to spiritual growth and well-being"
   }
 ];
 
