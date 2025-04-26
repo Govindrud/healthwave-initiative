@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MobileDropdown } from "../MobileDropdown";
 import { MobileNavItem } from "./MobileNavItem";
-import { servicesItems, activitiesItems, spiritualityItems } from "@/config/navigation";
+import { servicesItems, activitiesItems, spiritualityItems, mainMenuItems } from "@/config/navigation";
 
 interface MobileNavigationProps {
   onClose: () => void;
@@ -52,6 +52,18 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
         {spiritualityItems.map((item, index) => (
           <MobileNavItem 
             key={`spiritual-${index}`} 
+            to={item.href} 
+            onClick={onClose}
+          >
+            {item.title}
+          </MobileNavItem>
+        ))}
+      </MobileDropdown>
+      
+      <MobileDropdown title="Help & Support">
+        {mainMenuItems.map((item, index) => (
+          <MobileNavItem 
+            key={`main-${index}`} 
             to={item.href} 
             onClick={onClose}
           >

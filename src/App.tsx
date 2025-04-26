@@ -34,6 +34,7 @@ import { RegionProvider } from "@/context/RegionContext";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
 import ProductDetail from "@/pages/ProductDetail";
+import RehabilitationConfirmation from "@/pages/RehabilitationConfirmation";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
               <Route path="/booking-confirmation" element={<BookingConfirmation />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
               <Route path="/surender" element={<Surender />} />
+              <Route path="/rehabilitation-confirmation" element={<RehabilitationConfirmation />} />
               <Route path="/student-psychologists" element={<StudentPsychologists />} />
               <Route path="/webinars" element={<Webinars />} />
               <Route path="/corporate-plans" element={<CorporatePlans />} />

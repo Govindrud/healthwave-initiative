@@ -1,3 +1,4 @@
+
 import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield } from "lucide-react";
 
 export const spiritualityItems = [

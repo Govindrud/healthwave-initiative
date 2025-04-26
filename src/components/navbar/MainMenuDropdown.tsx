@@ -8,61 +8,37 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { DropdownListItem } from "./DropdownListItem";
-import { Heart, Shield, HelpCircle, Lightbulb } from "lucide-react";
+import { mainMenuItems } from "@/config/navigation";
+import { ChevronDown } from "lucide-react";
 
 interface MainMenuDropdownProps {
   scrollToSection: (id: string) => void;
 }
 
 export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSection }) => {
-  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium";
-
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={`${navLinkClass} bg-transparent px-2 py-2 text-xs lg:text-sm`}>More</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2 bg-white border border-border/20 rounded-md shadow-md">
-              <DropdownListItem
-                href="/surender"
-                title="Surender"
-                icon={<Heart className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50 bg-white"
-              >
-                Explore surrender services and assistance
-              </DropdownListItem>
-              <DropdownListItem
-                href="/de-addiction"
-                title="De-addiction"
-                icon={<Shield className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50 bg-white"
-              >
-                Support for overcoming addiction
-              </DropdownListItem>
-              <DropdownListItem
-                onClick={() => scrollToSection("solutions")}
-                title="Solutions"
-                icon={<Lightbulb className="h-4 w-4 text-meant-600" />}
-                className="hover:bg-meant-50 bg-white"
-              >
-                Explore our mental health solutions
-              </DropdownListItem>
-              <li className="lg:col-span-2 bg-white">
-                <button
-                  onClick={() => scrollToSection("problem")}
-                  className="block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-meant-50 bg-white"
-                >
-                  <div className="flex items-center gap-2">
-                    <HelpCircle className="h-4 w-4 text-meant-600" />
-                    <div className="text-sm font-medium leading-none">Contribute</div>
-                  </div>
-                  <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                    Help us grow and contribute to mental wellness
-                  </p>
-                </button>
-              </li>
+          <NavigationMenuTrigger className="bg-transparent hover:bg-transparent text-xs lg:text-sm whitespace-nowrap">
+            <span className="text-xs lg:text-sm whitespace-nowrap">Help & Support</span>
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="p-2 min-w-[240px]">
+            <ul className="space-y-1 grid p-2">
+              {mainMenuItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={item.href}
+                    className="flex items-center gap-3 rounded-md p-2 hover:bg-accent"
+                  >
+                    {item.icon && <item.icon className="h-4 w-4 text-meant-600" />}
+                    <div>
+                      <div className="text-sm font-medium">{item.title}</div>
+                      <p className="text-xs text-muted-foreground">{item.description}</p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
