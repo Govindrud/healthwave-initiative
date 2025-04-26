@@ -41,21 +41,21 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   ];
 
   return (
-    <div className="flex items-center justify-between w-full h-16 px-4">
-      <div className="flex items-center gap-6">
-        <Link to="/" className="shrink-0">
+    <div className="flex items-center justify-between w-full h-16">
+      <div className="flex items-center">
+        <Link to="/" className="mr-6">
           <Logo size="md" variant="full" />
         </Link>
         
         <nav className="flex items-center">
           {/* Primary Menu Items - Home, About, etc */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {primaryMenuItems.map((item, index) => (
               <NavLink 
                 key={index}
                 to={item.to} 
                 onClick={item.action}
-                className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                className="px-3 py-2 mx-1 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors"
               >
                 {item.label}
               </NavLink>
@@ -63,7 +63,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
           </div>
 
           {/* Dropdown Menus - Services, Activities, etc */}
-          <div className="flex items-center gap-2 ml-2">
+          <div className="flex items-center ml-2">
             <ServicesDropdown />
             <ActivitiesDropdown />
             <SpiritualityDropdown />
@@ -72,11 +72,16 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         </nav>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <ThemeToggle />
         
         {isAuthenticated ? (
-          <AdminMenu />
+          <button 
+            onClick={logout} 
+            className="text-sm font-medium px-4 py-2 border border-gray-300 rounded-md hover:bg-accent"
+          >
+            Logout
+          </button>
         ) : (
           <Link to="/login">
             <Button 

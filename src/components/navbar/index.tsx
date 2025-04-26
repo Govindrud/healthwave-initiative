@@ -28,7 +28,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center w-full">
+          <div className="hidden md:block w-full">
             <DesktopNav location={location} />
           </div>
 

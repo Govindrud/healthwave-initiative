@@ -24,8 +24,14 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
   const { isAuthenticated, logout } = useAuth();
   
   return (
-    <motion.div className="fixed inset-0 top-[60px] z-50 bg-background">
-      <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)] bg-background mobile-menu-container">
+    <motion.div 
+      className="fixed inset-0 top-[60px] z-50 bg-white"
+      initial={{ opacity: 0, x: "100%" }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: "100%" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+      <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)] bg-white mobile-menu-container">
         <div className="mb-4 flex justify-center">
           <Logo size="md" variant="full" />
         </div>

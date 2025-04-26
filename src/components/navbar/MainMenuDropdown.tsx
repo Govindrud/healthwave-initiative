@@ -19,10 +19,10 @@ export const MainMenuDropdown: React.FC<MainMenuDropdownProps> = ({ scrollToSect
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-background px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors">
+          <NavigationMenuTrigger className="bg-transparent hover:bg-accent px-3 py-2 mx-1 text-sm font-medium text-foreground/80 hover:text-foreground rounded-md transition-colors">
             Help & Support
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="p-2 min-w-[240px] z-50 bg-background border border-border shadow-lg rounded-md">
+          <NavigationMenuContent className="p-2 min-w-[240px] z-50 bg-white border border-border shadow-lg rounded-md">
             <ul className="space-y-1 grid p-2">
               {mainMenuItems.map((item, index) => (
                 <li key={index}>

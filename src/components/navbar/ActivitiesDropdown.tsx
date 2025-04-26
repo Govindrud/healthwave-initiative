@@ -15,10 +15,10 @@ export const ActivitiesDropdown: React.FC = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-background px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors">
+          <NavigationMenuTrigger className="bg-transparent hover:bg-accent px-3 py-2 mx-1 text-sm font-medium text-foreground/80 hover:text-foreground rounded-md transition-colors">
             Activities
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50 bg-background border border-border shadow-lg rounded-md">
+          <NavigationMenuContent className="z-50 bg-white border border-border shadow-lg rounded-md">
             <DropdownContent 
               items={activitiesItems}
               showViewAll={{
