@@ -1,7 +1,7 @@
 
 import * as React from "react"
 
-const MOBILE_BREAKPOINT = 768
+const MOBILE_BREAKPOINT = 1024 // Increasing from 768 to better handle tablets
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
@@ -75,11 +75,21 @@ export function useIsPlatform() {
   React.useEffect(() => {
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera || '';
     
+    // Enhanced mobile detection
+    // Check common mobile indicators
+    const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    
+    // Additional check for touch screen devices
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || 
+                          (window as any).DocumentTouch && document instanceof (window as any).DocumentTouch;
+    
+    // Combined mobile detection
+    const isMobile = isMobileDevice || hasTouchScreen || window.innerWidth < 768;
+    
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
     const isAndroid = /android/i.test(userAgent);
     const isMacOS = /Mac/.test(userAgent) && !isIOS;
     const isWindows = /Win/.test(userAgent);
-    const isMobile = isIOS || isAndroid || /Mobi|Android/i.test(userAgent);
     const isDesktop = !isMobile;
     const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
 

@@ -5,10 +5,13 @@ import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import { DesktopNav } from "@/components/navbar/DesktopNav";
 import { MobileNav } from "@/components/navbar/MobileNav";
+import { useIsPlatform } from "@/hooks/use-mobile"; 
 
 const Navbar = () => {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+  const { isMobile } = useIsPlatform();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -16,8 +19,26 @@ const Navbar = () => {
     };
     
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Check for mobile viewport
+    const checkMobile = () => {
+      setIsMobileView(window.innerWidth < 1024);
+    };
+
+    // Initial check
+    checkMobile();
+    
+    // Set up event listener for resize
+    window.addEventListener("resize", checkMobile);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
+
+  // Force mobile view on mobile browsers
+  const showMobileNav = isMobileView || isMobile;
 
   return (
     <header
@@ -27,15 +48,14 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Desktop Navigation */}
-          <div className="hidden md:block w-full">
-            <DesktopNav location={location} />
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="md:hidden flex items-center w-full">
+          {/* Use mobile navigation for both small screens and mobile browsers */}
+          {showMobileNav ? (
             <MobileNav location={location} />
-          </div>
+          ) : (
+            <div className="w-full">
+              <DesktopNav location={location} />
+            </div>
+          )}
         </div>
       </div>
     </header>
