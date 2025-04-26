@@ -26,24 +26,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
     
     try {
       // Check for admin login
-      if (email === "admin@example.com" && password !== "") {
+      if (email === "admin@example.com") {
         const success = login(password);
         if (success) {
           toast.success("Admin login successful!");
           navigate("/admin");
           return;
+        } else {
+          toast.error("Invalid admin password. Please try again.");
         }
-      }
-      
-      // Regular user login (simplified)
-      setTimeout(() => {
+      } else {
+        // Regular user login (simplified)
         // Store fake user info for demo purposes
         localStorage.setItem("user_email", email);
         localStorage.setItem("admin_auth", "true");
         
         toast.success("Login successful!");
         onSuccess();
-      }, 1000);
+      }
     } catch (error) {
       toast.error("Login failed. Please try again.");
     } finally {

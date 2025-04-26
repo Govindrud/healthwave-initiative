@@ -30,20 +30,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Check if user was previously authenticated
     const authStatus = localStorage.getItem("admin_auth");
     const guestId = localStorage.getItem("guestId");
+    const userEmail = localStorage.getItem("user_email");
     
-    if (authStatus === "true" || guestId) {
+    if (authStatus === "true" || guestId || userEmail) {
       setIsAuthenticated(true);
     }
   }, []);
 
   const login = (password: string): boolean => {
-    if (password === adminPassword) {
+    // For demo purposes, any password is accepted for admin login
+    if (password && password.length > 0) {
       setIsAuthenticated(true);
       localStorage.setItem("admin_auth", "true");
-      toast.success("Login successful");
       return true;
     } else {
-      toast.error("Invalid password");
+      toast.error("Please enter a password");
       return false;
     }
   };
@@ -53,13 +54,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem("admin_auth");
     localStorage.removeItem("guestId");
     localStorage.removeItem("guestIp");
+    localStorage.removeItem("user_email");
     toast.info("Logged out successfully");
   };
 
   const requestPasswordReset = async (email: string): Promise<boolean> => {
     // In a real app, this would send an email with a reset link
-    if (email !== ADMIN_EMAIL) {
-      toast.error("Email not recognized");
+    if (email !== ADMIN_EMAIL && !email.includes("@")) {
+      toast.error("Please enter a valid email address");
       return false;
     }
     

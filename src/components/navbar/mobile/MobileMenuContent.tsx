@@ -7,6 +7,7 @@ import { ShoppingCart, User, Home, Phone, Globe } from "lucide-react";
 import RegionSelector from "@/components/region/RegionSelector";
 import Logo from "@/components/Logo";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useAuth } from "@/context/AuthContext";
 
 interface MobileMenuContentProps {
   isOpen: boolean;
@@ -20,10 +21,11 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
   scrollToSection
 }) => {
   const { t } = useTranslation();
+  const { isAuthenticated, logout } = useAuth();
   
   return (
-    <motion.div className="fixed inset-0 top-[60px] z-50 bg-white">
-      <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)] bg-white mobile-menu-container">
+    <motion.div className="fixed inset-0 top-[60px] z-50 bg-background">
+      <div className="p-4 overflow-y-auto max-h-[calc(100vh-60px)] bg-background mobile-menu-container">
         <div className="mb-4 flex justify-center">
           <Logo size="md" variant="full" />
         </div>
@@ -37,16 +39,29 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
         </div>
         
         <div className="pt-4 mb-6 border-t border-gray-200 space-y-3">
-          <Link to="/cart" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
+          <Link to="/cart" className="flex items-center p-3 hover:bg-accent rounded-md" onClick={onClose}>
             <ShoppingCart size={20} className="mr-3 text-primary" />
             <span>Cart</span>
             <span className="ml-auto bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
           </Link>
           
-          <Link to="/login" className="flex items-center p-3 hover:bg-gray-100 rounded-md" onClick={onClose}>
-            <User size={20} className="mr-3 text-primary" />
-            <span>Login</span>
-          </Link>
+          {isAuthenticated ? (
+            <button 
+              onClick={() => {
+                logout();
+                onClose();
+              }} 
+              className="flex items-center p-3 w-full text-left hover:bg-accent rounded-md"
+            >
+              <User size={20} className="mr-3 text-primary" />
+              <span>Logout</span>
+            </button>
+          ) : (
+            <Link to="/login" className="flex items-center p-3 hover:bg-accent rounded-md" onClick={onClose}>
+              <User size={20} className="mr-3 text-primary" />
+              <span>Login</span>
+            </Link>
+          )}
         </div>
 
         <div className="pt-4 mt-4 border-t border-gray-200 grid grid-cols-2 gap-4">

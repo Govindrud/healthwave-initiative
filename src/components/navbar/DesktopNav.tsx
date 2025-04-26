@@ -48,20 +48,22 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         </Link>
         
         <nav className="flex items-center">
-          <div className="flex items-center gap-1">
+          {/* Primary Menu Items - Home, About, etc */}
+          <div className="flex items-center gap-2">
             {primaryMenuItems.map((item, index) => (
               <NavLink 
                 key={index}
                 to={item.to} 
                 onClick={item.action}
-                className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors rounded-md hover:bg-accent"
+                className="px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors"
               >
                 {item.label}
               </NavLink>
             ))}
           </div>
 
-          <div className="flex items-center gap-1 ml-1">
+          {/* Dropdown Menus - Services, Activities, etc */}
+          <div className="flex items-center gap-2 ml-2">
             <ServicesDropdown />
             <ActivitiesDropdown />
             <SpiritualityDropdown />

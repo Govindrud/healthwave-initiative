@@ -11,13 +11,11 @@ import { DropdownContent } from "./common/DropdownContent";
 import { spiritualityItems } from "@/config/navigation";
 
 export const SpiritualityDropdown: React.FC = () => {
-  const navLinkClass = "text-foreground/80 hover:text-foreground transition-colors text-sm font-medium";
-
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className={`${navLinkClass} bg-background px-2 py-2 text-xs lg:text-sm`}>
+          <NavigationMenuTrigger className="bg-background px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors">
             Spirituality
           </NavigationMenuTrigger>
           <NavigationMenuContent className="z-50 bg-background border border-border shadow-lg rounded-md">
