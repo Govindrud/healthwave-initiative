@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -13,24 +12,28 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  isAuthenticated: boolean; // Add isAuthenticated property
-  login: (email: string, password: string) => Promise<boolean>;
+  isAuthenticated: boolean;
+  login: (password: string) => boolean;
   register: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => void;
-  resetPassword: (email: string) => Promise<boolean>;
+  resetPassword: (token: string, newPassword: string) => Promise<boolean>;
+  requestPasswordReset: (email: string) => Promise<boolean>;
   updateProfile: (data: Partial<User>) => Promise<boolean>;
   isAdmin: () => boolean;
   isProvider: () => boolean;
+  ADMIN_EMAIL: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const ADMIN_EMAIL = "admin@meanttohelp.com";
+const ADMIN_PASSWORD = "admin123";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user exists in localStorage (for demo purposes)
     const storedUser = localStorage.getItem('auth_user');
     if (storedUser) {
       try {
@@ -43,71 +46,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    setLoading(true);
-    try {
-      // In a real app, this would make an API call to your auth service
-      // For demo, we'll simulate authentication
-      
-      // Simple validation
-      if (!email || !password) {
-        toast.error("Email and password are required");
-        return false;
-      }
-      
-      // Set timeout to simulate network request
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Simulate successful login
-      // In a real app, this would verify credentials with a backend
-      let role: 'user' | 'admin' | 'provider' = 'user';
-      
-      // For demo, set admin role for specific emails
-      if (email === 'admin@example.com') {
-        role = 'admin';
-      } else if (email === 'provider@example.com') {
-        role = 'provider';
-      }
-      
-      const loggedInUser: User = {
-        uid: `user-${Math.random().toString(36).substring(2, 11)}`,
-        email: email,
-        displayName: email.split('@')[0],
+  const login = (password: string): boolean => {
+    if (password === ADMIN_PASSWORD) {
+      const adminUser: User = {
+        uid: 'admin-user',
+        email: ADMIN_EMAIL,
+        displayName: 'Admin User',
         photoURL: null,
-        role
+        role: 'admin'
       };
       
-      // Store in localStorage for persistence
-      localStorage.setItem('auth_user', JSON.stringify(loggedInUser));
-      setUser(loggedInUser);
-      
-      toast.success("Logged in successfully!");
+      localStorage.setItem('auth_user', JSON.stringify(adminUser));
+      setUser(adminUser);
       return true;
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Failed to log in. Please check your credentials.");
-      return false;
-    } finally {
-      setLoading(false);
     }
+    return false;
   };
-  
+
   const register = async (email: string, password: string, name: string): Promise<boolean> => {
     setLoading(true);
     try {
-      // In a real app, this would make an API call to your auth service
-      // For demo, we'll simulate registration
-      
-      // Simple validation
       if (!email || !password || !name) {
         toast.error("All fields are required");
         return false;
       }
       
-      // Set timeout to simulate network request
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Simulate successful registration
       const newUser: User = {
         uid: `user-${Math.random().toString(36).substring(2, 11)}`,
         email: email,
@@ -116,7 +81,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         role: 'user'
       };
       
-      // Store in localStorage for persistence
       localStorage.setItem('auth_user', JSON.stringify(newUser));
       setUser(newUser);
       
@@ -130,26 +94,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
     }
   };
-  
+
   const logout = () => {
     localStorage.removeItem('auth_user');
     setUser(null);
     toast.success("Logged out successfully");
   };
-  
-  const resetPassword = async (email: string): Promise<boolean> => {
+
+  const requestPasswordReset = async (email: string): Promise<boolean> => {
     setLoading(true);
     try {
-      // In a real app, this would make an API call to your auth service
-      // For demo, we'll simulate password reset
-      
-      // Simple validation
       if (!email) {
         toast.error("Email is required");
         return false;
       }
       
-      // Set timeout to simulate network request
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast.success("Password reset link has been sent to your email");
@@ -162,17 +121,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
     }
   };
-  
+
+  const resetPassword = async (token: string, newPassword: string): Promise<boolean> => {
+    setLoading(true);
+    try {
+      if (!token || !newPassword) {
+        toast.error("Token and password are required");
+        return false;
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success("Password has been reset successfully");
+      return true;
+    } catch (error) {
+      console.error("Reset password error:", error);
+      toast.error("Failed to reset password.");
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const updateProfile = async (data: Partial<User>): Promise<boolean> => {
     if (!user) return false;
     
     try {
-      // In a real app, this would make an API call to update user profile
-      // For demo, we'll update the local user object
-      
       const updatedUser = { ...user, ...data };
       
-      // Store in localStorage for persistence
       localStorage.setItem('auth_user', JSON.stringify(updatedUser));
       setUser(updatedUser);
       
@@ -184,11 +160,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return false;
     }
   };
-  
+
   const isAdmin = () => {
     return user?.role === 'admin';
   };
-  
+
   const isProvider = () => {
     return user?.role === 'provider';
   };
@@ -197,14 +173,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider value={{
       user,
       loading,
-      isAuthenticated: !!user, // Add isAuthenticated property
+      isAuthenticated: !!user,
       login,
       register,
       logout,
       resetPassword,
+      requestPasswordReset,
       updateProfile,
       isAdmin,
-      isProvider
+      isProvider,
+      ADMIN_EMAIL
     }}>
       {children}
     </AuthContext.Provider>
