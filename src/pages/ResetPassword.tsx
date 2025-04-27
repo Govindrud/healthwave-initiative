@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Lock } from "lucide-react";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layouts/MainLayout";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/hooks/useAuth"; // Update import
 import { toast } from "sonner";
 
 const ResetPassword = () => {

@@ -8,7 +8,7 @@ import BookingsDashboard from "@/components/admin/BookingsDashboard";
 import SalesDashboard from "@/components/admin/SalesDashboard";
 import AppointmentsDashboard from "@/components/admin/AppointmentsDashboard";
 import ServicesManagement from "@/components/admin/ServicesManagement";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/hooks/useAuth"; // Update import
 import { useNavigate, Link } from "react-router-dom";
 import { useSheetDB } from "@/hooks/useSheetDB";
 import { useToast } from "@/components/ui/use-toast";

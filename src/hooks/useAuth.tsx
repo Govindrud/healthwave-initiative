@@ -7,12 +7,13 @@ interface User {
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
-  role?: 'user' | 'admin' | 'provider'; // Added role field
+  role?: 'user' | 'admin' | 'provider';
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isAuthenticated: boolean; // Add isAuthenticated property
   login: (email: string, password: string) => Promise<boolean>;
   register: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => void;
@@ -196,6 +197,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider value={{
       user,
       loading,
+      isAuthenticated: !!user, // Add isAuthenticated property
       login,
       register,
       logout,
