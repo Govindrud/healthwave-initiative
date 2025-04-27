@@ -13,7 +13,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
-  login: (password: string) => boolean;
+  login: (email: string, password: string) => boolean;
   register: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => void;
   resetPassword: (token: string, newPassword: string) => Promise<boolean>;
@@ -46,8 +46,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
-  const login = (password: string): boolean => {
-    if (password === ADMIN_PASSWORD) {
+  const login = (email: string, password: string): boolean => {
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       const adminUser: User = {
         uid: 'admin-user',
         email: ADMIN_EMAIL,
