@@ -57,10 +57,11 @@ const CartTable = ({ cart, onQuantityChange, onRemove }: CartTableProps) => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border">
-                      <img
+                      <Image
                         src={item.product.image}
                         alt={item.product.name}
                         className="h-full w-full object-cover object-center"
+                        fallbackSrc="/placeholder.svg"
                       />
                     </div>
                     <div className="ml-4">
