@@ -1,113 +1,121 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
-import { Minus, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TrashIcon, Plus, Minus } from "lucide-react";
 import { useRegion } from "@/context/RegionContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import Image from "@/components/ui/Image";
 
 interface CartTableProps {
-  cart: {
+  cart: Array<{
     product: {
       id: string;
       name: string;
-      image: string;
       price: number;
       discountPrice?: number;
-      category: string;
+      image: string;
     };
     quantity: number;
-  }[];
-  onQuantityChange: (idx: number, delta: number) => void;
-  onRemove: (idx: number) => void;
+  }>;
+  onQuantityChange: (index: number, delta: number) => void;
+  onRemove: (index: number) => void;
 }
 
-const CartTable: React.FC<CartTableProps> = ({
-  cart,
-  onQuantityChange,
-  onRemove,
-}) => {
+const CartTable = ({ cart, onQuantityChange, onRemove }: CartTableProps) => {
   const { formatPrice } = useRegion();
   const { t } = useTranslation();
-
+  
   return (
     <div className="border rounded-lg overflow-hidden">
-      <table className="w-full">
-        <thead className="bg-muted/50">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
-            <th className="text-left p-4">{t('product')}</th>
-            <th className="text-center p-4">{t('quantity')}</th>
-            <th className="text-right p-4">{t('price')}</th>
-            <th className="p-4 w-8"></th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {t('product')}
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {t('price')}
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {t('quantity')}
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {t('total')}
+            </th>
+            <th scope="col" className="relative px-6 py-3">
+              <span className="sr-only">{t('actions')}</span>
+            </th>
           </tr>
         </thead>
-        <tbody className="divide-y">
-          {cart.map((item, index) => (
-            <tr key={item.product.id}>
-              <td className="p-4">
-                <div className="flex items-center">
-                  <div className="w-16 h-16 rounded bg-muted mr-4 overflow-hidden flex-shrink-0">
-                    <img
-                      src={item.product.image}
-                      alt={item.product.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "/placeholder.svg";
-                      }}
-                    />
+        <tbody className="bg-white divide-y divide-gray-200">
+          {cart.map((item, index) => {
+            const price = item.product.discountPrice || item.product.price;
+            const total = price * item.quantity;
+            
+            return (
+              <tr key={item.product.id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border">
+                      <img
+                        src={item.product.image}
+                        alt={item.product.name}
+                        className="h-full w-full object-cover object-center"
+                      />
+                    </div>
+                    <div className="ml-4">
+                      <div className="text-sm font-medium text-gray-900">{item.product.name}</div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-medium">{item.product.name}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {item.product.category}
-                    </p>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    {formatPrice(price)}
+                    {item.product.discountPrice && (
+                      <span className="line-through text-gray-500 ml-2 text-xs">
+                        {formatPrice(item.product.price)}
+                      </span>
+                    )}
                   </div>
-                </div>
-              </td>
-              <td className="p-4">
-                <div className="flex items-center justify-center">
-                  <button
-                    className="p-1 rounded-full hover:bg-muted"
-                    onClick={() => onQuantityChange(index, -1)}
-                    aria-label="Decrease quantity"
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center border rounded-md w-fit">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 rounded-r-none"
+                      onClick={() => onQuantityChange(index, -1)}
+                      disabled={item.quantity <= 1}
+                    >
+                      <Minus className="h-3 w-3" />
+                    </Button>
+                    <div className="px-3 py-1 border-x text-center w-10">{item.quantity}</div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 rounded-l-none"
+                      onClick={() => onQuantityChange(index, 1)}
+                    >
+                      <Plus className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">{formatPrice(total)}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onRemove(index)}
+                    className="text-red-500 hover:text-red-700"
                   >
-                    <Minus size={14} />
-                  </button>
-                  <span className="mx-3 w-8 text-center">{item.quantity}</span>
-                  <button
-                    className="p-1 rounded-full hover:bg-muted"
-                    onClick={() => onQuantityChange(index, 1)}
-                    aria-label="Increase quantity"
-                  >
-                    <Plus size={14} />
-                  </button>
-                </div>
-              </td>
-              <td className="p-4 text-right">
-                <div className="font-medium">
-                  {formatPrice(
-                    (item.product.discountPrice || item.product.price) *
-                      item.quantity
-                  )}
-                </div>
-                {item.product.discountPrice && (
-                  <div className="text-sm text-muted-foreground line-through">
-                    {formatPrice(item.product.price * item.quantity)}
-                  </div>
-                )}
-              </td>
-              <td className="p-4">
-                <button
-                  className="p-1 text-muted-foreground hover:text-destructive"
-                  onClick={() => onRemove(index)}
-                  aria-label="Remove from cart"
-                >
-                  <X size={16} />
-                </button>
-              </td>
-            </tr>
-          ))}
+                    <TrashIcon className="h-4 w-4" />
+                  </Button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
