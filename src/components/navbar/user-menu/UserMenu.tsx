@@ -20,9 +20,10 @@ export const getInitials = (name: string) => {
 };
 
 export const UserMenu = () => {
-  const { user, logout } = useAuth();
+  // Use the AuthContext from context/AuthContext.tsx instead of hooks/useAuth.tsx
+  const { isAuthenticated, logout } = useAuth();
 
-  if (!user) {
+  if (!isAuthenticated) {
     return (
       <div className="flex items-center gap-4">
         <Button variant="outline" asChild>
@@ -40,8 +41,8 @@ export const UserMenu = () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={user.photoURL || ""} alt={user.displayName || "User"} />
-            <AvatarFallback>{getInitials(user.displayName || "User")}</AvatarFallback>
+            <AvatarImage src="" alt="User" />
+            <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

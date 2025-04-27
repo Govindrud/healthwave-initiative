@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -28,7 +27,7 @@ interface MobileMenuContentProps {
 }
 
 const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose }) => {
-  const { user, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   
   const handleLogout = () => {
     logout();
@@ -44,15 +43,15 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose }) => {
     <div className="bg-white h-full flex flex-col overflow-y-auto">
       {/* User profile or login/signup */}
       <div className="p-4 border-b">
-        {user ? (
+        {isAuthenticated ? (
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">
-              <AvatarImage src={user.photoURL || ""} alt={user.displayName || "User"} />
-              <AvatarFallback>{getInitials(user.displayName || "User")}</AvatarFallback>
+              <AvatarImage src="" alt="User" />
+              <AvatarFallback>U</AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-medium">{user.displayName || "User"}</p>
-              <p className="text-sm text-muted-foreground">{user.email}</p>
+              <p className="font-medium">User</p>
+              <p className="text-sm text-muted-foreground">user@example.com</p>
             </div>
           </div>
         ) : (
@@ -217,7 +216,7 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose }) => {
             <span>Contact</span>
           </Link>
           
-          {user && (
+          {isAuthenticated && (
             <>
               <div className="my-2 border-t"></div>
               <p className="px-4 py-1 text-xs text-muted-foreground">Account</p>
