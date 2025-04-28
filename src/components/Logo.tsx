@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -9,12 +9,6 @@ interface LogoProps {
 }
 
 const Logo = ({ size = 'md', variant = 'icon', className = '' }: LogoProps) => {
-  const navigate = useNavigate();
-  
-  const handleClick = () => {
-    navigate('/');
-  };
-  
   const sizeClasses = {
     sm: 'h-6',
     md: 'h-8',
@@ -25,7 +19,7 @@ const Logo = ({ size = 'md', variant = 'icon', className = '' }: LogoProps) => {
   const logoSize = sizeClasses[size];
   
   return (
-    <div onClick={handleClick} className={`cursor-pointer ${className}`}>
+    <Link to="/" className={`cursor-pointer ${className}`}>
       {variant === 'icon' ? (
         <div className={`${logoSize} aspect-square bg-gradient-to-br from-meant-500 to-meant-700 rounded-lg flex items-center justify-center text-white font-bold`}>
           <span className="text-lg">M</span>
@@ -40,7 +34,7 @@ const Logo = ({ size = 'md', variant = 'icon', className = '' }: LogoProps) => {
           </span>
         </div>
       )}
-    </div>
+    </Link>
   );
 };
 
