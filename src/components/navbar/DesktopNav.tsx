@@ -4,6 +4,7 @@ import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-m
 import Logo from "@/components/Logo";
 import { NavSection } from "./navigation/NavSection";
 import { UserMenu } from "./user-menu/UserMenu";
+import RegionSelector from "@/components/region/RegionSelector";
 
 export const DesktopNav = ({ location }: { location: any }) => {
   return (
@@ -112,11 +113,20 @@ export const DesktopNav = ({ location }: { location: any }) => {
               items={[{ title: "About", href: "/about", description: "" }]}
               isLink
             />
+
+            <NavSection 
+              title="Partners"
+              items={[{ title: "Partner Directory", href: "/partners", description: "Browse our mental health service partners" }]}
+              isLink
+            />
           </NavigationMenuList>
         </NavigationMenu>
       </div>
       
-      <UserMenu />
+      <div className="flex items-center gap-4">
+        <RegionSelector variant="minimal" />
+        <UserMenu />
+      </div>
     </div>
   );
 };

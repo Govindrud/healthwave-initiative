@@ -13,6 +13,8 @@ import SolutionsSection from '@/components/SolutionsSection';
 import ServicesSlider from '@/components/ServicesSlider';
 import VoiceAssistantPromo from '@/components/voice/VoiceAssistantPromo';
 import Spirituality from '@/components/Spirituality';
+import PartnersSection from '@/components/PartnersSection';
+import GoalSetting from '@/components/GoalSetting';
 
 const Home = () => {
   useEffect(() => {
@@ -29,6 +31,8 @@ const Home = () => {
         <ServicesSlider />
         <ProductsSection />
         <SolutionsSection />
+        <PartnersSection />
+        <GoalSetting />
         <ProblemForm />
         <Spirituality />
         <VoiceAssistantPromo />

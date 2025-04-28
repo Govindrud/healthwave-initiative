@@ -7,6 +7,7 @@ import { HamburgerButton } from "./mobile/HamburgerButton";
 import { MobileMenuContent } from "./mobile/MobileMenuContent";
 import ThemeToggle from "../ThemeToggle";
 import Logo from "../Logo";
+import RegionSelector from "@/components/region/RegionSelector";
 
 interface MobileNavProps {
   location: Location;
