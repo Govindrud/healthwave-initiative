@@ -1,13 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
-} from "@/components/ui/accordion";
 import { 
   Home, 
   Settings, 
@@ -22,7 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MobileDropdown } from "./MobileDropdown";
+import { MobileDropdown } from "@/components/navbar/MobileDropdown";
 import RegionSelector from "@/components/region/RegionSelector";
 import { motion } from "framer-motion";
 
