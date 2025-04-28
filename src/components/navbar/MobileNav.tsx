@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Location, useNavigate, Link } from "react-router-dom";
+import { Location, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
@@ -63,9 +63,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
 
   return (
     <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
-      <Link to="/" className="flex items-center">
-        <Logo size="md" variant="full" />
-      </Link>
+      <Logo size="md" variant="full" />
       
       <div className="flex items-center space-x-2">
         <ThemeToggle />

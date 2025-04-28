@@ -1,44 +1,46 @@
 
-import React from "react";
-import { Brain, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LogoProps {
-  size?: "sm" | "md" | "lg";
-  variant?: "full" | "icon";
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'icon' | 'full';
   className?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ size = "md", variant = "full", className }) => {
-  const sizeClasses = {
-    sm: "text-lg",
-    md: "text-xl",
-    lg: "text-2xl",
+const Logo = ({ size = 'md', variant = 'icon', className = '' }: LogoProps) => {
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    navigate('/');
   };
   
-  const iconSize = size === "sm" ? 16 : size === "md" ? 20 : 24;
-
+  const sizeClasses = {
+    sm: 'h-6',
+    md: 'h-8',
+    lg: 'h-10',
+    xl: 'h-16'
+  };
+  
+  const logoSize = sizeClasses[size];
+  
   return (
-    <Link to="/" className={cn("flex items-center gap-2 transition-transform hover:scale-105", className)}>
-      <div className="relative">
-        <div className="bg-gradient-to-br from-meant-500 to-meant-700 p-2 rounded-lg flex items-center justify-center shadow-md">
-          <Brain className="text-white" size={iconSize} />
+    <div onClick={handleClick} className={`cursor-pointer ${className}`}>
+      {variant === 'icon' ? (
+        <div className={`${logoSize} aspect-square bg-gradient-to-br from-meant-500 to-meant-700 rounded-lg flex items-center justify-center text-white font-bold`}>
+          <span className="text-lg">M</span>
         </div>
-        <Sparkles 
-          className="absolute -top-1 -right-1 text-meant-300" 
-          size={size === "sm" ? 10 : size === "md" ? 12 : 14} 
-        />
-      </div>
-      {variant === "full" && (
-        <span className={cn(
-          "font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800", 
-          sizeClasses[size]
-        )}>
-          <span className="font-extrabold">Meant</span>ToHelp
-        </span>
+      ) : (
+        <div className="flex items-center">
+          <div className={`${logoSize} aspect-square bg-gradient-to-br from-meant-500 to-meant-700 rounded-lg flex items-center justify-center text-white font-bold mr-2`}>
+            <span className="text-lg">M</span>
+          </div>
+          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
+            <span className="font-extrabold">Meant</span>ToHelp
+          </span>
+        </div>
       )}
-    </Link>
+    </div>
   );
 };
 

@@ -6,6 +6,13 @@ import Hero from '@/components/Hero';
 import ProductsSection from '@/components/ProductsSection';
 import About from '@/components/About';
 import Contact from '@/components/Contact';
+import SocialFeed from '@/components/SocialFeed';
+import AIMentalHealthAssistant from '@/components/AIMentalHealthAssistant';
+import ProblemForm from '@/components/ProblemForm';
+import SolutionsSection from '@/components/SolutionsSection';
+import ServicesSlider from '@/components/ServicesSlider';
+import VoiceAssistantPromo from '@/components/voice/VoiceAssistantPromo';
+import Spirituality from '@/components/Spirituality';
 
 const Home = () => {
   useEffect(() => {
@@ -18,8 +25,15 @@ const Home = () => {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <ProductsSection />
         <About />
+        <ServicesSlider />
+        <ProductsSection />
+        <SolutionsSection />
+        <ProblemForm />
+        <Spirituality />
+        <VoiceAssistantPromo />
+        <SocialFeed />
+        <AIMentalHealthAssistant />
         <Contact />
       </main>
       <Footer />

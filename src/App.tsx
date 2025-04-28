@@ -15,6 +15,7 @@ import BookingConfirmation from './pages/BookingConfirmation';
 import CorporatePlans from './pages/CorporatePlans';
 import ForgotPassword from './pages/ForgotPassword';
 import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/corporate-plans" element={<CorporatePlans />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Router>
       </AuthProvider>
