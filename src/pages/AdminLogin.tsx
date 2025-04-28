@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth"; // Update import
+import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,13 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 const AdminLogin = () => {
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, ADMIN_EMAIL } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
+    if (login(ADMIN_EMAIL, password)) {
       toast.success("Login successful! Redirecting to admin dashboard...");
       navigate("/admin");
     } else {
