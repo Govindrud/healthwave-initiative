@@ -13,26 +13,32 @@ import ProductDetails from './pages/ProductDetails';
 import PaymentSuccess from './pages/PaymentSuccess';
 import BookingConfirmation from './pages/BookingConfirmation';
 import CorporatePlans from './pages/CorporatePlans';
+import ForgotPassword from './pages/ForgotPassword';
+import AdminLogin from './pages/AdminLogin';
 
 const App = () => {
   return (
-    <RegionProvider>
-      <AuthProvider>
-        <Router>
-          <Toaster position="top-center" richColors />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/doctors" element={<Doctors />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/products/:id" element={<ProductDetails />} />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
-            <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-            <Route path="/corporate-plans" element={<CorporatePlans />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </RegionProvider>
+    <React.StrictMode>
+      <RegionProvider>
+        <AuthProvider>
+          <Router>
+            <Toaster position="top-center" richColors />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/doctors" element={<Doctors />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+              <Route path="/corporate-plans" element={<CorporatePlans />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </RegionProvider>
+    </React.StrictMode>
   );
 };
 
