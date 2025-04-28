@@ -51,7 +51,6 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
       className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-white shadow-lg z-50 overflow-y-auto"
     >
       <div className="flex flex-col h-full">
-        {/* Header with close button */}
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="font-semibold text-xl">Menu</h2>
           <button 
@@ -65,7 +64,6 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
           </button>
         </div>
 
-        {/* User profile or login/signup */}
         <div className="p-4 border-b">
           {isAuthenticated ? (
             <div className="flex items-center gap-3">
@@ -90,7 +88,6 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
           )}
         </div>
 
-        {/* Language & Currency selector */}
         <div className="p-4 border-b">
           <p className="text-sm font-medium mb-3 text-muted-foreground flex items-center">
             <Globe size={16} className="mr-2" />
@@ -99,7 +96,6 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
           <RegionSelector variant="full" />
         </div>
 
-        {/* Main navigation links */}
         <div className="flex-1 overflow-y-auto">
           <nav className="p-2">
             <Link 

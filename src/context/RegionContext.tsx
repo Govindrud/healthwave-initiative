@@ -15,7 +15,7 @@ interface RegionContextType {
   formatPrice: (amount: number) => string;
 }
 
-const RegionContext = createContext<RegionContextType>({
+const defaultContextValue: RegionContextType = {
   region: "india",
   setRegion: () => {},
   currency: "INR",
@@ -23,7 +23,9 @@ const RegionContext = createContext<RegionContextType>({
   language: "en",
   setLanguage: () => {},
   formatPrice: () => ""
-});
+};
+
+const RegionContext = createContext<RegionContextType>(defaultContextValue);
 
 export const useRegion = () => useContext(RegionContext);
 
