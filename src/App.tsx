@@ -51,7 +51,7 @@ import BookingConfirmation from './pages/BookingConfirmation';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <RegionProvider>
       <AuthProvider>
