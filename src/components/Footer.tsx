@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Twitter, Facebook, Instagram, Linkedin, Youtube, Heart } from "lucide-react";
+import { Twitter, Facebook, Instagram, Linkedin, Youtube, Heart, Phone, Mail, MapPin, BookOpen } from "lucide-react";
 import Logo from "./Logo";
 
 const Footer = () => {
@@ -23,8 +23,8 @@ const Footer = () => {
   return (
     <footer className="bg-card border-t">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2 lg:col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          <div className="col-span-1 lg:col-span-2">
             <Logo size="lg" variant="full" />
             <p className="mt-4 text-muted-foreground">
               Empowering individuals through innovative mental health solutions.
@@ -61,12 +61,19 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection("solutions")}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-left"
-                >
-                  Our Solutions
-                </button>
+                <Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/documentation" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Documentation
+                </Link>
               </li>
               <li>
                 <button 
@@ -76,6 +83,12 @@ const Footer = () => {
                   Contact
                 </button>
               </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-lg mb-4">Services</h3>
+            <ul className="space-y-2">
               <li>
                 <Link to="/surender" className="text-muted-foreground hover:text-foreground transition-colors">
                   Surender
@@ -86,35 +99,30 @@ const Footer = () => {
                   De-addiction
                 </Link>
               </li>
+              <li>
+                <Link to="/spirituality" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Spiritual Resources
+                </Link>
+              </li>
+              <li>
+                <Link to="/doctors" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Doctor Consultations
+                </Link>
+              </li>
+              <li>
+                <Link to="/student-psychologists" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Student Psychologists
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">Resources</h3>
+            <h3 className="font-semibold text-lg mb-4">Corporate</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/admin-login" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Admin Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link to="/hosting" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Hosting Guide
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Mental Health Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Help & Support
-                </Link>
-              </li>
-              <li>
-                <Link to="/spirituality" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Spiritual Resources
+                <Link to="/corporate-plans" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Corporate Plans
                 </Link>
               </li>
               <li>
@@ -122,28 +130,44 @@ const Footer = () => {
                   Corporate Certification
                 </Link>
               </li>
+              <li>
+                <Link to="/webinars" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Webinars
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin-login" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Admin Dashboard
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">Newsletter</h3>
-            <p className="text-muted-foreground mb-4">
-              Subscribe to our newsletter for the latest updates on mental health resources.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-meant-500"
-                aria-label="Email address"
-              />
-              <button
-                type="submit"
-                className="bg-meant-600 hover:bg-meant-700 text-white px-4 py-2 rounded-md"
-              >
-                Subscribe
-              </button>
-            </form>
+            <h3 className="font-semibold text-lg mb-4">Contact Info</h3>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <MapPin className="mr-3 h-5 w-5 text-meant-600 flex-shrink-0 mt-0.5" />
+                <span className="text-muted-foreground">
+                  123 Mental Health Street<br />
+                  Wellness City, WC 10001
+                </span>
+              </li>
+              <li className="flex items-center">
+                <Phone className="mr-3 h-5 w-5 text-meant-600 flex-shrink-0" />
+                <span className="text-muted-foreground">+1 (800) 123-4567</span>
+              </li>
+              <li className="flex items-center">
+                <Mail className="mr-3 h-5 w-5 text-meant-600 flex-shrink-0" />
+                <span className="text-muted-foreground">support@meanttohelp.com</span>
+              </li>
+              <li className="flex items-center">
+                <BookOpen className="mr-3 h-5 w-5 text-meant-600 flex-shrink-0" />
+                <Link to="/documentation" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Technical Documentation
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 

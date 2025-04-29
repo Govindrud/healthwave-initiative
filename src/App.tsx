@@ -24,6 +24,7 @@ import Services from './pages/Services';
 import StudentPsychologists from './pages/StudentPsychologists';
 import Activities from './pages/Activities';
 import DeAddiction from './pages/DeAddiction';
+import Surender from './pages/Surender';
 import Webinars from './pages/Webinars';
 import Adventures from './pages/Adventures';
 import Games from './pages/Games';
@@ -76,6 +77,7 @@ const App: React.FC = () => {
             <Route path="/student-psychologists" element={<StudentPsychologists />} />
             <Route path="/activities" element={<Activities />} />
             <Route path="/de-addiction" element={<DeAddiction />} />
+            <Route path="/surender" element={<Surender />} />
             <Route path="/webinars" element={<Webinars />} />
             <Route path="/adventures" element={<Adventures />} />
             <Route path="/games" element={<Games />} />

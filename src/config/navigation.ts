@@ -1,4 +1,5 @@
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield, Phone, MessageCircle } from "lucide-react";
+
+import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield, Phone, MessageCircle, Activity } from "lucide-react";
 
 export const spiritualityItems = [
   {
@@ -30,6 +31,12 @@ export const spiritualityItems = [
     title: "Video Consultations",
     icon: Video,
     description: "Connect with spiritual guides from anywhere"
+  },
+  {
+    href: "/spirituality-services?tab=bhakti",
+    title: "Bhakti Yoga",
+    icon: Activity,
+    description: "Devotional yoga practice for spiritual connection"
   }
 ];
 
@@ -103,5 +110,17 @@ export const mainMenuItems = [
     title: "De-addiction",
     icon: Shield,
     description: "Support for overcoming addiction"
+  },
+  {
+    href: "/documentation",
+    title: "Documentation",
+    icon: BookOpen,
+    description: "Technical documentation and user guides"
+  },
+  {
+    href: "/contact",
+    title: "Contact Help",
+    icon: Phone,
+    description: "24/7 support and emergency contact information"
   }
 ];

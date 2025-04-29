@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-menu";
 import Logo from "@/components/Logo";
 import { NavSection } from "./navigation/NavSection";
@@ -44,9 +45,14 @@ export const DesktopNav = ({ location }: { location: any }) => {
                   description: "Participate in wellness and mindfulness activities"
                 },
                 {
-                  title: "Addiction Recovery",
+                  title: "De-addiction",
                   href: "/de-addiction",
                   description: "Comprehensive addiction recovery programs"
+                },
+                {
+                  title: "Surender",
+                  href: "/surender",
+                  description: "Find peace and professional support for stress"
                 },
                 {
                   title: "All Services",
@@ -117,6 +123,12 @@ export const DesktopNav = ({ location }: { location: any }) => {
             <NavSection 
               title="Partners"
               items={[{ title: "Partner Directory", href: "/partners", description: "Browse our mental health service partners" }]}
+              isLink
+            />
+            
+            <NavSection 
+              title="Documentation"
+              items={[{ title: "Documentation", href: "/documentation", description: "Technical documentation" }]}
               isLink
             />
           </NavigationMenuList>

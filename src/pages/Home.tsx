@@ -17,6 +17,7 @@ import PartnerLogosSection from '@/components/partners/PartnerLogosSection';
 import GoalSetting from '@/components/GoalSetting';
 import PeerSupportSection from '@/components/PeerSupportSection';
 import SleepBetterSection from '@/components/SleepBetterSection';
+import HappyPeopleSlider from '@/components/HappyPeopleSlider';
 
 const Home = () => {
   useEffect(() => {
@@ -31,6 +32,7 @@ const Home = () => {
         <Hero />
         <About />
         <ServicesSlider />
+        <HappyPeopleSlider />
         <ProductsSection />
         <SolutionsSection />
         <PartnerLogosSection />
