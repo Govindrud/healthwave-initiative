@@ -2,25 +2,21 @@
 import ImageSlider from "./ImageSlider";
 
 const ServicesSlider = () => {
-  const serviceImages = [
+  const serviceSlides = [
     {
-      url: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb",
-      alt: "Spiritual Wellness Journey",
+      image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb",
       caption: "Discover inner peace through our spiritual wellness programs"
     },
     {
-      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      alt: "Mental Health Support",
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
       caption: "Professional support for your mental wellbeing journey"
     },
     {
-      url: "https://images.unsplash.com/photo-1500673922987-e212871fec22",
-      alt: "Community Support",
+      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22",
       caption: "Join our supportive community of like-minded individuals"
     },
     {
-      url: "/public/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png",
-      alt: "Mental Wellness Products",
+      image: "/public/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png",
       caption: "Explore our range of products designed to enhance your wellbeing"
     }
   ];
@@ -40,7 +36,9 @@ const ServicesSlider = () => {
           </p>
         </div>
         
-        <ImageSlider images={serviceImages} className="shadow-xl max-w-4xl mx-auto" />
+        <div className="shadow-xl max-w-4xl mx-auto">
+          <ImageSlider slides={serviceSlides} />
+        </div>
         
         <div className="mt-8 text-center">
           <a 
