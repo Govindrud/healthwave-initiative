@@ -17,6 +17,15 @@ import ForgotPassword from './pages/ForgotPassword';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import Partners from './pages/Partners';
+import StudentPsychologists from './pages/StudentPsychologists';
+import DeAddiction from './pages/DeAddiction';
+import Activities from './pages/Activities';
+import Games from './pages/Games';
+import Adventures from './pages/Adventures';
+import CorporateCertification from './pages/CorporateCertification';
+import Spirituality from './pages/Spirituality';
+import SpiritualityServices from './pages/SpiritualityServices';
+import Webinars from './pages/Webinars';
 
 const App = () => {
   return (
@@ -37,6 +46,15 @@ const App = () => {
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/student-psychologists" element={<StudentPsychologists />} />
+            <Route path="/de-addiction" element={<DeAddiction />} />
+            <Route path="/activities" element={<Activities />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/adventures" element={<Adventures />} />
+            <Route path="/corporate-certification" element={<CorporateCertification />} />
+            <Route path="/spirituality" element={<Spirituality />} />
+            <Route path="/spirituality-services" element={<SpiritualityServices />} />
+            <Route path="/webinars" element={<Webinars />} />
           </Routes>
         </Router>
       </AuthProvider>

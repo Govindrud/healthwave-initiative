@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,7 +12,13 @@ import {
   Users, 
   MoveRight,
   CalendarCheck,
-  Globe
+  Globe,
+  Heart,
+  GraduationCap,
+  Activity,
+  BookOpen,
+  Shield,
+  Video
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -34,6 +41,11 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
   
   const handleLogout = () => {
     logout();
+    onClose();
+  };
+
+  const handleSectionScroll = (id: string) => {
+    scrollToSection(id);
     onClose();
   };
   
@@ -110,42 +122,47 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
             <MobileDropdown title="Services">
               <Link 
                 to="/doctors" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Doctor Consultations
+                <Heart size={16} className="text-meant-600" />
+                <span>Doctor Consultations</span>
               </Link>
               <Link 
                 to="/spirituality" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Spiritual Guidance
+                <BookOpen size={16} className="text-meant-600" />
+                <span>Spiritual Guidance</span>
               </Link>
               <Link 
                 to="/student-psychologists" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Student Psychologists
+                <GraduationCap size={16} className="text-meant-600" />
+                <span>Student Psychologists</span>
               </Link>
               <Link 
                 to="/activities" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Wellness Activities
+                <Activity size={16} className="text-meant-600" />
+                <span>Wellness Activities</span>
               </Link>
               <Link 
                 to="/de-addiction" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Addiction Recovery
+                <Shield size={16} className="text-meant-600" />
+                <span>Addiction Recovery</span>
               </Link>
               <Link 
                 to="/services" 
-                className="block py-2 px-2 rounded hover:bg-gray-50 font-medium text-meant-700 mt-2" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50 font-medium text-meant-700 mt-2" 
                 onClick={onClose}
               >
                 <div className="flex items-center gap-1">
@@ -158,35 +175,39 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
             <MobileDropdown title="Products">
               <Link 
                 to="/products" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                All Products
+                <ShoppingBag size={16} className="text-meant-600" />
+                <span>All Products</span>
               </Link>
               <Link 
                 to="/products?category=books" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Self-Help Books
+                <BookOpen size={16} className="text-meant-600" />
+                <span>Self-Help Books</span>
               </Link>
               <Link 
                 to="/products?category=meditation" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Meditation Tools
+                <Heart size={16} className="text-meant-600" />
+                <span>Meditation Tools</span>
               </Link>
               <Link 
                 to="/products?category=aromatherapy" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Aromatherapy
+                <Activity size={16} className="text-meant-600" />
+                <span>Aromatherapy</span>
               </Link>
               <Link 
                 to="/cart" 
-                className="block py-2 px-2 rounded hover:bg-gray-50 font-medium text-meant-700 mt-2" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50 font-medium text-meant-700 mt-2" 
                 onClick={onClose}
               >
                 <div className="flex items-center gap-1">
@@ -199,31 +220,35 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
             <MobileDropdown title="Corporate">
               <Link 
                 to="/corporate-plans" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Corporate Wellness Plans
+                <Users size={16} className="text-meant-600" />
+                <span>Corporate Wellness Plans</span>
               </Link>
               <Link 
                 to="/corporate-plans#assistance" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Employee Assistance
+                <Heart size={16} className="text-meant-600" />
+                <span>Employee Assistance</span>
               </Link>
               <Link 
                 to="/corporate-certification" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Corporate Certifications
+                <Shield size={16} className="text-meant-600" />
+                <span>Corporate Certifications</span>
               </Link>
               <Link 
                 to="/webinars" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
+                className="flex items-center gap-2 py-2 px-2 rounded hover:bg-gray-50" 
                 onClick={onClose}
               >
-                Workshops & Webinars
+                <Video size={16} className="text-meant-600" />
+                <span>Workshops & Webinars</span>
               </Link>
             </MobileDropdown>
             
@@ -253,6 +278,24 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
               <Phone size={20} />
               <span>Contact</span>
             </Link>
+
+            <div className="border-t my-2"></div>
+            
+            <button
+              onClick={() => handleSectionScroll("peer-support")}
+              className="flex w-full items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
+            >
+              <Users size={20} />
+              <span>Peer Support</span>
+            </button>
+            
+            <button
+              onClick={() => handleSectionScroll("sleep-better")}
+              className="flex w-full items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
+            >
+              <Activity size={20} />
+              <span>Sleep Better</span>
+            </button>
             
             {isAuthenticated && (
               <>

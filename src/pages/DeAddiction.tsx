@@ -1,256 +1,158 @@
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import MainLayout from "@/components/layouts/MainLayout";
-import { Milestone, BadgeHelp, Heart, Shield, Users, Calendar, Clock, HandHeart, Smartphone, Wine, Pill, Coffee, Gamepad, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ServiceBookingForm from "@/components/services/ServiceBookingForm";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Shield, Phone, Users, MessageCircle, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 
 const DeAddiction = () => {
   useEffect(() => {
-    document.title = "MeantToHelp | De-addiction Services";
+    document.title = "MeantToHelp | Addiction Recovery";
     window.scrollTo(0, 0);
   }, []);
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const services = [
+  // Recovery program data
+  const recoveryPrograms = [
     {
-      title: "Mobile Phone De-addiction",
-      icon: Smartphone,
-      description: "Overcome smartphone addiction and digital dependency",
-      color: "bg-blue-50 text-blue-600"
+      id: 'program1',
+      title: 'Alcohol Dependence Recovery',
+      description: 'A comprehensive program to help you overcome alcohol dependence with personalized support and evidence-based therapies.',
+      duration: '12 weeks',
+      format: 'Online + In-person',
+      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
     },
     {
-      title: "Alcohol De-addiction",
-      icon: Wine,
-      description: "Professional support for alcohol dependency recovery",
-      color: "bg-purple-50 text-purple-600"
+      id: 'program2',
+      title: 'Substance Abuse Recovery',
+      description: 'Targeted intervention for substance abuse issues, including personalized counseling and group therapy sessions.',
+      duration: '16 weeks',
+      format: 'Online + In-person',
+      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
     },
     {
-      title: "Drug De-addiction",
-      icon: Pill,
-      description: "Comprehensive programs for substance abuse recovery",
-      color: "bg-red-50 text-red-600"
-    },
-    {
-      title: "Caffeine De-addiction",
-      icon: Coffee,
-      description: "Reduce dependency on caffeine products",
-      color: "bg-amber-50 text-amber-600"
-    },
-    {
-      title: "Gaming De-addiction",
-      icon: Gamepad,
-      description: "Overcome gaming addiction and find balance",
-      color: "bg-green-50 text-green-600"
-    },
-    {
-      title: "Shopping De-addiction",
-      icon: ShoppingBag,
-      description: "Control compulsive buying and shopping habits",
-      color: "bg-pink-50 text-pink-600"
+      id: 'program3',
+      title: 'Technology & Gaming Addiction',
+      description: 'Specialized program for overcoming technology and gaming addiction with practical strategies for digital wellbeing.',
+      duration: '8 weeks',
+      format: 'Online',
+      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
     }
   ];
 
   return (
     <MainLayout>
-      <div className="bg-gradient-to-b from-meant-50 to-white">
-        <motion.div 
-          className="container mx-auto px-4 py-16"
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          <motion.div 
-            className="max-w-4xl mx-auto space-y-8"
-            variants={fadeInUp}
-          >
-            <div className="text-center">
-              <motion.h1 
-                className="text-4xl md:text-5xl font-bold mb-6 text-meant-800"
-                variants={fadeInUp}
-              >
-                Your Journey to Recovery Starts Here
-              </motion.h1>
-              <motion.p 
-                className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto"
-                variants={fadeInUp}
-              >
-                Our specialized de-addiction services provide comprehensive support with a focus on lasting recovery and holistic healing.
-              </motion.p>
-            </div>
-
-            <motion.div 
-              className="grid gap-6 md:grid-cols-2"
-              variants={fadeInUp}
+      <section className="bg-gradient-to-b from-blue-50 to-white pt-12 pb-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recovery Programs</CardTitle>
-                  <CardDescription>Tailored treatment plans for your needs</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-4">
-                      <Shield className="h-5 w-5 text-meant-600 mt-1" />
-                      <div>
-                        <h3 className="font-medium">Personalized Care</h3>
-                        <p className="text-sm text-muted-foreground">Treatment plans customized to your specific needs</p>
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">Addiction Recovery Programs</h1>
+              <p className="text-lg text-muted-foreground mb-8">
+                Begin your journey to recovery with our compassionate, evidence-based addiction treatment programs. 
+                We offer personalized support for a variety of addiction challenges.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="p-3 rounded-full bg-blue-100 mb-4">
+                      <Shield className="text-blue-700" size={24} />
+                    </div>
+                    <h3 className="font-semibold mb-2">Confidential Support</h3>
+                    <p className="text-gray-600 text-sm">Your privacy is our priority throughout your recovery journey</p>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="p-3 rounded-full bg-blue-100 mb-4">
+                      <Phone className="text-blue-700" size={24} />
+                    </div>
+                    <h3 className="font-semibold mb-2">24/7 Helpline</h3>
+                    <p className="text-gray-600 text-sm">Access support whenever you need it, day or night</p>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="p-3 rounded-full bg-blue-100 mb-4">
+                      <Users className="text-blue-700" size={24} />
+                    </div>
+                    <h3 className="font-semibold mb-2">Group Support</h3>
+                    <p className="text-gray-600 text-sm">Connect with others on similar recovery journeys</p>
+                  </div>
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-bold mb-6">Recovery Programs</h2>
+            </motion.div>
+
+            <div className="space-y-6">
+              {recoveryPrograms.map((program, index) => (
+                <motion.div
+                  key={program.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 * index }}
+                  className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden"
+                >
+                  <div className="flex flex-col md:flex-row">
+                    <div className="md:w-1/3 h-48 md:h-auto relative">
+                      <img 
+                        src={program.image} 
+                        alt={program.title} 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                        <div className="flex items-center text-white">
+                          <Heart className="h-4 w-4 mr-1" />
+                          <span className="text-sm">98% success rate</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4">
-                      <Clock className="h-5 w-5 text-meant-600 mt-1" />
-                      <div>
-                        <h3 className="font-medium">Flexible Programs</h3>
-                        <p className="text-sm text-muted-foreground">Choose from various program durations</p>
+                    
+                    <div className="md:w-2/3 p-6">
+                      <h3 className="text-xl font-semibold mb-2">{program.title}</h3>
+                      <p className="text-gray-600 mb-4">{program.description}</p>
+                      
+                      <div className="flex flex-wrap gap-4 mb-4 text-sm">
+                        <div className="flex items-center">
+                          <span className="font-medium mr-2">Duration:</span>
+                          <span>{program.duration}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="font-medium mr-2">Format:</span>
+                          <span>{program.format}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <Users className="h-5 w-5 text-meant-600 mt-1" />
-                      <div>
-                        <h3 className="font-medium">Group Support</h3>
-                        <p className="text-sm text-muted-foreground">Access to supportive community and group therapy</p>
+                      
+                      <div className="flex flex-wrap gap-3">
+                        <Button>Learn More</Button>
+                        <Button variant="outline">
+                          <MessageCircle className="mr-2 h-4 w-4" />
+                          Speak to Counselor
+                        </Button>
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Expert Support</CardTitle>
-                  <CardDescription>Professional guidance at every step</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Tabs defaultValue="consult">
-                    <TabsList className="mb-4">
-                      <TabsTrigger value="consult">Consultation</TabsTrigger>
-                      <TabsTrigger value="book">Book Session</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="consult">
-                      <div className="space-y-4">
-                        <p className="text-sm text-muted-foreground">
-                          Schedule a confidential consultation with our addiction specialists to discuss your needs and create a recovery plan.
-                        </p>
-                        <Button className="w-full" variant="meant">
-                          Schedule Free Consultation
-                        </Button>
-                      </div>
-                    </TabsContent>
-                    <TabsContent value="book">
-                      <ServiceBookingForm
-                        serviceTitle="De-addiction Program"
-                        serviceType="de_addiction"
-                        servicePrice={2500}
-                      />
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div 
-              className="mt-12"
-              variants={fadeInUp}
-            >
-              <motion.h2 
-                className="text-2xl font-semibold mb-6 text-center"
-                variants={fadeInUp}
-              >
-                Our De-addiction Services
-              </motion.h2>
-              
-              <motion.div 
-                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-                variants={staggerContainer}
-              >
-                {services.map((service, index) => (
-                  <motion.div 
-                    key={index}
-                    variants={fadeInUp}
-                    whileHover={{ scale: 1.03 }}
-                    className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100"
-                  >
-                    <div className={`w-12 h-12 rounded-full ${service.color} flex items-center justify-center mb-4`}>
-                      <service.icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground text-sm">{service.description}</p>
-                    <Button variant="link" className="mt-3 p-0 h-auto text-meant-600">
-                      Learn more
-                    </Button>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-
-            <motion.div 
-              className="mt-16 text-center"
-              variants={fadeInUp}
-            >
-              <div className="inline-block p-4 rounded-lg bg-meant-50 mb-8">
-                <HandHeart className="h-8 w-8 text-meant-600 mx-auto" />
-              </div>
-              <h2 className="text-2xl font-semibold mb-4">24/7 Support Available</h2>
-              <p className="text-muted-foreground mb-6">
-                Our support line is always open. Reach out anytime for immediate assistance.
-              </p>
-              <motion.div 
-                className="text-xl font-bold text-meant-600"
-                whileHover={{ scale: 1.05 }}
-              >
-                +91 800-123-4567
-              </motion.div>
-            </motion.div>
-
-            <motion.div 
-              className="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-xl"
-              variants={fadeInUp}
-            >
-              <h2 className="text-2xl font-semibold mb-6 text-center">Our Recovery Process</h2>
-              <div className="grid md:grid-cols-4 gap-4 relative">
-                {["Assessment", "Personalized Plan", "Treatment", "Aftercare"].map((step, index) => (
-                  <motion.div
-                    key={index}
-                    className="relative"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    <div className="bg-white w-12 h-12 rounded-full shadow-md flex items-center justify-center mx-auto mb-4 z-10 relative">
-                      <span className="text-meant-600 font-bold">{index + 1}</span>
-                    </div>
-                    <h3 className="font-medium text-center mb-2">{step}</h3>
-                    <p className="text-sm text-center text-muted-foreground">
-                      {index === 0 && "Comprehensive evaluation of your specific situation"}
-                      {index === 1 && "Custom recovery plan designed for your needs"}
-                      {index === 2 && "Expert-guided therapy and treatment sessions"}
-                      {index === 3 && "Ongoing support to maintain long-term recovery"}
-                    </p>
-                  </motion.div>
-                ))}
-                <div className="absolute top-6 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-blue-200 to-purple-200 hidden md:block"></div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            <div className="mt-12 p-6 bg-blue-50 rounded-lg text-center">
+              <h3 className="text-xl font-semibold mb-3">Need Immediate Help?</h3>
+              <p className="mb-4">Our counselors are available 24/7 to support you in times of crisis.</p>
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+                <Phone className="mr-2 h-4 w-4" />
+                Call Helpline
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </MainLayout>
   );
 };

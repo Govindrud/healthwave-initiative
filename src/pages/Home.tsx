@@ -13,8 +13,10 @@ import SolutionsSection from '@/components/SolutionsSection';
 import ServicesSlider from '@/components/ServicesSlider';
 import VoiceAssistantPromo from '@/components/voice/VoiceAssistantPromo';
 import Spirituality from '@/components/Spirituality';
-import PartnersSection from '@/components/PartnersSection';
+import PartnerLogosSection from '@/components/partners/PartnerLogosSection';
 import GoalSetting from '@/components/GoalSetting';
+import PeerSupportSection from '@/components/PeerSupportSection';
+import SleepBetterSection from '@/components/SleepBetterSection';
 
 const Home = () => {
   useEffect(() => {
@@ -31,8 +33,10 @@ const Home = () => {
         <ServicesSlider />
         <ProductsSection />
         <SolutionsSection />
-        <PartnersSection />
+        <PartnerLogosSection />
         <GoalSetting />
+        <PeerSupportSection />
+        <SleepBetterSection />
         <ProblemForm />
         <Spirituality />
         <VoiceAssistantPromo />
