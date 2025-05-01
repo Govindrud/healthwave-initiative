@@ -18,6 +18,7 @@ import PeerSupportSection from '@/components/PeerSupportSection';
 import SleepBetterSection from '@/components/SleepBetterSection';
 import HappyPeopleSlider from '@/components/HappyPeopleSlider';
 import AIPersonalAssistant from '@/components/ai/AIPersonalAssistant';
+import MainLayout from '@/components/layouts/MainLayout';
 
 const Home = () => {
   useEffect(() => {
@@ -26,28 +27,24 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Hero />
-        <About />
-        <ServicesSlider />
-        <HappyPeopleSlider />
-        <ProductsSection />
-        <SolutionsSection />
-        <PartnerLogosSection />
-        <GoalSetting />
-        <PeerSupportSection />
-        <SleepBetterSection />
-        <ProblemForm />
-        <Spirituality />
-        <VoiceAssistantPromo />
-        <AIPersonalAssistant />
-        <SocialFeed />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <MainLayout>
+      <Hero />
+      <About />
+      <ServicesSlider />
+      <HappyPeopleSlider />
+      <ProductsSection />
+      <SolutionsSection />
+      <PartnerLogosSection />
+      <GoalSetting />
+      <PeerSupportSection />
+      <SleepBetterSection />
+      <ProblemForm />
+      <Spirituality />
+      <VoiceAssistantPromo />
+      <AIPersonalAssistant />
+      <SocialFeed />
+      <Contact />
+    </MainLayout>
   );
 };
 
