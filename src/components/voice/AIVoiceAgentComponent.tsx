@@ -35,6 +35,7 @@ const AIVoiceAgentComponent: React.FC = () => {
     };
 
     checkBrowserCompatibility();
+    document.title = "AI Voice Therapy Assistant | MeantToHelp";
   }, []);
 
   // Only initialize voice assistant when API key is configured
@@ -90,12 +91,14 @@ const AIVoiceAgentComponent: React.FC = () => {
       try {
         await initializeModel();
         setEmotionEnabled(true);
+        toast.success("Emotion detection enabled");
       } catch (error) {
         console.error("Failed to enable emotion detection:", error);
         toast.error("Could not enable emotion detection. Your browser may not support this feature.");
       }
     } else {
       setEmotionEnabled(false);
+      toast.info("Emotion detection disabled");
     }
   };
 
@@ -107,9 +110,21 @@ const AIVoiceAgentComponent: React.FC = () => {
     toast.success("Settings saved successfully!");
   };
 
+  const demoMode = !apiKeyConfigured && !elevenLabsApiKey;
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
+        {demoMode && (
+          <div className="bg-amber-50 border border-amber-200 rounded-md p-4 mb-8">
+            <h3 className="text-amber-800 font-medium mb-2">Demo Mode Active</h3>
+            <p className="text-amber-700">
+              You're currently in demo mode. For full functionality including voice synthesis, 
+              please configure your ElevenLabs API key in the settings panel below.
+            </p>
+          </div>
+        )}
+
         <ApiKeyConfiguration
           elevenLabsApiKey={elevenLabsApiKey}
           elevenLabsAgentId={elevenLabsAgentId}
@@ -130,28 +145,26 @@ const AIVoiceAgentComponent: React.FC = () => {
             </p>
           </div>
 
-          {apiKeyConfigured && (
-            <AssistantModeTabs
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-              elevenLabsApiKey={elevenLabsApiKey}
-              elevenLabsAgentId={elevenLabsAgentId}
-              messages={messages}
-              emotionEnabled={emotionEnabled}
-              emotions={emotions}
-              isEmotionLoading={isEmotionLoading}
-              isListening={isListening}
-              isSpeaking={isSpeaking}
-              volume={volume}
-              toggleListening={toggleListening}
-              stopSpeaking={stopSpeaking}
-              adjustVolume={adjustVolume}
-              resetConversation={resetConversation}
-              apiKeyConfigured={apiKeyConfigured}
-              toggleEmotionDetection={toggleEmotionDetection}
-              browserSupportsEmotionDetection={browserSupportsEmotionDetection}
-            />
-          )}
+          <AssistantModeTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            elevenLabsApiKey={elevenLabsApiKey}
+            elevenLabsAgentId={elevenLabsAgentId}
+            messages={messages}
+            emotionEnabled={emotionEnabled}
+            emotions={emotions}
+            isEmotionLoading={isEmotionLoading}
+            isListening={isListening}
+            isSpeaking={isSpeaking}
+            volume={volume}
+            toggleListening={toggleListening}
+            stopSpeaking={stopSpeaking}
+            adjustVolume={adjustVolume}
+            resetConversation={resetConversation}
+            apiKeyConfigured={apiKeyConfigured}
+            toggleEmotionDetection={toggleEmotionDetection}
+            browserSupportsEmotionDetection={browserSupportsEmotionDetection}
+          />
 
           <VoiceAssistantHelp emotionEnabled={emotionEnabled} />
         </div>

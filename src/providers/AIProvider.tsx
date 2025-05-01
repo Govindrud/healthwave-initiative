@@ -1,16 +1,25 @@
 
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { initializeAIServices } from '@/utils/ai-integration';
 import { toast } from 'sonner';
 
 interface AIContextType {
   isInitialized: boolean;
+  personaId: string;
+  setPersonaId: (id: string) => void;
 }
 
-export const AIContext = createContext<AIContextType>({ isInitialized: false });
+export const AIContext = createContext<AIContextType>({
+  isInitialized: false,
+  personaId: 'therapist',
+  setPersonaId: () => {}
+});
+
+export const useAIContext = () => useContext(AIContext);
 
 export const AIProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isInitialized, setIsInitialized] = React.useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [personaId, setPersonaId] = useState('therapist');
 
   useEffect(() => {
     const initialize = async () => {
@@ -31,7 +40,7 @@ export const AIProvider: React.FC<{ children: React.ReactNode }> = ({ children }
   }, []);
 
   return (
-    <AIContext.Provider value={{ isInitialized }}>
+    <AIContext.Provider value={{ isInitialized, personaId, setPersonaId }}>
       {children}
     </AIContext.Provider>
   );

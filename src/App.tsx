@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { RegionProvider } from './context/RegionContext';
 import { AuthProvider } from './hooks/useAuth';
+import { AIProvider } from './providers/AIProvider';
 
 // Main Pages
 import Home from './pages/Home';
@@ -56,9 +57,9 @@ import AdminDashboard from './pages/AdminDashboard';
 
 const App: React.FC = () => {
   return (
-    <React.StrictMode>
-      <RegionProvider>
-        <AuthProvider>
+    <RegionProvider>
+      <AuthProvider>
+        <AIProvider>
           <Router>
             <Toaster position="top-center" richColors />
             <Routes>
@@ -116,9 +117,9 @@ const App: React.FC = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
-        </AuthProvider>
-      </RegionProvider>
-    </React.StrictMode>
+        </AIProvider>
+      </AuthProvider>
+    </RegionProvider>
   );
 };
 

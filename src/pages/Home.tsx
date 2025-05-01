@@ -18,7 +18,6 @@ import PeerSupportSection from '@/components/PeerSupportSection';
 import SleepBetterSection from '@/components/SleepBetterSection';
 import HappyPeopleSlider from '@/components/HappyPeopleSlider';
 import AIPersonalAssistant from '@/components/ai/AIPersonalAssistant';
-import { AIProvider } from '@/providers/AIProvider';
 
 const Home = () => {
   useEffect(() => {
@@ -27,30 +26,28 @@ const Home = () => {
   }, []);
 
   return (
-    <AIProvider>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Hero />
-          <About />
-          <ServicesSlider />
-          <HappyPeopleSlider />
-          <ProductsSection />
-          <SolutionsSection />
-          <PartnerLogosSection />
-          <GoalSetting />
-          <PeerSupportSection />
-          <SleepBetterSection />
-          <ProblemForm />
-          <Spirituality />
-          <VoiceAssistantPromo />
-          <AIPersonalAssistant />
-          <SocialFeed />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
-    </AIProvider>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        <Hero />
+        <About />
+        <ServicesSlider />
+        <HappyPeopleSlider />
+        <ProductsSection />
+        <SolutionsSection />
+        <PartnerLogosSection />
+        <GoalSetting />
+        <PeerSupportSection />
+        <SleepBetterSection />
+        <ProblemForm />
+        <Spirituality />
+        <VoiceAssistantPromo />
+        <AIPersonalAssistant />
+        <SocialFeed />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
 };
 
