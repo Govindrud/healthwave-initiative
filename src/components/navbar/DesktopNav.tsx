@@ -6,6 +6,7 @@ import Logo from "@/components/Logo";
 import { NavSection } from "./navigation/NavSection";
 import { UserMenu } from "./user-menu/UserMenu";
 import RegionSelector from "@/components/region/RegionSelector";
+import { servicesItems, spiritualityItems, activitiesItems, mainMenuItems, aiItems } from "@/config/navigation";
 
 export const DesktopNav = ({ location }: { location: any }) => {
   return (
@@ -23,43 +24,7 @@ export const DesktopNav = ({ location }: { location: any }) => {
             
             <NavSection 
               title="Services"
-              items={[
-                {
-                  title: "Doctor Consultations",
-                  href: "/doctors",
-                  description: "Online consultations with experienced doctors"
-                },
-                {
-                  title: "Spiritual Guidance",
-                  href: "/spirituality",
-                  description: "Connect with spiritual guides and healers"
-                },
-                {
-                  title: "Student Psychologists",
-                  href: "/student-psychologists",
-                  description: "Affordable counseling with psychology students"
-                },
-                {
-                  title: "Wellness Activities",
-                  href: "/activities",
-                  description: "Participate in wellness and mindfulness activities"
-                },
-                {
-                  title: "De-addiction",
-                  href: "/de-addiction",
-                  description: "Comprehensive addiction recovery programs"
-                },
-                {
-                  title: "Surender",
-                  href: "/surender",
-                  description: "Find peace and professional support for stress"
-                },
-                {
-                  title: "All Services",
-                  href: "/services",
-                  description: "Browse our complete range of services"
-                }
-              ]}
+              items={servicesItems}
             />
             
             <NavSection 
@@ -86,6 +51,21 @@ export const DesktopNav = ({ location }: { location: any }) => {
                   description: "Essential oils and diffusers for aromatherapy"
                 }
               ]}
+            />
+            
+            <NavSection 
+              title="AI Assistants"
+              items={aiItems}
+            />
+            
+            <NavSection 
+              title="Spirituality"
+              items={spiritualityItems}
+            />
+            
+            <NavSection 
+              title="Activities"
+              items={activitiesItems}
             />
             
             <NavSection 

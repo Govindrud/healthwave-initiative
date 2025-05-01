@@ -1,5 +1,5 @@
 
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield, Phone, MessageCircle, Activity } from "lucide-react";
+import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield, Phone, MessageCircle, Activity, Bot, Mic } from "lucide-react";
 
 export const spiritualityItems = [
   {
@@ -95,6 +95,21 @@ export const activitiesItems = [
     title: "Ease of Living",
     icon: Trees,
     description: "Explore holistic approaches to simplify and enhance life"
+  }
+];
+
+export const aiItems = [
+  {
+    href: "/ai-personal-assistant",
+    title: "AI Personal Assistant", 
+    icon: Bot,
+    description: "Chat with our AI mental health assistant with multiple personalities"
+  },
+  {
+    href: "/ai-voice-agent",
+    title: "AI Voice Agent",
+    icon: Mic,
+    description: "Have a conversation with our voice-enabled AI mental health assistant"
   }
 ];
 

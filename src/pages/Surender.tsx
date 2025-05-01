@@ -1,167 +1,104 @@
 
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Navbar from '@/components/navbar';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Phone, MessageSquare, Clock, Users } from 'lucide-react';
+import MainLayout from '@/components/layouts/MainLayout';
 
-const SurenderPage = () => {
+const Surender = () => {
   useEffect(() => {
-    document.title = "Surender - MeantToHelp";
-    window.scrollTo(0, 0);
+    document.title = "Surender | MeantToHelp";
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-meant-50 to-meant-100 py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <motion.span 
-                  className="inline-block py-1 px-3 rounded-full bg-meant-200 text-meant-800 text-sm font-medium mb-5"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                >
-                  Emergency Mental Health Support
-                </motion.span>
-                <motion.h1 
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                >
-                  Surender - Find Peace in Your Moment of Need
-                </motion.h1>
-                <motion.p 
-                  className="text-lg text-gray-700 mb-8"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                >
-                  When you're overwhelmed and need immediate support, our Surender program provides compassionate assistance to help you find calm and clarity. Connect with professionals trained to guide you through difficult moments.
-                </motion.p>
-                <motion.div 
-                  className="flex flex-col sm:flex-row gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                >
-                  <Button size="lg" className="bg-meant-600 hover:bg-meant-700">
-                    <Phone className="mr-2 h-4 w-4" /> Call Support Now
-                  </Button>
-                  <Button size="lg" variant="outline" className="border-meant-600 text-meant-600">
-                    <MessageSquare className="mr-2 h-4 w-4" /> Chat With a Counselor
-                  </Button>
-                </motion.div>
+    <MainLayout title="Surender - Find Peace">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-meant-50/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Surender</h1>
+            <p className="text-lg text-muted-foreground">
+              Finding peace and professional support to help you let go of stress and anxiety.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div>
+              <img 
+                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                alt="Peaceful meditation scene" 
+                className="rounded-lg shadow-md w-full h-auto object-cover"
+              />
+            </div>
+            <div className="flex flex-col justify-center">
+              <h2 className="text-2xl font-semibold mb-4">The Art of Letting Go</h2>
+              <p className="mb-4">
+                Surender is about finding the strength to let go of what no longer serves you. It's about making peace with uncertainty and finding calm in the midst of life's challenges.
+              </p>
+              <p>
+                Our approach combines ancient wisdom with modern therapeutic techniques to help you release stress, anxiety, and negative thought patterns that prevent you from living fully.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-8 shadow-md mb-12">
+            <h2 className="text-2xl font-semibold mb-6 text-center">Our Surender Process</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-meant-50 p-5 rounded-lg">
+                <h3 className="font-medium text-lg mb-2">Acknowledge</h3>
+                <p>Begin by acknowledging your feelings and the struggles you're experiencing without judgment or criticism.</p>
               </div>
-              <div className="flex justify-center">
-                <motion.img 
-                  src="https://images.unsplash.com/photo-1541199249251-f713e6145474?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"
-                  alt="Person meditating peacefully"
-                  className="rounded-lg shadow-lg max-w-md w-full"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                />
+              <div className="bg-meant-50 p-5 rounded-lg">
+                <h3 className="font-medium text-lg mb-2">Release</h3>
+                <p>Learn practical techniques for releasing tension, worry, and the need to control outcomes.</p>
+              </div>
+              <div className="bg-meant-50 p-5 rounded-lg">
+                <h3 className="font-medium text-lg mb-2">Transform</h3>
+                <p>Discover how surrendering creates space for new perspectives, peace, and personal growth.</p>
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Emergency Contact Section */}
-        <section className="bg-red-50 py-12">
-          <div className="container mx-auto px-4">
-            <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-red-500">
-              <h2 className="text-2xl font-bold text-red-600 mb-4">24/7 Emergency Support</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="flex items-center">
-                  <Phone className="h-10 w-10 text-red-500 mr-4" />
-                  <div>
-                    <p className="text-sm text-gray-500">Crisis Helpline</p>
-                    <p className="font-bold text-lg">1-800-273-TALK (8255)</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <MessageSquare className="h-10 w-10 text-red-500 mr-4" />
-                  <div>
-                    <p className="text-sm text-gray-500">Text Crisis Line</p>
-                    <p className="font-bold text-lg">Text HOME to 741741</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <Clock className="h-10 w-10 text-red-500 mr-4" />
-                  <div>
-                    <p className="text-sm text-gray-500">Available</p>
-                    <p className="font-bold text-lg">24 hours, 7 days a week</p>
-                  </div>
-                </div>
+          
+          <div className="max-w-4xl mx-auto mt-16">
+            <h2 className="text-2xl font-semibold mb-6 text-center">How We Can Support You</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-medium text-lg mb-2">Professional Guidance</h3>
+                <p>Our experienced therapists and counselors provide compassionate support tailored to your unique journey.</p>
+                <a href="/doctors" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">Meet our professionals →</a>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-medium text-lg mb-2">Stress Relief Practices</h3>
+                <p>Learn evidence-based techniques for managing stress and cultivating inner peace.</p>
+                <a href="/services" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">View services →</a>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-medium text-lg mb-2">Community Support</h3>
+                <p>Connect with others on a similar journey in our supportive group sessions.</p>
+                <a href="/activities" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">Join activities →</a>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-medium text-lg mb-2">Spiritual Guidance</h3>
+                <p>Explore the spiritual dimensions of surrender with our experienced guides.</p>
+                <a href="/spirituality" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">Spiritual services →</a>
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Surender Services */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">How We Can Help You Find Peace</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Immediate Crisis Support",
-                  description: "Professional guidance for moments of acute distress or crisis, available anytime you need it.",
-                  icon: Heart,
-                  image: "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  title: "Guided Meditation Sessions",
-                  description: "Live guided meditation to help you center yourself and find calm during difficult moments.",
-                  icon: Users,
-                  image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                  title: "Follow-up Care Planning",
-                  description: "Creating a personalized wellness plan to support you beyond the immediate crisis.",
-                  icon: Clock,
-                  image: "https://images.unsplash.com/photo-1455849318743-b2233052fcff?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                },
-              ].map((service, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <div className="h-48 overflow-hidden">
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <CardContent className="pt-6">
-                    <div className="flex items-center mb-4">
-                      <div className="p-2 rounded-full bg-meant-100 mr-3">
-                        <service.icon className="h-6 w-6 text-meant-600" />
-                      </div>
-                      <h3 className="font-semibold text-xl">{service.title}</h3>
-                    </div>
-                    <p className="text-gray-600">{service.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-            <div className="text-center mt-12">
-              <Button className="bg-meant-600 hover:bg-meant-700">
+          
+          <div className="max-w-2xl mx-auto mt-16 text-center">
+            <h2 className="text-2xl font-semibold mb-4">Begin Your Journey to Peace</h2>
+            <p className="mb-6">
+              The path to inner peace begins with a single step. We're here to walk alongside you.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/contact" className="bg-meant-600 hover:bg-meant-700 text-white px-6 py-3 rounded-md font-medium">
+                Contact Us
+              </a>
+              <a href="#" className="border border-meant-600 text-meant-600 hover:bg-meant-50 px-6 py-3 rounded-md font-medium">
                 Book a Session
-              </Button>
+              </a>
             </div>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+        </div>
+      </section>
+    </MainLayout>
   );
 };
 
-export default SurenderPage;
+export default Surender;

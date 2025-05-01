@@ -31,6 +31,8 @@ import Games from './pages/Games';
 import EaseOfLiving from './pages/EaseOfLiving';
 import Spirituality from './pages/Spirituality';
 import SpiritualityServices from './pages/SpiritualityServices';
+import AIPersonalAssistant from './pages/AIPersonalAssistant';
+import AIVoiceAgent from './pages/AIVoiceAgent';
 
 // Corporate Pages
 import CorporatePlans from './pages/CorporatePlans';
@@ -84,6 +86,10 @@ const App: React.FC = () => {
             <Route path="/ease-of-living" element={<EaseOfLiving />} />
             <Route path="/spirituality" element={<Spirituality />} />
             <Route path="/spirituality-services" element={<SpiritualityServices />} />
+            
+            {/* AI Routes */}
+            <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
+            <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
             
             {/* Corporate Routes */}
             <Route path="/corporate-plans" element={<CorporatePlans />} />

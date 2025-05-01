@@ -7,7 +7,6 @@ import ProductsSection from '@/components/ProductsSection';
 import About from '@/components/About';
 import Contact from '@/components/Contact';
 import SocialFeed from '@/components/SocialFeed';
-import AIMentalHealthAssistant from '@/components/AIMentalHealthAssistant';
 import ProblemForm from '@/components/ProblemForm';
 import SolutionsSection from '@/components/SolutionsSection';
 import ServicesSlider from '@/components/ServicesSlider';
@@ -18,6 +17,8 @@ import GoalSetting from '@/components/GoalSetting';
 import PeerSupportSection from '@/components/PeerSupportSection';
 import SleepBetterSection from '@/components/SleepBetterSection';
 import HappyPeopleSlider from '@/components/HappyPeopleSlider';
+import AIPersonalAssistant from '@/components/ai/AIPersonalAssistant';
+import { AIProvider } from '@/providers/AIProvider';
 
 const Home = () => {
   useEffect(() => {
@@ -26,28 +27,30 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Hero />
-        <About />
-        <ServicesSlider />
-        <HappyPeopleSlider />
-        <ProductsSection />
-        <SolutionsSection />
-        <PartnerLogosSection />
-        <GoalSetting />
-        <PeerSupportSection />
-        <SleepBetterSection />
-        <ProblemForm />
-        <Spirituality />
-        <VoiceAssistantPromo />
-        <SocialFeed />
-        <AIMentalHealthAssistant />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <AIProvider>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Hero />
+          <About />
+          <ServicesSlider />
+          <HappyPeopleSlider />
+          <ProductsSection />
+          <SolutionsSection />
+          <PartnerLogosSection />
+          <GoalSetting />
+          <PeerSupportSection />
+          <SleepBetterSection />
+          <ProblemForm />
+          <Spirituality />
+          <VoiceAssistantPromo />
+          <AIPersonalAssistant />
+          <SocialFeed />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </AIProvider>
   );
 };
 
