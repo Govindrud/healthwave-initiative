@@ -25,10 +25,13 @@ const defaultContextValue: RegionContextType = {
   formatPrice: () => ""
 };
 
+// Create context with the default value
 const RegionContext = createContext<RegionContextType>(defaultContextValue);
 
+// Custom hook to use the region context
 export const useRegion = () => useContext(RegionContext);
 
+// Provider component
 export const RegionProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const [region, setRegion] = useState<RegionType>("india");
   const [currency, setCurrency] = useState<Currency>("INR");
@@ -82,3 +85,5 @@ export const RegionProvider: React.FC<{children: React.ReactNode}> = ({ children
     </RegionContext.Provider>
   );
 };
+
+export default RegionContext;
