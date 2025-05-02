@@ -32,16 +32,16 @@ export function useFetchData<T>(
     refetchInterval?: number;
   }
 ) {
-  return useQuery({
+  return useQuery<T, Error>({
     queryKey,
     queryFn: () => fetchData<T>(url),
     enabled: options?.enabled,
     refetchInterval: options?.refetchInterval,
-    onSuccess: (data) => {
-      if (options?.onSuccess) {
-        options.onSuccess(data);
-      }
+    meta: {
+      onSuccess: options?.onSuccess,
+      onError: options?.onError,
     },
+    onSuccess: options?.onSuccess,
     onError: (error) => {
       console.error(`Error fetching ${url}:`, error);
       toast.error(`Failed to load data: ${error.message}`);
@@ -62,7 +62,7 @@ export function useMutateData<TData, TVariables>(
     invalidateQueries?: string[];
   }
 ) {
-  return useMutation({
+  return useMutation<TData, Error, TVariables>({
     mutationFn: (variables: TVariables) =>
       fetchData<TData>(url, {
         method,
@@ -71,6 +71,10 @@ export function useMutateData<TData, TVariables>(
         },
         body: JSON.stringify(variables),
       }),
+    meta: {
+      onSuccess: options?.onSuccess,
+      onError: options?.onError,
+    },
     onSuccess: (data) => {
       // Invalidate queries if specified
       if (options?.invalidateQueries) {
