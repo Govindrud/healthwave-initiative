@@ -37,7 +37,16 @@ export function useFetchData<T>(
     queryFn: () => fetchData<T>(url),
     enabled: options?.enabled,
     refetchInterval: options?.refetchInterval,
-    onSuccess: options?.onSuccess,
+    // In React Query v5, we need to use the callbacks in this form:
+    meta: {
+      onSuccess: options?.onSuccess,
+      onError: options?.onError,
+    },
+    onSuccess: data => {
+      if (options?.onSuccess) {
+        options.onSuccess(data);
+      }
+    },
     onError: (error) => {
       console.error(`Error fetching ${url}:`, error);
       toast.error(`Failed to load data: ${error.message}`);
