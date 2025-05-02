@@ -1,5 +1,5 @@
 
-import { useQuery, useMutation, QueryClient, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, useMutation, QueryClient, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 // Initialize QueryClient
@@ -37,7 +37,15 @@ export function useFetchData<T>(
     queryFn: () => fetchData<T>(url),
     enabled: options?.enabled,
     refetchInterval: options?.refetchInterval,
-    onSuccess: options?.onSuccess,
+    meta: {
+      onSuccess: options?.onSuccess,
+      onError: options?.onError
+    },
+    onSuccess: (data) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data);
+      }
+    },
     onError: (error) => {
       console.error(`Error fetching ${url}:`, error);
       toast.error(`Failed to load data: ${error.message}`);
@@ -45,7 +53,7 @@ export function useFetchData<T>(
         options.onError(error);
       }
     },
-  });
+  } as UseQueryOptions<T, Error, T, string[]>);
 }
 
 // Hook for POST, PUT, DELETE
@@ -85,5 +93,5 @@ export function useMutateData<TData, TVariables>(
         options.onError(error);
       }
     },
-  });
+  } as UseMutationOptions<TData, Error, TVariables>);
 }

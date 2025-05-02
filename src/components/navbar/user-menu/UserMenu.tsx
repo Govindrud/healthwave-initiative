@@ -15,11 +15,12 @@ import { Button } from "@/components/ui/button";
 import { LogIn, User, CalendarClock, User as UserIcon, LogOut, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRegion } from "@/context/RegionContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export const UserMenu = () => {
   const [open, setOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
-  const { t } = useRegion();
+  const { t } = useTranslation();
   
   const handleLogout = () => {
     logout();
