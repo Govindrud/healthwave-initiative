@@ -2,6 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './hooks/useFetch';
 import { RegionProvider } from './context/RegionContext';
 import { AuthProvider } from './hooks/useAuth';
 import { AIProvider } from './providers/AIProvider';
@@ -57,69 +59,71 @@ import AdminDashboard from './pages/AdminDashboard';
 
 const App: React.FC = () => {
   return (
-    <RegionProvider>
-      <AuthProvider>
-        <AIProvider>
-          <Router>
-            <Toaster position="top-center" richColors />
-            <Routes>
-              {/* Main Routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/documentation" element={<Documentation />} />
-              
-              {/* Authentication Routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/my-bookings" element={<MyBookings />} />
-              
-              {/* Service Routes */}
-              <Route path="/doctors" element={<Doctors />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/student-psychologists" element={<StudentPsychologists />} />
-              <Route path="/activities" element={<Activities />} />
-              <Route path="/de-addiction" element={<DeAddiction />} />
-              <Route path="/surender" element={<Surender />} />
-              <Route path="/webinars" element={<Webinars />} />
-              <Route path="/adventures" element={<Adventures />} />
-              <Route path="/games" element={<Games />} />
-              <Route path="/ease-of-living" element={<EaseOfLiving />} />
-              <Route path="/spirituality" element={<Spirituality />} />
-              <Route path="/spirituality-services" element={<SpiritualityServices />} />
-              
-              {/* AI Routes */}
-              <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
-              <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
-              
-              {/* Corporate Routes */}
-              <Route path="/corporate-plans" element={<CorporatePlans />} />
-              <Route path="/corporate-certification" element={<CorporateCertification />} />
-              
-              {/* Product Routes */}
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/:id" element={<ProductDetails />} />
-              <Route path="/cart" element={<Cart />} />
-              
-              {/* Partner Routes */}
-              <Route path="/partners" element={<Partners />} />
-              
-              {/* Payment Routes */}
-              <Route path="/payment-success" element={<PaymentSuccess />} />
-              <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-              
-              {/* Admin Routes */}
-              <Route path="/admin-login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              
-              {/* 404 Route */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Router>
-        </AIProvider>
-      </AuthProvider>
-    </RegionProvider>
+    <QueryClientProvider client={queryClient}>
+      <RegionProvider>
+        <AuthProvider>
+          <AIProvider>
+            <Router>
+              <Toaster position="top-center" richColors />
+              <Routes>
+                {/* Main Routes */}
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/documentation" element={<Documentation />} />
+                
+                {/* Authentication Routes */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/my-bookings" element={<MyBookings />} />
+                
+                {/* Service Routes */}
+                <Route path="/doctors" element={<Doctors />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/student-psychologists" element={<StudentPsychologists />} />
+                <Route path="/activities" element={<Activities />} />
+                <Route path="/de-addiction" element={<DeAddiction />} />
+                <Route path="/surender" element={<Surender />} />
+                <Route path="/webinars" element={<Webinars />} />
+                <Route path="/adventures" element={<Adventures />} />
+                <Route path="/games" element={<Games />} />
+                <Route path="/ease-of-living" element={<EaseOfLiving />} />
+                <Route path="/spirituality" element={<Spirituality />} />
+                <Route path="/spirituality-services" element={<SpiritualityServices />} />
+                
+                {/* AI Routes */}
+                <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
+                <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
+                
+                {/* Corporate Routes */}
+                <Route path="/corporate-plans" element={<CorporatePlans />} />
+                <Route path="/corporate-certification" element={<CorporateCertification />} />
+                
+                {/* Product Routes */}
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/:id" element={<ProductDetails />} />
+                <Route path="/cart" element={<Cart />} />
+                
+                {/* Partner Routes */}
+                <Route path="/partners" element={<Partners />} />
+                
+                {/* Payment Routes */}
+                <Route path="/payment-success" element={<PaymentSuccess />} />
+                <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+                
+                {/* Admin Routes */}
+                <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                
+                {/* 404 Route */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Router>
+          </AIProvider>
+        </AuthProvider>
+      </RegionProvider>
+    </QueryClientProvider>
   );
 };
 
