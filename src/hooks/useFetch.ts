@@ -37,19 +37,17 @@ export function useFetchData<T>(
     queryFn: () => fetchData<T>(url),
     enabled: options?.enabled,
     refetchInterval: options?.refetchInterval,
-    callbacks: {
-      onSuccess: (data) => {
-        if (options?.onSuccess) {
-          options.onSuccess(data);
-        }
-      },
-      onError: (error) => {
-        console.error(`Error fetching ${url}:`, error);
-        toast.error(`Failed to load data: ${error.message}`);
-        if (options?.onError) {
-          options.onError(error as Error);
-        }
-      },
+    onSuccess: (data) => {
+      if (options?.onSuccess) {
+        options.onSuccess(data);
+      }
+    },
+    onError: (error) => {
+      console.error(`Error fetching ${url}:`, error);
+      toast.error(`Failed to load data: ${error.message}`);
+      if (options?.onError) {
+        options.onError(error as Error);
+      }
     },
   });
 }
@@ -73,25 +71,23 @@ export function useMutateData<TData, TVariables>(
         },
         body: JSON.stringify(variables),
       }),
-    callbacks: {
-      onSuccess: (data) => {
-        // Invalidate queries if specified
-        if (options?.invalidateQueries) {
-          options.invalidateQueries.forEach((queryKey) => {
-            queryClient.invalidateQueries({ queryKey: [queryKey] });
-          });
-        }
-        if (options?.onSuccess) {
-          options.onSuccess(data);
-        }
-      },
-      onError: (error) => {
-        console.error(`Error with ${method} to ${url}:`, error);
-        toast.error(`Operation failed: ${error.message}`);
-        if (options?.onError) {
-          options.onError(error as Error);
-        }
-      },
+    onSuccess: (data) => {
+      // Invalidate queries if specified
+      if (options?.invalidateQueries) {
+        options.invalidateQueries.forEach((queryKey) => {
+          queryClient.invalidateQueries({ queryKey: [queryKey] });
+        });
+      }
+      if (options?.onSuccess) {
+        options.onSuccess(data);
+      }
+    },
+    onError: (error) => {
+      console.error(`Error with ${method} to ${url}:`, error);
+      toast.error(`Operation failed: ${error.message}`);
+      if (options?.onError) {
+        options.onError(error as Error);
+      }
     },
   });
 }
