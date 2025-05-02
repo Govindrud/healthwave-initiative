@@ -4,6 +4,7 @@ import MainLayout from "@/components/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Calendar, Star, Shield, Users } from "lucide-react";
 import { motion } from "framer-motion";
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 const StudentPsychologists = () => {
   useEffect(() => {
@@ -21,7 +22,7 @@ const StudentPsychologists = () => {
       experience: '2 years',
       rating: 4.8,
       reviews: 24,
-      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
+      image: '/images/user-placeholder.jpg',
       availability: 'Available today'
     },
     {
@@ -32,7 +33,7 @@ const StudentPsychologists = () => {
       experience: '3 years',
       rating: 4.9,
       reviews: 31,
-      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
+      image: '/images/user-placeholder.jpg',
       availability: 'Next available: Tomorrow'
     },
     {
@@ -43,7 +44,7 @@ const StudentPsychologists = () => {
       experience: '1 year',
       rating: 4.7,
       reviews: 18,
-      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
+      image: '/images/user-placeholder.jpg',
       availability: 'Available today'
     }
   ];
@@ -104,10 +105,11 @@ const StudentPsychologists = () => {
                 >
                   <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/4 p-4 flex flex-col items-center justify-center">
-                      <img 
+                      <ImageWithFallback 
                         src={psychologist.image} 
                         alt={psychologist.name} 
                         className="w-32 h-32 object-cover rounded-full border-4 border-meant-50"
+                        fallbackSrc="/images/user-placeholder.jpg"
                       />
                       <div className="mt-3 flex items-center">
                         <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 mr-1" />

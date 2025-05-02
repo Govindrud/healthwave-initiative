@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ImageWithFallback from './ui/ImageWithFallback';
 
 interface SlideItem {
   image: string;
@@ -56,10 +57,11 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
           transition={{ duration: 0.5 }}
         >
           <div className="relative h-full w-full">
-            <img
+            <ImageWithFallback
               src={slides[currentIndex].image}
               alt={`Slide ${currentIndex + 1}`}
               className="h-full w-full object-cover"
+              fallbackSrc="/placeholder.svg"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
               <p className="text-center text-lg font-medium">

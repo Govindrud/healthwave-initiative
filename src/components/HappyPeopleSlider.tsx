@@ -2,19 +2,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ImageSlider from './ImageSlider';
+import ImageWithFallback from './ui/ImageWithFallback';
 
 const HappyPeopleSlider = () => {
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1536148935331-408321065b18?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "/images/happy-people-1.jpg",
       caption: "Finding my balance again"
     },
     {
-      image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "/images/happy-people-2.jpg",
       caption: "Meditation changed my perspective"
     },
     {
-      image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "/images/happy-people-3.jpg",
       caption: "Support makes all the difference"
     },
     {

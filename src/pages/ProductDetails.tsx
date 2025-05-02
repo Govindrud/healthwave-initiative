@@ -9,61 +9,25 @@ import { getProductById, getFeaturedProducts } from "@/data/products";
 import { Star, ShoppingCart, ArrowLeft, Heart } from "lucide-react";
 import ProductCarousel from "@/components/products/ProductCarousel";
 import { toast } from "sonner";
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 const ProductDetail = () => {
-  const { productId } = useParams<{ productId: string }>();
-  const [product, setProduct] = useState(productId ? getProductById(productId) : undefined);
+  const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState(id ? getProductById(id) : undefined);
   const relatedProducts = getFeaturedProducts(4);
-  const [imageSrc, setImageSrc] = useState(product?.image || "");
-  const [imageError, setImageError] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (product) {
       document.title = `${product.name} | MeantToHelp`;
-      setImageSrc(product.image);
-      setImageError(false);
-      setRetryCount(0);
     } else {
       document.title = "Product Not Found | MeantToHelp";
     }
   }, [product]);
 
   useEffect(() => {
-    setProduct(productId ? getProductById(productId) : undefined);
+    setProduct(id ? getProductById(id) : undefined);
     window.scrollTo(0, 0);
-  }, [productId]);
-
-  const handleImageError = () => {
-    setImageError(true);
-    
-    if (retryCount === 0) {
-      // Try loading from /images/products folder
-      const filename = product?.image.split('/').pop();
-      const newPath = `/images/products/${filename}`;
-      console.log(`First retry: attempting to load image from ${newPath}`);
-      setImageSrc(newPath);
-      setRetryCount(1);
-    } else if (retryCount === 1) {
-      // Try with public prefix
-      const filename = product?.image.split('/').pop();
-      const newPath = `/public/images/products/${filename}`;
-      console.log(`Second retry: attempting to load image from ${newPath}`);
-      setImageSrc(newPath);
-      setRetryCount(2);
-    } else if (retryCount === 2) {
-      // Try with just the filename
-      const filename = product?.image.split('/').pop();
-      const newPath = `/${filename}`;
-      console.log(`Third retry: attempting to load image from ${newPath}`);
-      setImageSrc(newPath);
-      setRetryCount(3);
-    } else {
-      // Final fallback
-      console.log("Using placeholder image after all retries failed");
-      setImageSrc("/placeholder.svg");
-    }
-  };
+  }, [id]);
 
   const handleAddToCart = () => {
     toast.success("Added to cart", {
@@ -97,9 +61,6 @@ const ProductDetail = () => {
     );
   }
 
-  // Log the current image path for debugging
-  console.log(`Current product image path: ${imageSrc}`);
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -113,21 +74,12 @@ const ProductDetail = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div>
               <div className="aspect-square bg-muted rounded-lg overflow-hidden">
-                <img
-                  src={imageSrc}
+                <ImageWithFallback
+                  src={product.image}
                   alt={product.name}
                   className="object-cover w-full h-full"
-                  onError={() => {
-                    if (retryCount < 3) {
-                      handleImageError();
-                    }
-                  }}
+                  fallbackSrc="/placeholder.svg"
                 />
-                {imageError && retryCount >= 3 && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-muted/80 text-muted-foreground text-xl">
-                    {product.name}
-                  </div>
-                )}
               </div>
             </div>
 

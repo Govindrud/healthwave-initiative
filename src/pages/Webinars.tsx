@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Video, Calendar, Clock, Users, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 const Webinars = () => {
   useEffect(() => {
@@ -25,7 +26,7 @@ const Webinars = () => {
       duration: '90 minutes',
       participants: '128',
       tags: ['Workplace', 'Stress Management', 'Corporate'],
-      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
+      image: '/images/webinar-stress.jpg',
       isPremium: false
     },
     {
@@ -39,7 +40,7 @@ const Webinars = () => {
       duration: '60 minutes',
       participants: '84',
       tags: ['Leadership', 'Team Building', 'Resilience', 'Corporate'],
-      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
+      image: '/images/webinar-teams.jpg',
       isPremium: true
     },
     {
@@ -53,7 +54,7 @@ const Webinars = () => {
       duration: '120 minutes',
       participants: '156',
       tags: ['Management', 'Mental Health', 'Leadership'],
-      image: '/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png',
+      image: '/images/webinar-mental-health.jpg',
       isPremium: true
     }
   ];
@@ -96,10 +97,11 @@ const Webinars = () => {
                 >
                   <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/3 h-48 md:h-auto relative">
-                      <img 
-                        src={webinar.image} 
-                        alt={webinar.title} 
+                      <ImageWithFallback
+                        src={webinar.image}
+                        alt={webinar.title}
                         className="w-full h-full object-cover"
+                        fallbackSrc="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                       />
                       {webinar.isPremium && (
                         <div className="absolute top-2 left-2">
