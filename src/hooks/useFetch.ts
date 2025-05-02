@@ -45,7 +45,7 @@ export function useFetchData<T>(
         options.onError(error);
       }
     },
-  } as UseQueryOptions<T, Error, T, string[]>);
+  });
 }
 
 // Hook for POST, PUT, DELETE

@@ -1,14 +1,14 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
-import { servicesItems, spiritualityItems, activitiesItems, mainMenuItems, aiItems } from "@/config/navigation";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { servicesItems, spiritualityItems, activitiesItems } from "@/config/navigation";
 
 interface MobileMenuContentProps {
   isOpen: boolean;
   onClose: () => void;
-  scrollToSection: (sectionId: string) => void;
+  scrollToSection: (id: string) => void;
 }
 
 export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
@@ -16,125 +16,225 @@ export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
   onClose,
   scrollToSection,
 }) => {
-  // Animation variants for the menu
+  const { isAuthenticated, user, logout } = useAuth();
+
   const menuVariants = {
     closed: {
       opacity: 0,
       x: "100%",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+      },
     },
     open: {
       opacity: 1,
       x: 0,
       transition: {
         type: "spring",
-        stiffness: 300,
-        damping: 30,
-      },
-    },
-    exit: {
-      opacity: 0,
-      x: "100%",
-      transition: {
-        ease: "easeInOut",
-        duration: 0.3,
+        stiffness: 400,
+        damping: 40,
       },
     },
   };
 
-  // Navigation sections
-  const navSections = [
-    { title: "Main", items: mainMenuItems },
-    { title: "Services", items: servicesItems },
-    { title: "AI Assistants", items: aiItems },
-    { title: "Spirituality", items: spiritualityItems },
-    { title: "Activities", items: activitiesItems }
-  ];
-
   return (
     <motion.div
-      className="fixed inset-0 bg-black bg-opacity-40 z-40 flex justify-end"
       initial="closed"
       animate={isOpen ? "open" : "closed"}
-      exit="exit"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      variants={menuVariants}
+      className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-white dark:bg-gray-900 z-50 shadow-xl overflow-y-auto"
     >
-      <motion.div
-        className="w-4/5 max-w-md bg-white h-full overflow-y-auto shadow-xl"
-        variants={menuVariants}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="p-4 flex justify-between items-center border-b">
-          <h2 className="text-lg font-bold">Menu</h2>
-          <button
-            onClick={onClose}
-            className="p-1 rounded-full hover:bg-gray-100"
-            aria-label="Close menu"
+      <div className="flex flex-col h-full pt-16 pb-6 px-6">
+        {/* Close button at the top */}
+        <button
+          className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700"
+          onClick={onClose}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            <X size={24} />
-          </button>
-        </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
 
-        <div className="py-2 px-4">
-          <Link
-            to="/"
-            className="block py-3 text-meant-800 font-medium hover:text-meant-600"
-            onClick={onClose}
-          >
-            Home
-          </Link>
-        </div>
+        {/* User info if authenticated */}
+        {isAuthenticated && user && (
+          <div className="border-b pb-4 mb-4">
+            <p className="font-medium">Welcome, {user.displayName || "User"}</p>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
+          </div>
+        )}
 
-        <div className="overflow-y-auto max-h-[calc(100vh-180px)]">
-          {navSections.map((section) => (
-            <div key={section.title} className="py-2 px-4 border-t">
-              <h3 className="font-medium text-gray-500 text-sm mb-2 uppercase tracking-wider">
-                {section.title}
-              </h3>
-              <div className="space-y-1">
-                {section.items.map((item) => (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    className="block py-2 px-2 rounded-md text-meant-800 hover:bg-meant-50"
-                    onClick={onClose}
-                  >
-                    <div className="flex items-center">
-                      {item.icon && <item.icon className="h-5 w-5 mr-2 text-meant-600" />}
+        {/* Main navigation links */}
+        <nav className="flex-grow">
+          <ul className="space-y-4">
+            <li>
+              <Link
+                to="/"
+                className="block py-2 hover:text-meant-600"
+                onClick={onClose}
+              >
+                Home
+              </Link>
+            </li>
+
+            <li className="border-t pt-2">
+              <span className="text-sm font-medium uppercase text-gray-500">Services</span>
+              <ul className="mt-1 ml-4 space-y-2">
+                {servicesItems.map((item) => (
+                  <li key={item.title}>
+                    <Link
+                      to={item.href}
+                      className="block py-1 hover:text-meant-600"
+                      onClick={onClose}
+                    >
                       {item.title}
-                    </div>
-                  </Link>
+                    </Link>
+                  </li>
                 ))}
-              </div>
-            </div>
-          ))}
-        </div>
+              </ul>
+            </li>
 
-        <div className="py-2 px-4 border-t">
-          <Link
-            to="/documentation"
-            className="block py-3 text-meant-800 font-medium hover:text-meant-600"
-            onClick={onClose}
-          >
-            Documentation
-          </Link>
-          <Link
-            to="/about"
-            className="block py-3 text-meant-800 font-medium hover:text-meant-600"
-            onClick={onClose}
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="block py-3 text-meant-800 font-medium hover:text-meant-600"
-            onClick={onClose}
-          >
-            Contact
-          </Link>
+            <li>
+              <Link
+                to="/products"
+                className="block py-2 hover:text-meant-600"
+                onClick={onClose}
+              >
+                Products
+              </Link>
+            </li>
+
+            <li className="border-t pt-2">
+              <span className="text-sm font-medium uppercase text-gray-500">Spirituality</span>
+              <ul className="mt-1 ml-4 space-y-2">
+                {spiritualityItems.map((item) => (
+                  <li key={item.title}>
+                    <Link
+                      to={item.href}
+                      className="block py-1 hover:text-meant-600"
+                      onClick={onClose}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+
+            <li className="border-t pt-2">
+              <span className="text-sm font-medium uppercase text-gray-500">Activities</span>
+              <ul className="mt-1 ml-4 space-y-2">
+                {activitiesItems.map((item) => (
+                  <li key={item.title}>
+                    <Link
+                      to={item.href}
+                      className="block py-1 hover:text-meant-600"
+                      onClick={onClose}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+
+            <li>
+              <Link
+                to="/ai-personal-assistant"
+                className="block py-2 hover:text-meant-600"
+                onClick={onClose}
+              >
+                AI Assistant
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/ai-voice-agent"
+                className="block py-2 hover:text-meant-600"
+                onClick={onClose}
+              >
+                Voice Agent
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/about"
+                className="block py-2 hover:text-meant-600"
+                onClick={onClose}
+              >
+                About
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/contact"
+                className="block py-2 hover:text-meant-600"
+                onClick={onClose}
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Authentication links */}
+        <div className="mt-6 pt-4 border-t">
+          {isAuthenticated ? (
+            <div className="space-y-2">
+              <Link
+                to="/my-bookings"
+                className="block w-full py-2 text-center bg-meant-50 text-meant-600 rounded-md"
+                onClick={onClose}
+              >
+                My Bookings
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  onClose();
+                }}
+                className="block w-full py-2 text-center bg-gray-100 text-gray-700 rounded-md"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <Link
+                to="/login"
+                className="block w-full py-2 text-center bg-meant-600 text-white rounded-md"
+                onClick={onClose}
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/register"
+                className="block w-full py-2 text-center bg-white text-meant-600 border border-meant-600 rounded-md"
+                onClick={onClose}
+              >
+                Create Account
+              </Link>
+            </div>
+          )}
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
+
+export default MobileMenuContent;

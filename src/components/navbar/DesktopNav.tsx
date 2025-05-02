@@ -7,8 +7,11 @@ import { NavSection } from "./navigation/NavSection";
 import { UserMenu } from "./user-menu/UserMenu";
 import RegionSelector from "@/components/region/RegionSelector";
 import { servicesItems, spiritualityItems, activitiesItems, mainMenuItems, aiItems } from "@/config/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 export const DesktopNav = ({ location }: { location: any }) => {
+  const { isAuthenticated } = useAuth();
+  
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center">
