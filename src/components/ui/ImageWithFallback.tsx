@@ -32,9 +32,11 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       // First try: if path doesn't include /images/, try adding it
       if (!imgSrc.includes('/images/')) {
         const filename = imgSrc.split('/').pop();
-        setImgSrc(`/images/${filename}`);
-        setAttempt(1);
-        return;
+        if (filename) {
+          setImgSrc(`/images/${filename}`);
+          setAttempt(1);
+          return;
+        }
       }
       setAttempt(1);
     } 
@@ -42,9 +44,11 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       // Second try: if path doesn't include /public/, try adding it
       if (!imgSrc.includes('/public/')) {
         const filename = imgSrc.split('/').pop();
-        setImgSrc(`/public/images/${filename}`);
-        setAttempt(2);
-        return;
+        if (filename) {
+          setImgSrc(`/public/images/${filename}`);
+          setAttempt(2);
+          return;
+        }
       }
       setAttempt(2);
     } 
@@ -62,7 +66,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       // Last resort: use fallback
       setImgSrc(fallbackSrc);
       setHasError(true);
-      console.log(`Using fallback for ${src}`);
+      console.log(`Using fallback for ${src}: ${fallbackSrc}`);
     }
   };
 
