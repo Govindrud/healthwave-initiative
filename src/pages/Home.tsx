@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
-import Navbar from '@/components/navbar';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/layouts/MainLayout';
 import Hero from '@/components/Hero';
 import ProductsSection from '@/components/ProductsSection';
 import About from '@/components/About';
@@ -18,7 +17,6 @@ import PeerSupportSection from '@/components/PeerSupportSection';
 import SleepBetterSection from '@/components/SleepBetterSection';
 import HappyPeopleSlider from '@/components/HappyPeopleSlider';
 import AIPersonalAssistant from '@/components/ai/AIPersonalAssistant';
-import MainLayout from '@/components/layouts/MainLayout';
 
 const Home = () => {
   useEffect(() => {

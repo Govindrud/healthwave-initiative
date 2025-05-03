@@ -21,6 +21,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const [attempt, setAttempt] = useState<number>(0);
 
   useEffect(() => {
+    // Reset state when src changes
     setImgSrc(src);
     setHasError(false);
     setAttempt(0);
