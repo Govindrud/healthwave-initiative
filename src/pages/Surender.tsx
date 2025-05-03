@@ -1,7 +1,7 @@
-
 import React, { useEffect } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import customPlaceholder from '../assets/custom-placeholder.svg';
 
 const Surender = () => {
   useEffect(() => {
@@ -25,7 +25,7 @@ const Surender = () => {
                 src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
                 alt="Peaceful meditation scene" 
                 className="rounded-lg shadow-md w-full h-auto object-cover"
-                fallbackSrc="/images/spirituality-hero.jpg"
+                fallbackSrc={customPlaceholder}
               />
             </div>
             <div className="flex flex-col justify-center">

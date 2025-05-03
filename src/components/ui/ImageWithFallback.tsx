@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import customPlaceholder from '../../assets/custom-placeholder.svg';
 
 interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -10,7 +11,7 @@ interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElemen
 
 const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
-  fallbackSrc = "/placeholder.svg",
+  fallbackSrc = customPlaceholder,
   alt,
   className = "",
   ...props

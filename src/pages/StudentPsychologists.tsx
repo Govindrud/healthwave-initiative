@@ -1,10 +1,10 @@
-
 import { useEffect } from "react";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Calendar, Star, Shield, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import customPlaceholder from '../assets/custom-placeholder.svg';
 
 const StudentPsychologists = () => {
   useEffect(() => {
@@ -109,7 +109,7 @@ const StudentPsychologists = () => {
                         src={psychologist.image} 
                         alt={psychologist.name} 
                         className="w-32 h-32 object-cover rounded-full border-4 border-meant-50"
-                        fallbackSrc="/images/user-placeholder.jpg"
+                        fallbackSrc={customPlaceholder}
                       />
                       <div className="mt-3 flex items-center">
                         <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 mr-1" />

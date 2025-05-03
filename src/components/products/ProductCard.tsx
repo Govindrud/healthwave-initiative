@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Product } from "@/types/product";
@@ -11,6 +10,7 @@ import { useRegion } from "@/context/RegionContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { toast } from "sonner";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import customPlaceholder from '../../assets/custom-placeholder.svg';
 
 interface ProductCardProps {
   product: Product;
@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
               !imageLoaded ? "opacity-0" : "opacity-100"
             }`}
             onLoad={() => setImageLoaded(true)}
-            fallbackSrc="/placeholder.svg"
+            fallbackSrc={customPlaceholder}
           />
           
           {product.badge && (

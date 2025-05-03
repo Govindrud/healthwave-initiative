@@ -10,6 +10,7 @@ import { Star, ShoppingCart, ArrowLeft, Heart } from "lucide-react";
 import ProductCarousel from "@/components/products/ProductCarousel";
 import { toast } from "sonner";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import customPlaceholder from '../assets/custom-placeholder.svg';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -78,7 +79,7 @@ const ProductDetail = () => {
                   src={product.image}
                   alt={product.name}
                   className="object-cover w-full h-full"
-                  fallbackSrc="/placeholder.svg"
+                  fallbackSrc={customPlaceholder}
                 />
               </div>
             </div>
