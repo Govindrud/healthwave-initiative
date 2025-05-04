@@ -15,6 +15,11 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Add error handling for global errors
+window.addEventListener('error', (event) => {
+  console.error('Global error caught:', event.error);
+});
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>

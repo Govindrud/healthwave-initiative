@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import { queryClient } from './hooks/useFetch';
 import { RegionProvider } from './context/RegionContext';
 import { AuthProvider } from './hooks/useAuth';
 import { AIProvider } from './providers/AIProvider';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Main Pages
 import Home from './pages/Home';
@@ -21,41 +22,43 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import MyBookings from './pages/MyBookings';
 
-// Services Pages
-import Doctors from './pages/Doctors';
-import Services from './pages/Services';
-import StudentPsychologists from './pages/StudentPsychologists';
-import Activities from './pages/Activities';
-import DeAddiction from './pages/DeAddiction';
-import Surender from './pages/Surender';
-import Webinars from './pages/Webinars';
-import Adventures from './pages/Adventures';
-import Games from './pages/Games';
-import EaseOfLiving from './pages/EaseOfLiving';
-import Spirituality from './pages/Spirituality';
-import SpiritualityServices from './pages/SpiritualityServices';
-import AIPersonalAssistant from './pages/AIPersonalAssistant';
-import AIVoiceAgent from './pages/AIVoiceAgent';
+// Lazy load non-critical pages
+const Doctors = React.lazy(() => import('./pages/Doctors'));
+const Services = React.lazy(() => import('./pages/Services'));
+const StudentPsychologists = React.lazy(() => import('./pages/StudentPsychologists'));
+const Activities = React.lazy(() => import('./pages/Activities'));
+const DeAddiction = React.lazy(() => import('./pages/DeAddiction'));
+const Surender = React.lazy(() => import('./pages/Surender'));
+const Webinars = React.lazy(() => import('./pages/Webinars'));
+const Adventures = React.lazy(() => import('./pages/Adventures'));
+const Games = React.lazy(() => import('./pages/Games'));
+const EaseOfLiving = React.lazy(() => import('./pages/EaseOfLiving'));
+const Spirituality = React.lazy(() => import('./pages/Spirituality'));
+const SpiritualityServices = React.lazy(() => import('./pages/SpiritualityServices'));
+const AIPersonalAssistant = React.lazy(() => import('./pages/AIPersonalAssistant'));
+const AIVoiceAgent = React.lazy(() => import('./pages/AIVoiceAgent'));
+const CorporatePlans = React.lazy(() => import('./pages/CorporatePlans'));
+const CorporateCertification = React.lazy(() => import('./pages/CorporateCertification'));
+const Products = React.lazy(() => import('./pages/Products'));
+const ProductDetails = React.lazy(() => import('./pages/ProductDetails'));
+const Cart = React.lazy(() => import('./pages/Cart'));
+const Partners = React.lazy(() => import('./pages/Partners'));
+const PaymentSuccess = React.lazy(() => import('./pages/PaymentSuccess'));
+const BookingConfirmation = React.lazy(() => import('./pages/BookingConfirmation'));
+const AdminLogin = React.lazy(() => import('./pages/AdminLogin'));
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
 
-// Corporate Pages
-import CorporatePlans from './pages/CorporatePlans';
-import CorporateCertification from './pages/CorporateCertification';
-
-// Product Pages
-import Products from './pages/Products';
-import ProductDetails from './pages/ProductDetails';
-import Cart from './pages/Cart';
-
-// Partner Pages
-import Partners from './pages/Partners';
-
-// Payment Pages
-import PaymentSuccess from './pages/PaymentSuccess';
-import BookingConfirmation from './pages/BookingConfirmation';
-
-// Admin Pages
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
+// Loading fallback
+const PageLoading = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="w-full max-w-md p-8">
+      <Skeleton className="h-12 w-3/4 mb-4" />
+      <Skeleton className="h-4 w-full mb-2" />
+      <Skeleton className="h-4 w-5/6 mb-2" />
+      <Skeleton className="h-4 w-4/6" />
+    </div>
+  </div>
+);
 
 const App: React.FC = () => {
   return (
@@ -66,55 +69,147 @@ const App: React.FC = () => {
             <Router>
               <Toaster position="top-center" richColors />
               <Routes>
-                {/* Main Routes */}
+                {/* Home route - not lazy loaded for faster initial render */}
                 <Route path="/" element={<Home />} />
+                
+                {/* Critical routes - not lazy loaded */}
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/documentation" element={<Documentation />} />
-                
-                {/* Authentication Routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/my-bookings" element={<MyBookings />} />
                 
-                {/* Service Routes */}
-                <Route path="/doctors" element={<Doctors />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/student-psychologists" element={<StudentPsychologists />} />
-                <Route path="/activities" element={<Activities />} />
-                <Route path="/de-addiction" element={<DeAddiction />} />
-                <Route path="/surender" element={<Surender />} />
-                <Route path="/webinars" element={<Webinars />} />
-                <Route path="/adventures" element={<Adventures />} />
-                <Route path="/games" element={<Games />} />
-                <Route path="/ease-of-living" element={<EaseOfLiving />} />
-                <Route path="/spirituality" element={<Spirituality />} />
-                <Route path="/spirituality-services" element={<SpiritualityServices />} />
-                
-                {/* AI Routes */}
-                <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
-                <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
-                
-                {/* Corporate Routes */}
-                <Route path="/corporate-plans" element={<CorporatePlans />} />
-                <Route path="/corporate-certification" element={<CorporateCertification />} />
-                
-                {/* Product Routes */}
-                <Route path="/products" element={<Products />} />
-                <Route path="/products/:id" element={<ProductDetails />} />
-                <Route path="/cart" element={<Cart />} />
-                
-                {/* Partner Routes */}
-                <Route path="/partners" element={<Partners />} />
-                
-                {/* Payment Routes */}
-                <Route path="/payment-success" element={<PaymentSuccess />} />
-                <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-                
-                {/* Admin Routes */}
-                <Route path="/admin-login" element={<AdminLogin />} />
-                <Route path="/admin" element={<AdminDashboard />} />
+                {/* Lazy-loaded routes */}
+                <Route path="/forgot-password" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <ForgotPassword />
+                  </Suspense>
+                } />
+                <Route path="/my-bookings" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <MyBookings />
+                  </Suspense>
+                } />
+                <Route path="/doctors" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Doctors />
+                  </Suspense>
+                } />
+                <Route path="/services" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Services />
+                  </Suspense>
+                } />
+                <Route path="/student-psychologists" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <StudentPsychologists />
+                  </Suspense>
+                } />
+                <Route path="/activities" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Activities />
+                  </Suspense>
+                } />
+                <Route path="/de-addiction" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <DeAddiction />
+                  </Suspense>
+                } />
+                <Route path="/surender" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Surender />
+                  </Suspense>
+                } />
+                <Route path="/webinars" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Webinars />
+                  </Suspense>
+                } />
+                <Route path="/adventures" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Adventures />
+                  </Suspense>
+                } />
+                <Route path="/games" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Games />
+                  </Suspense>
+                } />
+                <Route path="/ease-of-living" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <EaseOfLiving />
+                  </Suspense>
+                } />
+                <Route path="/spirituality" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Spirituality />
+                  </Suspense>
+                } />
+                <Route path="/spirituality-services" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <SpiritualityServices />
+                  </Suspense>
+                } />
+                <Route path="/ai-personal-assistant" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <AIPersonalAssistant />
+                  </Suspense>
+                } />
+                <Route path="/ai-voice-agent" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <AIVoiceAgent />
+                  </Suspense>
+                } />
+                <Route path="/corporate-plans" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <CorporatePlans />
+                  </Suspense>
+                } />
+                <Route path="/corporate-certification" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <CorporateCertification />
+                  </Suspense>
+                } />
+                <Route path="/products" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Products />
+                  </Suspense>
+                } />
+                <Route path="/products/:id" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <ProductDetails />
+                  </Suspense>
+                } />
+                <Route path="/cart" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Cart />
+                  </Suspense>
+                } />
+                <Route path="/partners" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <Partners />
+                  </Suspense>
+                } />
+                <Route path="/payment-success" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <PaymentSuccess />
+                  </Suspense>
+                } />
+                <Route path="/booking-confirmation" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <BookingConfirmation />
+                  </Suspense>
+                } />
+                <Route path="/admin-login" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <AdminLogin />
+                  </Suspense>
+                } />
+                <Route path="/admin" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <AdminDashboard />
+                  </Suspense>
+                } />
                 
                 {/* 404 Route */}
                 <Route path="*" element={<NotFound />} />

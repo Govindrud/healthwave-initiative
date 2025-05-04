@@ -22,7 +22,16 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
   interval = 5000 
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   
+  useEffect(() => {
+    // Preload the first image
+    const img = new Image();
+    img.src = slides[0].image;
+    img.onload = () => setIsLoading(false);
+    img.onerror = () => setIsLoading(false);
+  }, [slides]);
+
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
@@ -45,6 +54,15 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
     const slideInterval = setInterval(goToNext, interval);
     return () => clearInterval(slideInterval);
   }, [currentIndex, autoPlay, interval]);
+
+  // If we have no slides, show a placeholder
+  if (!slides || slides.length === 0) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl">
+        <p className="text-gray-500">No images available</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative h-full w-full overflow-hidden rounded-xl">

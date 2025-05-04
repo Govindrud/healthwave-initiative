@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from 'sonner';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   description = "MeantToHelp provides mental health support services, therapy resources, and wellness guidance." 
 }) => {
   // Set document title when provided
-  React.useEffect(() => {
+  useEffect(() => {
     if (title) {
       document.title = title;
     }
@@ -33,12 +34,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     }
   }, [title, description]);
 
+  // Log when layout is rendered
+  useEffect(() => {
+    console.log("MainLayout rendered");
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <Navbar />
+      <ErrorBoundary>
+        <Navbar />
+      </ErrorBoundary>
       <Toaster position="top-center" richColors />
-      <main className="flex-grow">
-        {children}
+      <main className="flex-grow pt-16">
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>

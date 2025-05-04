@@ -2,9 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ImageSlider from './ImageSlider';
-import ImageWithFallback from './ui/ImageWithFallback';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const HappyPeopleSlider = () => {
+  // Use a mix of local and remote images to increase chance of success
   const slides = [
     {
       image: "/images/happy-people-1.jpg",
@@ -19,6 +20,7 @@ const HappyPeopleSlider = () => {
       caption: "Support makes all the difference"
     },
     {
+      // Using an Unsplash image as a reliable fallback
       image: "https://images.unsplash.com/photo-1551894116-54f2a9d9ade6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
       caption: "Taking steps toward mental health"
     }
@@ -50,7 +52,9 @@ const HappyPeopleSlider = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <ImageSlider slides={slides} />
+          <ErrorBoundary>
+            <ImageSlider slides={slides} />
+          </ErrorBoundary>
         </motion.div>
       </div>
     </section>

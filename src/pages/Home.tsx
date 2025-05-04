@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import Hero from '@/components/Hero';
 import ProductsSection from '@/components/ProductsSection';
@@ -12,11 +12,17 @@ import ServicesSlider from '@/components/ServicesSlider';
 import VoiceAssistantPromo from '@/components/voice/VoiceAssistantPromo';
 import Spirituality from '@/components/Spirituality';
 import PartnerLogosSection from '@/components/partners/PartnerLogosSection';
-import GoalSetting from '@/components/GoalSetting';
-import PeerSupportSection from '@/components/PeerSupportSection';
-import SleepBetterSection from '@/components/SleepBetterSection';
-import HappyPeopleSlider from '@/components/HappyPeopleSlider';
-import AIPersonalAssistant from '@/components/ai/AIPersonalAssistant';
+import { Skeleton } from '@/components/ui/skeleton';
+
+// Lazy-loaded components for better performance
+const GoalSetting = React.lazy(() => import('@/components/GoalSetting'));
+const PeerSupportSection = React.lazy(() => import('@/components/PeerSupportSection'));
+const SleepBetterSection = React.lazy(() => import('@/components/SleepBetterSection'));
+const HappyPeopleSlider = React.lazy(() => import('@/components/HappyPeopleSlider'));
+const AIPersonalAssistant = React.lazy(() => import('@/components/ai/AIPersonalAssistant'));
+
+// Loading fallback for lazy-loaded components
+const LoadingFallback = () => <Skeleton className="w-full h-40" />;
 
 const Home = () => {
   useEffect(() => {
@@ -26,20 +32,34 @@ const Home = () => {
 
   return (
     <MainLayout>
+      {/* Critical components loaded immediately */}
       <Hero />
       <About />
       <ServicesSlider />
-      <HappyPeopleSlider />
       <ProductsSection />
       <SolutionsSection />
+      
+      {/* Secondary components lazy-loaded */}
+      <Suspense fallback={<LoadingFallback />}>
+        <HappyPeopleSlider />
+      </Suspense>
+      
       <PartnerLogosSection />
-      <GoalSetting />
-      <PeerSupportSection />
-      <SleepBetterSection />
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <GoalSetting />
+        <PeerSupportSection />
+        <SleepBetterSection />
+      </Suspense>
+      
       <ProblemForm />
       <Spirituality />
       <VoiceAssistantPromo />
-      <AIPersonalAssistant />
+      
+      <Suspense fallback={<LoadingFallback />}>
+        <AIPersonalAssistant />
+      </Suspense>
+      
       <SocialFeed />
       <Contact />
     </MainLayout>
