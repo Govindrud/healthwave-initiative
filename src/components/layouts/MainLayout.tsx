@@ -32,12 +32,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       }
       metaDescription.setAttribute('content', description);
     }
+    
+    console.log("MainLayout rendered with title:", title);
   }, [title, description]);
-
-  // Log when layout is rendered
-  useEffect(() => {
-    console.log("MainLayout rendered");
-  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-white">

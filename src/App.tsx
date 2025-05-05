@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
@@ -9,8 +8,8 @@ import { AuthProvider } from './hooks/useAuth';
 import { AIProvider } from './providers/AIProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Main Pages
-import Home from './pages/Home';
+// Main Pages - Remove the direct import of the Home from pages/Home and use the Index component
+import Index from './pages/Index'; // Main homepage
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Documentation from './pages/Documentation';
@@ -51,12 +50,10 @@ const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
 // Loading fallback
 const PageLoading = () => (
   <div className="min-h-screen flex items-center justify-center">
-    <div className="w-full max-w-md p-8">
-      <Skeleton className="h-12 w-3/4 mb-4" />
-      <Skeleton className="h-4 w-full mb-2" />
-      <Skeleton className="h-4 w-5/6 mb-2" />
-      <Skeleton className="h-4 w-4/6" />
-    </div>
+    <Skeleton className="h-12 w-3/4 mb-4" />
+    <Skeleton className="h-4 w-full mb-2" />
+    <Skeleton className="h-4 w-5/6 mb-2" />
+    <Skeleton className="h-4 w-4/6" />
   </div>
 );
 
@@ -69,8 +66,8 @@ const App: React.FC = () => {
             <Router>
               <Toaster position="top-center" richColors />
               <Routes>
-                {/* Home route - not lazy loaded for faster initial render */}
-                <Route path="/" element={<Home />} />
+                {/* Home route - using Index component instead of Home */}
+                <Route path="/" element={<Index />} />
                 
                 {/* Critical routes - not lazy loaded */}
                 <Route path="/about" element={<About />} />

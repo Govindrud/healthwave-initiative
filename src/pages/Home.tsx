@@ -13,6 +13,7 @@ import VoiceAssistantPromo from '@/components/voice/VoiceAssistantPromo';
 import Spirituality from '@/components/Spirituality';
 import PartnerLogosSection from '@/components/partners/PartnerLogosSection';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Lazy-loaded components for better performance
 const GoalSetting = React.lazy(() => import('@/components/GoalSetting'));
@@ -28,40 +29,65 @@ const Home = () => {
   useEffect(() => {
     document.title = "MeantToHelp - Mental Health Support";
     window.scrollTo(0, 0);
+    console.log("Home component rendered");
   }, []);
 
   return (
-    <MainLayout>
-      {/* Critical components loaded immediately */}
-      <Hero />
-      <About />
-      <ServicesSlider />
-      <ProductsSection />
-      <SolutionsSection />
+    <MainLayout title="MeantToHelp - Mental Health Support">
+      <ErrorBoundary>
+        {/* Critical components loaded immediately */}
+        <Hero />
+        <About />
+        <ServicesSlider />
+        <ProductsSection />
+        <SolutionsSection />
+      </ErrorBoundary>
       
       {/* Secondary components lazy-loaded */}
-      <Suspense fallback={<LoadingFallback />}>
-        <HappyPeopleSlider />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <HappyPeopleSlider />
+        </Suspense>
+      </ErrorBoundary>
       
-      <PartnerLogosSection />
+      <ErrorBoundary>
+        <PartnerLogosSection />
+      </ErrorBoundary>
       
-      <Suspense fallback={<LoadingFallback />}>
-        <GoalSetting />
-        <PeerSupportSection />
-        <SleepBetterSection />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <GoalSetting />
+        </Suspense>
+      </ErrorBoundary>
       
-      <ProblemForm />
-      <Spirituality />
-      <VoiceAssistantPromo />
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <PeerSupportSection />
+        </Suspense>
+      </ErrorBoundary>
       
-      <Suspense fallback={<LoadingFallback />}>
-        <AIPersonalAssistant />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <SleepBetterSection />
+        </Suspense>
+      </ErrorBoundary>
       
-      <SocialFeed />
-      <Contact />
+      <ErrorBoundary>
+        <ProblemForm />
+        <Spirituality />
+        <VoiceAssistantPromo />
+      </ErrorBoundary>
+      
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingFallback />}>
+          <AIPersonalAssistant />
+        </Suspense>
+      </ErrorBoundary>
+      
+      <ErrorBoundary>
+        <SocialFeed />
+        <Contact />
+      </ErrorBoundary>
     </MainLayout>
   );
 };

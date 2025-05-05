@@ -15,9 +15,22 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Add error handling for global errors
+// Add error handling for global errors with more detailed logging
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);
+  console.error('Error message:', event.message);
+  console.error('Error source:', event.filename, 'Line:', event.lineno, 'Column:', event.colno);
+  
+  // Prevent the error from breaking the entire app if possible
+  event.preventDefault();
+});
+
+// Create a custom error handler for unhandled promise rejections
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled Promise Rejection:', event.reason);
+  
+  // Prevent the error from breaking the entire app if possible
+  event.preventDefault();
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -27,3 +40,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </ErrorBoundary>
   </React.StrictMode>
 );
+
+// Add diagnostic logging to help identify render issues
+console.log('Main application rendered successfully');

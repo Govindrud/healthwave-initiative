@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import customPlaceholder from '../../assets/custom-placeholder.svg';
+
+// Default placeholder if no fallback is provided
+const DEFAULT_PLACEHOLDER = 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80';
 
 interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -11,7 +13,7 @@ interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElemen
 
 const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
-  fallbackSrc = customPlaceholder,
+  fallbackSrc,
   alt,
   className = "",
   ...props
@@ -19,6 +21,9 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const [imgSrc, setImgSrc] = useState<string>(src);
   const [hasError, setHasError] = useState<boolean>(false);
   const [attempt, setAttempt] = useState<number>(0);
+
+  // Use the provided fallback or default to the placeholder
+  const finalFallbackSrc = fallbackSrc || DEFAULT_PLACEHOLDER;
 
   useEffect(() => {
     // Reset state when src changes
@@ -30,47 +35,32 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const handleError = () => {
     console.log(`Image error loading: ${imgSrc}, attempt: ${attempt}`);
     
-    if (attempt === 0) {
-      // First try: if path doesn't include /images/, try adding it
-      if (!imgSrc.includes('/images/')) {
-        const filename = imgSrc.split('/').pop();
-        if (filename) {
-          console.log(`Trying with /images/ path: /images/${filename}`);
-          setImgSrc(`/images/${filename}`);
-          setAttempt(1);
-          return;
-        }
-      }
-      setAttempt(1);
-    } 
-    else if (attempt === 1) {
-      // Second try: if path doesn't include /public/, try adding it
-      if (!imgSrc.includes('/public/')) {
-        const filename = imgSrc.split('/').pop();
-        if (filename) {
-          console.log(`Trying with /public/images/ path: /public/images/${filename}`);
-          setImgSrc(`/public/images/${filename}`);
-          setAttempt(2);
-          return;
-        }
-      }
-      setAttempt(2);
-    } 
-    else if (attempt === 2) {
-      // Third try: try just the filename
-      const filename = imgSrc.split('/').pop();
-      if (filename) {
-        console.log(`Trying with root path: /${filename}`);
-        setImgSrc(`/${filename}`);
-        setAttempt(3);
-        return;
-      }
-      setAttempt(3);
-    }
-    else {
+    const pathVariants = [
+      // Try with /images/ path
+      (filename: string) => `/images/${filename}`,
+      // Try with /public/images/ path
+      (filename: string) => `/public/images/${filename}`,
+      // Try just the filename at root
+      (filename: string) => `/${filename}`,
+      // Try with public prefix
+      (filename: string) => `/public/${filename}`,
+      // Use unsplash placeholder as last resort
+      () => finalFallbackSrc
+    ];
+    
+    if (attempt < pathVariants.length - 1) {
+      // Extract filename from path
+      const filename = imgSrc.split('/').pop() || '';
+      const nextAttempt = attempt + 1;
+      const nextPath = pathVariants[nextAttempt](filename);
+      
+      console.log(`Trying next path (attempt ${nextAttempt}): ${nextPath}`);
+      setImgSrc(nextPath);
+      setAttempt(nextAttempt);
+    } else {
       // Last resort: use fallback
-      console.log(`Using fallback for ${src}: ${fallbackSrc}`);
-      setImgSrc(fallbackSrc);
+      console.log(`Using fallback for ${src}: ${finalFallbackSrc}`);
+      setImgSrc(finalFallbackSrc);
       setHasError(true);
     }
   };
