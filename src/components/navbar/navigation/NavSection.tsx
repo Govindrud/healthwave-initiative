@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { MenuItem } from "./MenuItem";
 import { Link } from "react-router-dom";
+import { LucideIcon } from "lucide-react";
 
 interface NavSectionProps {
   title: string;
@@ -14,7 +15,7 @@ interface NavSectionProps {
     title: string;
     href: string;
     description: string;
-    icon?: any;
+    icon?: LucideIcon | any;
   }>;
   isLink?: boolean;
 }

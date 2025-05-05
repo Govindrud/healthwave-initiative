@@ -4,7 +4,7 @@ import { Location, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
-import { MobileMenuContent } from "./mobile/MobileMenuContent";
+import MobileMenuContent from "./mobile/MobileMenuContent";
 import ThemeToggle from "../ThemeToggle";
 import Logo from "../Logo";
 import RegionSelector from "@/components/region/RegionSelector";
