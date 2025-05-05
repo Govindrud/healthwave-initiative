@@ -15,7 +15,7 @@ interface NavSectionProps {
     title: string;
     href: string;
     description: string;
-    icon?: LucideIcon | any;
+    icon?: React.ElementType | React.ReactNode;
   }>;
   isLink?: boolean;
 }

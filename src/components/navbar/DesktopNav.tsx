@@ -10,7 +10,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import Logo from "../Logo";
 import { ShoppingBag, User } from "lucide-react";
-import { servicesItems, activitiesItems, spiritualityItems, mainMenuItems } from "@/config/navigation";
+import { 
+  servicesItems, 
+  activitiesItems, 
+  spiritualityItems, 
+  mainMenuItems,
+  productItems,
+  aiItems,
+  aboutItems
+} from "@/config/navigation";
 import ThemeToggle from "../ThemeToggle";
 import RegionSelector from "@/components/region/RegionSelector";
 
@@ -53,6 +61,14 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
               items={spiritualityItems} 
             />
             <NavSection 
+              title="Products" 
+              items={productItems} 
+            />
+            <NavSection 
+              title="AI Assistance" 
+              items={aiItems} 
+            />
+            <NavSection 
               title="Help & Support" 
               items={mainMenuItems} 
             />
@@ -67,21 +83,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
             />
             <NavSection 
               title="About" 
-              items={[{
-                title: "About Us",
-                href: "/about",
-                description: "Learn more about our mission",
-              }]} 
-              isLink={true}
-            />
-            <NavSection 
-              title="Contact" 
-              items={[{
-                title: "Contact Us",
-                href: "/contact",
-                description: "Get in touch with our team",
-              }]} 
-              isLink={true}
+              items={aboutItems} 
             />
           </NavigationMenuList>
         </NavigationMenu>

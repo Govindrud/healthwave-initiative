@@ -6,7 +6,7 @@ import { LucideIcon } from "lucide-react";
 interface NavigationItem {
   href: string;
   title: string;
-  icon?: LucideIcon;
+  icon?: React.ElementType | React.ReactNode;
   description: string;
 }
 
@@ -26,17 +26,21 @@ export const DropdownContent: React.FC<DropdownContentProps> = ({
 }) => {
   return (
     <ul className={`grid gap-3 p-4 md:w-[400px] lg:w-[500px] ${columns === 2 ? 'lg:grid-cols-2' : ''} bg-white border border-border/20 shadow-md rounded-md`}>
-      {items.map((item) => (
-        <DropdownListItem
-          key={item.title}
-          href={item.href}
-          title={item.title}
-          icon={item.icon ? <item.icon className="h-4 w-4 text-meant-600" /> : undefined}
-          className="hover:bg-meant-50 bg-white"
-        >
-          {item.description}
-        </DropdownListItem>
-      ))}
+      {items.map((item) => {
+        const Icon = item.icon && typeof item.icon === 'function' ? item.icon as LucideIcon : null;
+        
+        return (
+          <DropdownListItem
+            key={item.title}
+            href={item.href}
+            title={item.title}
+            icon={Icon ? <Icon className="h-4 w-4 text-meant-600" /> : item.icon}
+            className="hover:bg-meant-50 bg-white"
+          >
+            {item.description}
+          </DropdownListItem>
+        );
+      })}
       {showViewAll && (
         <li className={`${columns === 2 ? 'col-span-2' : ''} mt-2 bg-white`}>
           <a href={showViewAll.href} className="text-sm text-primary hover:underline flex justify-center">

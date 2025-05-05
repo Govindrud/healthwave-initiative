@@ -1,6 +1,28 @@
 
-import { Heart, BookOpen, Sparkles, MapPin, Video, Users, GraduationCap, Building, Award, Trees, Leaf, Shield, Phone, MessageCircle, Activity, Bot, Mic } from "lucide-react";
+import { 
+  Heart, 
+  BookOpen, 
+  Sparkles, 
+  MapPin, 
+  Video, 
+  Users, 
+  GraduationCap, 
+  Building, 
+  Award, 
+  Trees, 
+  Leaf, 
+  Shield, 
+  Phone, 
+  MessageCircle, 
+  Activity, 
+  Bot, 
+  Mic, 
+  Home, 
+  Settings, 
+  ShoppingBag 
+} from "lucide-react";
 
+// Spirituality section items
 export const spiritualityItems = [
   {
     href: "/spirituality",
@@ -40,6 +62,7 @@ export const spiritualityItems = [
   }
 ];
 
+// Services section items
 export const servicesItems = [
   {
     href: "/doctors",
@@ -79,25 +102,29 @@ export const servicesItems = [
   }
 ];
 
+// Activities section items
 export const activitiesItems = [
   {
     href: "/adventures",
     title: "Stress-Free Adventures",
+    icon: Trees,
     description: "Enjoy therapeutic outdoor activities and retreats"
   },
   {
     href: "/games",
     title: "Mental Health Games",
+    icon: Activity,
     description: "Fun activities designed to boost mood and reduce stress"
   },
   {
     href: "/ease-of-living",
     title: "Ease of Living",
-    icon: Trees,
+    icon: Leaf,
     description: "Explore holistic approaches to simplify and enhance life"
   }
 ];
 
+// AI section items
 export const aiItems = [
   {
     href: "/ai-personal-assistant",
@@ -113,6 +140,7 @@ export const aiItems = [
   }
 ];
 
+// Main menu section items
 export const mainMenuItems = [
   {
     href: "/surender",
@@ -137,5 +165,93 @@ export const mainMenuItems = [
     title: "Contact Help",
     icon: Phone,
     description: "24/7 support and emergency contact information"
+  }
+];
+
+// User account section items
+export const accountItems = [
+  {
+    href: "/profile",
+    title: "My Profile",
+    icon: Users,
+    description: "View and edit your profile information"
+  },
+  {
+    href: "/my-bookings",
+    title: "My Bookings",
+    icon: Activity,
+    description: "View and manage your upcoming bookings"
+  },
+  {
+    href: "/settings",
+    title: "Settings",
+    icon: Settings,
+    description: "Manage your account settings and preferences"
+  }
+];
+
+// Product section items
+export const productItems = [
+  {
+    href: "/products",
+    title: "All Products",
+    icon: ShoppingBag,
+    description: "Browse our complete catalog of mental health products"
+  },
+  {
+    href: "/products?category=books",
+    title: "Self-Help Books",
+    icon: BookOpen,
+    description: "Curated collection of books for mental well-being"
+  },
+  {
+    href: "/products?category=meditation",
+    title: "Meditation Tools",
+    icon: Heart,
+    description: "Tools and accessories to enhance your meditation practice"
+  },
+  {
+    href: "/products?category=aromatherapy",
+    title: "Aromatherapy",
+    icon: Leaf,
+    description: "Essential oils and diffusers for relaxation and stress relief"
+  }
+];
+
+// About section items
+export const aboutItems = [
+  {
+    href: "/about",
+    title: "About Us",
+    icon: Users,
+    description: "Learn about our mission and team"
+  },
+  {
+    href: "/partners",
+    title: "Our Partners",
+    icon: Building,
+    description: "Organizations we collaborate with to provide better services"
+  }
+];
+
+// Home menu items (for mobile)
+export const homeItems = [
+  {
+    href: "/#features",
+    title: "Features",
+    icon: Sparkles,
+    description: "Explore the key features of our platform"
+  },
+  {
+    href: "/#testimonials",
+    title: "Testimonials",
+    icon: MessageCircle,
+    description: "Read what others are saying about us"
+  },
+  {
+    href: "/#contact",
+    title: "Contact",
+    icon: Phone,
+    description: "Get in touch with our team"
   }
 ];

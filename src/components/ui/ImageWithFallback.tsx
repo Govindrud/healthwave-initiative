@@ -15,6 +15,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 }) => {
   const [imgSrc, setImgSrc] = useState<string>(src || '');
   const [hasError, setHasError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleError = () => {
     if (!hasError) {
@@ -23,18 +24,26 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     }
   };
 
+  const handleLoad = () => {
+    setIsLoading(false);
+  };
+
   const defaultClassNames = "object-cover w-full h-full";
   const combinedClassNames = className ? `${defaultClassNames} ${className}` : defaultClassNames;
 
   return (
-    <img 
-      src={imgSrc} 
-      alt={alt} 
-      onError={handleError}
-      className={combinedClassNames}
-      loading="lazy"
-      {...rest}
-    />
+    <>
+      {isLoading && <div className="animate-pulse bg-gray-200 w-full h-full" />}
+      <img 
+        src={imgSrc} 
+        alt={alt} 
+        onError={handleError}
+        onLoad={handleLoad}
+        className={`${combinedClassNames} ${isLoading ? 'hidden' : ''}`}
+        loading="lazy"
+        {...rest}
+      />
+    </>
   );
 };
 
