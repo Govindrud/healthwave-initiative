@@ -4,40 +4,26 @@ import { Link } from "react-router-dom";
 
 interface MobileNavItemProps {
   to?: string;
-  onClick?: () => void;
-  className?: string;
   children: React.ReactNode;
-  active?: boolean;
+  onClick?: () => void;
 }
 
-export const MobileNavItem: React.FC<MobileNavItemProps> = ({
-  to,
-  onClick,
-  className = "",
-  children,
-  active = false
-}) => {
-  const baseClass = "block w-full text-left text-foreground hover:text-primary hover:bg-gray-50 transition-all px-4 py-3 rounded-md text-base font-medium";
-  const activeClass = active ? "text-meant-600 font-semibold" : "";
+export const MobileNavItem: React.FC<MobileNavItemProps> = ({ to, children, onClick }) => {
+  const baseClass = "flex items-center py-2 px-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors";
   
   if (to) {
     return (
-      <Link 
-        to={to} 
-        className={`${baseClass} ${activeClass} ${className}`}
-        onClick={onClick}
-      >
+      <Link to={to} className={baseClass} onClick={onClick}>
         {children}
       </Link>
     );
   }
   
   return (
-    <button
-      onClick={onClick}
-      className={`${baseClass} ${activeClass} ${className} w-full text-left`}
-    >
+    <button className={baseClass} onClick={onClick}>
       {children}
     </button>
   );
 };
+
+export default MobileNavItem;

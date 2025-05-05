@@ -17,6 +17,12 @@ interface ImageSliderProps {
 
 const ImageSlider = ({ slides, autoPlayInterval = 5000 }: ImageSliderProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoaded, setIsLoaded] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    // Initialize loading state for each slide
+    setIsLoaded(slides.map(() => false));
+  }, [slides.length]);
 
   // Handle auto-play
   useEffect(() => {
@@ -38,6 +44,12 @@ const ImageSlider = ({ slides, autoPlayInterval = 5000 }: ImageSliderProps) => {
     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
+  const handleImageLoad = (index: number) => {
+    const newLoadedState = [...isLoaded];
+    newLoadedState[index] = true;
+    setIsLoaded(newLoadedState);
+  };
+
   // If there are no slides, show a placeholder
   if (!slides.length) {
     return (
@@ -47,8 +59,10 @@ const ImageSlider = ({ slides, autoPlayInterval = 5000 }: ImageSliderProps) => {
     );
   }
 
+  const defaultFallback = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80";
+
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden bg-gray-100">
       {/* Slides */}
       {slides.map((slide, index) => (
         <ErrorBoundary key={index}>
@@ -57,11 +71,15 @@ const ImageSlider = ({ slides, autoPlayInterval = 5000 }: ImageSliderProps) => {
               index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
             }`}
           >
+            <div className={`absolute inset-0 flex items-center justify-center ${isLoaded[index] ? 'hidden' : 'block'}`}>
+              <div className="w-8 h-8 border-4 border-meant-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
             <ImageWithFallback
               src={slide.image}
-              fallbackSrc={slide.fallback}
+              fallbackSrc={slide.fallback || defaultFallback}
               alt={slide.caption}
               className="w-full h-full object-cover"
+              onLoad={() => handleImageLoad(index)}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
               <p className="text-lg font-medium">{slide.caption}</p>

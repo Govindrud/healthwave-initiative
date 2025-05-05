@@ -23,7 +23,7 @@ interface MobileMenuContentProps {
   scrollToSection?: (id: string) => void;
 }
 
-export const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, isOpen }) => {
+const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, isOpen, scrollToSection }) => {
   const { isAuthenticated, logout } = useAuth();
   
   const handleLogout = () => {

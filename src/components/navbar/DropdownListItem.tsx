@@ -3,53 +3,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 interface DropdownListItemProps {
-  href?: string;
+  href: string;
   title: string;
+  icon?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
-  icon?: React.ReactNode;
-  onClick?: () => void;
 }
 
-export const DropdownListItem: React.FC<DropdownListItemProps> = ({
+export const DropdownListItem = ({
   href,
   title,
-  children,
-  className = "",
   icon,
-  onClick
-}) => {
-  const baseClassName = `block w-full select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors 
-    hover:bg-accent text-foreground 
-    ${className}`;
-
-  if (onClick) {
-    return (
-      <li>
-        <button
-          onClick={onClick}
-          className={baseClassName}
-        >
-          <div className="flex items-center gap-2">
-            {icon && <span className="flex-shrink-0">{icon}</span>}
-            <div className="text-sm font-medium leading-none">{title}</div>
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </button>
-      </li>
-    );
-  }
-  
+  children,
+  className,
+}: DropdownListItemProps) => {
   return (
     <li>
       <Link
-        to={href || "#"}
-        className={baseClassName}
+        to={href}
+        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${className}`}
       >
         <div className="flex items-center gap-2">
-          {icon && <span className="flex-shrink-0">{icon}</span>}
+          {icon && <div className="shrink-0">{icon}</div>}
           <div className="text-sm font-medium leading-none">{title}</div>
         </div>
         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">

@@ -95,4 +95,29 @@
   .footer {
     @apply bg-white border-t border-gray-200;
   }
+  
+  /* Navigation dropdown improvements */
+  .navigation-dropdown {
+    @apply bg-white border border-gray-100 shadow-md rounded-md overflow-hidden;
+  }
+  
+  /* Main navigation menu item styling */
+  .nav-menu-item {
+    @apply flex items-center gap-2 py-2 px-3 rounded-md hover:bg-accent/50 transition-colors;
+  }
+  
+  /* Ensure consistent spacing in navigation */
+  .nav-container {
+    @apply container mx-auto px-4 py-2;
+  }
+  
+  /* Fix for z-index layering in dropdowns */
+  .z-dropdown {
+    @apply z-50;
+  }
+  
+  /* Solid card styling for consistency */
+  .solid-card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm p-4;
+  }
 }

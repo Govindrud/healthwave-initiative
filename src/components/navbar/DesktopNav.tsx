@@ -1,129 +1,121 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
-import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-menu";
-import Logo from "@/components/Logo";
+import { Location, Link } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
 import { NavSection } from "./navigation/NavSection";
-import { UserMenu } from "./user-menu/UserMenu";
-import RegionSelector from "@/components/region/RegionSelector";
-import { servicesItems, spiritualityItems, activitiesItems, mainMenuItems, aiItems } from "@/config/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import Logo from "../Logo";
+import { ShoppingBag, User } from "lucide-react";
+import { servicesItems, activitiesItems, spiritualityItems, mainMenuItems } from "@/config/navigation";
+import ThemeToggle from "../ThemeToggle";
+import RegionSelector from "@/components/region/RegionSelector";
 
-export const DesktopNav = ({ location }: { location: any }) => {
+interface DesktopNavProps {
+  location: Location;
+}
+
+export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const { isAuthenticated } = useAuth();
-  
-  return (
-    <div className="flex items-center justify-between w-full">
-      <div className="flex items-center">
-        <Logo className="mr-6" />
-        
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavSection 
-              title="Home"
-              items={[{ title: "Home", href: "/", description: "" }]}
-              isLink
-            />
-            
-            <NavSection 
-              title="Services"
-              items={servicesItems}
-            />
-            
-            <NavSection 
-              title="Products"
-              items={[
-                {
-                  title: "Wellness Products",
-                  href: "/products",
-                  description: "Products designed to improve your wellbeing"
-                },
-                {
-                  title: "Self-Help Books",
-                  href: "/products?category=books",
-                  description: "Curated collection of mental health books"
-                },
-                {
-                  title: "Meditation Tools",
-                  href: "/products?category=meditation",
-                  description: "Tools and accessories for meditation practice"
-                },
-                {
-                  title: "Aromatherapy",
-                  href: "/products?category=aromatherapy",
-                  description: "Essential oils and diffusers for aromatherapy"
-                }
-              ]}
-            />
-            
-            <NavSection 
-              title="AI Assistants"
-              items={aiItems}
-            />
-            
-            <NavSection 
-              title="Spirituality"
-              items={spiritualityItems}
-            />
-            
-            <NavSection 
-              title="Activities"
-              items={activitiesItems}
-            />
-            
-            <NavSection 
-              title="Corporate"
-              items={[
-                {
-                  title: "Corporate Wellness Plans",
-                  href: "/corporate-plans",
-                  description: "Wellness programs for your organization"
-                },
-                {
-                  title: "Employee Assistance",
-                  href: "/corporate-plans#assistance",
-                  description: "Support services for your employees"
-                },
-                {
-                  title: "Corporate Certifications",
-                  href: "/corporate-certification",
-                  description: "Mental health certifications for your workplace"
-                },
-                {
-                  title: "Workshops & Webinars",
-                  href: "/webinars",
-                  description: "Educational sessions for corporate teams"
-                }
-              ]}
-            />
-            
-            <NavSection 
-              title="About"
-              items={[{ title: "About", href: "/about", description: "" }]}
-              isLink
-            />
+  const isHomePage = location.pathname === "/";
 
+  const scrollToSection = (id: string) => {
+    if (isHomePage) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center">
+        <Link to="/" className="mr-6">
+          <Logo size="md" variant="full" />
+        </Link>
+
+        <NavigationMenu>
+          <NavigationMenuList className="space-x-2">
             <NavSection 
-              title="Partners"
-              items={[{ title: "Partner Directory", href: "/partners", description: "Browse our mental health service partners" }]}
-              isLink
+              title="Services" 
+              items={servicesItems} 
             />
-            
             <NavSection 
-              title="Documentation"
-              items={[{ title: "Documentation", href: "/documentation", description: "Technical documentation" }]}
-              isLink
+              title="Activities" 
+              items={activitiesItems} 
+            />
+            <NavSection 
+              title="Spirituality" 
+              items={spiritualityItems} 
+            />
+            <NavSection 
+              title="Help & Support" 
+              items={mainMenuItems} 
+            />
+            <NavSection 
+              title="Corporate" 
+              items={[{
+                title: "Corporate Plans",
+                href: "/corporate-plans",
+                description: "Wellness solutions for organizations",
+              }]} 
+              isLink={true}
+            />
+            <NavSection 
+              title="About" 
+              items={[{
+                title: "About Us",
+                href: "/about",
+                description: "Learn more about our mission",
+              }]} 
+              isLink={true}
+            />
+            <NavSection 
+              title="Contact" 
+              items={[{
+                title: "Contact Us",
+                href: "/contact",
+                description: "Get in touch with our team",
+              }]} 
+              isLink={true}
             />
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      
-      <div className="flex items-center gap-4">
-        <RegionSelector variant="minimal" />
-        <UserMenu />
+
+      <div className="flex items-center space-x-4">
+        <RegionSelector />
+        <ThemeToggle />
+
+        <Link to="/cart" className="relative">
+          <ShoppingBag className="h-5 w-5 text-gray-600" />
+          <span className="absolute -top-1 -right-1 bg-meant-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            2
+          </span>
+        </Link>
+
+        {isAuthenticated ? (
+          <Link to="/profile">
+            <div className="flex items-center space-x-1">
+              <User className="h-5 w-5 text-gray-600" />
+              <span className="text-sm">Profile</span>
+            </div>
+          </Link>
+        ) : (
+          <div className="flex items-center space-x-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/register">Sign Up</Link>
+            </Button>
+            <Button asChild size="sm">
+              <Link to="/login">Log In</Link>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
-export default DesktopNav;
