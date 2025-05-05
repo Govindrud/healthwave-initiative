@@ -34,60 +34,62 @@ const Home = () => {
 
   return (
     <MainLayout title="MeantToHelp - Mental Health Support">
-      <ErrorBoundary>
-        {/* Critical components loaded immediately */}
-        <Hero />
-        <About />
-        <ServicesSlider />
-        <ProductsSection />
-        <SolutionsSection />
-      </ErrorBoundary>
-      
-      {/* Secondary components lazy-loaded */}
-      <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <HappyPeopleSlider />
-        </Suspense>
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <PartnerLogosSection />
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <GoalSetting />
-        </Suspense>
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <PeerSupportSection />
-        </Suspense>
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <SleepBetterSection />
-        </Suspense>
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <ProblemForm />
-        <Spirituality />
-        <VoiceAssistantPromo />
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <Suspense fallback={<LoadingFallback />}>
-          <AIPersonalAssistant />
-        </Suspense>
-      </ErrorBoundary>
-      
-      <ErrorBoundary>
-        <SocialFeed />
-        <Contact />
-      </ErrorBoundary>
+      <div className="w-full">
+        <ErrorBoundary>
+          {/* Critical components loaded immediately */}
+          <Hero />
+          <About />
+          <ServicesSlider />
+          <ProductsSection />
+          <SolutionsSection />
+        </ErrorBoundary>
+        
+        {/* Secondary components lazy-loaded */}
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+            <HappyPeopleSlider />
+          </Suspense>
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <PartnerLogosSection />
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+            <GoalSetting />
+          </Suspense>
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+            <PeerSupportSection />
+          </Suspense>
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+            <SleepBetterSection />
+          </Suspense>
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <ProblemForm />
+          <Spirituality />
+          <VoiceAssistantPromo />
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingFallback />}>
+            <AIPersonalAssistant />
+          </Suspense>
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <SocialFeed />
+          <Contact />
+        </ErrorBoundary>
+      </div>
     </MainLayout>
   );
 };

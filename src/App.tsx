@@ -1,3 +1,4 @@
+
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
@@ -8,12 +9,13 @@ import { AuthProvider } from './hooks/useAuth';
 import { AIProvider } from './providers/AIProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Main Pages - Remove the direct import of the Home from pages/Home and use the Index component
-import Index from './pages/Index'; // Main homepage
+// Main Pages
+import Home from './pages/Home'; // Import the Home component directly
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Documentation from './pages/Documentation';
 import NotFound from './pages/NotFound';
+import Index from './pages/Index'; // Keep the Index component if needed elsewhere
 
 // Authentication Pages
 import Login from './pages/Login';
@@ -66,8 +68,8 @@ const App: React.FC = () => {
             <Router>
               <Toaster position="top-center" richColors />
               <Routes>
-                {/* Home route - using Index component instead of Home */}
-                <Route path="/" element={<Index />} />
+                {/* Home route - using Home component directly instead of Index */}
+                <Route path="/" element={<Home />} />
                 
                 {/* Critical routes - not lazy loaded */}
                 <Route path="/about" element={<About />} />
@@ -75,6 +77,9 @@ const App: React.FC = () => {
                 <Route path="/documentation" element={<Documentation />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                
+                {/* Legacy index page if needed */}
+                <Route path="/index" element={<Index />} />
                 
                 {/* Lazy-loaded routes */}
                 <Route path="/forgot-password" element={

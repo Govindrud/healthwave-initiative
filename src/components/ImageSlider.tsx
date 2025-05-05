@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageWithFallback from './ui/ImageWithFallback';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ErrorBoundary } from './ErrorBoundary';
 
 type Slide = {
   image: string;
@@ -50,22 +51,23 @@ const ImageSlider = ({ slides, autoPlayInterval = 5000 }: ImageSliderProps) => {
     <div className="relative w-full h-full overflow-hidden">
       {/* Slides */}
       {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute w-full h-full transition-opacity duration-500 ${
-            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          }`}
-        >
-          <ImageWithFallback
-            src={slide.image}
-            fallbackSrc={slide.fallback}
-            alt={slide.caption}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
-            <p className="text-lg font-medium">{slide.caption}</p>
+        <ErrorBoundary key={index}>
+          <div
+            className={`absolute w-full h-full transition-opacity duration-500 ${
+              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+          >
+            <ImageWithFallback
+              src={slide.image}
+              fallbackSrc={slide.fallback}
+              alt={slide.caption}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
+              <p className="text-lg font-medium">{slide.caption}</p>
+            </div>
           </div>
-        </div>
+        </ErrorBoundary>
       ))}
       
       {/* Navigation arrows */}

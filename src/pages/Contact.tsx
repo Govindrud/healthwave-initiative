@@ -13,7 +13,7 @@ const ContactPage = () => {
 
   return (
     <MainLayout title="Contact Us | MeantToHelp" description="Get in touch with our mental health support team">
-      <div className="pt-10">
+      <div className="py-10 px-4 md:px-0">
         <ErrorBoundary>
           <Contact />
         </ErrorBoundary>

@@ -12,6 +12,8 @@ if ('serviceWorker' in navigator) {
     for(let registration of registrations) {
       registration.unregister();
     }
+  }).catch(error => {
+    console.error('Failed to unregister service workers:', error);
   });
 }
 
@@ -22,7 +24,10 @@ window.addEventListener('error', (event) => {
   console.error('Error source:', event.filename, 'Line:', event.lineno, 'Column:', event.colno);
   
   // Prevent the error from breaking the entire app if possible
-  event.preventDefault();
+  // Only prevent default for non-critical errors
+  if (event.error && !event.error.toString().includes('ChunkLoadError')) {
+    event.preventDefault();
+  }
 });
 
 // Create a custom error handler for unhandled promise rejections
@@ -30,8 +35,14 @@ window.addEventListener('unhandledrejection', (event) => {
   console.error('Unhandled Promise Rejection:', event.reason);
   
   // Prevent the error from breaking the entire app if possible
-  event.preventDefault();
+  if (event.reason && !event.reason.toString().includes('ChunkLoadError')) {
+    event.preventDefault();
+  }
 });
+
+// Add detailed performance monitoring
+console.log('Starting app initialization at:', new Date().toISOString());
+const renderStart = performance.now();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -42,4 +53,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 );
 
 // Add diagnostic logging to help identify render issues
-console.log('Main application rendered successfully');
+const renderEnd = performance.now();
+console.log(`Main application rendered successfully in ${(renderEnd - renderStart).toFixed(2)}ms`);
+console.log('App initialization complete at:', new Date().toISOString());
