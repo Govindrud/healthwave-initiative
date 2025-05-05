@@ -1,10 +1,10 @@
 
 import React from "react";
 import { Location, useNavigate, Link } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { CartIcon } from "./CartIcon";
 import { HamburgerButton } from "./HamburgerButton";
-import { MobileMenuContent } from "./MobileMenuContent";
+import MobileMenuContent from "./MobileMenuContent";
 import ThemeToggle from "../../ThemeToggle";
 
 interface MobileNavProps {
@@ -97,3 +97,5 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     </div>
   );
 };
+
+export default MobileNav;

@@ -35,7 +35,7 @@ export const MobileDropdown: React.FC<MobileDropdownProps> = ({ title, children 
         {isOpen && (
           <motion.div 
             id={`dropdown-${title.toLowerCase().replace(/\s+/g, '-')}`}
-            className="bg-gray-50 rounded-md overflow-hidden"
+            className="bg-gray-50 rounded-md overflow-hidden z-10"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

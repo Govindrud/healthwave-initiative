@@ -14,6 +14,7 @@ interface NavSectionProps {
     title: string;
     href: string;
     description: string;
+    icon?: any;
   }>;
   isLink?: boolean;
 }
@@ -31,8 +32,8 @@ export const NavSection = ({ title, items, isLink = false }: NavSectionProps) =>
 
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>{title}</NavigationMenuTrigger>
-      <NavigationMenuContent>
+      <NavigationMenuTrigger className="z-30">{title}</NavigationMenuTrigger>
+      <NavigationMenuContent className="z-50 bg-white shadow-md border border-gray-100 rounded-md">
         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
           {items.map((item) => (
             <MenuItem
@@ -40,6 +41,7 @@ export const NavSection = ({ title, items, isLink = false }: NavSectionProps) =>
               title={item.title}
               href={item.href}
               description={item.description}
+              icon={item.icon}
             />
           ))}
         </ul>
