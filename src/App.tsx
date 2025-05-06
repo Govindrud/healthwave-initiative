@@ -16,6 +16,8 @@ import Contact from './pages/Contact';
 import Documentation from './pages/Documentation';
 import NotFound from './pages/NotFound';
 import Index from './pages/Index'; // Keep the Index component if needed elsewhere
+import Profile from './pages/Profile'; // Import the Profile component
+import Settings from './pages/Settings'; // Import the Settings component
 
 // Authentication Pages
 import Login from './pages/Login';
@@ -48,6 +50,7 @@ const PaymentSuccess = React.lazy(() => import('./pages/PaymentSuccess'));
 const BookingConfirmation = React.lazy(() => import('./pages/BookingConfirmation'));
 const AdminLogin = React.lazy(() => import('./pages/AdminLogin'));
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+const WhatsAppServices = React.lazy(() => import('./pages/WhatsAppServices'));
 
 // Loading fallback
 const PageLoading = () => (
@@ -77,6 +80,8 @@ const App: React.FC = () => {
                 <Route path="/documentation" element={<Documentation />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
                 
                 {/* Legacy index page if needed */}
                 <Route path="/index" element={<Index />} />
@@ -210,6 +215,11 @@ const App: React.FC = () => {
                 <Route path="/admin" element={
                   <Suspense fallback={<PageLoading />}>
                     <AdminDashboard />
+                  </Suspense>
+                } />
+                <Route path="/whatsapp-services" element={
+                  <Suspense fallback={<PageLoading />}>
+                    <WhatsAppServices />
                   </Suspense>
                 } />
                 
