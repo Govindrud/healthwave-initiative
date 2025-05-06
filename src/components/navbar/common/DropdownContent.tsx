@@ -30,8 +30,8 @@ export const DropdownContent: React.FC<DropdownContentProps> = ({
         let iconElement: React.ReactNode = null;
         
         if (item.icon) {
-          // Check if the icon is a React component (function or class)
           if (typeof item.icon === 'function') {
+            // For function components, use createElement to create a proper element
             const IconComponent = item.icon as React.ElementType;
             iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
           } else {

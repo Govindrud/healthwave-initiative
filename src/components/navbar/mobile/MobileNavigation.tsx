@@ -151,6 +151,14 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
           Contact Us
         </MobileNavItem>
       </MobileDropdown>
+      
+      <MobileNavItem to="/profile" onClick={onClose}>
+        My Profile
+      </MobileNavItem>
+      
+      <MobileNavItem to="/settings" onClick={onClose}>
+        Settings
+      </MobileNavItem>
     </nav>
   );
 };

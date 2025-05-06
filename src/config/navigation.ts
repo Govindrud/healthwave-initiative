@@ -19,7 +19,15 @@ import {
   Mic, 
   Home, 
   Settings, 
-  ShoppingBag 
+  ShoppingBag,
+  Headphones,
+  Laptop,
+  Calendar,
+  Clock,
+  User,
+  Mail,
+  FileText,
+  HelpCircle
 } from "lucide-react";
 
 // Spirituality section items
@@ -59,6 +67,12 @@ export const spiritualityItems = [
     title: "Bhakti Yoga",
     icon: Activity,
     description: "Devotional yoga practice for spiritual connection"
+  },
+  {
+    href: "/whatsapp-services",
+    title: "WhatsApp Services",
+    icon: MessageCircle,
+    description: "Connect with spiritual guides via WhatsApp"
   }
 ];
 
@@ -93,6 +107,12 @@ export const servicesItems = [
     title: "Stress-Free Certification",
     icon: Award,
     description: "Certify your organization as a stress-free workplace"
+  },
+  {
+    href: "/whatsapp-services",
+    title: "WhatsApp Support",
+    icon: MessageCircle,
+    description: "Get mental health support via WhatsApp"
   },
   {
     href: "/services",
@@ -165,6 +185,12 @@ export const mainMenuItems = [
     title: "Contact Help",
     icon: Phone,
     description: "24/7 support and emergency contact information"
+  },
+  {
+    href: "/whatsapp-services",
+    title: "WhatsApp Services",
+    icon: MessageCircle,
+    description: "Connect with our support team via WhatsApp"
   }
 ];
 
@@ -173,13 +199,13 @@ export const accountItems = [
   {
     href: "/profile",
     title: "My Profile",
-    icon: Users,
+    icon: User,
     description: "View and edit your profile information"
   },
   {
     href: "/my-bookings",
     title: "My Bookings",
-    icon: Activity,
+    icon: Calendar,
     description: "View and manage your upcoming bookings"
   },
   {
@@ -231,6 +257,18 @@ export const aboutItems = [
     title: "Our Partners",
     icon: Building,
     description: "Organizations we collaborate with to provide better services"
+  },
+  {
+    href: "/documentation",
+    title: "Documentation",
+    icon: FileText,
+    description: "Technical documentation and guides"
+  },
+  {
+    href: "/contact",
+    title: "Contact Us",
+    icon: Mail,
+    description: "Get in touch with our team"
   }
 ];
 
