@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Layout } from "@/components/Layout";
+import Layout from "@/components/Layout";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -32,12 +32,12 @@ const Profile: React.FC = () => {
               <CardContent className="pt-6">
                 <div className="flex flex-col items-center">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage src={user?.avatar || ""} />
+                    <AvatarImage src={user?.photoURL || ""} />
                     <AvatarFallback className="text-2xl">
-                      {user?.name?.charAt(0) || "U"}
+                      {user?.displayName?.charAt(0) || "U"}
                     </AvatarFallback>
                   </Avatar>
-                  <h2 className="mt-4 text-xl font-semibold">{user?.name || "User"}</h2>
+                  <h2 className="mt-4 text-xl font-semibold">{user?.displayName || "User"}</h2>
                   <p className="text-sm text-muted-foreground">{user?.email || "user@example.com"}</p>
                   
                   <Button variant="outline" className="mt-4 w-full">

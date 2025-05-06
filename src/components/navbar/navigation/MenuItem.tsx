@@ -11,19 +11,17 @@ interface MenuItemProps {
 }
 
 export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
-  // Safe check for function type icon
-  const isComponentIcon = typeof icon === 'function';
-  
   // Create a properly typed icon element
   let iconElement: React.ReactNode = null;
+  
   if (icon) {
-    if (isComponentIcon) {
-      // For component icons, explicitly create the element
+    // Check if the icon is a React component (function or class)
+    if (typeof icon === 'function') {
       const IconComponent = icon as React.ElementType;
       iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
     } else {
-      // For regular ReactNode icons
-      iconElement = <div className="h-4 w-4 text-meant-600">{icon}</div>;
+      // For ReactNode icons (already rendered elements)
+      iconElement = icon;
     }
   }
   
@@ -35,7 +33,7 @@ export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         >
           <div className="flex items-center gap-2">
-            {iconElement}
+            {iconElement && <div className="h-4 w-4 text-meant-600">{iconElement}</div>}
             <div className="text-sm font-medium leading-none">{title}</div>
           </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
