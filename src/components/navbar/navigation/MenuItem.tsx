@@ -16,7 +16,7 @@ export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
   
   // Create a properly typed icon element
   let iconElement: React.ReactNode = null;
-  if (isComponentIcon) {
+  if (isComponentIcon && icon) {
     const IconComponent = icon as React.ElementType;
     iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
   } else if (icon) {
