@@ -33,9 +33,11 @@ export const DropdownContent: React.FC<DropdownContentProps> = ({
         let iconElement: React.ReactNode = null;
         if (item.icon) {
           if (isComponentIcon) {
+            // For component icons, explicitly create the element
             const IconComponent = item.icon as React.ElementType;
-            iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
+            iconElement = React.createElement(IconComponent, { className: "h-4 w-4 text-meant-600" });
           } else {
+            // For regular ReactNode icons
             iconElement = item.icon;
           }
         }
