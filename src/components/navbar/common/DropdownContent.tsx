@@ -1,7 +1,6 @@
 
 import React from "react";
 import { DropdownListItem } from "../DropdownListItem";
-import { LucideIcon } from "lucide-react";
 
 interface NavigationItem {
   href: string;
@@ -27,14 +26,15 @@ export const DropdownContent: React.FC<DropdownContentProps> = ({
   return (
     <ul className={`grid gap-3 p-4 md:w-[400px] lg:w-[500px] ${columns === 2 ? 'lg:grid-cols-2' : ''} bg-white border border-border/20 shadow-md rounded-md`}>
       {items.map((item) => {
-        const Icon = item.icon && typeof item.icon === 'function' ? item.icon as LucideIcon : null;
+        // Check if icon is a React component (function) that can be rendered
+        const IconComponent = item.icon && typeof item.icon === 'function' ? item.icon as React.ElementType : null;
         
         return (
           <DropdownListItem
             key={item.title}
             href={item.href}
             title={item.title}
-            icon={Icon ? <Icon className="h-4 w-4 text-meant-600" /> : item.icon}
+            icon={IconComponent ? <IconComponent className="h-4 w-4 text-meant-600" /> : item.icon}
             className="hover:bg-meant-50 bg-white"
           >
             {item.description}

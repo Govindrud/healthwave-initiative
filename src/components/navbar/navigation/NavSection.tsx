@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { MenuItem } from "./MenuItem";
 import { Link } from "react-router-dom";
-import { LucideIcon } from "lucide-react";
 
 interface NavSectionProps {
   title: string;

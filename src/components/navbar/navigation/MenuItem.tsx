@@ -12,7 +12,8 @@ interface MenuItemProps {
 }
 
 export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
-  const Icon = icon && typeof icon === 'function' ? icon as LucideIcon : null;
+  // Check if icon is a React component (function) and can be rendered as an element
+  const IconComponent = icon && typeof icon === 'function' ? icon as React.ElementType : null;
   
   return (
     <li>
@@ -22,8 +23,8 @@ export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         >
           <div className="flex items-center gap-2">
-            {Icon ? (
-              <Icon className="h-4 w-4 text-meant-600" />
+            {IconComponent ? (
+              <IconComponent className="h-4 w-4 text-meant-600" />
             ) : (
               icon && <div className="h-4 w-4 text-meant-600">{icon}</div>
             )}
