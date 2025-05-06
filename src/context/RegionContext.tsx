@@ -32,7 +32,7 @@ const RegionContext = createContext<RegionContextType>(defaultContextValue);
 export const useRegion = () => useContext(RegionContext);
 
 // Provider component
-export const RegionProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
   const [region, setRegion] = useState<RegionType>("india");
   const [currency, setCurrency] = useState<Currency>("INR");
   const [language, setLanguage] = useState<Language>("en");
