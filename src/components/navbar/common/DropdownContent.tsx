@@ -26,17 +26,24 @@ export const DropdownContent: React.FC<DropdownContentProps> = ({
   return (
     <ul className={`grid gap-3 p-4 md:w-[400px] lg:w-[500px] ${columns === 2 ? 'lg:grid-cols-2' : ''} bg-white border border-border/20 shadow-md rounded-md`}>
       {items.map((item) => {
-        // Check if icon is a React component
+        // Safe check for function type icon
         const isComponentIcon = typeof item.icon === 'function';
+        
+        // Create a properly typed icon element
+        let iconElement: React.ReactNode = null;
+        if (isComponentIcon) {
+          const IconComponent = item.icon as React.ElementType;
+          iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
+        } else if (item.icon) {
+          iconElement = item.icon;
+        }
         
         return (
           <DropdownListItem
             key={item.title}
             href={item.href}
             title={item.title}
-            icon={isComponentIcon 
-              ? React.createElement(item.icon as React.ElementType, { className: "h-4 w-4 text-meant-600" }) 
-              : item.icon}
+            icon={iconElement}
             className="hover:bg-meant-50 bg-white"
           >
             {item.description}
