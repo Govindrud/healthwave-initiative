@@ -18,7 +18,8 @@ export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
   let iconElement: React.ReactNode = null;
   if (isComponentIcon && icon) {
     const IconComponent = icon as React.ElementType;
-    iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
+    // Use React.createElement instead of JSX for component icons
+    iconElement = React.createElement(IconComponent, { className: "h-4 w-4 text-meant-600" });
   } else if (icon) {
     iconElement = <div className="h-4 w-4 text-meant-600">{icon}</div>;
   }
