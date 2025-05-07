@@ -15,13 +15,13 @@ export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
   let iconElement: React.ReactNode = null;
   
   if (icon) {
-    if (typeof icon === 'function') {
-      // For function components, use createElement to create a proper element
+    if (React.isValidElement(icon)) {
+      // If it's already a React element, use it directly
+      iconElement = icon;
+    } else if (typeof icon === 'function') {
+      // For function components (like Lucide icons)
       const IconComponent = icon as React.ElementType;
       iconElement = <IconComponent className="h-4 w-4 text-meant-600" />;
-    } else {
-      // For ReactNode icons (already rendered elements)
-      iconElement = icon;
     }
   }
   
@@ -35,7 +35,7 @@ export const MenuItem = ({ title, href, description, icon }: MenuItemProps) => {
           <div className="flex items-center gap-2">
             {iconElement && (
               <div className="h-4 w-4 text-meant-600">
-                {typeof iconElement === 'object' ? iconElement : null}
+                {iconElement}
               </div>
             )}
             <div className="text-sm font-medium leading-none">{title}</div>

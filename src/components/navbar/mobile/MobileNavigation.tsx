@@ -126,6 +126,13 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             {item.title}
           </MobileNavItem>
         ))}
+        <MobileNavItem 
+          to="/whatsapp-services" 
+          onClick={onClose}
+          className="mt-2 text-meant-700 font-medium"
+        >
+          WhatsApp Services
+        </MobileNavItem>
       </MobileDropdown>
       
       <MobileNavItem to="/corporate-plans" onClick={onClose}>
