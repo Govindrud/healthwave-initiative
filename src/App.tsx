@@ -1,3 +1,4 @@
+
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
@@ -80,9 +81,6 @@ const App: React.FC = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
-                
-                {/* Legacy index page if needed */}
-                <Route path="/index" element={<Index />} />
                 
                 {/* Lazy-loaded routes */}
                 <Route path="/forgot-password" element={
