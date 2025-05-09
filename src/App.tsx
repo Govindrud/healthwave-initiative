@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
@@ -10,14 +9,13 @@ import { AIProvider } from './providers/AIProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 
 // Main Pages
-import Home from './pages/Home'; // Import the Home component directly
+import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Documentation from './pages/Documentation';
 import NotFound from './pages/NotFound';
-import Index from './pages/Index'; // Keep the Index component if needed elsewhere
-import Profile from './pages/Profile'; // Import the Profile component
-import Settings from './pages/Settings'; // Import the Settings component
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 
 // Authentication Pages
 import Login from './pages/Login';
@@ -71,7 +69,7 @@ const App: React.FC = () => {
             <Router>
               <Toaster position="top-center" richColors />
               <Routes>
-                {/* Home route - using Home component directly instead of Index */}
+                {/* Home route - using Home component directly */}
                 <Route path="/" element={<Home />} />
                 
                 {/* Critical routes - not lazy loaded */}

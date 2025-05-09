@@ -1,5 +1,5 @@
 
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import Hero from '@/components/Hero';
 import ProductsSection from '@/components/ProductsSection';
@@ -46,9 +46,9 @@ const Home = () => {
         
         {/* Secondary components lazy-loaded */}
         <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
+          <React.Suspense fallback={<LoadingFallback />}>
             <HappyPeopleSlider />
-          </Suspense>
+          </React.Suspense>
         </ErrorBoundary>
         
         <ErrorBoundary>
@@ -56,21 +56,21 @@ const Home = () => {
         </ErrorBoundary>
         
         <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
+          <React.Suspense fallback={<LoadingFallback />}>
             <GoalSetting />
-          </Suspense>
+          </React.Suspense>
         </ErrorBoundary>
         
         <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
+          <React.Suspense fallback={<LoadingFallback />}>
             <PeerSupportSection />
-          </Suspense>
+          </React.Suspense>
         </ErrorBoundary>
         
         <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
+          <React.Suspense fallback={<LoadingFallback />}>
             <SleepBetterSection />
-          </Suspense>
+          </React.Suspense>
         </ErrorBoundary>
         
         <ErrorBoundary>
@@ -80,9 +80,9 @@ const Home = () => {
         </ErrorBoundary>
         
         <ErrorBoundary>
-          <Suspense fallback={<LoadingFallback />}>
+          <React.Suspense fallback={<LoadingFallback />}>
             <AIPersonalAssistant />
-          </Suspense>
+          </React.Suspense>
         </ErrorBoundary>
         
         <ErrorBoundary>

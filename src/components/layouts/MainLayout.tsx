@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from 'sonner';
-import ErrorBoundary from '@/components/ErrorBoundary';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 interface MainLayoutProps {
   children: React.ReactNode;
