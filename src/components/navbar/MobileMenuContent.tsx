@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -24,9 +25,11 @@ import { MobileDropdown } from "./MobileDropdown";
 
 interface MobileMenuContentProps {
   onClose: () => void;
+  isOpen?: boolean;
+  scrollToSection?: (id: string) => void;
 }
 
-const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose }) => {
+const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, isOpen, scrollToSection }) => {
   const { isAuthenticated, logout } = useAuth();
   
   const handleLogout = () => {

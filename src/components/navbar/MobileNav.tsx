@@ -3,10 +3,9 @@ import React from "react";
 import { Location, useNavigate, Link } from "react-router-dom";
 import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
-import MobileMenuContent from "./mobile/MobileMenuContent";
+import MobileMenuContent from "./MobileMenuContent";
 import ThemeToggle from "../ThemeToggle";
 import Logo from "../Logo";
-import RegionSelector from "@/components/region/RegionSelector";
 
 interface MobileNavProps {
   location: Location;

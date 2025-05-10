@@ -70,7 +70,7 @@ const App: React.FC = () => {
             <Router>
               <Toaster position="top-center" richColors />
               <Routes>
-                {/* Home route - using Home component directly */}
+                {/* Home route */}
                 <Route path="/" element={<Home />} />
                 
                 {/* Critical routes - not lazy loaded */}
