@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { DesktopNav } from "@/components/navbar/DesktopNav";
-import { MobileNav } from "@/components/navbar/MobileNav";
+import MobileNav from "@/components/navbar/MobileNav";
 import { useIsPlatform } from "@/hooks/use-mobile"; 
 
 const Navbar = () => {

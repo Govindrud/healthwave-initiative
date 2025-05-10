@@ -1,25 +1,10 @@
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Twitter, Facebook, Instagram, Linkedin, Youtube, Heart, Phone, Mail, MapPin, BookOpen } from "lucide-react";
 import Logo from "./Logo";
 
 const Footer = () => {
-  const navigate = useNavigate();
-  
-  const scrollToSection = (id: string) => {
-    if (window.location.pathname === '/') {
-      // If on home page, scroll to section
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      // If not on home page, navigate to home page with hash
-      navigate(`/#${id}`);
-    }
-  };
-
   return (
     <footer className="bg-card border-t">
       <div className="container mx-auto px-4 py-12">
@@ -53,12 +38,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection("about")}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-left"
-                >
+                <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
                   About Us
-                </button>
+                </Link>
               </li>
               <li>
                 <Link to="/services" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -76,12 +58,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection("contact")}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-left"
-                >
+                <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact
-                </button>
+                </Link>
               </li>
             </ul>
           </div>

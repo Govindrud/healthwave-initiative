@@ -1,7 +1,6 @@
 
 import React from "react";
-import { Location, useNavigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { Location, useNavigate, Link } from "react-router-dom";
 import { CartIcon } from "./mobile/CartIcon";
 import { HamburgerButton } from "./mobile/HamburgerButton";
 import MobileMenuContent from "./mobile/MobileMenuContent";
@@ -13,7 +12,7 @@ interface MobileNavProps {
   location: Location;
 }
 
-export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
+const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const isHomePage = location.pathname === "/";
   const navigate = useNavigate();
@@ -64,7 +63,9 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
 
   return (
     <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
-      <Logo size="md" variant="full" />
+      <Link to="/" className="flex items-center">
+        <Logo size="md" variant="full" />
+      </Link>
       
       <div className="flex items-center space-x-2">
         <ThemeToggle />
@@ -75,18 +76,16 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
           onClick={toggleMenu}
         />
 
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <MobileMenuContent 
-              isOpen={isMobileMenuOpen}
-              onClose={() => {
-                setIsMobileMenuOpen(false);
-                document.body.style.overflow = "auto";
-              }}
-              scrollToSection={scrollToSection}
-            />
-          )}
-        </AnimatePresence>
+        {isMobileMenuOpen && (
+          <MobileMenuContent 
+            isOpen={isMobileMenuOpen}
+            onClose={() => {
+              setIsMobileMenuOpen(false);
+              document.body.style.overflow = "auto";
+            }}
+            scrollToSection={scrollToSection}
+          />
+        )}
       </div>
     </div>
   );

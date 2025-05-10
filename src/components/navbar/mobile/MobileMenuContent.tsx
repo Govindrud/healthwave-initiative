@@ -1,255 +1,84 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
-import { 
-  Home, 
-  Settings, 
-  LogOut, 
-  User, 
-  ShoppingBag, 
-  Phone, 
-  Users, 
-  MoveRight,
-  CalendarCheck
+import { motion } from "framer-motion";
+import {
+  HomeIcon,
+  User,
+  BookOpen,
+  Heart,
+  Settings,
+  Phone,
+  ShoppingBag,
+  Building,
+  MessageSquare
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MobileDropdown } from "../MobileDropdown";
 
 interface MobileMenuContentProps {
-  onClose: () => void;
   isOpen: boolean;
-  scrollToSection?: (id: string) => void;
+  onClose: () => void;
+  scrollToSection: (id: string) => void;
 }
 
-const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, isOpen, scrollToSection }) => {
-  const { isAuthenticated, logout } = useAuth();
-  
-  const handleLogout = () => {
-    logout();
-    onClose();
-  };
-
+const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ isOpen, onClose, scrollToSection }) => {
   return (
-    <div className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 ${isOpen ? 'block' : 'hidden'}`}>
-      <div className="fixed top-16 right-0 h-[calc(100vh-4rem)] w-full sm:w-80 bg-white shadow-xl z-50 overflow-y-auto">
-        {/* User profile or login/signup */}
-        <div className="p-4 border-b">
-          {isAuthenticated ? (
-            <div className="flex items-center gap-3">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src="" alt="User" />
-                <AvatarFallback>U</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">User</p>
-                <p className="text-sm text-muted-foreground">user@example.com</p>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <Button asChild onClick={onClose}>
-                <Link to="/login">Log In</Link>
-              </Button>
-              <Button variant="outline" asChild onClick={onClose}>
-                <Link to="/register">Sign Up</Link>
-              </Button>
-            </div>
-          )}
-        </div>
-
-        {/* Main navigation links */}
-        <div className="flex-1 overflow-y-auto">
-          <nav className="p-2">
-            <Link 
-              to="/" 
-              className="flex items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
-              onClick={onClose}
-            >
-              <Home size={20} />
+    <motion.div
+      initial={{ opacity: 0, x: "100%" }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: "100%" }}
+      transition={{ duration: 0.3 }}
+      className="fixed top-0 right-0 h-screen w-full bg-white dark:bg-gray-900 z-50 pt-20 pb-6 px-4 overflow-y-auto"
+    >
+      <div className="grid gap-4">
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Navigation</h3>
+          <div className="grid gap-2">
+            <Link to="/" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <HomeIcon className="h-5 w-5 text-meant-600" />
               <span>Home</span>
             </Link>
-            
-            <MobileDropdown title="Services">
-              <Link 
-                to="/doctors" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Doctor Consultations
-              </Link>
-              <Link 
-                to="/spirituality" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Spiritual Guidance
-              </Link>
-              <Link 
-                to="/student-psychologists" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Student Psychologists
-              </Link>
-              <Link 
-                to="/activities" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Wellness Activities
-              </Link>
-              <Link 
-                to="/de-addiction" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Addiction Recovery
-              </Link>
-              <Link 
-                to="/services" 
-                className="block py-2 px-2 rounded hover:bg-gray-50 font-medium text-meant-700 mt-2" 
-                onClick={onClose}
-              >
-                <div className="flex items-center gap-1">
-                  <span>View All Services</span>
-                  <MoveRight size={16} />
-                </div>
-              </Link>
-            </MobileDropdown>
-            
-            <MobileDropdown title="Products">
-              <Link 
-                to="/products" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                All Products
-              </Link>
-              <Link 
-                to="/products?category=books" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Self-Help Books
-              </Link>
-              <Link 
-                to="/products?category=meditation" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Meditation Tools
-              </Link>
-              <Link 
-                to="/products?category=aromatherapy" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Aromatherapy
-              </Link>
-              <Link 
-                to="/cart" 
-                className="block py-2 px-2 rounded hover:bg-gray-50 font-medium text-meant-700 mt-2" 
-                onClick={onClose}
-              >
-                <div className="flex items-center gap-1">
-                  <span>View Cart</span>
-                  <ShoppingBag size={16} />
-                </div>
-              </Link>
-            </MobileDropdown>
-            
-            <MobileDropdown title="Corporate">
-              <Link 
-                to="/corporate-plans" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Corporate Wellness Plans
-              </Link>
-              <Link 
-                to="/corporate-plans#assistance" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Employee Assistance
-              </Link>
-              <Link 
-                to="/corporate-certification" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Corporate Certifications
-              </Link>
-              <Link 
-                to="/webinars" 
-                className="block py-2 px-2 rounded hover:bg-gray-50" 
-                onClick={onClose}
-              >
-                Workshops & Webinars
-              </Link>
-            </MobileDropdown>
-            
-            <Link 
-              to="/about" 
-              className="flex items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
-              onClick={onClose}
-            >
-              <Users size={20} />
+            <Link to="/about" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <Building className="h-5 w-5 text-meant-600" />
               <span>About</span>
             </Link>
-            
-            <Link 
-              to="/contact" 
-              className="flex items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
-              onClick={onClose}
-            >
-              <Phone size={20} />
+            <Link to="/services" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <Heart className="h-5 w-5 text-meant-600" />
+              <span>Services</span>
+            </Link>
+            <Link to="/products" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <ShoppingBag className="h-5 w-5 text-meant-600" />
+              <span>Products</span>
+            </Link>
+            <Link to="/whatsapp-services" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <MessageSquare className="h-5 w-5 text-meant-600" />
+              <span>WhatsApp Services</span>
+            </Link>
+            <Link to="/contact" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <Phone className="h-5 w-5 text-meant-600" />
               <span>Contact</span>
             </Link>
-            
-            {isAuthenticated && (
-              <>
-                <div className="my-2 border-t"></div>
-                <p className="px-4 py-1 text-xs text-muted-foreground">Account</p>
-                <Link 
-                  to="/profile" 
-                  className="flex items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
-                  onClick={onClose}
-                >
-                  <User size={20} />
-                  <span>My Profile</span>
-                </Link>
-                <Link 
-                  to="/my-bookings" 
-                  className="flex items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
-                  onClick={onClose}
-                >
-                  <CalendarCheck size={20} />
-                  <span>My Bookings</span>
-                </Link>
-                <Link 
-                  to="/settings" 
-                  className="flex items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-meant-700"
-                  onClick={onClose}
-                >
-                  <Settings size={20} />
-                  <span>Settings</span>
-                </Link>
-                <button 
-                  className="flex w-full items-center gap-2 py-3 px-4 rounded-md hover:bg-gray-100 text-red-600"
-                  onClick={handleLogout}
-                >
-                  <LogOut size={20} />
-                  <span>Log Out</span>
-                </button>
-              </>
-            )}
-          </nav>
+          </div>
+        </div>
+        
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Account</h3>
+          <div className="grid gap-2">
+            <Link to="/profile" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <User className="h-5 w-5 text-meant-600" />
+              <span>Profile</span>
+            </Link>
+            <Link to="/settings" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <Settings className="h-5 w-5 text-meant-600" />
+              <span>Settings</span>
+            </Link>
+            <Link to="/documentation" className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={onClose}>
+              <BookOpen className="h-5 w-5 text-meant-600" />
+              <span>Documentation</span>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
