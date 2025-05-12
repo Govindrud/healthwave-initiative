@@ -38,6 +38,8 @@ const Navbar = () => {
   // Force mobile view on mobile browsers and small viewports
   const showMobileNav = isMobileView || isMobile;
 
+  console.log("Current location:", location.pathname);
+  
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${

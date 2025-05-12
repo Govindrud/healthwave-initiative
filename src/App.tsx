@@ -1,6 +1,6 @@
 
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './hooks/useFetch';
@@ -62,6 +62,8 @@ const PageLoading = () => (
 );
 
 const App: React.FC = () => {
+  console.log("App component rendered");
+  
   return (
     <QueryClientProvider client={queryClient}>
       <RegionProvider>

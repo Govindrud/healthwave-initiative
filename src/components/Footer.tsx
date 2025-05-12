@@ -1,16 +1,17 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Twitter, Facebook, Instagram, Linkedin, Youtube, Heart, Phone, Mail, MapPin, BookOpen } from "lucide-react";
 import Logo from "./Logo";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="bg-card border-t">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="col-span-1 lg:col-span-2">
-            <Logo size="lg" variant="full" />
+            <Link to="/">
+              <Logo size="lg" variant="full" />
+            </Link>
             <p className="mt-4 text-muted-foreground">
               Empowering individuals through innovative mental health solutions.
               Our mission is to make mental wellness accessible to everyone.

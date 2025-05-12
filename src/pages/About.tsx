@@ -4,10 +4,11 @@ import MainLayout from '@/components/layouts/MainLayout';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import { motion } from 'framer-motion';
 
-const About = () => {
+const About: React.FC = () => {
   useEffect(() => {
     document.title = "About Us | MeantToHelp";
     window.scrollTo(0, 0);
+    console.log("About page rendered");
   }, []);
 
   return (

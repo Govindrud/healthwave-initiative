@@ -25,7 +25,7 @@ const AIPersonalAssistant = React.lazy(() => import('@/components/ai/AIPersonalA
 // Loading fallback for lazy-loaded components
 const LoadingFallback = () => <Skeleton className="w-full h-40" />;
 
-const Home = () => {
+const Home: React.FC = () => {
   useEffect(() => {
     document.title = "MeantToHelp - Mental Health Support";
     window.scrollTo(0, 0);
