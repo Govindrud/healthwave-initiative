@@ -38,8 +38,8 @@ const EaseOfLiving = () => {
             </p>
             <div className="space-y-4">
               <div className="flex items-start">
-                <div className="bg-meant-100 p-2 rounded-full mr-3 mt-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-meant-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="bg-green-100 p-2 rounded-full mr-3 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -49,8 +49,8 @@ const EaseOfLiving = () => {
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="bg-meant-100 p-2 rounded-full mr-3 mt-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-meant-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="bg-green-100 p-2 rounded-full mr-3 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -60,8 +60,8 @@ const EaseOfLiving = () => {
                 </div>
               </div>
               <div className="flex items-start">
-                <div className="bg-meant-100 p-2 rounded-full mr-3 mt-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-meant-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="bg-green-100 p-2 rounded-full mr-3 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -77,7 +77,7 @@ const EaseOfLiving = () => {
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-8 text-center">Our Ease of Living Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-green-100">
               <div className="p-6">
                 <h3 className="font-bold text-xl mb-3">Home Organization</h3>
                 <p className="text-muted-foreground mb-4">
@@ -85,26 +85,26 @@ const EaseOfLiving = () => {
                 </p>
                 <ul className="space-y-2 mb-4">
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Room-by-room organization
                   </li>
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Storage solutions
                   </li>
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Decluttering assistance
                   </li>
                 </ul>
               </div>
-              <div className="bg-gray-50 p-6">
+              <div className="bg-green-50 p-6">
                 <ServiceBookingForm 
                   serviceId="home-org-1"
                   title="Home Organization Service"
@@ -117,7 +117,7 @@ const EaseOfLiving = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-green-100">
               <div className="p-6">
                 <h3 className="font-bold text-xl mb-3">Meal Preparation</h3>
                 <p className="text-muted-foreground mb-4">
@@ -125,26 +125,26 @@ const EaseOfLiving = () => {
                 </p>
                 <ul className="space-y-2 mb-4">
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Weekly meal planning
                   </li>
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Grocery shopping
                   </li>
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Batch cooking
                   </li>
                 </ul>
               </div>
-              <div className="bg-gray-50 p-6">
+              <div className="bg-green-50 p-6">
                 <ServiceBookingForm 
                   serviceId="meal-prep-1"
                   title="Meal Preparation Service"
@@ -157,7 +157,7 @@ const EaseOfLiving = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-green-100">
               <div className="p-6">
                 <h3 className="font-bold text-xl mb-3">Administrative Support</h3>
                 <p className="text-muted-foreground mb-4">
@@ -165,26 +165,26 @@ const EaseOfLiving = () => {
                 </p>
                 <ul className="space-y-2 mb-4">
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Email management
                   </li>
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Appointment scheduling
                   </li>
                   <li className="flex items-center">
-                    <svg className="h-5 w-5 text-meant-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-5 w-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Document organization
                   </li>
                 </ul>
               </div>
-              <div className="bg-gray-50 p-6">
+              <div className="bg-green-50 p-6">
                 <ServiceBookingForm 
                   serviceId="admin-support-1"
                   title="Administrative Support"
@@ -199,12 +199,12 @@ const EaseOfLiving = () => {
           </div>
         </div>
         
-        <div className="bg-meant-50 rounded-2xl p-8 md:p-12 text-center mb-16">
+        <div className="bg-green-50 rounded-2xl p-8 md:p-12 text-center mb-16">
           <h2 className="text-2xl font-bold mb-4">Custom Support Packages</h2>
           <p className="text-lg mb-6 max-w-3xl mx-auto">
             Need a combination of services or something not listed above? We offer customized packages tailored to your specific needs and circumstances.
           </p>
-          <Button asChild size="lg" className="bg-meant-600 hover:bg-meant-700">
+          <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white">
             <Link to="/contact">Contact Us for Custom Solutions</Link>
           </Button>
         </div>
@@ -213,21 +213,21 @@ const EaseOfLiving = () => {
           <h2 className="text-2xl font-bold mb-4">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             <div className="flex flex-col items-center">
-              <div className="bg-meant-100 text-meant-800 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
+              <div className="bg-green-100 text-green-800 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
               <h3 className="font-semibold text-lg mb-2">Book a Service</h3>
               <p className="text-muted-foreground">
                 Choose the service you need and schedule a time that works for you using our online booking system.
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-meant-100 text-meant-800 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
+              <div className="bg-green-100 text-green-800 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
               <h3 className="font-semibold text-lg mb-2">Initial Consultation</h3>
               <p className="text-muted-foreground">
                 A brief consultation call to understand your specific needs and preferences before the service.
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-meant-100 text-meant-800 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
+              <div className="bg-green-100 text-green-800 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
               <h3 className="font-semibold text-lg mb-2">Service Delivery</h3>
               <p className="text-muted-foreground">
                 Our professional team arrives at the scheduled time to provide the service with care and attention to detail.
