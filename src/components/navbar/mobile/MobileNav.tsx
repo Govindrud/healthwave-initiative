@@ -48,12 +48,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     document.body.style.overflow = !isMobileMenuOpen ? "hidden" : "auto";
   };
 
+  // Updated to handle home navigation correctly
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
     document.body.style.overflow = "auto";
     
     if (isHomePage) {
-      // If we're on the home page, scroll to the section
+      // If we're on the home page and not clicking HOME,
+      // scroll to the section
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
@@ -64,9 +66,20 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     }
   };
 
+  // Handle direct home navigation without section scrolling
+  const handleHomeClick = () => {
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = "auto";
+    navigate("/");
+  };
+
   return (
     <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
-      <Link to="/" className="flex items-center">
+      <Link 
+        to="/" 
+        className="flex items-center"
+        onClick={handleHomeClick}
+      >
         <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-meant-600 to-meant-800">
           <span className="font-extrabold">Meant</span>ToHelp
         </span>
