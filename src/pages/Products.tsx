@@ -3,13 +3,17 @@ import React, { useEffect } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import ProductGrid from '@/components/products/ProductGrid';
 import { useAllProducts } from '@/hooks/use-products';
+import { mapDatabaseProductsToUIProducts } from '@/utils/product-utils';
 
 const Products = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { data: products, isLoading, error } = useAllProducts();
+  const { data: databaseProducts, isLoading, error } = useAllProducts();
+  
+  // Convert database products to UI product format
+  const products = databaseProducts ? mapDatabaseProductsToUIProducts(databaseProducts) : [];
 
   return (
     <MainLayout title="Products - Mental Health Support Tools">
