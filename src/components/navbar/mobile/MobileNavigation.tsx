@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { MobileDropdown } from "../MobileDropdown";
@@ -9,8 +10,7 @@ import {
   mainMenuItems,
   productItems,
   aiItems,
-  aboutItems,
-  homeItems
+  aboutItems
 } from "@/config/navigation";
 
 interface MobileNavigationProps {
@@ -24,7 +24,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 }) => {
   return (
     <nav className="flex flex-col space-y-1 rounded-lg overflow-hidden">
-      {/* Home navigation - Updated to ensure it just navigates to home without section scrolling */}
+      {/* Home navigation - Direct link to home page */}
       <MobileNavItem 
         to="/" 
         onClick={onClose} 

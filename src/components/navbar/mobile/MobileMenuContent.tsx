@@ -2,8 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import UserProfileSection from "./UserProfileSection";
-import MainNavLinks from "./MainNavLinks";
-import AccountNavLinks from "./AccountNavLinks";
+import { MobileNavigation } from "./MobileNavigation";
 
 interface MobileMenuContentProps {
   isOpen: boolean;
@@ -22,8 +21,14 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ isOpen, onClose, 
     >
       <div className="grid gap-4">
         <UserProfileSection onClose={onClose} />
-        <MainNavLinks onClose={onClose} />
-        <AccountNavLinks onClose={onClose} />
+        
+        {/* Main navigation using the dedicated component */}
+        <div className="pb-20">
+          <MobileNavigation 
+            onClose={onClose} 
+            scrollToSection={scrollToSection} 
+          />
+        </div>
       </div>
     </motion.div>
   );

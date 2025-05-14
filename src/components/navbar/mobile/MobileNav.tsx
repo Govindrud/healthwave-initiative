@@ -48,7 +48,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     document.body.style.overflow = !isMobileMenuOpen ? "hidden" : "auto";
   };
 
-  // Updated to handle home navigation correctly
+  // Handle section scrolling or navigation
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
     document.body.style.overflow = "auto";
