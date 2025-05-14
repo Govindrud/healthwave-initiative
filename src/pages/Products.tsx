@@ -2,14 +2,14 @@
 import React, { useEffect } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import ProductGrid from '@/components/products/ProductGrid';
-import { useProducts } from '@/hooks/use-products';
+import { useAllProducts } from '@/hooks/use-products';
 
 const Products = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { products, isLoading, error } = useProducts();
+  const { data: products, isLoading, error } = useAllProducts();
 
   return (
     <MainLayout title="Products - Mental Health Support Tools">
