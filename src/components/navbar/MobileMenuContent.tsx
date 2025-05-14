@@ -1,28 +1,36 @@
 
 import React from "react";
-import { MoveRight } from "lucide-react";
+import { motion } from "framer-motion";
 import UserProfileSection from "./mobile/UserProfileSection";
-import MainNavLinks from "./mobile/MainNavLinks";
-import AccountNavLinks from "./mobile/AccountNavLinks";
+import { MobileNavigation } from "./mobile/MobileNavigation";
 
 interface MobileMenuContentProps {
+  isOpen: boolean;
   onClose: () => void;
-  isOpen?: boolean;
-  scrollToSection?: (id: string) => void;
+  scrollToSection: (id: string) => void;
 }
 
-const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, isOpen, scrollToSection }) => {
+const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ isOpen, onClose, scrollToSection }) => {
   return (
-    <div className="bg-white h-full flex flex-col overflow-y-auto">
-      {/* User profile section */}
-      <UserProfileSection onClose={onClose} />
-
-      {/* Main navigation links */}
-      <div className="flex-1 overflow-y-auto">
-        <MainNavLinks onClose={onClose} />
-        <AccountNavLinks onClose={onClose} />
+    <motion.div
+      initial={{ opacity: 0, x: "100%" }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: "100%" }}
+      transition={{ duration: 0.3 }}
+      className="fixed top-0 right-0 h-screen w-full bg-white dark:bg-gray-900 z-50 pt-20 pb-6 px-4 overflow-y-auto"
+    >
+      <div className="grid gap-4">
+        <UserProfileSection onClose={onClose} />
+        
+        {/* Main navigation using the dedicated component */}
+        <div className="pb-20">
+          <MobileNavigation 
+            onClose={onClose} 
+            scrollToSection={scrollToSection} 
+          />
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

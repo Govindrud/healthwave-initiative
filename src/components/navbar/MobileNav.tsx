@@ -6,6 +6,7 @@ import { HamburgerButton } from "./mobile/HamburgerButton";
 import MobileMenuContent from "./MobileMenuContent";
 import ThemeToggle from "../ThemeToggle";
 import Logo from "../Logo";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MobileNavProps {
   location: Location;
@@ -16,6 +17,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
   const isHomePage = location.pathname === "/";
   const navigate = useNavigate();
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   
   // Close mobile menu when route changes
   React.useEffect(() => {

@@ -10,7 +10,8 @@ import {
   mainMenuItems,
   productItems,
   aiItems,
-  aboutItems
+  aboutItems,
+  homeItems
 } from "@/config/navigation";
 
 interface MobileNavigationProps {
@@ -24,6 +25,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
 }) => {
   return (
     <nav className="flex flex-col space-y-1 rounded-lg overflow-hidden">
+      {/* Home navigation */}
       <MobileNavItem to="/" onClick={onClose} className="font-medium">
         Home
       </MobileNavItem>
@@ -34,7 +36,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`service-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -53,7 +57,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`activity-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -72,7 +78,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`spiritual-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -91,7 +99,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`product-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -110,7 +120,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`ai-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -122,7 +134,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`main-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -145,7 +159,9 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             key={`about-${index}`} 
             to={item.href} 
             onClick={onClose}
+            className="flex items-center gap-2"
           >
+            {item.icon && <item.icon size={16} className="text-meant-600" />}
             {item.title}
           </MobileNavItem>
         ))}
@@ -154,6 +170,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({
             scrollToSection("contact");
             onClose();
           }}
+          className="flex items-center gap-2"
         >
           Contact Us
         </MobileNavItem>
