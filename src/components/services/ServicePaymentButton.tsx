@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { usePayment } from "@/hooks/use-payment";
-import { IndianRupee } from "lucide-react";
+import { IndianRupee, Leaf } from "lucide-react";
 
 interface ServicePaymentButtonProps {
   amount: number;
@@ -42,13 +42,14 @@ const ServicePaymentButton = ({
   return (
     <Button 
       onClick={handlePayment}
-      className={`bg-green-600 hover:bg-green-700 text-white ${className}`}
+      className={`bg-green-600 hover:bg-green-700 text-white flex items-center gap-2 ${className}`}
       disabled={isLoading || !isScriptLoaded || disabled}
     >
       {isLoading ? "Processing..." : (
         <>
-          <IndianRupee className="mr-2 h-4 w-4" />
+          <IndianRupee className="h-4 w-4" />
           {buttonText}
+          <Leaf className="h-4 w-4 ml-1" />
         </>
       )}
     </Button>

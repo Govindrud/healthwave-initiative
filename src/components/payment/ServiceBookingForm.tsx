@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ServicePaymentButton from "@/components/services/ServicePaymentButton";
+import { Leaf } from "lucide-react";
 
 interface ServiceBookingFormProps {
   serviceId?: string;
@@ -52,9 +53,12 @@ const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({
   const finalType = serviceType || type;
 
   return (
-    <Card className="w-full border-green-100">
-      <CardHeader>
-        <CardTitle className="text-green-800">{duration && provider ? `Book ${finalTitle}` : finalTitle}</CardTitle>
+    <Card className="w-full border-green-100 hover:shadow-lg transition-all duration-300">
+      <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50">
+        <div className="flex items-center gap-2">
+          <Leaf className="h-5 w-5 text-green-600" />
+          <CardTitle className="text-green-800">{duration && provider ? `Book ${finalTitle}` : finalTitle}</CardTitle>
+        </div>
         {duration && provider && (
           <div className="text-sm text-muted-foreground">
             <div>{duration} with {provider}</div>
@@ -62,7 +66,7 @@ const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({
           </div>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Your Name</Label>
@@ -73,6 +77,7 @@ const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({
               value={customerInfo.name}
               onChange={handleInputChange}
               required
+              className="focus:border-green-500"
             />
           </div>
           <div className="space-y-2">
@@ -85,6 +90,7 @@ const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({
               value={customerInfo.email}
               onChange={handleInputChange}
               required
+              className="focus:border-green-500"
             />
           </div>
           <div className="space-y-2">
@@ -96,12 +102,16 @@ const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({
               value={customerInfo.phone}
               onChange={handleInputChange}
               required
+              className="focus:border-green-500"
             />
           </div>
         </div>
       </CardContent>
       <CardFooter className="flex-col items-start">
-        <div className="text-xl font-bold text-green-800 mb-4">₹{finalPrice}</div>
+        <div className="text-xl font-bold text-green-800 mb-4 flex items-center">
+          <IndianRupee className="mr-1 h-5 w-5 text-green-700" />
+          {finalPrice}
+        </div>
         <ServicePaymentButton 
           amount={finalPrice}
           title={finalTitle}
@@ -109,6 +119,7 @@ const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({
           serviceId={serviceId}
           customerInfo={customerInfo}
           disabled={!formIsValid}
+          buttonText="Book Sustainable Service"
         />
       </CardFooter>
     </Card>
