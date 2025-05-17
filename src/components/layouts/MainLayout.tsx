@@ -4,6 +4,7 @@ import Navbar from '@/components/navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from 'sonner';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import usePageScrolling from '@/hooks/use-scroll';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,6 +17,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   title = "MeantToHelp - Mental Health Support",
   description = "MeantToHelp provides mental health support services, therapy resources, and wellness guidance." 
 }) => {
+  // Since MainLayout is used inside Routes, it's safe to use router hooks here
+  usePageScrolling();
+  
   // Set document title when provided
   useEffect(() => {
     if (title) {

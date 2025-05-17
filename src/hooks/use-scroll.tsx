@@ -3,18 +3,36 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 export function useScrollToTop() {
-  const { pathname } = useLocation();
+  // Safety check to only run when inside Router context
+  let isRouterAvailable = true;
+  try {
+    useLocation();
+  } catch (e) {
+    isRouterAvailable = false;
+  }
+  
+  const { pathname } = isRouterAvailable ? useLocation() : { pathname: "" };
   
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (isRouterAvailable) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, isRouterAvailable]);
 }
 
 export function useScrollToHash() {
-  const { hash } = useLocation();
+  // Safety check to only run when inside Router context
+  let isRouterAvailable = true;
+  try {
+    useLocation();
+  } catch (e) {
+    isRouterAvailable = false;
+  }
+  
+  const { hash } = isRouterAvailable ? useLocation() : { hash: "" };
   
   useEffect(() => {
-    if (hash) {
+    if (isRouterAvailable && hash) {
       const id = hash.replace("#", "");
       const element = document.getElementById(id);
       
@@ -25,7 +43,7 @@ export function useScrollToHash() {
         }, 300);
       }
     }
-  }, [hash]);
+  }, [hash, isRouterAvailable]);
 }
 
 export function useScrollTrigger(callback: () => void, threshold: number = 100) {
@@ -45,6 +63,19 @@ export function useScrollTrigger(callback: () => void, threshold: number = 100) 
 }
 
 export default function usePageScrolling() {
-  useScrollToTop();
-  useScrollToHash();
+  // Only try to use router hooks if inside Router context
+  let isRouterAvailable = true;
+  try {
+    useLocation();
+  } catch (e) {
+    isRouterAvailable = false;
+    console.warn("usePageScrolling: Router context not available, some scroll features disabled");
+    return; // Exit early if Router context is not available
+  }
+  
+  // Only use these hooks if Router is available
+  if (isRouterAvailable) {
+    useScrollToTop();
+    useScrollToHash();
+  }
 }
