@@ -1,28 +1,14 @@
 
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import AppRoutes from '@/routes';
 import AppProviders from '@/providers/AppProviders';
+import usePageScrolling from '@/hooks/use-scroll';
 
 const App: React.FC = () => {
-  const location = useLocation();
+  // Use our custom hook that combines scroll behaviors
+  usePageScrolling();
   
-  useEffect(() => {
-    // Global handler for hash fragments in URLs
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
-      
-      // Small delay to ensure the page has fully rendered
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 300);
-    }
-    
-    console.log("App component rendered");
-  }, [location]);
+  console.log("App component rendered");
   
   return (
     <AppProviders>
