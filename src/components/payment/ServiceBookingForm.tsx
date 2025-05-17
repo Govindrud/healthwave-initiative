@@ -1,10 +1,9 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ServicePaymentButton from "@/components/services/ServicePaymentButton";
-import { Leaf } from "lucide-react";
+import { Leaf, IndianRupee } from "lucide-react";
 
 interface ServiceBookingFormProps {
   serviceId?: string;
