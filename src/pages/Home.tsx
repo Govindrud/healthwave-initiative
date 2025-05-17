@@ -1,5 +1,6 @@
 
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import MainLayout from '@/components/layouts/MainLayout';
 import Hero from '@/components/Hero';
 import ProductsSection from '@/components/ProductsSection';
@@ -26,11 +27,31 @@ const AIPersonalAssistant = React.lazy(() => import('@/components/ai/AIPersonalA
 const LoadingFallback = () => <Skeleton className="w-full h-40" />;
 
 const Home: React.FC = () => {
+  const location = useLocation();
+  
   useEffect(() => {
     document.title = "MeantToHelp - Mental Health Support";
-    window.scrollTo(0, 0);
+    
+    // Handle initial hash fragment for direct navigation
+    if (location.hash) {
+      // Remove the # character
+      const targetId = location.hash.substring(1);
+      setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // If target section not found, scroll to top
+          window.scrollTo(0, 0);
+        }
+      }, 300); // Small delay to ensure DOM is ready
+    } else {
+      // No hash in URL, just scroll to top
+      window.scrollTo(0, 0);
+    }
+
     console.log("Home component rendered");
-  }, []);
+  }, [location.hash]);
 
   return (
     <MainLayout title="MeantToHelp - Mental Health Support">

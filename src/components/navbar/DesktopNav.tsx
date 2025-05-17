@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Location, Link } from "react-router-dom";
+import { Location, Link, useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -29,6 +29,21 @@ interface DesktopNavProps {
 export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   const { isAuthenticated } = useAuth();
   const isHomePage = location.pathname === "/";
+  const navigate = useNavigate();
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isHomePage) {
+      // If already on home page, scroll to hero section
+      const heroSection = document.getElementById("hero");
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If on another page, navigate to home page with hash
+      navigate("/#hero");
+    }
+  };
 
   const scrollToSection = (id: string) => {
     if (isHomePage) {
@@ -42,7 +57,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
-        <Link to="/" className="mr-6">
+        <Link to="/#hero" className="mr-6" onClick={handleLogoClick}>
           <Logo size="md" variant="full" />
         </Link>
 

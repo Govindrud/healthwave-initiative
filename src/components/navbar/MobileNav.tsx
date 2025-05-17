@@ -62,9 +62,23 @@ const MobileNav: React.FC<MobileNavProps> = ({ location }) => {
     }
   };
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isHomePage) {
+      // If already on home page, scroll to hero section
+      const heroSection = document.getElementById("hero");
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If on another page, navigate to home page
+      navigate("/#hero");
+    }
+  };
+
   return (
     <div className="flex items-center justify-between w-full px-0" ref={menuRef}>
-      <Link to="/" className="flex items-center">
+      <Link to="/#hero" className="flex items-center" onClick={handleLogoClick}>
         <Logo size="md" variant="full" />
       </Link>
       
