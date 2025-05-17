@@ -6,12 +6,16 @@ export function useScrollToTop() {
   // Safety check to only run when inside Router context
   let isRouterAvailable = true;
   try {
+    // Just checking if we have access to the router context
+    // without actually using the hook result yet
     useLocation();
   } catch (e) {
     isRouterAvailable = false;
   }
   
-  const { pathname } = isRouterAvailable ? useLocation() : { pathname: "" };
+  // Only call useLocation if we know we're in a Router context
+  const location = isRouterAvailable ? useLocation() : null;
+  const pathname = location?.pathname || "";
   
   useEffect(() => {
     if (isRouterAvailable) {
@@ -24,12 +28,16 @@ export function useScrollToHash() {
   // Safety check to only run when inside Router context
   let isRouterAvailable = true;
   try {
+    // Just checking if we have access to the router context
+    // without actually using the hook result yet
     useLocation();
   } catch (e) {
     isRouterAvailable = false;
   }
   
-  const { hash } = isRouterAvailable ? useLocation() : { hash: "" };
+  // Only call useLocation if we know we're in a Router context
+  const location = isRouterAvailable ? useLocation() : null;
+  const hash = location?.hash || "";
   
   useEffect(() => {
     if (isRouterAvailable && hash) {
@@ -66,6 +74,9 @@ export default function usePageScrolling() {
   // Only try to use router hooks if inside Router context
   let isRouterAvailable = true;
   try {
+    // This is just a check, we're not using the result
+    // This line is important - we need to check if useLocation is available
+    // without actually calling it if it will throw an error
     useLocation();
   } catch (e) {
     isRouterAvailable = false;
@@ -73,9 +84,7 @@ export default function usePageScrolling() {
     return; // Exit early if Router context is not available
   }
   
-  // Only use these hooks if Router is available
-  if (isRouterAvailable) {
-    useScrollToTop();
-    useScrollToHash();
-  }
+  // If we get here, we know we can safely use the router hooks
+  useScrollToTop();
+  useScrollToHash();
 }
