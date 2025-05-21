@@ -4,7 +4,7 @@ import AppRoutes from '@/routes';
 import AppProviders from '@/providers/AppProviders';
 
 const App: React.FC = () => {
-  // We'll move the usePageScrolling hook inside AppRoutes where Router is available
+  // We should not use hooks that depend on Router context here
   console.log("App component rendered");
   
   return (
