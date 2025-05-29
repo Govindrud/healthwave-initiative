@@ -15,6 +15,7 @@ import NotFound from '@/pages/NotFound';
 import PaymentSuccess from '@/pages/PaymentSuccess';
 import Onboarding from '@/pages/Onboarding';
 import Referrals from '@/pages/Referrals';
+import Assessment from '@/pages/Assessment';
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
       {/* Strategic routes */}
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/referrals" element={<Referrals />} />
+      <Route path="/assessment" element={<Assessment />} />
       
       {/* Catch-all route */}
       <Route path="*" element={<NotFound />} />

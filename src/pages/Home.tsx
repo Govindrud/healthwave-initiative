@@ -20,6 +20,7 @@ import TrustBadges from '@/components/trust/TrustBadges';
 import PricingOptimization from '@/components/pricing/PricingOptimization';
 import UserEngagementTracker from '@/components/analytics/UserEngagementTracker';
 import MobileOptimizedLayout from '@/components/mobile/MobileOptimizedLayout';
+import AssessmentCTA from '@/components/assessment/AssessmentCTA';
 
 // Lazy-loaded components for better performance
 const GoalSetting = React.lazy(() => import('@/components/GoalSetting'));
@@ -77,6 +78,11 @@ const Home: React.FC = () => {
               <ServicesSlider />
               <ProductsSection />
               <SolutionsSection />
+            </ErrorBoundary>
+            
+            {/* Assessment CTA - Key conversion point */}
+            <ErrorBoundary>
+              <AssessmentCTA />
             </ErrorBoundary>
             
             {/* Pricing section - key for monetization */}
