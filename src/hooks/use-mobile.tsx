@@ -60,6 +60,9 @@ export function useIsMobile() {
   return !!isMobile;
 }
 
+// Export useMobile as an alias for useIsMobile for backward compatibility
+export const useMobile = useIsMobile;
+
 // Enhanced platform detection hooks
 export function useIsPlatform() {
   const [platform, setPlatform] = React.useState({

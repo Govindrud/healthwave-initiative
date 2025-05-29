@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, MessageCircle, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MobileOptimizedLayoutProps {
   children: React.ReactNode;
@@ -12,7 +11,7 @@ interface MobileOptimizedLayoutProps {
 const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showCrisisButton, setShowCrisisButton] = useState(false);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Show crisis help button on mobile after a delay
