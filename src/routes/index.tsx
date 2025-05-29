@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from '@/pages/Home';
 import About from '@/components/About';
 import Contact from '@/components/Contact';
@@ -18,28 +18,26 @@ import Referrals from '@/pages/Referrals';
 
 const AppRoutes = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/spirituality" element={<Spirituality />} />
-        <Route path="/ease-of-living" element={<EaseOfLiving />} />
-        <Route path="/payment-success" element={<PaymentSuccess />} />
-        
-        {/* Strategic routes */}
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/referrals" element={<Referrals />} />
-        
-        {/* Catch-all route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/doctors" element={<Doctors />} />
+      <Route path="/spirituality" element={<Spirituality />} />
+      <Route path="/ease-of-living" element={<EaseOfLiving />} />
+      <Route path="/payment-success" element={<PaymentSuccess />} />
+      
+      {/* Strategic routes */}
+      <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/referrals" element={<Referrals />} />
+      
+      {/* Catch-all route */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
