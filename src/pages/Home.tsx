@@ -15,6 +15,12 @@ import PartnerLogosSection from '@/components/partners/PartnerLogosSection';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
+// Strategic components
+import TrustBadges from '@/components/trust/TrustBadges';
+import PricingOptimization from '@/components/pricing/PricingOptimization';
+import UserEngagementTracker from '@/components/analytics/UserEngagementTracker';
+import MobileOptimizedLayout from '@/components/mobile/MobileOptimizedLayout';
+
 // Lazy-loaded components for better performance
 const GoalSetting = React.lazy(() => import('@/components/GoalSetting'));
 const PeerSupportSection = React.lazy(() => import('@/components/PeerSupportSection'));
@@ -59,64 +65,74 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <MainLayout title="MeantToHelp - Mental Health Support">
-      <div className="w-full">
-        <ErrorBoundary>
-          {/* Critical components loaded immediately */}
-          <Hero />
-          <About />
-          <ServicesSlider />
-          <ProductsSection />
-          <SolutionsSection />
-        </ErrorBoundary>
-        
-        {/* Secondary components lazy-loaded */}
-        <ErrorBoundary>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <HappyPeopleSlider />
-          </React.Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <PartnerLogosSection />
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <GoalSetting />
-          </React.Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <PeerSupportSection />
-          </React.Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <SleepBetterSection />
-          </React.Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <ProblemForm />
-          <Spirituality />
-          <VoiceAssistantPromo />
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <React.Suspense fallback={<LoadingFallback />}>
-            <AIPersonalAssistant />
-          </React.Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary>
-          <SocialFeed />
-          <Contact />
-        </ErrorBoundary>
-      </div>
-    </MainLayout>
+    <UserEngagementTracker>
+      <MobileOptimizedLayout>
+        <MainLayout title="MeantToHelp - Mental Health Support">
+          <div className="w-full">
+            <ErrorBoundary>
+              {/* Critical components loaded immediately */}
+              <Hero />
+              <TrustBadges />
+              <About />
+              <ServicesSlider />
+              <ProductsSection />
+              <SolutionsSection />
+            </ErrorBoundary>
+            
+            {/* Pricing section - key for monetization */}
+            <ErrorBoundary>
+              <PricingOptimization />
+            </ErrorBoundary>
+            
+            {/* Secondary components lazy-loaded */}
+            <ErrorBoundary>
+              <React.Suspense fallback={<LoadingFallback />}>
+                <HappyPeopleSlider />
+              </React.Suspense>
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <PartnerLogosSection />
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <React.Suspense fallback={<LoadingFallback />}>
+                <GoalSetting />
+              </React.Suspense>
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <React.Suspense fallback={<LoadingFallback />}>
+                <PeerSupportSection />
+              </React.Suspense>
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <React.Suspense fallback={<LoadingFallback />}>
+                <SleepBetterSection />
+              </React.Suspense>
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <ProblemForm />
+              <Spirituality />
+              <VoiceAssistantPromo />
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <React.Suspense fallback={<LoadingFallback />}>
+                <AIPersonalAssistant />
+              </React.Suspense>
+            </ErrorBoundary>
+            
+            <ErrorBoundary>
+              <SocialFeed />
+              <Contact />
+            </ErrorBoundary>
+          </div>
+        </MainLayout>
+      </MobileOptimizedLayout>
+    </UserEngagementTracker>
   );
 };
 
