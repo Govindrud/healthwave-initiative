@@ -16,6 +16,8 @@ import PaymentSuccess from '@/pages/PaymentSuccess';
 import Onboarding from '@/pages/Onboarding';
 import Referrals from '@/pages/Referrals';
 import Assessment from '@/pages/Assessment';
+import Profile from '@/pages/Profile';
+import Cart from '@/pages/Cart';
 
 const AppRoutes = () => {
   return (
@@ -31,6 +33,8 @@ const AppRoutes = () => {
       <Route path="/spirituality" element={<Spirituality />} />
       <Route path="/ease-of-living" element={<EaseOfLiving />} />
       <Route path="/payment-success" element={<PaymentSuccess />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/cart" element={<Cart />} />
       
       {/* Strategic routes */}
       <Route path="/onboarding" element={<Onboarding />} />

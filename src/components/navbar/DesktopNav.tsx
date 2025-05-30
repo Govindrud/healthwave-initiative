@@ -57,9 +57,9 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
-        <Link to="/#hero" className="mr-6" onClick={handleLogoClick}>
-          <Logo size="md" variant="full" />
-        </Link>
+        <div className="mr-6 cursor-pointer" onClick={handleLogoClick}>
+          <Logo size="md" variant="full" asLink={false} />
+        </div>
 
         <NavigationMenu>
           <NavigationMenuList className="space-x-2">

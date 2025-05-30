@@ -1,146 +1,124 @@
 
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { getFeaturedProducts } from "@/data/products";
-import MainLayout from "@/components/layouts/MainLayout";
-import { toast } from "sonner";
-import { initializeRazorpay, initiatePayment } from "@/utils/payments";
-import CartTable from "@/components/cart/CartTable";
-import CartSummary from "@/components/cart/CartSummary";
-import CartEmptyState from "@/components/cart/CartEmptyState";
-import { ArrowLeft } from "lucide-react";
-import { useRegion } from "@/context/RegionContext";
-import { useTranslation } from "@/hooks/useTranslation";
-
-type CartItem = {
-  product: ReturnType<typeof getFeaturedProducts>[0];
-  quantity: number;
-};
+import React, { useEffect } from 'react';
+import MainLayout from '@/components/layouts/MainLayout';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ShoppingBag, Plus, Minus, Trash2 } from 'lucide-react';
 
 const Cart = () => {
   useEffect(() => {
-    document.title = "Your Cart | MeantToHelp";
+    document.title = "Shopping Cart - MeantToHelp";
     window.scrollTo(0, 0);
   }, []);
 
-  // INTERACTIVE cart: use state instead of static mockCart
-  const [cart, setCart] = useState<CartItem[]>(
-    getFeaturedProducts(2).map(product => ({
-      product,
-      quantity: 1
-    }))
-  );
-  const [isPaying, setIsPaying] = useState(false);
-  const navigate = useNavigate();
-  const { formatPrice } = useRegion();
-  const { t } = useTranslation();
-
-  const handleQuantityChange = (index: number, delta: number) => {
-    setCart(cart =>
-      cart.map((item, i) =>
-        i === index
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
-  };
-
-  const handleRemove = (index: number) => {
-    setCart(cart => cart.filter((_, i) => i !== index));
-  };
-
-  const subtotal = cart.reduce((sum, item) => {
-    const price = item.product.discountPrice || item.product.price;
-    return sum + price * item.quantity;
-  }, 0);
-
-  const shipping = subtotal === 0 ? 0 : (subtotal > 1500 ? 0 : 100);
-  const tax = subtotal * 0.18; // 18% GST
-  const total = subtotal + shipping + tax;
-
-  // Simple customer info (could be replaced with user profile if available)
-  const customerInfo = {
-    name: "Test User",
-    email: "testuser@example.com",
-    phone: "9999999999"
-  };
-
-  const handleCheckout = async () => {
-    if (cart.length === 0) {
-      toast.error("Your cart is empty.");
-      return;
+  const cartItems = [
+    {
+      id: 1,
+      name: "Meditation Cushion",
+      price: 2500,
+      quantity: 1,
+      image: "/public/images/products/meditation-cushion.jpg"
+    },
+    {
+      id: 2,
+      name: "Aromatherapy Diffuser",
+      price: 3500,
+      quantity: 1,
+      image: "/public/images/products/aromatherapy-diffuser.jpg"
     }
-    setIsPaying(true);
-    toast.info("Setting up payment gateway...");
+  ];
 
-    const description = cart
-      .map(item => `${item.product.name} x${item.quantity}`)
-      .join(", ");
-
-    initializeRazorpay(() => {
-      initiatePayment({
-        amount: Math.round(total),
-        description: `Cart purchase: ${description}`,
-        name: customerInfo.name,
-        email: customerInfo.email,
-        phone: customerInfo.phone,
-        orderId: `ORDER${Date.now()}`,
-        successCallback: (response) => {
-          setIsPaying(false);
-          toast.success("Payment successful!");
-          navigate(
-            `/payment-success?payment_id=${response.razorpay_payment_id}&amount=${total}`
-          );
-        },
-        errorCallback: (error) => {
-          setIsPaying(false);
-          let errorMessage = "Payment failed. Please try again.";
-          if (error?.error?.description) {
-            errorMessage = `Payment failed: ${error.error.description}`;
-          } else if (typeof error === "string") {
-            errorMessage = error;
-          }
-          toast.error(errorMessage);
-        }
-      });
-    });
-  };
-
-  if (cart.length === 0) {
-    return (
-      <MainLayout>
-        <CartEmptyState />
-      </MainLayout>
-    );
-  }
+  const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
-    <MainLayout>
-      <div className="container mx-auto px-4 py-12">
-        <Link to="/products" className="inline-flex items-center text-meant-600 hover:text-meant-800 mb-6">
-          <ArrowLeft size={16} className="mr-2" />
-          {t('continue_shopping')}
-        </Link>
-        
-        <h1 className="text-2xl font-bold mb-6">{t('your_cart')}</h1>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <CartTable
-              cart={cart}
-              onQuantityChange={handleQuantityChange}
-              onRemove={handleRemove}
-            />
-          </div>
-          <div className="lg:col-span-1">
-            <CartSummary
-              subtotal={subtotal}
-              shipping={shipping}
-              tax={tax}
-              total={total}
-              isPaying={isPaying}
-              onCheckout={handleCheckout}
-            />
+    <MainLayout title="Shopping Cart - MeantToHelp">
+      <div className="min-h-screen bg-gradient-to-br from-meant-50 to-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-meant-800 mb-2">Shopping Cart</h1>
+              <p className="text-muted-foreground">Review your selected wellness products</p>
+            </div>
+
+            {cartItems.length > 0 ? (
+              <div className="grid gap-6 lg:grid-cols-3">
+                <div className="lg:col-span-2 space-y-4">
+                  {cartItems.map((item) => (
+                    <Card key={item.id}>
+                      <CardContent className="p-6">
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-20 h-20 object-cover rounded-lg"
+                            onError={(e) => {
+                              e.currentTarget.src = '/public/placeholder.svg';
+                            }}
+                          />
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-meant-800">{item.name}</h3>
+                            <p className="text-meant-600 font-medium">₹{item.price.toLocaleString()}</p>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button size="icon" variant="outline">
+                              <Minus className="h-4 w-4" />
+                            </Button>
+                            <span className="w-12 text-center">{item.quantity}</span>
+                            <Button size="icon" variant="outline">
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          <Button size="icon" variant="outline" className="text-red-600">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <div>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Order Summary</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex justify-between">
+                        <span>Subtotal</span>
+                        <span>₹{total.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                      </div>
+                      <div className="border-t pt-4">
+                        <div className="flex justify-between font-semibold text-lg">
+                          <span>Total</span>
+                          <span>₹{total.toLocaleString()}</span>
+                        </div>
+                      </div>
+                      <Button className="w-full bg-meant-600 hover:bg-meant-700">
+                        Proceed to Checkout
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="p-12 text-center">
+                  <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">Your cart is empty</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Explore our wellness products to start your journey
+                  </p>
+                  <Button asChild>
+                    <a href="/products">Browse Products</a>
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </div>
