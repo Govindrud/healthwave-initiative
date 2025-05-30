@@ -23,6 +23,8 @@ import Partners from '@/pages/Partners';
 import MyBookings from '@/pages/MyBookings';
 import Settings from '@/pages/Settings';
 import Activities from '@/pages/Activities';
+import CrisisHelpline from '@/pages/CrisisHelpline';
+import ChatSupport from '@/pages/ChatSupport';
 
 const AppRoutes = () => {
   return (
@@ -45,6 +47,8 @@ const AppRoutes = () => {
       <Route path="/my-bookings" element={<MyBookings />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/activities" element={<Activities />} />
+      <Route path="/crisis-helpline" element={<CrisisHelpline />} />
+      <Route path="/chat-support" element={<ChatSupport />} />
       
       {/* Strategic routes */}
       <Route path="/onboarding" element={<Onboarding />} />

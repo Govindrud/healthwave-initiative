@@ -1,18 +1,77 @@
 
 import React from 'react';
-import { Heart, Brain, Shield, Award } from 'lucide-react';
+import { Heart, Brain, Shield, Award, Phone, MessageCircle, Activity } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import { Button } from './ui/button';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-b from-meant-800 to-meant-900 text-white">
+    <footer className="bg-gradient-to-b from-meant-800 to-meant-900 text-white relative">
+      {/* Crisis Action Bar - More prominent */}
+      <div className="bg-gradient-to-r from-red-600 via-blue-600 to-green-600 py-4">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Crisis Helpline */}
+            <Link to="/crisis-helpline" className="block">
+              <Button className="w-full h-16 bg-red-500 hover:bg-red-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-white/20 rounded-full">
+                    <Phone className="h-6 w-6 animate-pulse" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-lg">Crisis Helpline</div>
+                    <div className="text-sm opacity-90">24/7 Emergency Support</div>
+                  </div>
+                </div>
+              </Button>
+            </Link>
+
+            {/* Chat Support */}
+            <Link to="/chat-support" className="block">
+              <Button className="w-full h-16 bg-blue-500 hover:bg-blue-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-white/20 rounded-full">
+                    <MessageCircle className="h-6 w-6" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-lg">Chat Support</div>
+                    <div className="text-sm opacity-90">Live Help Available</div>
+                  </div>
+                </div>
+              </Button>
+            </Link>
+
+            {/* Quick Assessment */}
+            <Link to="/assessment" className="block">
+              <Button className="w-full h-16 bg-green-500 hover:bg-green-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-white/20 rounded-full">
+                    <Activity className="h-6 w-6" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-lg">Quick Assessment</div>
+                    <div className="text-sm opacity-90">Check Your Wellness</div>
+                  </div>
+                </div>
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
+          {/* Company Info with Enhanced Logo */}
           <div className="space-y-4">
-            <Logo size="lg" variant="full" className="text-white" />
+            <div className="p-4 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20">
+              <Logo size="lg" variant="full" className="text-white mb-2" />
+              <div className="text-center">
+                <div className="text-xs text-meant-200 opacity-75">Mental Health Solutions</div>
+              </div>
+            </div>
             <p className="text-meant-200 text-sm leading-relaxed">
               Empowering individuals through innovative mental health solutions. 
               Our mission is to make mental wellness accessible to everyone.
@@ -35,12 +94,12 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-meant-200">
-              <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Services</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Products</a></li>
+              <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/services" className="hover:text-white transition-colors">Services</Link></li>
+              <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>
 
@@ -50,8 +109,8 @@ const Footer = () => {
             <ul className="space-y-2 text-meant-200">
               <li><a href="#" className="hover:text-white transition-colors">Surender</a></li>
               <li><a href="#" className="hover:text-white transition-colors">De-addiction</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Spiritual Resources</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Doctor Consultations</a></li>
+              <li><Link to="/spirituality" className="hover:text-white transition-colors">Spiritual Resources</Link></li>
+              <li><Link to="/doctors" className="hover:text-white transition-colors">Doctor Consultations</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Student Psychologists</a></li>
             </ul>
           </div>
@@ -60,7 +119,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Corporate</h3>
             <ul className="space-y-2 text-meant-200">
-              <li><a href="#" className="hover:text-white transition-colors">Corporate Plans</a></li>
+              <li><Link to="/corporate-plans" className="hover:text-white transition-colors">Corporate Plans</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Corporate Certification</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Webinars</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Admin Dashboard</a></li>
