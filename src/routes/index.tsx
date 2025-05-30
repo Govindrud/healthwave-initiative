@@ -18,6 +18,11 @@ import Referrals from '@/pages/Referrals';
 import Assessment from '@/pages/Assessment';
 import Profile from '@/pages/Profile';
 import Cart from '@/pages/Cart';
+import CorporatePlans from '@/pages/CorporatePlans';
+import Partners from '@/pages/Partners';
+import MyBookings from '@/pages/MyBookings';
+import Settings from '@/pages/Settings';
+import Activities from '@/pages/Activities';
 
 const AppRoutes = () => {
   return (
@@ -35,6 +40,11 @@ const AppRoutes = () => {
       <Route path="/payment-success" element={<PaymentSuccess />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/corporate-plans" element={<CorporatePlans />} />
+      <Route path="/partners" element={<Partners />} />
+      <Route path="/my-bookings" element={<MyBookings />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/activities" element={<Activities />} />
       
       {/* Strategic routes */}
       <Route path="/onboarding" element={<Onboarding />} />
