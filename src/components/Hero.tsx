@@ -3,7 +3,6 @@ import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
-import Logo from "./Logo";
 
 const Hero = () => {
   return (
@@ -58,16 +57,6 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Logo prominently displayed */}
-            <motion.div 
-              className="flex justify-center md:justify-start mb-8"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              <Logo size="lg" variant="full" className="transform hover:scale-105 transition-transform duration-300" />
-            </motion.div>
-
             <motion.span 
               className="inline-block py-1 px-3 rounded-full bg-purple-200 text-purple-800 text-sm font-medium mb-5"
               initial={{ opacity: 0, scale: 0.9 }}
