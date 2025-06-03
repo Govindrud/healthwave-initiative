@@ -10,19 +10,24 @@ const Footer = () => {
 
   return (
     <footer className="bg-gradient-to-b from-meant-800 to-meant-900 text-white relative">
-      {/* Crisis Action Bar - More prominent */}
-      <div className="bg-gradient-to-r from-red-600 via-blue-600 to-green-600 py-4">
+      {/* Enhanced Crisis Action Bar - More prominent and beautiful */}
+      <div className="bg-gradient-to-r from-red-500 via-blue-500 to-green-500 py-6 shadow-2xl">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-bold text-white mb-2">Need Immediate Support?</h2>
+            <p className="text-white/90">We're here to help you 24/7</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {/* Crisis Helpline */}
-            <Link to="/crisis-helpline" className="block">
-              <Button className="w-full h-16 bg-red-500 hover:bg-red-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-white/20 rounded-full">
-                    <Phone className="h-6 w-6 animate-pulse" />
+            <Link to="/crisis-helpline" className="block group">
+              <Button className="w-full h-20 bg-red-600 hover:bg-red-700 text-white shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-3 border-white/30 group-hover:border-white/50 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-white/10 to-red-600/0 transform skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <div className="flex items-center space-x-4 relative z-10">
+                  <div className="p-3 bg-white/20 rounded-full">
+                    <Phone className="h-8 w-8 animate-pulse" />
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-lg">Crisis Helpline</div>
+                    <div className="font-bold text-xl">Crisis Helpline</div>
                     <div className="text-sm opacity-90">24/7 Emergency Support</div>
                   </div>
                 </div>
@@ -30,14 +35,15 @@ const Footer = () => {
             </Link>
 
             {/* Chat Support */}
-            <Link to="/chat-support" className="block">
-              <Button className="w-full h-16 bg-blue-500 hover:bg-blue-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-white/20 rounded-full">
-                    <MessageCircle className="h-6 w-6" />
+            <Link to="/chat-support" className="block group">
+              <Button className="w-full h-20 bg-blue-600 hover:bg-blue-700 text-white shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-3 border-white/30 group-hover:border-white/50 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-white/10 to-blue-600/0 transform skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <div className="flex items-center space-x-4 relative z-10">
+                  <div className="p-3 bg-white/20 rounded-full">
+                    <MessageCircle className="h-8 w-8" />
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-lg">Chat Support</div>
+                    <div className="font-bold text-xl">Chat Support</div>
                     <div className="text-sm opacity-90">Live Help Available</div>
                   </div>
                 </div>
@@ -45,14 +51,15 @@ const Footer = () => {
             </Link>
 
             {/* Quick Assessment */}
-            <Link to="/assessment" className="block">
-              <Button className="w-full h-16 bg-green-500 hover:bg-green-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-white/20">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-white/20 rounded-full">
-                    <Activity className="h-6 w-6" />
+            <Link to="/assessment" className="block group">
+              <Button className="w-full h-20 bg-green-600 hover:bg-green-700 text-white shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-3 border-white/30 group-hover:border-white/50 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600/0 via-white/10 to-green-600/0 transform skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <div className="flex items-center space-x-4 relative z-10">
+                  <div className="p-3 bg-white/20 rounded-full">
+                    <Activity className="h-8 w-8" />
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-lg">Quick Assessment</div>
+                    <div className="font-bold text-xl">Quick Assessment</div>
                     <div className="text-sm opacity-90">Check Your Wellness</div>
                   </div>
                 </div>
@@ -64,35 +71,42 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info with Enhanced Logo */}
-          <div className="space-y-4">
-            <div className="p-4 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20">
-              <Logo size="lg" variant="full" className="text-white mb-2" />
+          {/* Enhanced Company Info with Much More Visible Logo */}
+          <div className="space-y-6">
+            {/* Highly Visible Logo Section */}
+            <div className="p-6 bg-gradient-to-br from-white/15 to-white/5 rounded-xl backdrop-blur-md border-2 border-white/30 shadow-xl">
               <div className="text-center">
-                <div className="text-xs text-meant-200 opacity-75">Mental Health Solutions</div>
+                <div className="mb-4 flex justify-center">
+                  <div className="p-4 bg-white/20 rounded-full border-2 border-white/40">
+                    <Logo size="lg" variant="full" className="text-white scale-125" />
+                  </div>
+                </div>
+                <div className="text-white font-semibold text-lg mb-2">MeantToHelp</div>
+                <div className="text-meant-200 text-sm">Mental Health Solutions</div>
               </div>
             </div>
+            
             <p className="text-meant-200 text-sm leading-relaxed">
               Empowering individuals through innovative mental health solutions. 
               Our mission is to make mental wellness accessible to everyone.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex justify-center space-x-4">
               {/* Social Media Icons */}
-              <a href="#" className="w-8 h-8 bg-meant-700 rounded-full flex items-center justify-center hover:bg-meant-600 transition-colors">
-                <span className="text-xs">f</span>
+              <a href="#" className="w-10 h-10 bg-meant-700 rounded-full flex items-center justify-center hover:bg-meant-600 transition-colors hover:scale-110 transform">
+                <span className="text-sm">f</span>
               </a>
-              <a href="#" className="w-8 h-8 bg-meant-700 rounded-full flex items-center justify-center hover:bg-meant-600 transition-colors">
-                <span className="text-xs">t</span>
+              <a href="#" className="w-10 h-10 bg-meant-700 rounded-full flex items-center justify-center hover:bg-meant-600 transition-colors hover:scale-110 transform">
+                <span className="text-sm">t</span>
               </a>
-              <a href="#" className="w-8 h-8 bg-meant-700 rounded-full flex items-center justify-center hover:bg-meant-600 transition-colors">
-                <span className="text-xs">in</span>
+              <a href="#" className="w-10 h-10 bg-meant-700 rounded-full flex items-center justify-center hover:bg-meant-600 transition-colors hover:scale-110 transform">
+                <span className="text-sm">in</span>
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
+            <h3 className="font-semibold text-lg mb-4 text-white">Quick Links</h3>
             <ul className="space-y-2 text-meant-200">
               <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
               <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
@@ -105,7 +119,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Services</h3>
+            <h3 className="font-semibold text-lg mb-4 text-white">Services</h3>
             <ul className="space-y-2 text-meant-200">
               <li><a href="#" className="hover:text-white transition-colors">Surender</a></li>
               <li><a href="#" className="hover:text-white transition-colors">De-addiction</a></li>
@@ -117,7 +131,7 @@ const Footer = () => {
 
           {/* Corporate */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Corporate</h3>
+            <h3 className="font-semibold text-lg mb-4 text-white">Corporate</h3>
             <ul className="space-y-2 text-meant-200">
               <li><Link to="/corporate-plans" className="hover:text-white transition-colors">Corporate Plans</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Corporate Certification</a></li>
