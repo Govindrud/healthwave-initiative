@@ -25,6 +25,7 @@ import Settings from '@/pages/Settings';
 import Activities from '@/pages/Activities';
 import CrisisHelpline from '@/pages/CrisisHelpline';
 import ChatSupport from '@/pages/ChatSupport';
+import InvestorPitch from '@/pages/InvestorPitch';
 
 const AppRoutes = () => {
   return (
@@ -49,6 +50,7 @@ const AppRoutes = () => {
       <Route path="/activities" element={<Activities />} />
       <Route path="/crisis-helpline" element={<CrisisHelpline />} />
       <Route path="/chat-support" element={<ChatSupport />} />
+      <Route path="/investor-pitch" element={<InvestorPitch />} />
       
       {/* Strategic routes */}
       <Route path="/onboarding" element={<Onboarding />} />
