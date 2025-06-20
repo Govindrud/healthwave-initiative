@@ -67,7 +67,7 @@ const InvestorPitch = () => {
           >
             <div className="mb-8">
               <img 
-                src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                 alt="Mental Health Innovation"
                 className="w-full max-w-2xl mx-auto rounded-lg shadow-xl"
               />
@@ -106,7 +106,7 @@ const InvestorPitch = () => {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <img 
-                  src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                   alt="Mental Health Crisis"
                   className="w-full rounded-lg shadow-lg"
                 />
@@ -194,7 +194,7 @@ const InvestorPitch = () => {
             <h2 className="text-4xl font-bold mb-8">Our Solution</h2>
             <div className="mb-12">
               <img 
-                src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                 alt="Technology Solution"
                 className="w-full max-w-4xl mx-auto rounded-lg shadow-xl"
               />
@@ -258,7 +258,7 @@ const InvestorPitch = () => {
             <h2 className="text-4xl font-bold mb-8">Investment Opportunity</h2>
             <div className="mb-8">
               <img 
-                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                 alt="Investment Growth"
                 className="w-full max-w-2xl mx-auto rounded-lg shadow-lg"
               />

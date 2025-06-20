@@ -4,20 +4,24 @@ import ImageSlider from "./ImageSlider";
 const ServicesSlider = () => {
   const serviceSlides = [
     {
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Discover inner peace through our spiritual wellness programs"
+      image: "https://images.unsplash.com/photo-1591027866135-b2bb82b6a9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      caption: "Discover inner peace through our spiritual wellness programs",
+      fallback: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Professional support for your mental wellbeing journey"
+      image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      caption: "Professional therapy support for your mental wellbeing journey",
+      fallback: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Join our supportive community of like-minded individuals"
+      image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      caption: "Join our supportive community of like-minded individuals",
+      fallback: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Explore our range of products designed to enhance your wellbeing"
+      image: "https://images.unsplash.com/photo-1545156521-77bd85671d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      caption: "Explore our range of wellness products designed to enhance your wellbeing",
+      fallback: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     }
   ];
 
