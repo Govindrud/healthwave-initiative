@@ -17,14 +17,14 @@ const Cart = () => {
       name: "Meditation Cushion",
       price: 2500,
       quantity: 1,
-      image: "/public/images/products/meditation-cushion.jpg"
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
     },
     {
       id: 2,
       name: "Aromatherapy Diffuser",
       price: 3500,
       quantity: 1,
-      image: "/public/images/products/aromatherapy-diffuser.jpg"
+      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
     }
   ];
 
@@ -53,7 +53,7 @@ const Cart = () => {
                             alt={item.name}
                             className="w-20 h-20 object-cover rounded-lg"
                             onError={(e) => {
-                              e.currentTarget.src = '/public/placeholder.svg';
+                              e.currentTarget.src = 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';
                             }}
                           />
                           <div className="flex-1">

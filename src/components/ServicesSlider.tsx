@@ -4,19 +4,19 @@ import ImageSlider from "./ImageSlider";
 const ServicesSlider = () => {
   const serviceSlides = [
     {
-      image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Discover inner peace through our spiritual wellness programs"
     },
     {
-      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Professional support for your mental wellbeing journey"
     },
     {
-      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22",
+      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Join our supportive community of like-minded individuals"
     },
     {
-      image: "/public/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png",
+      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Explore our range of products designed to enhance your wellbeing"
     }
   ];

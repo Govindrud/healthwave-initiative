@@ -6,23 +6,21 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 const HappyPeopleSlider = () => {
-  // Use a mix of local and remote images to increase chance of success
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Finding my balance again"
     },
     {
-      image: "https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Meditation changed my perspective"
     },
     {
-      image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Support makes all the difference"
     },
     {
-      // Using an Unsplash image as a reliable fallback
-      image: "https://images.unsplash.com/photo-1551894116-54f2a9d9ade6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       caption: "Taking steps toward mental health"
     }
   ];
