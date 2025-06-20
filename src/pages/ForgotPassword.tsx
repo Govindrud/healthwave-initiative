@@ -8,15 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layouts/MainLayout";
-import { useAuth } from "@/hooks/useAuth"; // Update import
-import { useRegion } from "@/context/RegionContext";
+import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { requestPasswordReset, ADMIN_EMAIL } = useAuth();
+  const { requestPasswordReset } = useAuth();
   const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,7 +55,7 @@ const ForgotPassword = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder={ADMIN_EMAIL}
+                      placeholder="Enter your email address"
                       className="pl-10"
                       required
                     />
@@ -74,7 +73,7 @@ const ForgotPassword = () => {
                 </Button>
                 <div className="text-center w-full">
                   <Link 
-                    to="/admin-login" 
+                    to="/login" 
                     className="text-sm text-primary hover:underline"
                   >
                     Back to Login
@@ -91,7 +90,7 @@ const ForgotPassword = () => {
                 <p className="mb-4">
                   If {email} is associated with an account, we've sent instructions to reset your password.
                 </p>
-                <Link to="/admin-login">
+                <Link to="/login">
                   <Button variant="outline" className="w-full">
                     Return to Login
                   </Button>

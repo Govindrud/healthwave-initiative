@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabase";
 
 export const usePasswordReset = () => {
   const [loading, setLoading] = useState(false);
@@ -8,18 +9,21 @@ export const usePasswordReset = () => {
   const requestPasswordReset = async (email: string): Promise<boolean> => {
     setLoading(true);
     try {
-      if (!email) {
-        toast.error("Email is required");
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+
+      if (error) {
+        console.error("Password reset request error:", error);
+        toast.error("Failed to send password reset email. Please try again.");
         return false;
       }
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success("Password reset link has been sent to your email");
+
+      toast.success("Password reset email sent! Please check your inbox.");
       return true;
     } catch (error) {
-      console.error("Password reset error:", error);
-      toast.error("Failed to send password reset email.");
+      console.error("Password reset request error:", error);
+      toast.error("Failed to send password reset email. Please try again.");
       return false;
     } finally {
       setLoading(false);
@@ -29,18 +33,21 @@ export const usePasswordReset = () => {
   const resetPassword = async (token: string, newPassword: string): Promise<boolean> => {
     setLoading(true);
     try {
-      if (!token || !newPassword) {
-        toast.error("Token and password are required");
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) {
+        console.error("Password reset error:", error);
+        toast.error("Failed to reset password. Please try again.");
         return false;
       }
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success("Password has been reset successfully");
+
+      toast.success("Password updated successfully!");
       return true;
     } catch (error) {
-      console.error("Reset password error:", error);
-      toast.error("Failed to reset password.");
+      console.error("Password reset error:", error);
+      toast.error("Failed to reset password. Please try again.");
       return false;
     } finally {
       setLoading(false);

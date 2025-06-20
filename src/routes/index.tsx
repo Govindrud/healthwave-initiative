@@ -26,6 +26,11 @@ import Activities from '@/pages/Activities';
 import CrisisHelpline from '@/pages/CrisisHelpline';
 import ChatSupport from '@/pages/ChatSupport';
 import InvestorPitch from '@/pages/InvestorPitch';
+import AdminDashboard from '@/pages/AdminDashboard';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import AdminRoute from '@/components/AdminRoute';
 
 const AppRoutes = () => {
   return (
@@ -37,25 +42,32 @@ const AppRoutes = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/doctors" element={<Doctors />} />
       <Route path="/spirituality" element={<Spirituality />} />
       <Route path="/ease-of-living" element={<EaseOfLiving />} />
       <Route path="/payment-success" element={<PaymentSuccess />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/cart" element={<Cart />} />
       <Route path="/corporate-plans" element={<CorporatePlans />} />
       <Route path="/partners" element={<Partners />} />
-      <Route path="/my-bookings" element={<MyBookings />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/activities" element={<Activities />} />
       <Route path="/crisis-helpline" element={<CrisisHelpline />} />
       <Route path="/chat-support" element={<ChatSupport />} />
       <Route path="/investor-pitch" element={<InvestorPitch />} />
       
-      {/* Strategic routes */}
-      <Route path="/onboarding" element={<Onboarding />} />
-      <Route path="/referrals" element={<Referrals />} />
-      <Route path="/assessment" element={<Assessment />} />
+      {/* Protected routes - require authentication */}
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+      <Route path="/my-bookings" element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
+      <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+      <Route path="/activities" element={<ProtectedRoute><Activities /></ProtectedRoute>} />
+      
+      {/* Strategic routes - require authentication */}
+      <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+      <Route path="/referrals" element={<ProtectedRoute><Referrals /></ProtectedRoute>} />
+      <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
+      
+      {/* Admin routes - require admin role */}
+      <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       
       {/* Catch-all route */}
       <Route path="*" element={<NotFound />} />

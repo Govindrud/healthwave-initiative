@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Lock } from "lucide-react";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layouts/MainLayout";
-import { useAuth } from "@/hooks/useAuth"; // Update import
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 const ResetPassword = () => {
@@ -44,7 +44,7 @@ const ResetPassword = () => {
       
       if (success) {
         toast.success("Password has been reset successfully");
-        navigate("/admin-login");
+        navigate("/login");
       }
     } catch (error) {
       toast.error("Failed to reset password. Please try again.");
@@ -105,7 +105,7 @@ const ResetPassword = () => {
               </Button>
               <div className="text-center w-full">
                 <Link 
-                  to="/admin-login" 
+                  to="/login" 
                   className="text-sm text-primary hover:underline"
                 >
                   Back to Login

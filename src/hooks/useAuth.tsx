@@ -1,9 +1,10 @@
 
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useEffect } from "react";
 import { AuthContextType } from "@/types/auth";
 import { useUser } from "./useUser";
-import { useAuthentication, ADMIN_EMAIL } from "./useAuthentication";
+import { useAuthentication } from "./useAuthentication";
 import { usePasswordReset } from "./usePasswordReset";
+import { supabase } from "@/lib/supabase";
 
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,6 +16,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { loading: passwordLoading, requestPasswordReset, resetPassword } = usePasswordReset();
 
   const loading = authLoading || passwordLoading;
+
+  // Check for existing session on mount
+  useEffect(() => {
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const authUser = {
+          uid: session.user.id,
+          email: session.user.email,
+          displayName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+          photoURL: session.user.user_metadata?.avatar_url || null,
+          role: session.user.user_metadata?.role || 'user'
+        };
+        updateUser(authUser);
+      }
+    };
+
+    getSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          const authUser = {
+            uid: session.user.id,
+            email: session.user.email,
+            displayName: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || '',
+            photoURL: session.user.user_metadata?.avatar_url || null,
+            role: session.user.user_metadata?.role || 'user'
+          };
+          updateUser(authUser);
+        } else {
+          updateUser(null);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, [updateUser]);
 
   return (
     <AuthContext.Provider value={{
@@ -29,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       updateProfile,
       isAdmin,
       isProvider,
-      ADMIN_EMAIL
+      ADMIN_EMAIL: "" // Remove hardcoded admin email
     }}>
       {children}
     </AuthContext.Provider>
