@@ -4,6 +4,7 @@ import MainLayout from '@/components/layouts/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageCircle, Clock, Shield, Heart } from 'lucide-react';
+import crisisSupport from '@/assets/crisis-support.jpg';
 
 const CrisisHelpline = () => {
   useEffect(() => {
@@ -35,9 +36,17 @@ const CrisisHelpline = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Emergency Banner */}
-            <div className="bg-red-600 text-white rounded-lg p-6 mb-8 text-center">
-              <h1 className="text-3xl font-bold mb-2">Crisis Support Available 24/7</h1>
-              <p className="text-lg">If you're in immediate danger, call 911 or go to your nearest emergency room</p>
+            <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl p-8 mb-8 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+              <div className="relative z-10">
+                <img 
+                  src={crisisSupport} 
+                  alt="Crisis Support" 
+                  className="w-full max-w-md mx-auto rounded-lg shadow-lg mb-6"
+                />
+                <h1 className="text-3xl md:text-4xl font-bold mb-4">Crisis Support Available 24/7</h1>
+                <p className="text-lg md:text-xl">If you're in immediate danger, call 911 or go to your nearest emergency room</p>
+              </div>
             </div>
 
             {/* Quick Action Buttons */}

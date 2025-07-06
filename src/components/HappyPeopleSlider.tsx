@@ -3,32 +3,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ImageSlider from './ImageSlider';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import happyPeopleWellness from '@/assets/happy-people-wellness.jpg';
+import therapySession from '@/assets/therapy-session.jpg';
+import meditationWellness from '@/assets/meditation-wellness.jpg';
+import supportGroup from '@/assets/support-group.jpg';
 
 const HappyPeopleSlider = () => {
   const slides = [
     {
-      image: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Finding my balance through mindfulness",
+      image: happyPeopleWellness,
+      caption: "Finding my balance through mindfulness and professional support",
       fallback: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Meditation transformed my perspective",
+      image: therapySession,
+      caption: "Professional therapy transformed my perspective on mental wellness",
       fallback: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Community support makes all the difference",
+      image: supportGroup,
+      caption: "Community support makes all the difference in my healing journey",
       fallback: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Taking steps toward mental wellness",
+      image: meditationWellness,
+      caption: "Taking mindful steps toward lasting mental wellness and peace",
       fallback: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     },
     {
       image: "https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      caption: "Healing through nature and mindfulness",
+      caption: "Healing through nature and mindfulness practices",
       fallback: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
     }
   ];

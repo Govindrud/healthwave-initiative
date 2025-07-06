@@ -41,14 +41,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   }, [title, description]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-background">
       <ErrorBoundary>
         <Navbar />
       </ErrorBoundary>
       <Toaster position="top-center" richColors />
-      <main className="flex-grow pt-16">
+      <main className="flex-grow pt-16 w-full">
         <ErrorBoundary>
-          {children}
+          <div className="w-full overflow-x-hidden">
+            {children}
+          </div>
         </ErrorBoundary>
       </main>
       <Footer />
