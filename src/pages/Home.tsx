@@ -40,6 +40,9 @@ const Home: React.FC = () => {
     
     // Handle initial hash fragment for direct navigation
     const handleInitialScroll = () => {
+      // Always scroll to top first
+      window.scrollTo(0, 0);
+      
       const hash = window.location.hash;
       if (hash) {
         // Remove the # character
@@ -48,21 +51,20 @@ const Home: React.FC = () => {
           const element = document.getElementById(targetId);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            // If target section not found, scroll to top
-            window.scrollTo(0, 0);
           }
-        }, 300); // Small delay to ensure DOM is ready
-      } else {
-        // No hash in URL, just scroll to top
-        window.scrollTo(0, 0);
+        }, 500); // Increased delay to ensure page is fully loaded
       }
     };
 
-    // Run initial scroll handler
-    handleInitialScroll();
+    // Force scroll to top immediately
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    
+    // Run initial scroll handler after a small delay
+    const timeoutId = setTimeout(handleInitialScroll, 100);
 
     console.log("Home component rendered");
+    
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (

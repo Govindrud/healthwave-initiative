@@ -31,6 +31,21 @@ import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminRoute from '@/components/AdminRoute';
+import Webinars from '@/pages/Webinars';
+import StudentPsychologists from '@/pages/StudentPsychologists';
+import Adventures from '@/pages/Adventures';
+import Games from '@/pages/Games';
+import SpiritualityServices from '@/pages/SpiritualityServices';
+import ProductDetails from '@/pages/ProductDetails';
+import WhatsAppServices from '@/pages/WhatsAppServices';
+import Surender from '@/pages/Surender';
+import DeAddiction from '@/pages/DeAddiction';
+import Documentation from '@/pages/Documentation';
+import CorporateCertification from '@/pages/CorporateCertification';
+import AIPersonalAssistant from '@/pages/AIPersonalAssistant';
+import AIVoiceAgent from '@/pages/AIVoiceAgent';
+import AngerManagement from '@/pages/AngerManagement';
+import BookingConfirmation from '@/pages/BookingConfirmation';
 
 const AppRoutes = () => {
   return (
@@ -39,7 +54,22 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<Products />} />
+      <Route path="/products/:id" element={<ProductDetails />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/webinars" element={<Webinars />} />
+      <Route path="/student-psychologists" element={<StudentPsychologists />} />
+      <Route path="/adventures" element={<Adventures />} />
+      <Route path="/games" element={<Games />} />
+      <Route path="/spirituality-services" element={<SpiritualityServices />} />
+      <Route path="/whatsapp-services" element={<WhatsAppServices />} />
+      <Route path="/surender" element={<Surender />} />
+      <Route path="/de-addiction" element={<DeAddiction />} />
+      <Route path="/documentation" element={<Documentation />} />
+      <Route path="/corporate-certification" element={<CorporateCertification />} />
+      <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
+      <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
+      <Route path="/anger-management" element={<AngerManagement />} />
+      <Route path="/booking-confirmation" element={<BookingConfirmation />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

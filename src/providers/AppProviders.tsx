@@ -7,6 +7,7 @@ import { queryClient } from '@/hooks/useFetch';
 import { RegionProvider } from '@/context/RegionContext';
 import { AuthProvider } from '@/hooks/useAuth';
 import { AIProvider } from '@/providers/AIProvider';
+import ScrollToTop from '@/components/ScrollToTop';
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
         <AuthProvider>
           <AIProvider>
             <Router>
+              <ScrollToTop />
               <Toaster position="top-center" richColors />
               {children}
             </Router>

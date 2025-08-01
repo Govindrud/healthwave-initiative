@@ -18,7 +18,7 @@ export const SpiritualityDropdown: React.FC = () => {
           <NavigationMenuTrigger className="bg-transparent hover:bg-accent px-3 py-2 mx-1 text-sm font-medium text-foreground/80 hover:text-foreground rounded-md transition-colors">
             Spirituality
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50 bg-white border border-border shadow-lg rounded-md">
+          <NavigationMenuContent className="z-[100] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-lg backdrop-blur-sm">
             <DropdownContent 
               items={spiritualityItems} 
               showViewAll={{
