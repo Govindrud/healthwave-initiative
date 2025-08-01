@@ -121,7 +121,7 @@ const GameListing = () => {
                 className="w-full h-48 object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = "/placeholder.svg";
+                  target.src = "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80";
                 }}
               />
               <div className="absolute top-2 right-2">
@@ -215,7 +215,7 @@ const GameListing = () => {
                     className="w-full h-64 object-cover rounded-md"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder.svg";
+                      target.src = "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80";
                     }}
                   />
                 </div>

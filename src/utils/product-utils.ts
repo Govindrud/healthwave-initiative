@@ -14,7 +14,7 @@ export function mapDatabaseProductToUIProduct(product: ModelProduct): UIProduct 
     price: product.price,
     discountPrice: product.sale_price || undefined,
     category: (product.category as UIProduct['category']) || 'selfcare',
-    image: product.image || '/placeholder.svg',
+    image: product.image || 'https://images.unsplash.com/photo-1516824711773-9c3b3b4b6bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
     badge: undefined,
     rating: 4.5, // Default rating if not available
     stock: product.stock || 10,

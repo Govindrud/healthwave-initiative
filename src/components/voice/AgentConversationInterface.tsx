@@ -201,7 +201,7 @@ const AgentConversationInterface: React.FC<AgentConversationInterfaceProps> = ({
       <div className="bg-meant-600 text-white p-4 rounded-t-lg flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Avatar className="h-8 w-8 bg-white/20">
-            <AvatarImage src="/placeholder.svg" />
+            <AvatarImage src="https://images.unsplash.com/photo-1567515004624-219c11d31f2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" />
             <AvatarFallback className="text-white">
               <Bot className="h-4 w-4" />
             </AvatarFallback>

@@ -22,7 +22,7 @@ const StudentPsychologists = () => {
       experience: '2 years',
       rating: 4.8,
       reviews: 24,
-      image: '/images/user-placeholder.jpg',
+      image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
       availability: 'Available today'
     },
     {
@@ -33,7 +33,7 @@ const StudentPsychologists = () => {
       experience: '3 years',
       rating: 4.9,
       reviews: 31,
-      image: '/images/user-placeholder.jpg',
+      image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
       availability: 'Next available: Tomorrow'
     },
     {
@@ -44,7 +44,7 @@ const StudentPsychologists = () => {
       experience: '1 year',
       rating: 4.7,
       reviews: 18,
-      image: '/images/user-placeholder.jpg',
+      image: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
       availability: 'Available today'
     }
   ];

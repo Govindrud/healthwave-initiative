@@ -61,7 +61,7 @@ const CartTable = ({ cart, onQuantityChange, onRemove }: CartTableProps) => {
                         src={item.product.image}
                         alt={item.product.name}
                         className="h-full w-full object-cover object-center"
-                        fallbackSrc="/placeholder.svg"
+                        fallbackSrc="https://images.unsplash.com/photo-1516824711773-9c3b3b4b6bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
                       />
                     </div>
                     <div className="ml-4">

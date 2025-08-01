@@ -95,7 +95,7 @@ const StudentListing = () => {
                     className="w-full h-48 object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder.svg";
+                      target.src = "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80";
                     }}
                   />
                   <div className="absolute top-2 right-2">

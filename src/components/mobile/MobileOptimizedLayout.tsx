@@ -33,13 +33,13 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({ children 
     {
       icon: MessageCircle,
       label: 'Chat Support',
-      action: () => console.log('Open chat'),
+      action: () => window.location.href = '/chat-support',
       color: 'bg-blue-500 hover:bg-blue-600'
     },
     {
       icon: Heart,
       label: 'Quick Assessment',
-      action: () => console.log('Open assessment'),
+      action: () => window.location.href = '/assessment',
       color: 'bg-green-500 hover:bg-green-600'
     }
   ];
@@ -130,7 +130,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({ children 
       </AnimatePresence>
 
       {/* Bottom Quick Actions Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-meant-100 shadow-lg z-30">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-meant-100 shadow-lg z-30 safe-area-inset-bottom">
         <div className="grid grid-cols-3 gap-1 p-2">
           {quickActions.map((action, index) => (
             <Button
@@ -147,7 +147,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({ children 
       </div>
 
       {/* Accessibility Features */}
-      <div className="fixed bottom-20 right-4 z-30 space-y-2">
+      <div className="fixed bottom-20 right-4 z-30 space-y-2 safe-area-inset-bottom">
         <Button
           size="icon"
           variant="outline"
