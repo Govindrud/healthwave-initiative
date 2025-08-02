@@ -21,86 +21,69 @@ interface FormData {
 }
 
 interface ContactFormProps {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  formData: FormData;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  stressLevel: string;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({
-  isOpen,
-  onOpenChange,
-  formData,
-  onChange,
-  onSubmit,
-}) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ stressLevel }) => {
+  const getUrgencyMessage = (level: string) => {
+    switch (level) {
+      case 'Extreme':
+        return {
+          message: 'Based on your stress level, we recommend immediate professional support. Our team will prioritize your case.',
+          buttonText: 'Get Immediate Help',
+          bgColor: 'bg-red-50 border-red-200'
+        };
+      case 'High':
+        return {
+          message: 'Your stress levels indicate you would benefit from professional support soon. We\'re here to help.',
+          buttonText: 'Schedule Support',
+          bgColor: 'bg-orange-50 border-orange-200'
+        };
+      case 'Medium':
+        return {
+          message: 'Professional guidance can help you manage your stress more effectively.',
+          buttonText: 'Get Support',
+          bgColor: 'bg-yellow-50 border-yellow-200'
+        };
+      default:
+        return {
+          message: 'Proactive stress management can help prevent future issues.',
+          buttonText: 'Learn More',
+          bgColor: 'bg-green-50 border-green-200'
+        };
+    }
+  };
+
+  const urgencyInfo = getUrgencyMessage(stressLevel);
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <span className="hidden">Trigger</span>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white shadow-lg border border-gray-200">
-        <form onSubmit={onSubmit}>
-          <DialogHeader className="bg-background">
-            <DialogTitle>Request Professional Help</DialogTitle>
-            <DialogDescription>
-              Fill in your details and we'll reach out to you within 24 hours.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4 bg-white">
-            <div className="grid gap-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={onChange}
-                required
-                className="bg-white border-gray-300"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={onChange}
-                required
-                className="bg-white border-gray-300"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={onChange}
-                required
-                className="bg-white border-gray-300"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="concerns">Primary Concerns</Label>
-              <Input
-                id="concerns"
-                name="concerns"
-                value={formData.concerns}
-                onChange={onChange}
-                placeholder="Tell us briefly about your situation"
-                className="bg-white border-gray-300"
-              />
-            </div>
-          </div>
-          <DialogFooter className="bg-background">
-            <Button type="submit" variant="meant">Submit</Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <div className={`p-6 rounded-lg border ${urgencyInfo.bgColor} mt-6`}>
+      <h3 className="text-lg font-semibold mb-3">Next Steps for Your Stress Level: {stressLevel}</h3>
+      <p className="text-muted-foreground mb-4">{urgencyInfo.message}</p>
+      
+      <div className="flex flex-col sm:flex-row gap-3">
+        <Button 
+          variant="meant" 
+          className="flex-1"
+          onClick={() => window.location.href = '/contact'}
+        >
+          {urgencyInfo.buttonText}
+        </Button>
+        <Button 
+          variant="outline" 
+          className="flex-1"
+          onClick={() => window.location.href = '/crisis-helpline'}
+        >
+          Crisis Support
+        </Button>
+      </div>
+      
+      {stressLevel === 'Extreme' && (
+        <div className="mt-4 p-3 bg-red-100 border border-red-300 rounded-md">
+          <p className="text-sm text-red-800">
+            <strong>Emergency:</strong> If you're having thoughts of self-harm, please call emergency services (911) or contact the National Suicide Prevention Lifeline at 988.
+          </p>
+        </div>
+      )}
+    </div>
   );
 };

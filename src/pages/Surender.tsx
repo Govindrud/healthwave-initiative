@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import { StressLevelSelector } from '@/components/surender/StressLevelSelector';
+import { ContactForm } from '@/components/surender/ContactForm';
+import { HelpInfo } from '@/components/surender/HelpInfo';
 import customPlaceholder from '../assets/custom-placeholder.svg';
+import surenderMeditation from '../assets/surender-meditation.jpg';
+import stressRelief from '../assets/stress-relief.jpg';
 
 const Surender = () => {
+  const [selectedStressLevel, setSelectedStressLevel] = useState<string | null>(null);
+  
   useEffect(() => {
     document.title = "Surender | MeantToHelp";
   }, []);
@@ -22,8 +29,8 @@ const Surender = () => {
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div>
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                alt="Peaceful meditation scene" 
+                src={surenderMeditation}
+                alt="Peaceful meditation scene representing surrender and letting go" 
                 className="rounded-lg shadow-md w-full h-auto object-cover"
                 fallbackSrc={customPlaceholder}
               />
@@ -55,6 +62,28 @@ const Surender = () => {
                 <p>Discover how surrendering creates space for new perspectives, peace, and personal growth.</p>
               </div>
             </div>
+          </div>
+
+          {/* Stress Level Assessment Section */}
+          <div className="max-w-4xl mx-auto mt-16">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-semibold mb-4">How Stressed Are You Feeling?</h2>
+              <p className="text-muted-foreground">
+                Help us understand your current stress level so we can provide the most appropriate support and resources.
+              </p>
+            </div>
+            
+            <StressLevelSelector
+              selectedLevel={selectedStressLevel}
+              onSelectLevel={setSelectedStressLevel}
+            />
+            
+            {selectedStressLevel && (
+              <div className="mt-8">
+                <HelpInfo stressLevel={selectedStressLevel} />
+                <ContactForm stressLevel={selectedStressLevel} />
+              </div>
+            )}
           </div>
           
           <div className="max-w-4xl mx-auto mt-16">

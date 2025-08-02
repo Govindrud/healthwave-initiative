@@ -12,9 +12,9 @@ export interface StressLevel {
 export const stressLevels: StressLevel[] = [
   {
     level: "Low",
-    color: "bg-green-500",
+    color: "bg-emerald-500",
     description: "Manageable daily stress",
-    icon: <Thermometer className="h-10 w-10 text-green-500" />,
+    icon: <Thermometer className="h-10 w-10 text-emerald-500" />,
   },
   {
     level: "Medium",
@@ -47,8 +47,8 @@ export const StressLevelSelector: React.FC<StressLevelSelectorProps> = ({
 }) => {
   return (
     <div className="mb-16">
-      <div className="relative w-full h-8 bg-gradient-to-r from-green-500 via-yellow-500 via-orange-500 to-red-500 rounded-full mb-10 shadow-inner">
-        <div className="absolute top-0 w-full flex justify-between px-2 -mt-10 text-sm font-medium text-gray-800">
+      <div className="relative w-full h-8 bg-gradient-to-r from-emerald-500 via-yellow-500 via-orange-500 to-red-500 rounded-full mb-10 shadow-inner">
+        <div className="absolute top-0 w-full flex justify-between px-2 -mt-10 text-sm font-medium text-foreground">
           <span>Low</span>
           <span>Medium</span>
           <span>High</span>
@@ -58,14 +58,23 @@ export const StressLevelSelector: React.FC<StressLevelSelectorProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {stressLevels.map((stress) => {
-          const colorClass = stress.color.replace('bg-', '');
+          const isSelected = selectedLevel === stress.level;
+          let borderColor = "border-border";
+          if (isSelected) {
+            switch (stress.level) {
+              case 'Low': borderColor = "border-emerald-500"; break;
+              case 'Medium': borderColor = "border-yellow-500"; break;
+              case 'High': borderColor = "border-orange-500"; break;
+              case 'Extreme': borderColor = "border-red-500"; break;
+            }
+          }
           return (
             <div
               key={stress.level}
-              className={`p-6 rounded-lg border bg-white hover:shadow-lg cursor-pointer transition-all ${
-                selectedLevel === stress.level 
-                  ? `border-${colorClass} shadow-lg` 
-                  : "border-gray-200"
+              className={`p-6 rounded-lg border bg-card hover:shadow-lg cursor-pointer transition-all ${
+                isSelected 
+                  ? `${borderColor} shadow-lg` 
+                  : "border-border hover:border-muted-foreground"
               }`}
               onClick={() => onSelectLevel(stress.level)}
             >

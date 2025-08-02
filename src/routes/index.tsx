@@ -46,6 +46,9 @@ import AIPersonalAssistant from '@/pages/AIPersonalAssistant';
 import AIVoiceAgent from '@/pages/AIVoiceAgent';
 import AngerManagement from '@/pages/AngerManagement';
 import BookingConfirmation from '@/pages/BookingConfirmation';
+import Terms from '@/pages/Terms';
+import Privacy from '@/pages/Privacy';
+import Resources from '@/pages/Resources';
 
 const AppRoutes = () => {
   return (
@@ -70,6 +73,9 @@ const AppRoutes = () => {
       <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
       <Route path="/anger-management" element={<AngerManagement />} />
       <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/resources" element={<Resources />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

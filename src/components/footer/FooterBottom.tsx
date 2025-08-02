@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Brain, Shield, Award } from 'lucide-react';
 
 const FooterBottom = () => {
@@ -34,8 +35,8 @@ const FooterBottom = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-6 text-meant-300 text-sm">
           <p>&copy; {currentYear} MeantToHelp. All rights reserved.</p>
           <div className="flex space-x-4">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <a href="#" className="hover:text-white transition-colors">Accessibility</a>
           </div>
         </div>

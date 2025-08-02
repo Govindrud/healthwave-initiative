@@ -5,10 +5,47 @@ import { Brain, Heart, HelpingHand, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HelpInfoProps {
-  onOpenForm: () => void;
+  stressLevel: string;
 }
 
-export const HelpInfo: React.FC<HelpInfoProps> = ({ onOpenForm }) => {
+export const HelpInfo: React.FC<HelpInfoProps> = ({ stressLevel }) => {
+  
+  const getStressLevelInfo = (level: string) => {
+    switch (level) {
+      case 'Low':
+        return {
+          title: 'Managing Daily Stress',
+          description: 'You\'re experiencing normal daily stress. Here are some resources to help you maintain your well-being.',
+          urgency: 'low'
+        };
+      case 'Medium':
+        return {
+          title: 'Persistent Stress Support',
+          description: 'Your stress levels are concerning and may be affecting your daily life. Let\'s work together to find solutions.',
+          urgency: 'medium'
+        };
+      case 'High':
+        return {
+          title: 'Overwhelming Stress Relief',
+          description: 'You\'re dealing with high stress that\'s impacting your well-being. Immediate professional support is recommended.',
+          urgency: 'high'
+        };
+      case 'Extreme':
+        return {
+          title: 'Critical Stress Intervention',
+          description: 'Your stress levels require immediate professional attention. We\'re here to provide urgent support.',
+          urgency: 'critical'
+        };
+      default:
+        return {
+          title: 'Stress Assessment',
+          description: 'Please select your stress level for personalized support.',
+          urgency: 'unknown'
+        };
+    }
+  };
+
+  const stressInfo = getStressLevelInfo(stressLevel);
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -38,8 +75,14 @@ export const HelpInfo: React.FC<HelpInfoProps> = ({ onOpenForm }) => {
             className="text-2xl font-bold mb-6 text-meant-700"
             variants={item}
           >
-            How We Help You Surrender
+            {stressInfo.title}
           </motion.h2>
+          <motion.p 
+            className="text-muted-foreground mb-6"
+            variants={item}
+          >
+            {stressInfo.description}
+          </motion.p>
           <motion.ul className="space-y-5" variants={container}>
             <motion.li className="flex gap-3" variants={item}>
               <div className="h-12 w-12 rounded-full bg-meant-50 flex items-center justify-center flex-shrink-0">
@@ -91,9 +134,9 @@ export const HelpInfo: React.FC<HelpInfoProps> = ({ onOpenForm }) => {
               variant="meant" 
               size="lg" 
               className="w-full group transition-all"
-              onClick={onOpenForm}
+              onClick={() => window.location.href = '/contact'}
             >
-              <span>I'm Ready to Surrender</span>
+              <span>Get Professional Help</span>
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 width="20" 
