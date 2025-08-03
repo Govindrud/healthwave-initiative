@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Moon, Activity, Check, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import sleepWellnessRoom from '@/assets/sleep-wellness-room.jpg';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 const SleepBetterSection = () => {
   return (
@@ -17,13 +19,14 @@ const SleepBetterSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="p-4 bg-white rounded-xl shadow-lg">
-              <div className="relative overflow-hidden rounded-lg mb-4 bg-indigo-900">
-                <img 
-                  src="/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png" 
-                  alt="Peaceful night sky" 
-                  className="w-full h-auto opacity-50"
+              <div className="relative overflow-hidden rounded-lg mb-4">
+                <ImageWithFallback 
+                  src={sleepWellnessRoom}
+                  fallbackSrc="https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                  alt="Peaceful sleep environment with comfortable bedroom setup" 
+                  className="w-full h-auto"
                 />
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center p-6">
+                <div className="absolute inset-0 bg-indigo-900/70 flex flex-col justify-center items-center text-white text-center p-6">
                   <Moon size={48} className="mb-4 text-indigo-200" />
                   <h3 className="text-2xl font-bold mb-2">Sleep Better</h3>
                   <p className="text-indigo-200">Track and improve your sleep quality</p>

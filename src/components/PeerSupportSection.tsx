@@ -3,6 +3,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, MessageCircle, Heart, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import peerSupportGroup from '@/assets/peer-support-group.jpg';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 const PeerSupportSection = () => {
   return (
@@ -82,18 +84,25 @@ const PeerSupportSection = () => {
             className="order-1 lg:order-2"
           >
             <div className="relative rounded-xl overflow-hidden shadow-xl">
-              <img 
-                src="/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png" 
-                alt="Peer support session" 
+              <ImageWithFallback 
+                src={peerSupportGroup}
+                fallbackSrc="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                alt="Diverse group of people in a supportive therapy session showing connection and empathy" 
                 className="w-full h-auto"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
                 <div className="absolute bottom-6 left-6 right-6 text-white">
                   <div className="flex items-center mb-2">
                     <div className="flex -space-x-2">
-                      <img className="h-8 w-8 rounded-full border-2 border-white" src="/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png" alt="User" />
-                      <img className="h-8 w-8 rounded-full border-2 border-white" src="/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png" alt="User" />
-                      <img className="h-8 w-8 rounded-full border-2 border-white" src="/lovable-uploads/b97cd24e-d99c-413c-84ad-e51e71795119.png" alt="User" />
+                      <div className="h-8 w-8 rounded-full border-2 border-white bg-purple-500 flex items-center justify-center">
+                        <Users size={16} className="text-white" />
+                      </div>
+                      <div className="h-8 w-8 rounded-full border-2 border-white bg-blue-500 flex items-center justify-center">
+                        <Heart size={16} className="text-white" />
+                      </div>
+                      <div className="h-8 w-8 rounded-full border-2 border-white bg-green-500 flex items-center justify-center">
+                        <MessageCircle size={16} className="text-white" />
+                      </div>
                     </div>
                     <span className="ml-4 text-sm opacity-90">42 people joined this week</span>
                   </div>

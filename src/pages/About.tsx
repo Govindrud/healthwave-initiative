@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import MainLayout from '@/components/layouts/MainLayout';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import { motion } from 'framer-motion';
+import mentalHealthTeam from '@/assets/mental-health-team.jpg';
 
 const About: React.FC = () => {
   useEffect(() => {
@@ -38,9 +39,9 @@ const About: React.FC = () => {
             >
               <div className="relative h-80 md:h-96 mb-8 rounded-xl overflow-hidden">
                 <ImageWithFallback
-                  src="/images/about-team.jpg"
+                  src={mentalHealthTeam}
                   fallbackSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                  alt="Our team of mental health professionals"
+                  alt="Our professional mental health team in a modern, welcoming environment"
                   className="w-full h-full object-cover"
                 />
               </div>

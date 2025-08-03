@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Check, Star, MapPin, Users, Award, Shield } from 'lucide-react';
+import psychcarelogo from '@/assets/partner-psychcare-logo.jpg';
+import mindfullogo from '@/assets/partner-mindful-logo.jpg';
+import serenitylogo from '@/assets/partner-serenity-logo.jpg';
 
 interface PartnerLogo {
   id: string;
@@ -22,7 +25,7 @@ const partnerLogos: PartnerLogo[] = [
   { 
     id: 'partner1', 
     name: 'PsychCare Institute', 
-    logo: '/lovable-uploads/574d7e65-696e-471c-849d-e785d5f54a9d.png',
+    logo: psychcarelogo,
     verified: true,
     rating: 4.9,
     specialization: 'Trauma & PTSD Therapy',
@@ -33,7 +36,7 @@ const partnerLogos: PartnerLogo[] = [
   { 
     id: 'partner2', 
     name: 'Mindful Wellness Center', 
-    logo: '/lovable-uploads/574d7e65-696e-471c-849d-e785d5f54a9d.png',
+    logo: mindfullogo,
     verified: true,
     rating: 4.8,
     specialization: 'Anxiety & Depression',
@@ -44,7 +47,7 @@ const partnerLogos: PartnerLogo[] = [
   { 
     id: 'partner3', 
     name: 'Serenity Counseling Group', 
-    logo: '/lovable-uploads/574d7e65-696e-471c-849d-e785d5f54a9d.png',
+    logo: serenitylogo,
     verified: true,
     rating: 4.7,
     specialization: 'Family & Couples Therapy',
@@ -55,7 +58,7 @@ const partnerLogos: PartnerLogo[] = [
   { 
     id: 'partner4', 
     name: 'Breakthrough Recovery', 
-    logo: '/lovable-uploads/574d7e65-696e-471c-849d-e785d5f54a9d.png',
+    logo: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
     verified: true,
     rating: 4.8,
     specialization: 'Addiction & Recovery',
@@ -66,7 +69,7 @@ const partnerLogos: PartnerLogo[] = [
   { 
     id: 'partner5', 
     name: 'Corporate Wellness Solutions', 
-    logo: '/lovable-uploads/574d7e65-696e-471c-849d-e785d5f54a9d.png',
+    logo: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
     verified: true,
     rating: 4.6,
     specialization: 'Employee Mental Health',
