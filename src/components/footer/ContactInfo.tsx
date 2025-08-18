@@ -13,8 +13,10 @@ const ContactInfo = () => {
             <span className="text-sm">📍</span>
           </div>
           <div>
-            <p className="text-sm font-medium">123 Mental Health Street</p>
-            <p className="text-meant-300 text-sm">Wellness City, WC 10001</p>
+            <p className="text-sm font-medium">MeantToHelp Wellness Center</p>
+            <p className="text-meant-300 text-sm">42B, Electronics City Phase 1</p>
+            <p className="text-meant-300 text-sm">Bangalore, Karnataka 560100</p>
+            <p className="text-meant-300 text-sm">India</p>
           </div>
         </div>
         <div className="flex items-center space-x-3">
@@ -22,8 +24,9 @@ const ContactInfo = () => {
             <span className="text-sm">📞</span>
           </div>
           <div>
-            <p className="text-sm font-medium">+1 (800) 123-4567</p>
+            <p className="text-sm font-medium">+91-80-2852-0000</p>
             <p className="text-meant-300 text-sm">24/7 Crisis Support</p>
+            <p className="text-meant-300 text-sm">WhatsApp: +91-9876543210</p>
           </div>
         </div>
         <div className="flex items-center space-x-3">
