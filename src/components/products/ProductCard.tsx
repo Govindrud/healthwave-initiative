@@ -42,6 +42,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
       localStorage.setItem('cart', JSON.stringify(cart));
       setIsInCart(true);
       toast.success(`${product.name} added to cart`);
+      // Dispatch custom event for cart badge update
+      window.dispatchEvent(new Event('cartUpdated'));
     } else {
       toast.info(`${product.name} is already in cart`);
     }

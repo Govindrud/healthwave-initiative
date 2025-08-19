@@ -92,7 +92,7 @@ const AppRoutes = () => {
       
       {/* Protected routes - require authentication */}
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-      <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+      <Route path="/cart" element={<Cart />} />
       <Route path="/my-bookings" element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/activities" element={<ProtectedRoute><Activities /></ProtectedRoute>} />

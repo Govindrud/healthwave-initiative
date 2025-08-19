@@ -21,6 +21,7 @@ import {
 } from "@/config/navigation";
 import ThemeToggle from "../ThemeToggle";
 import RegionSelector from "@/components/region/RegionSelector";
+import CartBadge from "@/components/cart/CartBadge";
 
 interface DesktopNavProps {
   location: Location;
@@ -108,12 +109,7 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         <RegionSelector />
         <ThemeToggle />
 
-        <Link to="/cart" className="relative">
-          <ShoppingBag className="h-5 w-5 text-gray-600" />
-          <span className="absolute -top-1 -right-1 bg-meant-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-            2
-          </span>
-        </Link>
+        <CartBadge />
 
         {isAuthenticated ? (
           <Link to="/profile">
