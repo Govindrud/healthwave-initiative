@@ -11,6 +11,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { toast } from "sonner";
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import customPlaceholder from '../../assets/custom-placeholder.svg';
+import { useCart } from "@/hooks/useCart";
 
 interface ProductCardProps {
   product: Product;
@@ -19,31 +20,28 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
-  const [isInCart, setIsInCart] = React.useState(false);
   const [isInWishlist, setIsInWishlist] = React.useState(false);
   
   const { formatPrice } = useRegion();
   const { t } = useTranslation();
+  const { cartItems, addToCart } = useCart();
+
+  const isInCart = cartItems.some(item => item.product_id === product.id);
 
   React.useEffect(() => {
-    // Check if product is in cart
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setIsInCart(cart.some((item: any) => item.id === product.id));
-    
-    // Check if product is in wishlist
+    // Check if product is in wishlist (still using localStorage for wishlist)
     const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
     setIsInWishlist(wishlist.some((item: any) => item.id === product.id));
   }, [product.id]);
 
   const handleAddToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     if (!isInCart) {
-      cart.push({ ...product, quantity: 1 });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      setIsInCart(true);
-      toast.success(`${product.name} added to cart`);
-      // Dispatch custom event for cart badge update
-      window.dispatchEvent(new Event('cartUpdated'));
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.discountPrice || product.price,
+        image: product.image,
+      });
     } else {
       toast.info(`${product.name} is already in cart`);
     }

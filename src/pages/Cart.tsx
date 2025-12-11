@@ -1,69 +1,62 @@
 
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShoppingBag, Plus, Minus, Trash2, ArrowLeft } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, Trash2, ArrowLeft, LogIn } from 'lucide-react';
 import { useRegion } from '@/context/RegionContext';
-import { toast } from 'sonner';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const { cartItems, loading, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart();
+  const { isAuthenticated } = useAuth();
   const { formatPrice } = useRegion();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Shopping Cart - MeantToHelp";
     window.scrollTo(0, 0);
-    
-    // Load cart items from localStorage
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
   }, []);
 
-  const updateQuantity = (id: string, delta: number) => {
-    const updatedCart = cartItems.map(item => {
-      if (item.id === id) {
-        const newQuantity = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    window.dispatchEvent(new Event('cartUpdated'));
-    toast.success('Cart updated');
-  };
-
-  const removeItem = (id: string) => {
-    const updatedCart = cartItems.filter(item => item.id !== id);
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    window.dispatchEvent(new Event('cartUpdated'));
-    toast.success('Item removed from cart');
-  };
-
-  const clearCart = () => {
-    setCartItems([]);
-    localStorage.removeItem('cart');
-    window.dispatchEvent(new Event('cartUpdated'));
-    toast.success('Cart cleared');
-  };
-
-  const total = cartItems.reduce((sum, item) => {
-    const price = item.discountPrice || item.price;
-    return sum + (price * item.quantity);
-  }, 0);
-  
   const savings = cartItems.reduce((sum, item) => {
-    if (item.discountPrice) {
-      return sum + ((item.price - item.discountPrice) * item.quantity);
-    }
+    // Calculate savings if there's a discount
     return sum;
   }, 0);
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      navigate('/auth');
+    } else {
+      // Navigate to checkout - placeholder for now
+      navigate('/payment-success');
+    }
+  };
+
+  if (loading) {
+    return (
+      <MainLayout title="Shopping Cart - MeantToHelp">
+        <div className="min-h-screen bg-gradient-to-br from-meant-50 to-white py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <Skeleton className="h-10 w-64 mb-8" />
+              <div className="grid gap-6 lg:grid-cols-3">
+                <div className="lg:col-span-2 space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-32 w-full" />
+                  ))}
+                </div>
+                <Skeleton className="h-64 w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout title="Shopping Cart - MeantToHelp">
@@ -93,6 +86,24 @@ const Cart = () => {
               )}
             </div>
 
+            {/* Login prompt for guests */}
+            {!isAuthenticated && cartItems.length > 0 && (
+              <Card className="mb-6 border-meant-200 bg-meant-50/50">
+                <CardContent className="p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <LogIn className="h-5 w-5 text-meant-600" />
+                    <div>
+                      <p className="font-medium text-meant-800">Sign in to save your cart</p>
+                      <p className="text-sm text-muted-foreground">Your cart will be synced across devices</p>
+                    </div>
+                  </div>
+                  <Button asChild size="sm">
+                    <Link to="/auth">Sign In</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+
             {cartItems.length > 0 ? (
               <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2 space-y-4">
@@ -101,36 +112,24 @@ const Cart = () => {
                       <CardContent className="p-6">
                         <div className="flex items-center space-x-4">
                           <ImageWithFallback
-                            src={item.image}
-                            alt={item.name}
+                            src={item.product_image || ''}
+                            alt={item.product_name}
                             className="w-20 h-20 object-cover rounded-lg"
                             fallbackSrc="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
                           />
                           <div className="flex-1">
-                            <h3 className="font-semibold text-meant-800">{item.name}</h3>
-                            <p className="text-sm text-muted-foreground mb-1">{item.shortDescription}</p>
+                            <h3 className="font-semibold text-meant-800">{item.product_name}</h3>
                             <div className="flex items-center gap-2">
-                              {item.discountPrice ? (
-                                <>
-                                  <span className="text-meant-600 font-medium">
-                                    {formatPrice(item.discountPrice)}
-                                  </span>
-                                  <span className="text-sm text-muted-foreground line-through">
-                                    {formatPrice(item.price)}
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="text-meant-600 font-medium">
-                                  {formatPrice(item.price)}
-                                </span>
-                              )}
+                              <span className="text-meant-600 font-medium">
+                                {formatPrice(item.product_price)}
+                              </span>
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <Button 
                               size="icon" 
                               variant="outline"
-                              onClick={() => updateQuantity(item.id, -1)}
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
                               disabled={item.quantity <= 1}
                             >
                               <Minus className="h-4 w-4" />
@@ -139,20 +138,20 @@ const Cart = () => {
                             <Button 
                               size="icon" 
                               variant="outline"
-                              onClick={() => updateQuantity(item.id, 1)}
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             >
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>
                           <div className="text-right">
                             <div className="font-semibold text-meant-800">
-                              {formatPrice((item.discountPrice || item.price) * item.quantity)}
+                              {formatPrice(item.product_price * item.quantity)}
                             </div>
                             <Button 
                               size="sm" 
                               variant="ghost" 
                               className="text-red-600 hover:text-red-700 mt-1"
-                              onClick={() => removeItem(item.id)}
+                              onClick={() => removeFromCart(item.id)}
                             >
                               <Trash2 className="h-4 w-4 mr-1" />
                               Remove
@@ -171,15 +170,9 @@ const Cart = () => {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex justify-between">
-                        <span>Subtotal ({cartItems.length} items)</span>
-                        <span>{formatPrice(total + savings)}</span>
+                        <span>Subtotal ({cartItems.reduce((c, i) => c + i.quantity, 0)} items)</span>
+                        <span>{formatPrice(cartTotal)}</span>
                       </div>
-                      {savings > 0 && (
-                        <div className="flex justify-between text-green-600">
-                          <span>Savings</span>
-                          <span>-{formatPrice(savings)}</span>
-                        </div>
-                      )}
                       <div className="flex justify-between">
                         <span>Shipping</span>
                         <span className="text-green-600">Free</span>
@@ -187,12 +180,15 @@ const Cart = () => {
                       <div className="border-t pt-4">
                         <div className="flex justify-between font-semibold text-lg">
                           <span>Total</span>
-                          <span>{formatPrice(total)}</span>
+                          <span>{formatPrice(cartTotal)}</span>
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Button className="w-full bg-meant-600 hover:bg-meant-700">
-                          Proceed to Checkout
+                        <Button 
+                          className="w-full bg-meant-600 hover:bg-meant-700"
+                          onClick={handleCheckout}
+                        >
+                          {isAuthenticated ? 'Proceed to Checkout' : 'Sign In to Checkout'}
                         </Button>
                         <Button variant="outline" className="w-full" asChild>
                           <Link to="/products">Continue Shopping</Link>

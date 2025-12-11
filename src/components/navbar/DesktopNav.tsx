@@ -121,10 +121,10 @@ export const DesktopNav: React.FC<DesktopNavProps> = ({ location }) => {
         ) : (
           <div className="flex items-center space-x-2">
             <Button asChild variant="outline" size="sm">
-              <Link to="/register">Sign Up</Link>
+              <Link to="/auth">Sign Up</Link>
             </Button>
             <Button asChild size="sm">
-              <Link to="/login">Log In</Link>
+              <Link to="/auth">Log In</Link>
             </Button>
           </div>
         )}

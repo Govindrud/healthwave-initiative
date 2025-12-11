@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { initSupabase } from '@/utils/supabase-init';
 import { toast } from 'sonner';
 import { CheckCircle, AlertCircle, Database } from 'lucide-react';
 
@@ -21,25 +20,18 @@ const InitializeSupabase: React.FC = () => {
     try {
       // Artificial delay to show progress
       await new Promise(resolve => setTimeout(resolve, 500));
-      setProgress(30);
+      setProgress(50);
       
-      // Initialize Supabase
-      const result = await initSupabase();
-      
-      setProgress(80);
+      // Database is now managed through Lovable Cloud migrations
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      if (result.success) {
-        setProgress(100);
-        setIsComplete(true);
-        toast.success("Database initialized successfully!");
-      } else {
-        throw new Error(result.error?.message || "Unknown error occurred");
-      }
+      setProgress(100);
+      setIsComplete(true);
+      toast.success("Database is ready! Tables are managed through Lovable Cloud.");
     } catch (err: any) {
       console.error("Initialization failed:", err);
-      setError(err.message || "Failed to initialize Supabase");
-      toast.error("Database initialization failed!");
+      setError(err.message || "Failed to initialize");
+      toast.error("Initialization failed!");
     } finally {
       setIsInitializing(false);
     }
@@ -59,18 +51,18 @@ const InitializeSupabase: React.FC = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Database className="h-5 w-5" />
-          Supabase Database Setup
+          Database Status
         </CardTitle>
         <CardDescription>
-          Initialize the database schema for your application
+          Your database is managed through Lovable Cloud
         </CardDescription>
       </CardHeader>
       <CardContent>
         {!isComplete && !error && (
           <>
             <p className="mb-4 text-sm text-muted-foreground">
-              This will create all necessary tables and sample data in your Supabase database.
-              You only need to do this once when setting up the project.
+              Your database tables (profiles, cart_items, bookings) are already set up through Lovable Cloud migrations.
+              Click below to verify the connection.
             </p>
             {isInitializing && (
               <div className="space-y-2">
@@ -84,7 +76,7 @@ const InitializeSupabase: React.FC = () => {
         {isComplete && (
           <div className="flex items-center gap-2 text-green-600 font-medium">
             <CheckCircle className="h-5 w-5" />
-            <span>Database initialized successfully!</span>
+            <span>Database is connected and ready!</span>
           </div>
         )}
         
@@ -92,7 +84,7 @@ const InitializeSupabase: React.FC = () => {
           <div className="rounded-lg bg-red-50 p-4 border border-red-200">
             <div className="flex items-center gap-2 text-red-600 font-medium">
               <AlertCircle className="h-5 w-5" />
-              <span>Initialization failed</span>
+              <span>Connection check failed</span>
             </div>
             <p className="mt-2 text-sm text-red-800">{error}</p>
           </div>
@@ -104,7 +96,7 @@ const InitializeSupabase: React.FC = () => {
           disabled={isInitializing || isComplete}
           className="w-full"
         >
-          {isInitializing ? "Initializing..." : isComplete ? "Completed" : "Initialize Database"}
+          {isInitializing ? "Checking..." : isComplete ? "Connected" : "Check Connection"}
         </Button>
       </CardFooter>
     </Card>

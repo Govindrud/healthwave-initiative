@@ -4,7 +4,7 @@ import { AuthContextType } from "@/types/auth";
 import { useUser } from "./useUser";
 import { useAuthentication } from "./useAuthentication";
 import { usePasswordReset } from "./usePasswordReset";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

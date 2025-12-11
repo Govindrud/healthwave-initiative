@@ -8,6 +8,7 @@ import Products from '@/pages/Products';
 import Services from '@/pages/Services';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import Auth from '@/pages/Auth';
 import Doctors from '@/pages/Doctors';
 import Spirituality from '@/pages/Spirituality';
 import EaseOfLiving from '@/pages/EaseOfLiving';
@@ -76,6 +77,7 @@ const AppRoutes = () => {
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/resources" element={<Resources />} />
+      <Route path="/auth" element={<Auth />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
