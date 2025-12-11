@@ -1,39 +1,94 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShoppingBag, Plus, Minus, Trash2, ArrowLeft, LogIn } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, Trash2, ArrowLeft, LogIn, CreditCard } from 'lucide-react';
 import { useRegion } from '@/context/RegionContext';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
+import { useRazorpay } from '@/hooks/useRazorpay';
 import { Skeleton } from '@/components/ui/skeleton';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const Cart = () => {
   const { cartItems, loading, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { formatPrice } = useRegion();
   const navigate = useNavigate();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const { initiatePayment, loading: paymentLoading } = useRazorpay({
+    onSuccess: async (result) => {
+      if (result.payment_id && result.order_id) {
+        // Create order in database
+        try {
+          const orderData = {
+            user_id: user?.uid || null,
+            razorpay_order_id: result.order_id,
+            razorpay_payment_id: result.payment_id,
+            amount: cartTotal,
+            currency: 'INR',
+            status: 'paid',
+            items: cartItems.map(item => ({
+              product_id: item.product_id,
+              product_name: item.product_name,
+              price: item.product_price,
+              quantity: item.quantity,
+            })),
+            customer_name: user?.displayName || '',
+            customer_email: user?.email || '',
+          };
+
+          const { error } = await supabase.from('orders').insert(orderData);
+          
+          if (error) {
+            console.error('Error saving order:', error);
+          }
+
+          // Clear cart and redirect
+          await clearCart();
+          navigate('/payment-success?order_id=' + result.order_id);
+        } catch (err) {
+          console.error('Error processing order:', err);
+          toast.error('Order saved but there was an issue. Please contact support.');
+        }
+      }
+      setIsProcessing(false);
+    },
+    onError: (error) => {
+      setIsProcessing(false);
+      toast.error(error);
+    },
+  });
 
   useEffect(() => {
     document.title = "Shopping Cart - MeantToHelp";
     window.scrollTo(0, 0);
   }, []);
 
-  const savings = cartItems.reduce((sum, item) => {
-    // Calculate savings if there's a discount
-    return sum;
-  }, 0);
-
-  const handleCheckout = () => {
-    if (!isAuthenticated) {
-      navigate('/auth');
-    } else {
-      // Navigate to checkout - placeholder for now
-      navigate('/payment-success');
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) {
+      toast.error('Your cart is empty');
+      return;
     }
+
+    setIsProcessing(true);
+    
+    await initiatePayment({
+      amount: cartTotal,
+      productName: `MeantToHelp Order (${cartItems.length} items)`,
+      productDescription: cartItems.map(i => i.product_name).join(', '),
+      customerName: user?.displayName || '',
+      customerEmail: user?.email || '',
+      notes: {
+        user_id: user?.uid || 'guest',
+        item_count: String(cartItems.length),
+      },
+    });
   };
 
   if (loading) {
@@ -187,9 +242,20 @@ const Cart = () => {
                         <Button 
                           className="w-full bg-meant-600 hover:bg-meant-700"
                           onClick={handleCheckout}
+                          disabled={isProcessing || paymentLoading}
                         >
-                          {isAuthenticated ? 'Proceed to Checkout' : 'Sign In to Checkout'}
+                          {isProcessing || paymentLoading ? (
+                            <>Processing...</>
+                          ) : (
+                            <>
+                              <CreditCard className="mr-2 h-4 w-4" />
+                              Pay ₹{cartTotal.toLocaleString('en-IN')}
+                            </>
+                          )}
                         </Button>
+                        <p className="text-xs text-center text-muted-foreground">
+                          Secure payment via Razorpay
+                        </p>
                         <Button variant="outline" className="w-full" asChild>
                           <Link to="/products">Continue Shopping</Link>
                         </Button>
