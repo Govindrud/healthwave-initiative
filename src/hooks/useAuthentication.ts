@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { User } from "@/types/auth";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 export const useAuthentication = (updateUser: (user: User | null) => void) => {
   const [loading, setLoading] = useState(false);

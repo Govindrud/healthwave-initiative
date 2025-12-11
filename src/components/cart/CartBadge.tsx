@@ -1,39 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useCart } from '@/hooks/useCart';
 
 const CartBadge: React.FC = () => {
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const totalItems = cart.reduce((sum: number, item: any) => sum + item.quantity, 0);
-      setCartCount(totalItems);
-    };
-
-    // Initial load
-    updateCartCount();
-
-    // Listen for cart updates
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'cart') {
-        updateCartCount();
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Custom event for same-page cart updates
-    const handleCartUpdate = () => updateCartCount();
-    window.addEventListener('cartUpdated', handleCartUpdate);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('cartUpdated', handleCartUpdate);
-    };
-  }, []);
+  const { cartCount } = useCart();
 
   return (
     <Link to="/cart" className="relative">

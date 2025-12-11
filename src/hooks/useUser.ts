@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { User } from "@/types/auth";
 import { getStoredUser, setStoredUser } from "@/utils/auth-storage";
 import { toast } from "sonner";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 export const useUser = () => {
   const [user, setUser] = useState<User | null>(() => getStoredUser());
