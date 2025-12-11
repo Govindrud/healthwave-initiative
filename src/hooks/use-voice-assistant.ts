@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { useElevenLabsVoice } from './use-eleven-labs-voice';
+import { browserAIService } from '@/services/browser-ai-service';
 
 export type VoiceMessageType = {
   role: "user" | "assistant";
@@ -14,6 +15,7 @@ export type VoiceAssistantOptions = {
   initialVolume?: number;
   elevenLabsApiKey?: string;
   agentId?: string;
+  useBrowserVoice?: boolean;
 };
 
 export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
@@ -29,8 +31,9 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
   );
   const [volume, setVolume] = useState(options?.initialVolume || 0.8);
   const [agentMode, setAgentMode] = useState(!!options?.agentId);
+  const [useBrowserVoice, setUseBrowserVoice] = useState(options?.useBrowserVoice ?? !options?.elevenLabsApiKey);
   
-  // ElevenLabs Voice Synthesis
+  // ElevenLabs Voice Synthesis (optional)
   const { synthesizeSpeech, getSignedAgentUrl, isLoading: isSynthesizing } = useElevenLabsVoice(
     options?.elevenLabsApiKey || '', 
     { 
@@ -274,17 +277,53 @@ export const useVoiceAssistant = (options?: VoiceAssistantOptions) => {
     if (isSynthesizing) return;
 
     setIsSpeaking(true);
+    
+    // Use browser speech synthesis if no API key or explicitly enabled
+    if (useBrowserVoice || !options?.elevenLabsApiKey) {
+      try {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.volume = volume;
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        
+        // Try to find a natural voice
+        const voices = speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => 
+          v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha')
+        ) || voices.find(v => v.lang.startsWith('en'));
+        
+        if (preferredVoice) {
+          utterance.voice = preferredVoice;
+        }
+        
+        utterance.onend = () => setIsSpeaking(false);
+        utterance.onerror = () => setIsSpeaking(false);
+        
+        speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error('Browser speech synthesis error:', error);
+        setIsSpeaking(false);
+      }
+      return;
+    }
+    
+    // Use ElevenLabs if API key is provided
     try {
       const audioUrl = await synthesizeSpeech(text);
       if (audioUrl) {
         const audio = new Audio(audioUrl);
         audioRef.current = audio;
+        audio.volume = volume;
         audio.onended = () => setIsSpeaking(false);
         audio.play();
       }
     } catch (error) {
-      toast.error('Failed to speak text');
-      setIsSpeaking(false);
+      // Fallback to browser voice
+      console.warn('ElevenLabs failed, using browser voice');
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.volume = volume;
+      utterance.onend = () => setIsSpeaking(false);
+      speechSynthesis.speak(utterance);
     }
   };
 

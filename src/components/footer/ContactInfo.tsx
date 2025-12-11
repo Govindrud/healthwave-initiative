@@ -13,9 +13,10 @@ const ContactInfo = () => {
             <span className="text-sm">📍</span>
           </div>
           <div>
-            <p className="text-sm font-medium">MeantToHelp Wellness Center</p>
-            <p className="text-meant-300 text-sm">42B, Electronics City Phase 1</p>
-            <p className="text-meant-300 text-sm">Bangalore, Karnataka 560100</p>
+            <p className="text-sm font-medium">TechD Wellness Center</p>
+            <p className="text-meant-300 text-sm">TechD, Bhugaon</p>
+            <p className="text-meant-300 text-sm">Near Chandni Chowk</p>
+            <p className="text-meant-300 text-sm">Pune, Maharashtra 411042</p>
             <p className="text-meant-300 text-sm">India</p>
           </div>
         </div>
@@ -24,9 +25,9 @@ const ContactInfo = () => {
             <span className="text-sm">📞</span>
           </div>
           <div>
-            <p className="text-sm font-medium">+91-80-2852-0000</p>
-            <p className="text-meant-300 text-sm">24/7 Crisis Support</p>
-            <p className="text-meant-300 text-sm">WhatsApp: +91-9876543210</p>
+            <p className="text-sm font-medium">+91-8329116329</p>
+            <p className="text-meant-300 text-sm">24/7 Support Line</p>
+            <p className="text-meant-300 text-sm">WhatsApp: +91-8329116329</p>
           </div>
         </div>
         <div className="flex items-center space-x-3">
@@ -47,7 +48,7 @@ const ContactInfo = () => {
             <Activity className="h-6 w-6 animate-pulse mr-2" />
             <h3 className="text-lg font-bold">Crisis Emergency</h3>
           </div>
-          <p className="text-sm mb-4">If you're in immediate danger, call 911</p>
+          <p className="text-sm mb-4">If you're in immediate danger, call emergency services</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button 
               asChild
@@ -59,7 +60,7 @@ const ContactInfo = () => {
               asChild
               className="bg-white/20 hover:bg-white/30 text-white border border-white/30"
             >
-              <a href="tel:988">Call 988</a>
+              <a href="tel:+918329116329">Call Support</a>
             </Button>
           </div>
         </div>

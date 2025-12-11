@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Sparkles, Heart, Images } from "lucide-react";
+import meditationImg from "@/assets/meditation-session.jpg";
+import spiritualCounselingImg from "@/assets/therapy-session.jpg";
+import wellnessImg from "@/assets/wellness-center-hero.jpg";
 
 // Custom Meditation icon since it's not available in Lucide
 const MeditationIcon = () => (
@@ -64,19 +67,19 @@ const Spirituality: React.FC = () => {
       title: "Meditation Sessions",
       description: "Guided meditation sessions to help you find inner peace and mindfulness in your daily life.",
       icon: <MeditationIcon />,
-      imageSrc: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e"
+      imageSrc: meditationImg
     },
     {
       title: "Spiritual Counseling",
       description: "One-on-one sessions with spiritual guides to help you navigate life's challenges with wisdom.",
       icon: <Heart />,
-      imageSrc: "https://images.unsplash.com/photo-1466442929976-97f336a657be"
+      imageSrc: spiritualCounselingImg
     },
     {
       title: "Mindfulness Workshops",
       description: "Group workshops focused on developing mindfulness techniques for mental health improvement.",
       icon: <Sparkles />,
-      imageSrc: "https://images.unsplash.com/photo-1473177104440-ffee2f376098"
+      imageSrc: wellnessImg
     }
   ];
 
