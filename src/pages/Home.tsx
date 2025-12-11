@@ -33,38 +33,19 @@ const AIPersonalAssistant = React.lazy(() => import('@/components/ai/AIPersonalA
 const LoadingFallback = () => <Skeleton className="w-full h-40" />;
 
 const Home: React.FC = () => {
-  // Safe scrolling handler that doesn't directly use useLocation
+  // Fix: Always scroll to top on mount, ignore hash fragments
   useEffect(() => {
-    // Set page title
     document.title = "MeantToHelp - Mental Health Support";
     
-    // Handle initial hash fragment for direct navigation
-    const handleInitialScroll = () => {
-      // Always scroll to top first
-      window.scrollTo(0, 0);
-      
-      const hash = window.location.hash;
-      if (hash) {
-        // Remove the # character
-        const targetId = hash.substring(1);
-        setTimeout(() => {
-          const element = document.getElementById(targetId);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 500); // Increased delay to ensure page is fully loaded
-      }
-    };
-
-    // Force scroll to top immediately
+    // Immediately scroll to top on mount - ignore any hash
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     
-    // Run initial scroll handler after a small delay
-    const timeoutId = setTimeout(handleInitialScroll, 100);
-
-    console.log("Home component rendered");
+    // Clear any hash from URL without triggering navigation
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
     
-    return () => clearTimeout(timeoutId);
+    console.log("Home component rendered");
   }, []);
 
   return (
