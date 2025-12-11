@@ -3,9 +3,11 @@
  * AI Integration Utilities
  * 
  * This file contains utilities for integrating AI capabilities into the application.
+ * Uses browser-based Hugging Face Transformers.js for open-source AI
  */
 
 import MCPComplianceConfig, { logComplianceEvent } from "@/config/mcp-compliance";
+import { browserAIService } from "@/services/browser-ai-service";
 
 // Define types for AI features
 export type AITextAnalysisResult = {
@@ -34,6 +36,7 @@ export type AIRecommendationResult = {
 
 /**
  * Analyzes text to extract sentiment, topics, and key phrases
+ * Uses browser-based Hugging Face model
  */
 export async function analyzeText(text: string): Promise<AITextAnalysisResult> {
   try {
@@ -43,40 +46,16 @@ export async function analyzeText(text: string): Promise<AITextAnalysisResult> {
       throw new Error('Text is empty');
     }
     
-    // In a real implementation, this would make an API call to an AI service
-    // For now, we'll simulate a response
+    // Use browser-based AI service for sentiment analysis
+    const sentimentResult = await browserAIService.analyzeSentiment(text);
+    const keyPhrases = browserAIService.extractKeyPhrases(text);
     
-    // Simple sentiment analysis simulation
-    const lowerText = text.toLowerCase();
-    const positiveWords = ['good', 'great', 'excellent', 'happy', 'positive', 'wonderful', 'amazing'];
-    const negativeWords = ['bad', 'terrible', 'sad', 'negative', 'awful', 'horrible', 'poor'];
-    
-    let positiveScore = 0;
-    let negativeScore = 0;
-    
-    positiveWords.forEach(word => {
-      if (lowerText.includes(word)) positiveScore++;
-    });
-    
-    negativeWords.forEach(word => {
-      if (lowerText.includes(word)) negativeScore++;
-    });
-    
-    let sentiment: 'positive' | 'negative' | 'neutral' = 'neutral';
-    
-    if (positiveScore > negativeScore) {
-      sentiment = 'positive';
-    } else if (negativeScore > positiveScore) {
-      sentiment = 'negative';
-    }
-    
-    // Mock response
     const result: AITextAnalysisResult = {
-      sentiment,
+      sentiment: sentimentResult.sentiment,
       topics: ['mental health', 'wellness'],
-      keyPhrases: text.split('.').map(s => s.trim()).filter(s => s.length > 0),
+      keyPhrases,
       language: 'en',
-      confidenceScore: 0.85
+      confidenceScore: sentimentResult.confidence
     };
     
     logComplianceEvent('text_analysis_completed', { 
@@ -87,8 +66,47 @@ export async function analyzeText(text: string): Promise<AITextAnalysisResult> {
     return result;
   } catch (error) {
     logComplianceEvent('text_analysis_failed', { error: (error as Error).message });
-    throw error;
+    
+    // Fallback to simple analysis if browser AI fails
+    console.warn('Browser AI failed, using fallback analysis');
+    return fallbackTextAnalysis(text);
   }
+}
+
+/**
+ * Fallback text analysis when browser AI is unavailable
+ */
+function fallbackTextAnalysis(text: string): AITextAnalysisResult {
+  const lowerText = text.toLowerCase();
+  const positiveWords = ['good', 'great', 'excellent', 'happy', 'positive', 'wonderful', 'amazing'];
+  const negativeWords = ['bad', 'terrible', 'sad', 'negative', 'awful', 'horrible', 'poor'];
+  
+  let positiveScore = 0;
+  let negativeScore = 0;
+  
+  positiveWords.forEach(word => {
+    if (lowerText.includes(word)) positiveScore++;
+  });
+  
+  negativeWords.forEach(word => {
+    if (lowerText.includes(word)) negativeScore++;
+  });
+  
+  let sentiment: 'positive' | 'negative' | 'neutral' = 'neutral';
+  
+  if (positiveScore > negativeScore) {
+    sentiment = 'positive';
+  } else if (negativeScore > positiveScore) {
+    sentiment = 'negative';
+  }
+  
+  return {
+    sentiment,
+    topics: ['mental health', 'wellness'],
+    keyPhrases: text.split('.').map(s => s.trim()).filter(s => s.length > 0),
+    language: 'en',
+    confidenceScore: 0.75
+  };
 }
 
 /**
