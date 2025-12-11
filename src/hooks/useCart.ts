@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 export interface CartItem {
@@ -44,7 +44,7 @@ export const useCart = () => {
         const { data, error } = await supabase
           .from("cart_items")
           .select("*")
-          .eq("user_id", user.id);
+          .eq("user_id", user.uid);
 
         if (error) throw error;
         setCartItems(data || []);
@@ -72,7 +72,7 @@ export const useCart = () => {
           try {
             for (const item of guestCart) {
               await supabase.from("cart_items").upsert({
-                user_id: user.id,
+                user_id: user.uid,
                 product_id: item.product_id,
                 product_name: item.product_name,
                 product_price: item.product_price,
@@ -104,7 +104,7 @@ export const useCart = () => {
         const { data: existing } = await supabase
           .from("cart_items")
           .select("*")
-          .eq("user_id", user.id)
+          .eq("user_id", user.uid)
           .eq("product_id", product.id)
           .maybeSingle();
 
@@ -115,7 +115,7 @@ export const useCart = () => {
             .eq("id", existing.id);
         } else {
           await supabase.from("cart_items").insert({
-            user_id: user.id,
+            user_id: user.uid,
             product_id: product.id,
             product_name: product.name,
             product_price: product.price,
@@ -209,7 +209,7 @@ export const useCart = () => {
         await supabase
           .from("cart_items")
           .delete()
-          .eq("user_id", user.id);
+          .eq("user_id", user.uid);
         setCartItems([]);
       } catch (error) {
         console.error("Error clearing cart:", error);
