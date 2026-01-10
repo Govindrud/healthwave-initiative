@@ -10,6 +10,7 @@ export interface User {
 export interface AuthContextType {
   user: User | null;
   loading: boolean;
+  roleCheckLoading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   register: (email: string, password: string, name: string) => Promise<boolean>;
@@ -19,5 +20,4 @@ export interface AuthContextType {
   updateProfile: (data: Partial<User>) => Promise<boolean>;
   isAdmin: () => boolean;
   isProvider: () => boolean;
-  ADMIN_EMAIL: string;
 }
