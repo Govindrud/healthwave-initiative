@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackSrc?: string;
@@ -8,24 +7,36 @@ interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElemen
 
 const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
-  fallbackSrc = "https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+  fallbackSrc = "/placeholder.svg",
   alt,
   className,
+  onLoad,
   ...rest
 }) => {
-  const [imgSrc, setImgSrc] = useState<string>(src || '');
+  const [imgSrc, setImgSrc] = useState<string>(src || fallbackSrc);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // Update imgSrc when src prop changes
+  useEffect(() => {
+    if (src) {
+      setImgSrc(src);
+      setHasError(false);
+      setIsLoading(true);
+    }
+  }, [src]);
+
   const handleError = () => {
-    if (!hasError) {
+    if (!hasError && fallbackSrc) {
       setImgSrc(fallbackSrc);
       setHasError(true);
+      setIsLoading(false);
     }
   };
 
-  const handleLoad = () => {
+  const handleLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     setIsLoading(false);
+    onLoad?.(e);
   };
 
   const defaultClassNames = "object-cover w-full h-full";
@@ -33,13 +44,13 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 
   return (
     <>
-      {isLoading && <div className="animate-pulse bg-gray-200 w-full h-full" />}
+      {isLoading && <div className="animate-pulse bg-muted w-full h-full absolute inset-0" />}
       <img 
         src={imgSrc} 
         alt={alt} 
         onError={handleError}
         onLoad={handleLoad}
-        className={`${combinedClassNames} ${isLoading ? 'hidden' : ''}`}
+        className={`${combinedClassNames} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
         loading="lazy"
         {...rest}
       />
