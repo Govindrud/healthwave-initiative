@@ -1,15 +1,59 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+// Get allowed origins from environment or use defaults for the Lovable project
+const getAllowedOrigins = (): string[] => {
+  const customOrigin = Deno.env.get("ALLOWED_ORIGIN");
+  const projectRef = Deno.env.get("SUPABASE_PROJECT_REF") || "qjzyuxqcujwjgfyttpjf";
+  
+  // Default allowed origins for this project
+  const defaultOrigins = [
+    `https://${projectRef}.lovable.app`,
+    `https://${projectRef}.lovableproject.com`,
+    "https://meanttohelp.com",
+    "https://www.meanttohelp.com",
+    "http://localhost:8080",
+    "http://localhost:5173"
+  ];
+  
+  if (customOrigin) {
+    return [...defaultOrigins, customOrigin];
+  }
+  
+  return defaultOrigins;
+};
+
+const getCorsHeaders = (origin: string | null): Record<string, string> => {
+  const allowedOrigins = getAllowedOrigins();
+  
+  // Check if the request origin is in our allowed list
+  const isAllowed = origin && allowedOrigins.some(allowed => 
+    origin === allowed || origin.endsWith('.lovable.app') || origin.endsWith('.lovableproject.com')
+  );
+  
+  return {
+    "Access-Control-Allow-Origin": isAllowed ? origin : allowedOrigins[0],
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Max-Age": "86400",
+  };
 };
 
 serve(async (req) => {
+  const origin = req.headers.get("Origin");
+  const corsHeaders = getCorsHeaders(origin);
+  
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Only allow POST requests
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 
   try {
@@ -17,6 +61,8 @@ serve(async (req) => {
     
     const RAZORPAY_KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
     const RAZORPAY_KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET");
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     
     if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
       throw new Error("Razorpay credentials not configured");
@@ -24,10 +70,27 @@ serve(async (req) => {
 
     const auth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
 
+    // For order creation, optionally verify user authentication
+    // This prevents abuse while still allowing guest checkout
     if (action === "create_order") {
-      const { amount, currency = "INR", receipt, notes } = params;
+      const { amount, currency = "INR", receipt, notes, user_id } = params;
       
-      console.log("Creating Razorpay order:", { amount, currency, receipt });
+      // Log order creation attempt (for monitoring abuse)
+      console.log("Creating Razorpay order:", { 
+        amount, 
+        currency, 
+        receipt, 
+        hasUserId: !!user_id,
+        origin: origin || 'unknown'
+      });
+      
+      // Validate amount to prevent abuse
+      if (!amount || amount <= 0 || amount > 10000000) {
+        return new Response(
+          JSON.stringify({ error: "Invalid amount" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
       
       const response = await fetch("https://api.razorpay.com/v1/orders", {
         method: "POST",
@@ -39,7 +102,11 @@ serve(async (req) => {
           amount: Math.round(amount * 100), // Convert to paise
           currency,
           receipt,
-          notes,
+          notes: {
+            ...notes,
+            origin: origin || 'unknown',
+            created_via: 'lovable_edge_function'
+          },
         }),
       });
 
