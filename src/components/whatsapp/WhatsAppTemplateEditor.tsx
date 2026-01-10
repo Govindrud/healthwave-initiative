@@ -154,13 +154,36 @@ const WhatsAppTemplateEditor = () => {
   };
   
   const previewTemplate = (template: Template) => {
-    let previewContent = template.content;
+    const parts: React.ReactNode[] = [];
+    let content = template.content;
+    
+    // Build array of text and styled variable parts safely without dangerouslySetInnerHTML
     template.variables.forEach((variable, index) => {
       const placeholder = `{{${index + 1}}}`;
-      previewContent = previewContent.replace(placeholder, `<strong>${variable}</strong>`);
+      const splitIndex = content.indexOf(placeholder);
+      
+      if (splitIndex !== -1) {
+        // Add text before placeholder
+        if (splitIndex > 0) {
+          parts.push(content.substring(0, splitIndex));
+        }
+        // Add styled variable
+        parts.push(
+          <strong key={`var-${index}`} className="text-meant-700 font-semibold">
+            {variable}
+          </strong>
+        );
+        // Update remaining content
+        content = content.substring(splitIndex + placeholder.length);
+      }
     });
     
-    return <div dangerouslySetInnerHTML={{ __html: previewContent }} />;
+    // Add any remaining content after the last placeholder
+    if (content) {
+      parts.push(content);
+    }
+    
+    return <div>{parts}</div>;
   };
 
   return (

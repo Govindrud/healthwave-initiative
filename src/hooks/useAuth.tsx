@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Create the provider component
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { user, updateUser, updateProfile, isAdmin, isProvider } = useUser();
+  const { user, updateUser, updateProfile, isAdmin, isProvider, roleCheckLoading } = useUser();
   const { loading: authLoading, login, register, logout } = useAuthentication(updateUser);
   const { loading: passwordLoading, requestPasswordReset, resetPassword } = usePasswordReset();
 
@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider value={{
       user,
       loading,
+      roleCheckLoading,
       isAuthenticated: !!user,
       login,
       register,
@@ -68,8 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       requestPasswordReset,
       updateProfile,
       isAdmin,
-      isProvider,
-      ADMIN_EMAIL: "" // Remove hardcoded admin email
+      isProvider
     }}>
       {children}
     </AuthContext.Provider>
