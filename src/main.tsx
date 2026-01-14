@@ -40,6 +40,14 @@ window.addEventListener('unhandledrejection', (event) => {
   }
 });
 
+// Disable browser scroll restoration before app loads
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
+// Force scroll to top immediately on initial load
+window.scrollTo(0, 0);
+
 // Add detailed performance monitoring
 console.log('Starting app initialization at:', new Date().toISOString());
 const renderStart = performance.now();

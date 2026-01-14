@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Custom scrollbar */
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
@@ -30,10 +34,10 @@
   }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling - disabled for initial load control */
 @media (prefers-reduced-motion: no-preference) {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 }
 

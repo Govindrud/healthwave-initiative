@@ -64,6 +64,12 @@
   * {
     @apply border-0;
   }
+  
+  /* Prevent browser scroll restoration and ensure top start */
+  html {
+    scroll-behavior: auto !important;
+  }
+  
   body {
     @apply bg-background text-foreground;
   }
