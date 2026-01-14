@@ -1,14 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Base styles */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @layer base {
-  * {
-    @apply border-border;
+  *,
+  *::before,
+  *::after {
+    border-color: hsl(var(--border));
     -webkit-tap-highlight-color: transparent;
   }
 
   html, body {
-    @apply overflow-x-hidden font-body antialiased;
+    overflow-x: hidden;
+    font-family: 'SF Pro Text', 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     width: 100%;
     height: 100%;
   }
@@ -19,7 +28,8 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-medium tracking-tight;
+    font-family: 'SF Pro Display', 'Inter', sans-serif;
+    @apply font-medium tracking-tight;
   }
 
   h1 {
@@ -39,7 +49,7 @@
   }
 
   input, textarea, select, button {
-    @apply font-body;
+    font-family: 'SF Pro Text', 'Inter', sans-serif;
     font-size: inherit;
   }
 
