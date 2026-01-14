@@ -202,7 +202,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      orders_safe: {
+        Row: {
+          amount: number | null
+          created_at: string | null
+          currency: string | null
+          customer_email: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          id: string | null
+          items: Json | null
+          notes: string | null
+          shipping_address: Json | null
+          status: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string | null
+          currency?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          id?: string | null
+          items?: Json | null
+          notes?: string | null
+          shipping_address?: Json | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string | null
+          currency?: string | null
+          customer_email?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          id?: string | null
+          items?: Json | null
+          notes?: string | null
+          shipping_address?: Json | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_request_secure_token: { Args: never; Returns: string }
