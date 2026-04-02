@@ -3,6 +3,7 @@ import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
+import PretextCanvas from "./canvas/PretextCanvas";
 
 const Hero = () => {
   return (
@@ -66,16 +67,20 @@ const Hero = () => {
               Transforming Mental Health Support
             </motion.span>
             
-            <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-gradient"
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-800 to-indigo-600">
-                Break Free From Mental Loops
-              </span>
-            </motion.h1>
+              <PretextCanvas
+                text="Break Free From Mental Loops"
+                fontSize={48}
+                lineHeight={1.2}
+                maxWidth={500}
+                gradientColors={['#6b21a8', '#4f46e5']}
+                className="mb-6"
+              />
+            </motion.div>
             
             <motion.p 
               className="text-lg md:text-xl text-foreground/80 max-w-3xl mb-10"
