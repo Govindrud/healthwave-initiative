@@ -17,7 +17,7 @@ const Surender = () => {
 
   return (
     <MainLayout title="Surender - Find Peace">
-      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-meant-50/30">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-background to-accent/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-10">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Surender</h1>
@@ -46,18 +46,18 @@ const Surender = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-8 shadow-md mb-12">
+          <div className="bg-card border border-border rounded-xl p-8 shadow-sm mb-12">
             <h2 className="text-2xl font-semibold mb-6 text-center">Our Surender Process</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-meant-50 p-5 rounded-lg">
+              <div className="bg-accent p-5 rounded-lg">
                 <h3 className="font-medium text-lg mb-2">Acknowledge</h3>
                 <p>Begin by acknowledging your feelings and the struggles you're experiencing without judgment or criticism.</p>
               </div>
-              <div className="bg-meant-50 p-5 rounded-lg">
+              <div className="bg-accent p-5 rounded-lg">
                 <h3 className="font-medium text-lg mb-2">Release</h3>
                 <p>Learn practical techniques for releasing tension, worry, and the need to control outcomes.</p>
               </div>
-              <div className="bg-meant-50 p-5 rounded-lg">
+              <div className="bg-accent p-5 rounded-lg">
                 <h3 className="font-medium text-lg mb-2">Transform</h3>
                 <p>Discover how surrendering creates space for new perspectives, peace, and personal growth.</p>
               </div>
@@ -89,22 +89,22 @@ const Surender = () => {
           <div className="max-w-4xl mx-auto mt-16">
             <h2 className="text-2xl font-semibold mb-6 text-center">How We Can Support You</h2>
             <div className="grid sm:grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-card border border-border p-6 rounded-lg shadow-sm">
                 <h3 className="font-medium text-lg mb-2">Professional Guidance</h3>
                 <p>Our experienced therapists and counselors provide compassionate support tailored to your unique journey.</p>
                 <a href="/doctors" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">Meet our professionals →</a>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-card border border-border p-6 rounded-lg shadow-sm">
                 <h3 className="font-medium text-lg mb-2">Stress Relief Practices</h3>
                 <p>Learn evidence-based techniques for managing stress and cultivating inner peace.</p>
                 <a href="/services" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">View services →</a>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-card border border-border p-6 rounded-lg shadow-sm">
                 <h3 className="font-medium text-lg mb-2">Community Support</h3>
                 <p>Connect with others on a similar journey in our supportive group sessions.</p>
                 <a href="/activities" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">Join activities →</a>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              <div className="bg-card border border-border p-6 rounded-lg shadow-sm">
                 <h3 className="font-medium text-lg mb-2">Spiritual Guidance</h3>
                 <p>Explore the spiritual dimensions of surrender with our experienced guides.</p>
                 <a href="/spirituality" className="text-meant-600 hover:text-meant-800 mt-3 inline-block font-medium">Spiritual services →</a>
