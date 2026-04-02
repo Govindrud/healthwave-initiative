@@ -46,7 +46,7 @@ const Surender = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-8 shadow-md mb-12">
+          <div className="bg-card border border-border rounded-xl p-8 shadow-sm mb-12">
             <h2 className="text-2xl font-semibold mb-6 text-center">Our Surender Process</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-meant-50 p-5 rounded-lg">
