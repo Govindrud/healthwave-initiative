@@ -3,6 +3,7 @@ import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { BrainThoughtsAnimation } from "./animations/BrainThoughtsAnimation";
+import PretextCanvas from "./canvas/PretextCanvas";
 
 const Hero = () => {
   return (
