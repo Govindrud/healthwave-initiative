@@ -7,6 +7,7 @@ import { queryClient } from '@/hooks/useFetch';
 import { RegionProvider } from '@/context/RegionContext';
 import { AuthProvider } from '@/hooks/useAuth';
 import { AIProvider } from '@/providers/AIProvider';
+import { ThemeProvider } from '@/components/ui/theme-provider';
 import ScrollToTop from '@/components/ScrollToTop';
 
 interface AppProvidersProps {
@@ -16,17 +17,19 @@ interface AppProvidersProps {
 const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RegionProvider>
-        <AuthProvider>
-          <AIProvider>
-            <Router>
-              <ScrollToTop />
-              <Toaster position="top-center" richColors />
-              {children}
-            </Router>
-          </AIProvider>
-        </AuthProvider>
-      </RegionProvider>
+      <ThemeProvider defaultTheme="light" storageKey="meant-ui-theme">
+        <RegionProvider>
+          <AuthProvider>
+            <AIProvider>
+              <Router>
+                <ScrollToTop />
+                <Toaster position="top-center" richColors />
+                {children}
+              </Router>
+            </AIProvider>
+          </AuthProvider>
+        </RegionProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
