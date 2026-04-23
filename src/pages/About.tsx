@@ -14,7 +14,7 @@ const About: React.FC = () => {
 
   return (
     <MainLayout title="About Us | MeantToHelp" description="Learn about our mission to support mental well-being">
-      <section className="py-16 md:py-20 bg-gradient-to-b from-white to-meant-50">
+      <section className="py-16 md:py-20 bg-gradient-to-b from-background to-accent">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div 
@@ -96,27 +96,27 @@ const About: React.FC = () => {
             >
               <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
               <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="bg-card text-card-foreground p-6 rounded-lg shadow-sm border">
                   <h3 className="font-medium text-lg mb-2">Compassion</h3>
                   <p>We approach each individual with genuine care and understanding.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="bg-card text-card-foreground p-6 rounded-lg shadow-sm border">
                   <h3 className="font-medium text-lg mb-2">Accessibility</h3>
                   <p>We strive to make mental health support available to everyone who needs it.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="bg-card text-card-foreground p-6 rounded-lg shadow-sm border">
                   <h3 className="font-medium text-lg mb-2">Innovation</h3>
                   <p>We continuously explore new ways to improve mental health services.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="bg-card text-card-foreground p-6 rounded-lg shadow-sm border">
                   <h3 className="font-medium text-lg mb-2">Integrity</h3>
                   <p>We uphold the highest ethical standards in all our practices.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="bg-card text-card-foreground p-6 rounded-lg shadow-sm border">
                   <h3 className="font-medium text-lg mb-2">Inclusivity</h3>
                   <p>We create safe spaces that welcome people of all backgrounds.</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="bg-card text-card-foreground p-6 rounded-lg shadow-sm border">
                   <h3 className="font-medium text-lg mb-2">Empowerment</h3>
                   <p>We equip individuals with tools and knowledge for self-management.</p>
                 </div>
@@ -136,10 +136,10 @@ const About: React.FC = () => {
                 with us, we welcome you to become part of our community dedicated to mental well-being.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact" className="bg-meant-600 hover:bg-meant-700 text-white px-6 py-3 rounded-md font-medium">
+                <a href="/contact" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-md font-medium transition-colors">
                   Contact Us
                 </a>
-                <a href="/services" className="border border-meant-600 text-meant-600 hover:bg-meant-50 px-6 py-3 rounded-md font-medium">
+                <a href="/services" className="border border-primary text-primary hover:bg-accent px-6 py-3 rounded-md font-medium transition-colors">
                   Explore Our Services
                 </a>
               </div>
