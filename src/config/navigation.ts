@@ -147,6 +147,13 @@ export const activitiesItems = [
 // AI section items
 export const aiItems = [
   {
+    href: "/ai-counselor",
+    title: "AI Mental Health Counselor",
+    icon: Sparkles,
+    description: "Private AI counselling sessions with saved history and coping tools"
+  },
+  {
+
     href: "/ai-personal-assistant",
     title: "AI Personal Assistant", 
     icon: Bot,
