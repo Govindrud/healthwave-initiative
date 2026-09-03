@@ -70,7 +70,9 @@ const AppRoutes = () => {
       <Route path="/de-addiction" element={<DeAddiction />} />
       <Route path="/documentation" element={<Documentation />} />
       <Route path="/corporate-certification" element={<CorporateCertification />} />
+      <Route path="/ai-counselor" element={<AICounselor />} />
       <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
+
       <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
       <Route path="/anger-management" element={<AngerManagement />} />
       <Route path="/booking-confirmation" element={<BookingConfirmation />} />
