@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Shield, Users, Building, Calendar, Clock, CheckCircle, Phone, Mail, Building2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import PayNowButton from "@/components/payment/PayNowButton";
 
 const CorporatePlansContent = () => {
   const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
@@ -190,9 +191,25 @@ const CorporatePlansContent = () => {
                 </li>
               </ul>
             </CardContent>
-            <CardFooter>
-              <Button 
-                variant="meant" 
+            <CardFooter className="flex flex-col gap-2">
+              <PayNowButton
+                className="w-full"
+                amount={25000}
+                productName="Corporate Starter Plan"
+                productDescription="Starter Plan — first month, up to 25 employees"
+                label="Subscribe — ₹25,000/month"
+                items={[
+                  {
+                    product_id: "corporate-starter-monthly",
+                    product_name: "Corporate Starter Plan (monthly)",
+                    price: 25000,
+                    quantity: 1,
+                  },
+                ]}
+                notes={{ plan: "Starter" }}
+              />
+              <Button
+                variant="outline"
                 className="w-full"
                 onClick={() => openContactDialog("Starter Plan")}
               >
@@ -248,9 +265,25 @@ const CorporatePlansContent = () => {
                 </li>
               </ul>
             </CardContent>
-            <CardFooter>
-              <Button 
-                variant="meant" 
+            <CardFooter className="flex flex-col gap-2">
+              <PayNowButton
+                className="w-full"
+                amount={60000}
+                productName="Corporate Growth Plan"
+                productDescription="Growth Plan — first month, up to 100 employees"
+                label="Subscribe — ₹60,000/month"
+                items={[
+                  {
+                    product_id: "corporate-growth-monthly",
+                    product_name: "Corporate Growth Plan (monthly)",
+                    price: 60000,
+                    quantity: 1,
+                  },
+                ]}
+                notes={{ plan: "Growth" }}
+              />
+              <Button
+                variant="outline"
                 className="w-full"
                 onClick={() => openContactDialog("Growth Plan")}
               >
