@@ -44,6 +44,8 @@ import DeAddiction from '@/pages/DeAddiction';
 import Documentation from '@/pages/Documentation';
 import CorporateCertification from '@/pages/CorporateCertification';
 import AIPersonalAssistant from '@/pages/AIPersonalAssistant';
+import AICounselor from '@/pages/AICounselor';
+
 import AIVoiceAgent from '@/pages/AIVoiceAgent';
 import AngerManagement from '@/pages/AngerManagement';
 import BookingConfirmation from '@/pages/BookingConfirmation';
