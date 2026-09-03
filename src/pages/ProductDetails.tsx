@@ -9,6 +9,7 @@ import { getProductById } from '@/data/products';
 import { useRegion } from '@/context/RegionContext';
 import { toast } from 'sonner';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import PayNowButton from '@/components/payment/PayNowButton';
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -234,11 +235,29 @@ const ProductDetails = () => {
                 </div>
               </div>
 
+              <PayNowButton
+                className="w-full bg-meant-600 hover:bg-meant-700"
+                disabled={product.stock === 0}
+                amount={Number(product.price) * quantity}
+                productName={product.name}
+                productDescription={`${product.name} x ${quantity}`}
+                label={`Buy Now — ₹${(Number(product.price) * quantity).toLocaleString('en-IN')}`}
+                items={[
+                  {
+                    product_id: String(product.id),
+                    product_name: product.name,
+                    price: Number(product.price),
+                    quantity,
+                  },
+                ]}
+              />
+
               <div className="flex gap-3">
-                <Button 
+                <Button
+                  variant="outline"
                   onClick={handleAddToCart}
                   disabled={product.stock === 0}
-                  className="flex-1 bg-meant-600 hover:bg-meant-700"
+                  className="flex-1"
                 >
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   {product.stock === 0 ? 'Out of Stock' : isInCart ? 'Add More to Cart' : 'Add to Cart'}

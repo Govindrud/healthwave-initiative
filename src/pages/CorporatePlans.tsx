@@ -1,5 +1,8 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
+import PayNowButton from '@/components/payment/PayNowButton';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,6 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { Building, Users, Shield, CheckCircle, Star } from 'lucide-react';
 
 const CorporatePlans = () => {
+  const [seats, setSeats] = useState<Record<string, number>>({ Starter: 25, Professional: 50 });
+
   useEffect(() => {
     document.title = "Corporate Plans - MeantToHelp";
     window.scrollTo(0, 0);
@@ -17,6 +22,7 @@ const CorporatePlans = () => {
       name: "Starter",
       price: "₹299",
       period: "per employee/month",
+      pricePerEmployee: 299,
       description: "Perfect for small teams getting started with mental health support",
       features: [
         "Basic mental health assessments",
@@ -31,6 +37,7 @@ const CorporatePlans = () => {
       name: "Professional",
       price: "₹599",
       period: "per employee/month",
+      pricePerEmployee: 599,
       description: "Comprehensive mental health solution for growing organizations",
       features: [
         "Advanced mental health assessments",
@@ -46,6 +53,7 @@ const CorporatePlans = () => {
       name: "Enterprise",
       price: "Custom",
       period: "contact for pricing",
+      pricePerEmployee: null as number | null,
       description: "Tailored solutions for large organizations with specific needs",
       features: [
         "All Professional features",
@@ -127,11 +135,54 @@ const CorporatePlans = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button 
-                      className={`w-full ${plan.popular ? 'bg-meant-600 hover:bg-meant-700' : 'bg-gray-800 hover:bg-gray-900'}`}
-                    >
-                      {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
-                    </Button>
+                    {plan.pricePerEmployee ? (
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <label htmlFor={`seats-${plan.name}`} className="text-sm text-muted-foreground whitespace-nowrap">
+                            Employees
+                          </label>
+                          <Input
+                            id={`seats-${plan.name}`}
+                            type="number"
+                            min={1}
+                            max={5000}
+                            value={seats[plan.name] ?? 1}
+                            onChange={(e) =>
+                              setSeats((prev) => ({
+                                ...prev,
+                                [plan.name]: Math.max(1, Math.min(5000, Number(e.target.value) || 1)),
+                              }))
+                            }
+                          />
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          First month total:{' '}
+                          <span className="font-semibold text-foreground">
+                            ₹{(plan.pricePerEmployee * (seats[plan.name] ?? 1)).toLocaleString('en-IN')}
+                          </span>
+                        </p>
+                        <PayNowButton
+                          className={`w-full ${plan.popular ? 'bg-meant-600 hover:bg-meant-700' : ''}`}
+                          amount={plan.pricePerEmployee * (seats[plan.name] ?? 1)}
+                          productName={`Corporate ${plan.name} Plan`}
+                          productDescription={`${plan.name} plan — ${seats[plan.name] ?? 1} employees (first month)`}
+                          label="Get Started"
+                          items={[
+                            {
+                              product_id: `corporate-${plan.name.toLowerCase()}`,
+                              product_name: `Corporate ${plan.name} Plan (per employee/month)`,
+                              price: plan.pricePerEmployee,
+                              quantity: seats[plan.name] ?? 1,
+                            },
+                          ]}
+                          notes={{ plan: plan.name, employees: String(seats[plan.name] ?? 1) }}
+                        />
+                      </div>
+                    ) : (
+                      <Button asChild className="w-full bg-gray-800 hover:bg-gray-900">
+                        <Link to="/contact">Contact Sales</Link>
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               ))}
@@ -148,11 +199,11 @@ const CorporatePlans = () => {
                     Contact our team to discuss your organization's specific needs and get a customized quote.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button className="bg-meant-600 hover:bg-meant-700">
-                      Schedule Demo
+                    <Button asChild className="bg-meant-600 hover:bg-meant-700">
+                      <Link to="/contact">Schedule Demo</Link>
                     </Button>
-                    <Button variant="outline" className="border-meant-600 text-meant-600 hover:bg-meant-50">
-                      Contact Sales
+                    <Button asChild variant="outline" className="border-meant-600 text-meant-600 hover:bg-meant-50">
+                      <Link to="/contact">Contact Sales</Link>
                     </Button>
                   </div>
                 </CardContent>
