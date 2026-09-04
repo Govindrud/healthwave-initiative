@@ -5,6 +5,7 @@ import { Loader2, CreditCard } from "lucide-react";
 import { useRazorpay } from "@/hooks/useRazorpay";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { toast } from "sonner";
 
 export interface PayNowItem {
@@ -61,7 +62,7 @@ const PayNowButton: React.FC<PayNowButtonProps> = ({
             amount,
             currency: "INR",
             status: "paid",
-            items,
+            items: items as unknown as Json,
             customer_name: user?.displayName || "",
             customer_email: user?.email || "",
             notes: productName,
