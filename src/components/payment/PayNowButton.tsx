@@ -5,6 +5,7 @@ import { Loader2, CreditCard } from "lucide-react";
 import { useRazorpay } from "@/hooks/useRazorpay";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { toast } from "sonner";
 
 export interface PayNowItem {
@@ -54,18 +55,19 @@ const PayNowButton: React.FC<PayNowButtonProps> = ({
     onSuccess: async (result) => {
       if (result.payment_id && result.order_id) {
         try {
-          const { error } = await supabase.from("orders").insert({
-            user_id: user?.uid || null,
+          const orderData = {
+            ...(user?.uid ? { user_id: user.uid } : {}),
             razorpay_order_id: result.order_id,
             razorpay_payment_id: result.payment_id,
             amount,
             currency: "INR",
             status: "paid",
-            items,
+            items: items as unknown as Json,
             customer_name: user?.displayName || "",
             customer_email: user?.email || "",
             notes: productName,
-          });
+          };
+          const { error } = await supabase.from("orders").insert([orderData]);
           if (error) console.error("Error saving order:", error);
         } catch (err) {
           console.error("Error processing order:", err);
