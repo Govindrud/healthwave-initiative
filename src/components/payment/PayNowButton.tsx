@@ -54,8 +54,8 @@ const PayNowButton: React.FC<PayNowButtonProps> = ({
     onSuccess: async (result) => {
       if (result.payment_id && result.order_id) {
         try {
-          const { error } = await supabase.from("orders").insert({
-            user_id: user?.uid || null,
+          const orderData = {
+            ...(user?.uid ? { user_id: user.uid } : {}),
             razorpay_order_id: result.order_id,
             razorpay_payment_id: result.payment_id,
             amount,
@@ -65,7 +65,8 @@ const PayNowButton: React.FC<PayNowButtonProps> = ({
             customer_name: user?.displayName || "",
             customer_email: user?.email || "",
             notes: productName,
-          });
+          };
+          const { error } = await supabase.from("orders").insert(orderData);
           if (error) console.error("Error saving order:", error);
         } catch (err) {
           console.error("Error processing order:", err);
