@@ -66,7 +66,7 @@ const PayNowButton: React.FC<PayNowButtonProps> = ({
             customer_email: user?.email || "",
             notes: productName,
           };
-          const { error } = await supabase.from("orders").insert(orderData);
+          const { error } = await supabase.from("orders").insert([orderData]);
           if (error) console.error("Error saving order:", error);
         } catch (err) {
           console.error("Error processing order:", err);
