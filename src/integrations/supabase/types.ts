@@ -22,6 +22,8 @@ export type Database = {
           created_at: string
           id: string
           notes: string | null
+          payment_status: string
+          provider_id: string | null
           service_name: string
           service_type: string
           status: string
@@ -35,6 +37,8 @@ export type Database = {
           created_at?: string
           id?: string
           notes?: string | null
+          payment_status?: string
+          provider_id?: string | null
           service_name: string
           service_type: string
           status?: string
@@ -48,6 +52,8 @@ export type Database = {
           created_at?: string
           id?: string
           notes?: string | null
+          payment_status?: string
+          provider_id?: string | null
           service_name?: string
           service_type?: string
           status?: string
@@ -92,6 +98,36 @@ export type Database = {
         }
         Relationships: []
       }
+      counselor_availability: {
+        Row: {
+          availability_status: string
+          counselor_id: string
+          created_at: string
+          ends_at: string
+          id: string
+          starts_at: string
+          updated_at: string
+        }
+        Insert: {
+          availability_status?: string
+          counselor_id: string
+          created_at?: string
+          ends_at: string
+          id?: string
+          starts_at: string
+          updated_at?: string
+        }
+        Update: {
+          availability_status?: string
+          counselor_id?: string
+          created_at?: string
+          ends_at?: string
+          id?: string
+          starts_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       counselor_messages: {
         Row: {
           content: string
@@ -126,6 +162,162 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      counselor_payment_records: {
+        Row: {
+          amount_paise: number
+          booking_id: string
+          created_at: string
+          id: string
+          payment_status: string
+          provider_id: string
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_paise: number
+          booking_id: string
+          created_at?: string
+          id?: string
+          payment_status?: string
+          provider_id: string
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_paise?: number
+          booking_id?: string
+          created_at?: string
+          id?: string
+          payment_status?: string
+          provider_id?: string
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "counselor_payment_records_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: true
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      counselor_payout_transactions: {
+        Row: {
+          created_at: string
+          id: string
+          payout_id: string
+          razorpay_linked_account_id: string | null
+          razorpay_transfer_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          payout_id: string
+          razorpay_linked_account_id?: string | null
+          razorpay_transfer_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          payout_id?: string
+          razorpay_linked_account_id?: string | null
+          razorpay_transfer_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "counselor_payout_transactions_payout_id_fkey"
+            columns: ["payout_id"]
+            isOneToOne: true
+            referencedRelation: "counselor_payouts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      counselor_payouts: {
+        Row: {
+          amount: number
+          booking_id: string
+          created_at: string
+          id: string
+          paid_at: string | null
+          provider_id: string
+          status: string
+        }
+        Insert: {
+          amount: number
+          booking_id: string
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          provider_id: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          booking_id?: string
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          provider_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "counselor_payouts_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: true
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      counselor_profiles: {
+        Row: {
+          bio: string
+          created_at: string
+          display_name: string
+          id: string
+          qualifications: string[]
+          session_duration_minutes: number
+          session_rate: number
+          specialties: string[]
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          qualifications?: string[]
+          session_duration_minutes?: number
+          session_rate?: number
+          specialties?: string[]
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string
+          created_at?: string
+          display_name?: string
+          id?: string
+          qualifications?: string[]
+          session_duration_minutes?: number
+          session_rate?: number
+          specialties?: string[]
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       counselor_sessions: {
         Row: {
