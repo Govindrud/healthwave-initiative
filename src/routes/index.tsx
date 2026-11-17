@@ -52,6 +52,7 @@ import BookingConfirmation from '@/pages/BookingConfirmation';
 import Terms from '@/pages/Terms';
 import Privacy from '@/pages/Privacy';
 import Resources from '@/pages/Resources';
+import CounselorPortal from '@/pages/CounselorPortal';
 
 const AppRoutes = () => {
   return (
@@ -74,6 +75,7 @@ const AppRoutes = () => {
       <Route path="/corporate-certification" element={<CorporateCertification />} />
       <Route path="/ai-counselor" element={<AICounselor />} />
       <Route path="/ai-personal-assistant" element={<AIPersonalAssistant />} />
+      <Route path="/counselor-portal" element={<CounselorPortal />} />
 
       <Route path="/ai-voice-agent" element={<AIVoiceAgent />} />
       <Route path="/anger-management" element={<AngerManagement />} />
